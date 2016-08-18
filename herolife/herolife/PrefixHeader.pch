@@ -1,0 +1,25 @@
+//
+//  PrefixHeader.pch
+//  herolife
+//
+//  Created by sswukang on 16/8/18.
+//  Copyright © 2016年 huarui. All rights reserved.
+//
+
+#ifndef PrefixHeader_pch
+#define PrefixHeader_pch
+#import "HRConst.h"
+#import <CocoaLumberjack/CocoaLumberjack.h>
+
+#ifdef DEBUG
+static const int ddLogLevel = DDLogLevelVerbose;
+#define NSLog(...) NSLog(__VA_ARGS__)
+#else
+static const int ddLogLevel = DDLogLevelOff;
+#define NSLog(...)
+#endif
+
+
+
+
+#endif /* PrefixHeader_pch */

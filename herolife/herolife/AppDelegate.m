@@ -7,6 +7,8 @@
 //
 
 #import "AppDelegate.h"
+#import "LoginController.h"
+#import "HRTabBarController.h"
 
 @interface AppDelegate ()
 
@@ -16,30 +18,68 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-	// Override point for customization after application launch.
+	//显示界面
+	[self setupWindow];
+	
+	
+	
+	/******* 日志 ********/
+#ifdef DEBUG
+	[self setLogger];
+#endif
 	return YES;
 }
 
+
 - (void)applicationWillResignActive:(UIApplication *)application {
-	// Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
-	// Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
+	
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
-	// Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
-	// If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+	
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
-	// Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+	
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
-	// Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+	
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {
-	// Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+	
+}
+#pragma mark - 一些自定义的方法
+- (void)setupWindow
+{
+	BOOL isLogin = NO;
+	self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+	LoginController *loginVC = [[LoginController alloc] init];
+	HRTabBarController *tabBarVC = [[HRTabBarController alloc] init];
+	
+	if (isLogin) {
+		self.window.rootViewController = tabBarVC;
+	}else
+	{
+		self.window.rootViewController = loginVC;
+	}
+	
+	[self.window makeKeyAndVisible];
+}
+-(void) setLogger {
+	
+	DDTTYLogger *logger = [DDTTYLogger sharedInstance];
+	logger.colorsEnabled = YES;
+	
+	[logger setForegroundColor:[UIColor colorWithRed:219 green:44 blue:56 alpha:1.f] backgroundColor:nil forFlag:DDLogFlagError];
+	[logger setForegroundColor:[UIColor orangeColor] backgroundColor:nil forFlag:DDLogFlagWarning];
+	
+	[logger setForegroundColor:[UIColor colorWithRed:91 green:149 blue:207 alpha:1.f] backgroundColor:nil forFlag:DDLogFlagInfo];
+	
+	[logger setForegroundColor:[UIColor colorWithRed:133 green:208 blue:107 alpha:1.f] backgroundColor:nil forFlag:DDLogFlagDebug];
+	
+	[DDLog addLogger:logger];
 }
 
 @end

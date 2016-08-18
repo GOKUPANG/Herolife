@@ -9,13 +9,23 @@
 /* Begin PBXBuildFile section */
 		D17CF0F11D6567E7007C95DD /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D17CF0F01D6567E7007C95DD /* main.m */; };
 		D17CF0F41D6567E7007C95DD /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D17CF0F31D6567E7007C95DD /* AppDelegate.m */; };
-		D17CF0F71D6567E7007C95DD /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D17CF0F61D6567E7007C95DD /* ViewController.m */; };
 		D17CF0FA1D6567E7007C95DD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D17CF0F81D6567E7007C95DD /* Main.storyboard */; };
 		D17CF0FC1D6567E7007C95DD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D17CF0FB1D6567E7007C95DD /* Assets.xcassets */; };
 		D17CF0FF1D6567E7007C95DD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D17CF0FD1D6567E7007C95DD /* LaunchScreen.storyboard */; };
 		D17CF10A1D6567E7007C95DD /* herolifeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D17CF1091D6567E7007C95DD /* herolifeTests.m */; };
 		D17CF1151D6567E7007C95DD /* herolifeUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = D17CF1141D6567E7007C95DD /* herolifeUITests.m */; };
-		D17CF1631D656FBC007C95DD /* test.m in Sources */ = {isa = PBXBuildFile; fileRef = D17CF1621D656FBC007C95DD /* test.m */; };
+		D17CF2341D658AF6007C95DD /* HRConst.m in Sources */ = {isa = PBXBuildFile; fileRef = D17CF1F11D658AF6007C95DD /* HRConst.m */; };
+		D17CF2FF1D6594C3007C95DD /* LoginController.m in Sources */ = {isa = PBXBuildFile; fileRef = D17CF2FD1D6594C3007C95DD /* LoginController.m */; };
+		D17CF3001D6594C3007C95DD /* LoginController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D17CF2FE1D6594C3007C95DD /* LoginController.xib */; };
+		D17CF30E1D65AC62007C95DD /* DeviceListController.m in Sources */ = {isa = PBXBuildFile; fileRef = D17CF30C1D65AC62007C95DD /* DeviceListController.m */; };
+		D17CF30F1D65AC62007C95DD /* DeviceListController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D17CF30D1D65AC62007C95DD /* DeviceListController.xib */; };
+		D17CF3131D65AC7E007C95DD /* SettingController.m in Sources */ = {isa = PBXBuildFile; fileRef = D17CF3111D65AC7E007C95DD /* SettingController.m */; };
+		D17CF3141D65AC7E007C95DD /* SettingController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D17CF3121D65AC7E007C95DD /* SettingController.xib */; };
+		D17CF3181D65ACB9007C95DD /* QRcodeController.m in Sources */ = {isa = PBXBuildFile; fileRef = D17CF3161D65ACB9007C95DD /* QRcodeController.m */; };
+		D17CF3191D65ACB9007C95DD /* QRcodeController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D17CF3171D65ACB9007C95DD /* QRcodeController.xib */; };
+		D1B5C55C1D65D3C2006E9BF2 /* HRNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1B5C55B1D65D3C2006E9BF2 /* HRNavigationController.m */; };
+		D1B5C55F1D65D458006E9BF2 /* HRTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1B5C55E1D65D458006E9BF2 /* HRTabBarController.m */; };
+		DAE2A790C81C0FDB9C617E84 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DC40F28764523F49428DB0CE /* libPods.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,12 +46,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1665122F3D59E8EE8CCA6258 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		B1A28F2C2DAB37DA40A8D5EB /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		D17CF0EC1D6567E7007C95DD /* herolife.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = herolife.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D17CF0F01D6567E7007C95DD /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		D17CF0F21D6567E7007C95DD /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		D17CF0F31D6567E7007C95DD /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		D17CF0F51D6567E7007C95DD /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		D17CF0F61D6567E7007C95DD /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		D17CF0F21D6567E7007C95DD /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = ../../AppDelegate.h; sourceTree = "<group>"; };
+		D17CF0F31D6567E7007C95DD /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = ../../AppDelegate.m; sourceTree = "<group>"; };
 		D17CF0F91D6567E7007C95DD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		D17CF0FB1D6567E7007C95DD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D17CF0FE1D6567E7007C95DD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -52,8 +62,26 @@
 		D17CF1101D6567E7007C95DD /* herolifeUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = herolifeUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D17CF1141D6567E7007C95DD /* herolifeUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = herolifeUITests.m; sourceTree = "<group>"; };
 		D17CF1161D6567E7007C95DD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		D17CF1611D656FBC007C95DD /* test.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = test.h; sourceTree = "<group>"; };
-		D17CF1621D656FBC007C95DD /* test.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = test.m; sourceTree = "<group>"; };
+		D17CF1F01D658AF6007C95DD /* HRConst.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HRConst.h; path = ../HRConst.h; sourceTree = "<group>"; };
+		D17CF1F11D658AF6007C95DD /* HRConst.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HRConst.m; path = ../HRConst.m; sourceTree = "<group>"; };
+		D17CF2FB1D658F9D007C95DD /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
+		D17CF2FC1D6594C3007C95DD /* LoginController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginController.h; sourceTree = "<group>"; };
+		D17CF2FD1D6594C3007C95DD /* LoginController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginController.m; sourceTree = "<group>"; };
+		D17CF2FE1D6594C3007C95DD /* LoginController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginController.xib; sourceTree = "<group>"; };
+		D17CF30B1D65AC62007C95DD /* DeviceListController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DeviceListController.h; path = ../DeviceListController.h; sourceTree = "<group>"; };
+		D17CF30C1D65AC62007C95DD /* DeviceListController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DeviceListController.m; path = ../DeviceListController.m; sourceTree = "<group>"; };
+		D17CF30D1D65AC62007C95DD /* DeviceListController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = DeviceListController.xib; path = ../DeviceListController.xib; sourceTree = "<group>"; };
+		D17CF3101D65AC7E007C95DD /* SettingController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingController.h; sourceTree = "<group>"; };
+		D17CF3111D65AC7E007C95DD /* SettingController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingController.m; sourceTree = "<group>"; };
+		D17CF3121D65AC7E007C95DD /* SettingController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingController.xib; sourceTree = "<group>"; };
+		D17CF3151D65ACB9007C95DD /* QRcodeController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QRcodeController.h; path = ../QRcodeController.h; sourceTree = "<group>"; };
+		D17CF3161D65ACB9007C95DD /* QRcodeController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = QRcodeController.m; path = ../QRcodeController.m; sourceTree = "<group>"; };
+		D17CF3171D65ACB9007C95DD /* QRcodeController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = QRcodeController.xib; path = ../QRcodeController.xib; sourceTree = "<group>"; };
+		D1B5C55A1D65D3C2006E9BF2 /* HRNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HRNavigationController.h; sourceTree = "<group>"; };
+		D1B5C55B1D65D3C2006E9BF2 /* HRNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HRNavigationController.m; sourceTree = "<group>"; };
+		D1B5C55D1D65D458006E9BF2 /* HRTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HRTabBarController.h; sourceTree = "<group>"; };
+		D1B5C55E1D65D458006E9BF2 /* HRTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HRTabBarController.m; sourceTree = "<group>"; };
+		DC40F28764523F49428DB0CE /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,6 +89,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DAE2A790C81C0FDB9C617E84 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -88,6 +117,8 @@
 				D17CF1081D6567E7007C95DD /* herolifeTests */,
 				D17CF1131D6567E7007C95DD /* herolifeUITests */,
 				D17CF0ED1D6567E7007C95DD /* Products */,
+				FE5412166E47B915E6848B9B /* Pods */,
+				EFE49747F7B44972AEF6CB46 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -104,16 +135,7 @@
 		D17CF0EE1D6567E7007C95DD /* herolife */ = {
 			isa = PBXGroup;
 			children = (
-				D17CF0F21D6567E7007C95DD /* AppDelegate.h */,
-				D17CF0F31D6567E7007C95DD /* AppDelegate.m */,
-				D17CF0F51D6567E7007C95DD /* ViewController.h */,
-				D17CF0F61D6567E7007C95DD /* ViewController.m */,
-				D17CF1611D656FBC007C95DD /* test.h */,
-				D17CF1621D656FBC007C95DD /* test.m */,
-				D17CF0F81D6567E7007C95DD /* Main.storyboard */,
-				D17CF0FB1D6567E7007C95DD /* Assets.xcassets */,
-				D17CF0FD1D6567E7007C95DD /* LaunchScreen.storyboard */,
-				D17CF1001D6567E7007C95DD /* Info.plist */,
+				D17CF1641D658AF6007C95DD /* Classes */,
 				D17CF0EF1D6567E7007C95DD /* Supporting Files */,
 			);
 			path = herolife;
@@ -122,6 +144,11 @@
 		D17CF0EF1D6567E7007C95DD /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				D17CF0F81D6567E7007C95DD /* Main.storyboard */,
+				D17CF0FD1D6567E7007C95DD /* LaunchScreen.storyboard */,
+				D17CF0FB1D6567E7007C95DD /* Assets.xcassets */,
+				D17CF1001D6567E7007C95DD /* Info.plist */,
+				D17CF2FB1D658F9D007C95DD /* PrefixHeader.pch */,
 				D17CF0F01D6567E7007C95DD /* main.m */,
 			);
 			name = "Supporting Files";
@@ -145,6 +172,238 @@
 			path = herolifeUITests;
 			sourceTree = "<group>";
 		};
+		D17CF1641D658AF6007C95DD /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				D17CF1C41D658AF6007C95DD /* Other-其他 */,
+				D17CF3071D65ABE9007C95DD /* QRcode */,
+				D17CF19B1D658AF6007C95DD /* Setting */,
+				D17CF1A41D658AF6007C95DD /* DeviceList */,
+				D17CF1BE1D658AF6007C95DD /* Login */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		D17CF19B1D658AF6007C95DD /* Setting */ = {
+			isa = PBXGroup;
+			children = (
+				D17CF19C1D658AF6007C95DD /* Controller */,
+				D17CF1A21D658AF6007C95DD /* Model */,
+				D17CF1A31D658AF6007C95DD /* View */,
+			);
+			name = Setting;
+			path = "Follow-关注";
+			sourceTree = "<group>";
+		};
+		D17CF19C1D658AF6007C95DD /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				D17CF3101D65AC7E007C95DD /* SettingController.h */,
+				D17CF3111D65AC7E007C95DD /* SettingController.m */,
+				D17CF3121D65AC7E007C95DD /* SettingController.xib */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		D17CF1A21D658AF6007C95DD /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		D17CF1A31D658AF6007C95DD /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		D17CF1A41D658AF6007C95DD /* DeviceList */ = {
+			isa = PBXGroup;
+			children = (
+				D17CF1A51D658AF6007C95DD /* Controller */,
+				D17CF1AD1D658AF6007C95DD /* Model */,
+				D17CF1B01D658AF6007C95DD /* View */,
+			);
+			name = DeviceList;
+			path = "Me-我";
+			sourceTree = "<group>";
+		};
+		D17CF1A51D658AF6007C95DD /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				D17CF30B1D65AC62007C95DD /* DeviceListController.h */,
+				D17CF30C1D65AC62007C95DD /* DeviceListController.m */,
+				D17CF30D1D65AC62007C95DD /* DeviceListController.xib */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		D17CF1AD1D658AF6007C95DD /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		D17CF1B01D658AF6007C95DD /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		D17CF1BE1D658AF6007C95DD /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				D17CF1BF1D658AF6007C95DD /* Controller */,
+				D17CF1C21D658AF6007C95DD /* Model */,
+				D17CF1C31D658AF6007C95DD /* View */,
+			);
+			name = Login;
+			path = "New-新帖";
+			sourceTree = "<group>";
+		};
+		D17CF1BF1D658AF6007C95DD /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				D17CF2FC1D6594C3007C95DD /* LoginController.h */,
+				D17CF2FD1D6594C3007C95DD /* LoginController.m */,
+				D17CF2FE1D6594C3007C95DD /* LoginController.xib */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		D17CF1C21D658AF6007C95DD /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		D17CF1C31D658AF6007C95DD /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		D17CF1C41D658AF6007C95DD /* Other-其他 */ = {
+			isa = PBXGroup;
+			children = (
+				D17CF0F21D6567E7007C95DD /* AppDelegate.h */,
+				D17CF0F31D6567E7007C95DD /* AppDelegate.m */,
+				D17CF1D81D658AF6007C95DD /* Controller */,
+				D17CF1E31D658AF6007C95DD /* Model */,
+				D17CF1E51D658AF6007C95DD /* View */,
+				D17CF2AD1D658C4B007C95DD /* Utils */,
+				D17CF2371D658C33007C95DD /* Library */,
+				D17CF1C71D658AF6007C95DD /* Category */,
+			);
+			path = "Other-其他";
+			sourceTree = "<group>";
+		};
+		D17CF1C71D658AF6007C95DD /* Category */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Category;
+			sourceTree = "<group>";
+		};
+		D17CF1D81D658AF6007C95DD /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				D1B5C55D1D65D458006E9BF2 /* HRTabBarController.h */,
+				D1B5C55E1D65D458006E9BF2 /* HRTabBarController.m */,
+				D1B5C55A1D65D3C2006E9BF2 /* HRNavigationController.h */,
+				D1B5C55B1D65D3C2006E9BF2 /* HRNavigationController.m */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		D17CF1E31D658AF6007C95DD /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		D17CF1E51D658AF6007C95DD /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		D17CF2371D658C33007C95DD /* Library */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Library;
+			sourceTree = "<group>";
+		};
+		D17CF2AD1D658C4B007C95DD /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				D17CF1F01D658AF6007C95DD /* HRConst.h */,
+				D17CF1F11D658AF6007C95DD /* HRConst.m */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		D17CF3071D65ABE9007C95DD /* QRcode */ = {
+			isa = PBXGroup;
+			children = (
+				D17CF3081D65ABE9007C95DD /* Controller */,
+				D17CF3091D65ABE9007C95DD /* Model */,
+				D17CF30A1D65ABE9007C95DD /* View */,
+			);
+			name = QRcode;
+			path = "Essence-精华";
+			sourceTree = "<group>";
+		};
+		D17CF3081D65ABE9007C95DD /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				D17CF3151D65ACB9007C95DD /* QRcodeController.h */,
+				D17CF3161D65ACB9007C95DD /* QRcodeController.m */,
+				D17CF3171D65ACB9007C95DD /* QRcodeController.xib */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		D17CF3091D65ABE9007C95DD /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		D17CF30A1D65ABE9007C95DD /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		EFE49747F7B44972AEF6CB46 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				DC40F28764523F49428DB0CE /* libPods.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		FE5412166E47B915E6848B9B /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				1665122F3D59E8EE8CCA6258 /* Pods.debug.xcconfig */,
+				B1A28F2C2DAB37DA40A8D5EB /* Pods.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -152,9 +411,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = D17CF1191D6567E7007C95DD /* Build configuration list for PBXNativeTarget "herolife" */;
 			buildPhases = (
+				180419613A743D2521ED7327 /* Check Pods Manifest.lock */,
 				D17CF0E81D6567E7007C95DD /* Sources */,
 				D17CF0E91D6567E7007C95DD /* Frameworks */,
 				D17CF0EA1D6567E7007C95DD /* Resources */,
+				DB6CB6AD5D24D135E25968E1 /* Embed Pods Frameworks */,
+				E13A6F80FD9BA0AB2A83A2F3 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -212,6 +474,7 @@
 				TargetAttributes = {
 					D17CF0EB1D6567E7007C95DD = {
 						CreatedOnToolsVersion = 7.3;
+						DevelopmentTeam = K3Y96N97ET;
 					};
 					D17CF1041D6567E7007C95DD = {
 						CreatedOnToolsVersion = 7.3;
@@ -249,8 +512,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				D17CF0FF1D6567E7007C95DD /* LaunchScreen.storyboard in Resources */,
+				D17CF3001D6594C3007C95DD /* LoginController.xib in Resources */,
 				D17CF0FC1D6567E7007C95DD /* Assets.xcassets in Resources */,
 				D17CF0FA1D6567E7007C95DD /* Main.storyboard in Resources */,
+				D17CF3141D65AC7E007C95DD /* SettingController.xib in Resources */,
+				D17CF30F1D65AC62007C95DD /* DeviceListController.xib in Resources */,
+				D17CF3191D65ACB9007C95DD /* QRcodeController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -270,15 +537,68 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		180419613A743D2521ED7327 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		DB6CB6AD5D24D135E25968E1 /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E13A6F80FD9BA0AB2A83A2F3 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		D17CF0E81D6567E7007C95DD /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D17CF0F71D6567E7007C95DD /* ViewController.m in Sources */,
-				D17CF1631D656FBC007C95DD /* test.m in Sources */,
+				D17CF3131D65AC7E007C95DD /* SettingController.m in Sources */,
+				D17CF2341D658AF6007C95DD /* HRConst.m in Sources */,
+				D17CF2FF1D6594C3007C95DD /* LoginController.m in Sources */,
 				D17CF0F41D6567E7007C95DD /* AppDelegate.m in Sources */,
 				D17CF0F11D6567E7007C95DD /* main.m in Sources */,
+				D17CF3181D65ACB9007C95DD /* QRcodeController.m in Sources */,
+				D1B5C55C1D65D3C2006E9BF2 /* HRNavigationController.m in Sources */,
+				D17CF30E1D65AC62007C95DD /* DeviceListController.m in Sources */,
+				D1B5C55F1D65D458006E9BF2 /* HRTabBarController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -370,7 +690,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -409,7 +729,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -419,10 +739,22 @@
 		};
 		D17CF11A1D6567E7007C95DD /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1665122F3D59E8EE8CCA6258 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/herolife/Classes/Other-其他/Library/Umeng",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SRCROOT)/herolife/PrefixHeader.pch";
 				INFOPLIST_FILE = herolife/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/herolife/Classes/Other-其他/Library/Umeng",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.huarui.herolife;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -430,10 +762,22 @@
 		};
 		D17CF11B1D6567E7007C95DD /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B1A28F2C2DAB37DA40A8D5EB /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/herolife/Classes/Other-其他/Library/Umeng",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SRCROOT)/herolife/PrefixHeader.pch";
 				INFOPLIST_FILE = herolife/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/herolife/Classes/Other-其他/Library/Umeng",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.huarui.herolife;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};

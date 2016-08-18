@@ -1,5 +1,5 @@
 //
-//  ViewController.h
+//  SettingController.h
 //  herolife
 //
 //  Created by sswukang on 16/8/18.
@@ -8,8 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ViewController : UIViewController
-
+@interface SettingController : UIViewController
 
 @end
-
