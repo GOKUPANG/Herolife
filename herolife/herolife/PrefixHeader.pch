@@ -12,6 +12,7 @@
 #import <CocoaLumberjack/CocoaLumberjack.h>
 #import <SVProgressHUD.h>
 #import "SVProgressTool.h"
+#import "UIView+HRExtension.h"
 
 #define HRUIScreenW [UIScreen mainScreen].bounds.size.width
 #define HRUIScreenH [UIScreen mainScreen].bounds.size.height

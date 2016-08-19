@@ -29,6 +29,7 @@
 		D1D407741D66AF94007A9E5E /* RegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1D407701D66AF94007A9E5E /* RegisterViewController.m */; };
 		D1D407751D66AF94007A9E5E /* UIView+XD.m in Sources */ = {isa = PBXBuildFile; fileRef = D1D407721D66AF94007A9E5E /* UIView+XD.m */; };
 		D1D407781D66B23F007A9E5E /* SVProgressTool.m in Sources */ = {isa = PBXBuildFile; fileRef = D1D407771D66B23F007A9E5E /* SVProgressTool.m */; };
+		D1D4077F1D66B718007A9E5E /* UIView+HRExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = D1D4077E1D66B718007A9E5E /* UIView+HRExtension.m */; };
 		DAE2A790C81C0FDB9C617E84 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DC40F28764523F49428DB0CE /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -91,8 +92,10 @@
 		D1D407701D66AF94007A9E5E /* RegisterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegisterViewController.m; sourceTree = "<group>"; };
 		D1D407711D66AF94007A9E5E /* UIView+XD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+XD.h"; sourceTree = "<group>"; };
 		D1D407721D66AF94007A9E5E /* UIView+XD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+XD.m"; sourceTree = "<group>"; };
-		D1D407761D66B23F007A9E5E /* SVProgressTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVProgressTool.h; sourceTree = "<group>"; };
-		D1D407771D66B23F007A9E5E /* SVProgressTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVProgressTool.m; sourceTree = "<group>"; };
+		D1D407761D66B23F007A9E5E /* SVProgressTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SVProgressTool.h; path = ../SVProgressTool.h; sourceTree = "<group>"; };
+		D1D407771D66B23F007A9E5E /* SVProgressTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SVProgressTool.m; path = ../SVProgressTool.m; sourceTree = "<group>"; };
+		D1D4077D1D66B718007A9E5E /* UIView+HRExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+HRExtension.h"; sourceTree = "<group>"; };
+		D1D4077E1D66B718007A9E5E /* UIView+HRExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+HRExtension.m"; sourceTree = "<group>"; };
 		DC40F28764523F49428DB0CE /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -320,6 +323,8 @@
 		D17CF1C71D658AF6007C95DD /* Category */ = {
 			isa = PBXGroup;
 			children = (
+				D1D4077D1D66B718007A9E5E /* UIView+HRExtension.h */,
+				D1D4077E1D66B718007A9E5E /* UIView+HRExtension.m */,
 			);
 			path = Category;
 			sourceTree = "<group>";
@@ -359,8 +364,7 @@
 		D17CF2AD1D658C4B007C95DD /* Utils */ = {
 			isa = PBXGroup;
 			children = (
-				D1D407761D66B23F007A9E5E /* SVProgressTool.h */,
-				D1D407771D66B23F007A9E5E /* SVProgressTool.m */,
+				D1D4077C1D66B6D0007A9E5E /* Tools */,
 				D17CF1F01D658AF6007C95DD /* HRConst.h */,
 				D17CF1F11D658AF6007C95DD /* HRConst.m */,
 			);
@@ -413,6 +417,15 @@
 				D1D4076E1D66AF94007A9E5E /* InputText.m */,
 			);
 			path = register;
+			sourceTree = "<group>";
+		};
+		D1D4077C1D66B6D0007A9E5E /* Tools */ = {
+			isa = PBXGroup;
+			children = (
+				D1D407761D66B23F007A9E5E /* SVProgressTool.h */,
+				D1D407771D66B23F007A9E5E /* SVProgressTool.m */,
+			);
+			path = Tools;
 			sourceTree = "<group>";
 		};
 		EFE49747F7B44972AEF6CB46 /* Frameworks */ = {
@@ -626,6 +639,7 @@
 				D17CF0F41D6567E7007C95DD /* AppDelegate.m in Sources */,
 				D1D407731D66AF94007A9E5E /* InputText.m in Sources */,
 				D17CF0F11D6567E7007C95DD /* main.m in Sources */,
+				D1D4077F1D66B718007A9E5E /* UIView+HRExtension.m in Sources */,
 				D17CF3181D65ACB9007C95DD /* QRcodeController.m in Sources */,
 				D1B5C5621D65D799006E9BF2 /* HRTabBarViewController.m in Sources */,
 				D1D407781D66B23F007A9E5E /* SVProgressTool.m in Sources */,
@@ -778,6 +792,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/herolife/Classes/Other-其他/Library/Umeng",
+					"$(PROJECT_DIR)/herolife/Classes/Other-其他/Library/ShareSDK/Support/PlatformSDK/QQSDK",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/herolife/PrefixHeader.pch";
@@ -801,6 +816,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/herolife/Classes/Other-其他/Library/Umeng",
+					"$(PROJECT_DIR)/herolife/Classes/Other-其他/Library/ShareSDK/Support/PlatformSDK/QQSDK",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/herolife/PrefixHeader.pch";
