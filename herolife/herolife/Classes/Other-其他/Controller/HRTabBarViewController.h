@@ -1,5 +1,5 @@
 //
-//  HRTabBarController.h
+//  HRTabBarViewController.h
 //  herolife
 //
 //  Created by sswukang on 16/8/18.
@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface HRTabBarController : UITabBarController
+@interface HRTabBarViewController : UITabBarController
 
 @end

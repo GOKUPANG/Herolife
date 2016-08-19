@@ -8,7 +8,7 @@
 
 #import "AppDelegate.h"
 #import "LoginController.h"
-#import "HRTabBarController.h"
+#import "HRTabBarViewController.h"
 
 @interface AppDelegate ()
 
@@ -56,7 +56,7 @@
 	BOOL isLogin = NO;
 	self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
 	LoginController *loginVC = [[LoginController alloc] init];
-	HRTabBarController *tabBarVC = [[HRTabBarController alloc] init];
+	HRTabBarViewController *tabBarVC = [[HRTabBarViewController alloc] init];
 	
 	if (isLogin) {
 		self.window.rootViewController = tabBarVC;

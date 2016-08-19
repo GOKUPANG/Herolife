@@ -1,5 +1,5 @@
 //
-//  HRNavigationController.h
+//  HRNavigationViewController.h
 //  herolife
 //
 //  Created by sswukang on 16/8/18.
@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface HRNavigationController : UINavigationController
+@interface HRNavigationViewController : UINavigationController
 
 @end
