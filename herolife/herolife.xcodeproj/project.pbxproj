@@ -25,6 +25,10 @@
 		D17CF3191D65ACB9007C95DD /* QRcodeController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D17CF3171D65ACB9007C95DD /* QRcodeController.xib */; };
 		D1B5C5621D65D799006E9BF2 /* HRTabBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1B5C5611D65D799006E9BF2 /* HRTabBarViewController.m */; };
 		D1B5C5651D65D84F006E9BF2 /* HRNavigationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1B5C5641D65D84F006E9BF2 /* HRNavigationViewController.m */; };
+		D1D407731D66AF94007A9E5E /* InputText.m in Sources */ = {isa = PBXBuildFile; fileRef = D1D4076E1D66AF94007A9E5E /* InputText.m */; };
+		D1D407741D66AF94007A9E5E /* RegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1D407701D66AF94007A9E5E /* RegisterViewController.m */; };
+		D1D407751D66AF94007A9E5E /* UIView+XD.m in Sources */ = {isa = PBXBuildFile; fileRef = D1D407721D66AF94007A9E5E /* UIView+XD.m */; };
+		D1D407781D66B23F007A9E5E /* SVProgressTool.m in Sources */ = {isa = PBXBuildFile; fileRef = D1D407771D66B23F007A9E5E /* SVProgressTool.m */; };
 		DAE2A790C81C0FDB9C617E84 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DC40F28764523F49428DB0CE /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -81,6 +85,14 @@
 		D1B5C5611D65D799006E9BF2 /* HRTabBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HRTabBarViewController.m; sourceTree = "<group>"; };
 		D1B5C5631D65D84F006E9BF2 /* HRNavigationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HRNavigationViewController.h; sourceTree = "<group>"; };
 		D1B5C5641D65D84F006E9BF2 /* HRNavigationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HRNavigationViewController.m; sourceTree = "<group>"; };
+		D1D4076D1D66AF94007A9E5E /* InputText.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InputText.h; sourceTree = "<group>"; };
+		D1D4076E1D66AF94007A9E5E /* InputText.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InputText.m; sourceTree = "<group>"; };
+		D1D4076F1D66AF94007A9E5E /* RegisterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegisterViewController.h; sourceTree = "<group>"; };
+		D1D407701D66AF94007A9E5E /* RegisterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegisterViewController.m; sourceTree = "<group>"; };
+		D1D407711D66AF94007A9E5E /* UIView+XD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+XD.h"; sourceTree = "<group>"; };
+		D1D407721D66AF94007A9E5E /* UIView+XD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+XD.m"; sourceTree = "<group>"; };
+		D1D407761D66B23F007A9E5E /* SVProgressTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVProgressTool.h; sourceTree = "<group>"; };
+		D1D407771D66B23F007A9E5E /* SVProgressTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVProgressTool.m; sourceTree = "<group>"; };
 		DC40F28764523F49428DB0CE /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -136,6 +148,7 @@
 			isa = PBXGroup;
 			children = (
 				D17CF1641D658AF6007C95DD /* Classes */,
+				D1D4076C1D66AF94007A9E5E /* register */,
 				D17CF0EF1D6567E7007C95DD /* Supporting Files */,
 			);
 			path = herolife;
@@ -346,6 +359,8 @@
 		D17CF2AD1D658C4B007C95DD /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				D1D407761D66B23F007A9E5E /* SVProgressTool.h */,
+				D1D407771D66B23F007A9E5E /* SVProgressTool.m */,
 				D17CF1F01D658AF6007C95DD /* HRConst.h */,
 				D17CF1F11D658AF6007C95DD /* HRConst.m */,
 			);
@@ -385,6 +400,19 @@
 			children = (
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		D1D4076C1D66AF94007A9E5E /* register */ = {
+			isa = PBXGroup;
+			children = (
+				D1D4076F1D66AF94007A9E5E /* RegisterViewController.h */,
+				D1D407701D66AF94007A9E5E /* RegisterViewController.m */,
+				D1D407711D66AF94007A9E5E /* UIView+XD.h */,
+				D1D407721D66AF94007A9E5E /* UIView+XD.m */,
+				D1D4076D1D66AF94007A9E5E /* InputText.h */,
+				D1D4076E1D66AF94007A9E5E /* InputText.m */,
+			);
+			path = register;
 			sourceTree = "<group>";
 		};
 		EFE49747F7B44972AEF6CB46 /* Frameworks */ = {
@@ -590,14 +618,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D1D407741D66AF94007A9E5E /* RegisterViewController.m in Sources */,
 				D17CF3131D65AC7E007C95DD /* SettingController.m in Sources */,
 				D1B5C5651D65D84F006E9BF2 /* HRNavigationViewController.m in Sources */,
 				D17CF2341D658AF6007C95DD /* HRConst.m in Sources */,
 				D17CF2FF1D6594C3007C95DD /* LoginController.m in Sources */,
 				D17CF0F41D6567E7007C95DD /* AppDelegate.m in Sources */,
+				D1D407731D66AF94007A9E5E /* InputText.m in Sources */,
 				D17CF0F11D6567E7007C95DD /* main.m in Sources */,
 				D17CF3181D65ACB9007C95DD /* QRcodeController.m in Sources */,
 				D1B5C5621D65D799006E9BF2 /* HRTabBarViewController.m in Sources */,
+				D1D407781D66B23F007A9E5E /* SVProgressTool.m in Sources */,
+				D1D407751D66AF94007A9E5E /* UIView+XD.m in Sources */,
 				D17CF30E1D65AC62007C95DD /* DeviceListController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

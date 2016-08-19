@@ -7,7 +7,6 @@
 //
 
 #import "DeviceListController.h"
-
 @interface DeviceListController ()
 
 @end

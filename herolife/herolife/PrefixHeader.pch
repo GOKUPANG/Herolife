@@ -10,6 +10,11 @@
 #define PrefixHeader_pch
 #import "HRConst.h"
 #import <CocoaLumberjack/CocoaLumberjack.h>
+#import <SVProgressHUD.h>
+#import "SVProgressTool.h"
+
+#define HRUIScreenW [UIScreen mainScreen].bounds.size.width
+#define HRUIScreenH [UIScreen mainScreen].bounds.size.height
 
 #ifdef DEBUG
 static const int ddLogLevel = DDLogLevelVerbose;
