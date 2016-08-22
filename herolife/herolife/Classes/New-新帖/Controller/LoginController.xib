@@ -19,20 +19,9 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="1 登录页" translatesAutoresizingMaskIntoConstraints="NO" id="qna-x7-L2f">
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="qna-x7-L2f">
                     <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                 </imageView>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JgI-q2-Ewu">
-                    <rect key="frame" x="163" y="617" width="50" height="50"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="50" id="WPZ-uq-qnL"/>
-                        <constraint firstAttribute="width" constant="50" id="vOi-4e-bJR"/>
-                    </constraints>
-                    <state key="normal" image="形状-8"/>
-                    <connections>
-                        <action selector="qqButtonClick:" destination="-1" eventType="touchUpInside" id="BYp-M8-aTq"/>
-                    </connections>
-                </button>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="其他登陆方式" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5DP-uK-P9c">
                     <rect key="frame" x="142" y="589" width="90" height="18"/>
                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
@@ -127,8 +116,19 @@
                     <fontDescription key="fontDescription" type="system" pointSize="20"/>
                     <textInputTraits key="textInputTraits" returnKeyType="next"/>
                 </textField>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JgI-q2-Ewu">
+                    <rect key="frame" x="162" y="617" width="50" height="50"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="50" id="WPZ-uq-qnL"/>
+                        <constraint firstAttribute="width" constant="50" id="vOi-4e-bJR"/>
+                    </constraints>
+                    <state key="normal" image="形状-8"/>
+                    <connections>
+                        <action selector="qqButtonClick:" destination="-1" eventType="touchUpInside" id="BYp-M8-aTq"/>
+                    </connections>
+                </button>
             </subviews>
-            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="SRQ-hf-qfD" secondAttribute="trailing" constant="20" id="50w-BE-GuO"/>
                 <constraint firstItem="Fai-iv-mf0" firstAttribute="centerX" secondItem="Eyx-KF-wy9" secondAttribute="centerX" id="5RC-4V-9jZ"/>
@@ -176,10 +176,10 @@
                     <exclude reference="fPg-09-hGZ"/>
                 </mask>
             </variation>
+            <point key="canvasLocation" x="585.5" y="320.5"/>
         </view>
     </objects>
     <resources>
-        <image name="1 登录页" width="750" height="1334"/>
         <image name="形状-8" width="20" height="20"/>
     </resources>
 </document>

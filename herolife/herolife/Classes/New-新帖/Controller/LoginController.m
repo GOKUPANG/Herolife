@@ -21,7 +21,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-	self.backgroundImageView.image = [UIImage imageNamed:@"1 登录页.jpg"];
+//	self.backgroundImageView.image = [UIImage imageNamed:@"1 登录页.jpg"];
+	self.backgroundImageView.image = [UIImage imageNamed:@""];
 	NSMutableDictionary *dict = [NSMutableDictionary dictionary];
 	dict[NSForegroundColorAttributeName] = [UIColor whiteColor];
 	dict[NSAttachmentAttributeName] = [UIFont systemFontOfSize:20];
