@@ -1,7 +1,5 @@
 #import <UIKit/UIKit.h>
 
-/** 统一的间距 */
-CGFloat const XMGCommonMargin = 10;
 
 /** 导航栏最大的Y值 */
 CGFloat const XMGNavMaxY = 64;

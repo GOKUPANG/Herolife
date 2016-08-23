@@ -13,9 +13,24 @@
 #import <SVProgressHUD.h>
 #import "SVProgressTool.h"
 #import "UIView+HRExtension.h"
+#import <Masonry.h>
 
 #define HRUIScreenW [UIScreen mainScreen].bounds.size.width
 #define HRUIScreenH [UIScreen mainScreen].bounds.size.height
+
+
+
+
+
+/********************************************** 存储的key ***********************************************/
+#define kNSUserDefaults [NSUserDefaults standardUserDefaults]
+/** 保存第三方QQ登陆Openid 的Key */
+#define kNSUserDefaultsOpenid @"kNSUserDefaultsOpenid"
+/** 保存第三方QQ登陆nickname 的Key */
+#define kNSUserDefaultsNickname @"kNSUserDefaultsNickname"
+/** 保存第三方QQ登陆Figureurl_1 的Key */
+#define kNSUserDefaultsFigureurl_1 @"kNSUserDefaultsFigureurl_1"
+
 
 #ifdef DEBUG
 static const int ddLogLevel = DDLogLevelVerbose;
