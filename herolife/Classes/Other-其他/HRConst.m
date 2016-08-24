@@ -2,7 +2,7 @@
 
 
 /** 导航栏最大的Y值 */
-CGFloat const XMGNavMaxY = 64;
+CGFloat const HRNavH = 44;
 
 /** 标题栏的高度 */
 CGFloat const XMGTitlesViewH = 35;

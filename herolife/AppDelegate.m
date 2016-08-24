@@ -9,7 +9,7 @@
 #import "AppDelegate.h"
 #import "LoginController.h"
 #import "HRTabBarViewController.h"
-
+#import "HRNavigationViewController.h"
 #import <ShareSDK/ShareSDK.h>
 #import <ShareSDKConnector/ShareSDKConnector.h>
 //腾讯开放平台（对应QQ和QQ空间）SDK头文件
@@ -105,14 +105,16 @@
 {
 	BOOL isLogin = NO;
 	self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+	
 	LoginController *loginVC = [[LoginController alloc] init];
+	HRNavigationViewController *nav = [[HRNavigationViewController alloc] initWithRootViewController:loginVC];
 	HRTabBarViewController *tabBarVC = [[HRTabBarViewController alloc] init];
 	
 	if (isLogin) {
 		self.window.rootViewController = tabBarVC;
 	}else
 	{
-		self.window.rootViewController = loginVC;
+		self.window.rootViewController = nav;
 	}
 	
 	[self.window makeKeyAndVisible];

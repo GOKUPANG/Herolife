@@ -11,8 +11,9 @@
 #import "QRcodeController.h"
 #import "DeviceListController.h"
 #import "HRNavigationViewController.h"
+#import "HRTabBar.h"
 
-@interface HRTabBarViewController ()
+@interface HRTabBarViewController ()<HRTabBarDelegate>
 
 @end
 
@@ -20,25 +21,34 @@
 
 - (void)viewDidLoad {
 	[super viewDidLoad];
-	// 设置所有UITabBarItem的文字属性
-	[self setupItemTitleTextAttrs];
 
 	// 添加子控制器
 	[self setupAllChildVcs];
+	self.tabBar.barTintColor = [[UIColor whiteColor]  colorWithAlphaComponent:0.2];
+	self.tabBar.alpha = 0.2;
+	
+	// 处理TabBar
+	[self setupTabBar];
 	//默认选中第2个控制器
 	self.selectedIndex = 1;
 }
-
+- (void)setupTabBar
+{
+	[self.tabBar removeFromSuperview];
+	HRTabBar *tabBar = [[HRTabBar alloc] initWithFrame:CGRectMake(0, HRUIScreenH - HRUIScreenH /667 *50, HRUIScreenW, HRUIScreenH /667 *50)];
+	tabBar.delegate = self;
+	[self.view addSubview:tabBar];
+}
 /**
  *  添加子控制器
  */
 - (void)setupAllChildVcs
 {
-	[self setupOneChildVc:[[HRNavigationViewController alloc] initWithRootViewController:[[QRcodeController alloc] init]] title:@"扫描" image:@"tabBar_essence_icon" selectedImage:@"tabBar_essence_click_icon"];
+	[self setupOneChildVc:[[HRNavigationViewController alloc] initWithRootViewController:[[QRcodeController alloc] init]] title:@"扫描" image:@"扫描白" selectedImage:@"扫描蓝"];
 
-	[self setupOneChildVc:[[HRNavigationViewController alloc] initWithRootViewController:[[DeviceListController alloc] init]] title:@"首页" image:@"tabBar_new_icon" selectedImage:@"tabBar_new_click_icon"];
+	[self setupOneChildVc:[[HRNavigationViewController alloc] initWithRootViewController:[[DeviceListController alloc] init]] title:@"首页" image:@"首页白" selectedImage:@"首页蓝"];
 
-	[self setupOneChildVc:[[HRNavigationViewController alloc] initWithRootViewController:[[SettingController alloc] init]] title:@"设置" image:@"tabBar_friendTrends_icon" selectedImage:@"tabBar_friendTrends_click_icon"];
+	[self setupOneChildVc:[[HRNavigationViewController alloc] initWithRootViewController:[[SettingController alloc] init]] title:@"设置" image:@"设置白" selectedImage:@"设置蓝"];
 
 }
 
@@ -58,26 +68,11 @@
 	[self addChildViewController:childVc];
 }
 
-/**
- *  设置所有UITabBarItem的文字属性
- */
-- (void)setupItemTitleTextAttrs
+#pragma mark - HRTabBarDelegate
+- (void)hrTabBar:(HRTabBar *)tabBar didClickBtn:(NSInteger)index
 {
-	// 设置normal状态下的文字属性
-	NSMutableDictionary *normalAttrs = [NSMutableDictionary dictionary];
-	normalAttrs[NSFontAttributeName] = [UIFont systemFontOfSize:13];
-	normalAttrs[NSForegroundColorAttributeName] = [UIColor grayColor];
-
-	// 设置normal状态下的文字属性
-	NSMutableDictionary *selectedAttrs = [NSMutableDictionary dictionary];
-	selectedAttrs[NSForegroundColorAttributeName] = [UIColor darkGrayColor];
-
-	// 利用Appearance对象统一设置文字属性
-	UITabBarItem *item = [UITabBarItem appearance];
-	[item setTitleTextAttributes:normalAttrs forState:UIControlStateNormal];
-	[item setTitleTextAttributes:selectedAttrs forState:UIControlStateSelected];
+	self.selectedIndex = index -1;
 }
-
 
 
 @end

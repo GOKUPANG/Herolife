@@ -13,7 +13,8 @@
 #import "UIView+XD.h"
 #import "InputText.h"
 #import "UIImageView+WebCache.h"
-
+#import "HRTabBarViewController.h"
+#import "ForgetController.h"
 
 @interface LoginController ()<UITextFieldDelegate>
 /** 背景图片 */
@@ -61,7 +62,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {
 	[super viewWillAppear:animated];
-	[self.userNameField becomeFirstResponder];
+//	[self.userNameField becomeFirstResponder];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -74,8 +75,8 @@
 	[super viewWillLayoutSubviews];
 	//w375.000000h667.000000
 	// 比例
-	CGFloat const HRCommonScreenH = HRUIScreenH / 667 /2;
-	CGFloat const HRCommonScreenW = HRUIScreenW / 375 /2;
+//	CGFloat const HRCommonScreenH = HRUIScreenH / 667 /2;
+//	CGFloat const HRCommonScreenW = HRUIScreenW / 375 /2;
 	//底部条
 	[self.tabBarView mas_makeConstraints:^(MASConstraintMaker *make) {
 		make.left.right.bottom.equalTo(self.view);
@@ -186,6 +187,7 @@
  */
 - (void)setupViews
 {
+	self.navigationController.navigationBar.hidden = YES;
 	self.view.backgroundColor = [UIColor blueColor];
 	//背景
 	UIImageView *backgroundImageView = [[UIImageView alloc] init];
@@ -228,7 +230,7 @@
 	[passwdField setSecureTextEntry:YES];
 	passwdField.delegate = self;
 	self.passwdField = passwdField;
-	[passwdField addTarget:self action:@selector(textFieldDidChange) forControlEvents:UIControlEventEditingChanged];
+	
 	[self.view addSubview:passwdField];
 	
 	UILabel *passwdLabel = [self setupTextName:[NSString stringWithFormat:@"密  \t码"] frame:passwdField.frame];
@@ -317,7 +319,8 @@
 //忘记密码
 - (void)forgetButtonClick:(UIButton *)button
 {
-	DDLogInfo(@"forgetButtonClick");
+	ForgetController *forgetVC = [[ForgetController alloc] init];
+	[self.navigationController pushViewController:forgetVC animated:YES];
 }
 //注册
 - (void)registerButtonClick:(UIButton *)button
@@ -359,6 +362,77 @@
 		 
 	 }];
 }
+#pragma mark - touchesBegan
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
+	
+	[self.view endEditing:YES];
+	[self restoreTextName:self.userNameLabel textField:self.userNameField];
+	[self restoreTextName:self.passwdLabel textField:self.passwdField];
+	
+}
+
+
+static BOOL ispush = YES;
+- (void)loginButtonClick:(UIButton *)button
+{
+	[self backKeyBrody];
+	
+	if (self.userNameField.text.length == 0 && self.passwdField.text.length == 0) {
+		
+		[SVProgressTool hr_showErrorWithStatus:@"用户名或密码不能为空!"];
+		return;
+	}
+	
+	[SVProgressTool hr_showWithStatus:@"正在登陆..."];
+	if ([self.userNameField.text
+		 isEqualToString:@"test01"] && [self.passwdField.text isEqualToString:@"123456"]) {
+		HRTabBarViewController *tabBar = [[HRTabBarViewController alloc] init];
+		[self.navigationController pushViewController:tabBar animated:YES];
+		[SVProgressHUD dismiss];
+		
+	}
+	//	AFHTTPSessionManager *manager = [AFHTTPSessionManager hrPostManager];
+	//
+	//
+	//	NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
+	//
+	//	parameters[@"name"] = self.userNameField.text;
+	//	parameters[@"mail"] = self.emailText.text;
+	//	parameters[@"pass"] = self.passwdField.text;
+	//	parameters[@"pass2"] = self.passwdFieldRepeat.text;
+	//	parameters[@"field_phone[und][0][value]"] = self.phoneText.text;
+	//
+	//
+	//	[manager POST:HRAPI_XiaoRuiRegister_URL parameters: parameters success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+	//
+	//		/// 这里返回的responseObject 不是json数据 是NSData数据
+	//
+	//		[SVProgressHUD showSuccessWithStatus:@"注册成功!"];
+	//
+	//		NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+	//		dict[@"user"] = self.userNameField.text;
+	//		dict[@"pass"] = self.passwdFieldRepeat.text;
+	//		[[NSNotificationCenter defaultCenter] postNotificationName:kNotificationRegister object:nil userInfo:dict];
+	//		[self.navigationController popViewControllerAnimated:YES];
+	//
+	//
+	//	} failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+	//
+	//		DDLogDebug(@"注册失败error %@", error);
+	//		[self showRegisterError:error];
+	//	}];
+	
+}
+
+//退出键盘
+- (void)backKeyBrody
+{
+	[self.userNameField resignFirstResponder];
+	[self.passwdField resignFirstResponder];
+	
+}
+
 #pragma mark - 拷贝
 
 - (UILabel *)setupTextName:(NSString *)textName frame:(CGRect)frame
@@ -428,74 +502,6 @@
 	} else {
 		self.chang = YES;
 	}
-}
-
-#pragma mark - touchesBegan
-- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
-{
-	
-	[self.view endEditing:YES];
-	[self restoreTextName:self.userNameLabel textField:self.userNameField];
-	[self restoreTextName:self.passwdLabel textField:self.passwdField];
-	
-}
-
-
-static BOOL ispush = YES;
-- (void)loginButtonClick:(UIButton *)button
-{
-	[self backKeyBrody];
-	
-	if (self.userNameField.text.length == 0 && self.passwdField.text.length == 0) {
-		
-		[SVProgressTool hr_showErrorWithStatus:@"用户名或密码不能为空!"];
-		return;
-	}
-	
-	[SVProgressTool hr_showWithStatus:@"正在登陆..."];
-	if ([self.userNameField.text
-		 isEqualToString:@"test01"] && [self.passwdField.text isEqualToString:@"123456"]) {
-		
-	}
-//	AFHTTPSessionManager *manager = [AFHTTPSessionManager hrPostManager];
-//	
-//	
-//	NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
-//	
-//	parameters[@"name"] = self.userNameField.text;
-//	parameters[@"mail"] = self.emailText.text;
-//	parameters[@"pass"] = self.passwdField.text;
-//	parameters[@"pass2"] = self.passwdFieldRepeat.text;
-//	parameters[@"field_phone[und][0][value]"] = self.phoneText.text;
-//	
-//	
-//	[manager POST:HRAPI_XiaoRuiRegister_URL parameters: parameters success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-//		
-//		/// 这里返回的responseObject 不是json数据 是NSData数据
-//		
-//		[SVProgressHUD showSuccessWithStatus:@"注册成功!"];
-//		
-//		NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-//		dict[@"user"] = self.userNameField.text;
-//		dict[@"pass"] = self.passwdFieldRepeat.text;
-//		[[NSNotificationCenter defaultCenter] postNotificationName:kNotificationRegister object:nil userInfo:dict];
-//		[self.navigationController popViewControllerAnimated:YES];
-//		
-//		
-//	} failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-//		
-//		DDLogDebug(@"注册失败error %@", error);
-//		[self showRegisterError:error];
-//	}];
-	
-}
-
-//退出键盘
-- (void)backKeyBrody
-{
-	[self.userNameField resignFirstResponder];
-	[self.passwdField resignFirstResponder];
-	
 }
 
 

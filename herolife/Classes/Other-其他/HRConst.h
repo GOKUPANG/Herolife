@@ -1,8 +1,8 @@
 #import <UIKit/UIKit.h>
 
 
-/** 导航栏最大的Y值 */
-UIKIT_EXTERN CGFloat const XMGNavMaxY;
+/** 导航栏高度 */
+UIKIT_EXTERN CGFloat const HRNavH;
 
 /** 标题栏的高度 */
 UIKIT_EXTERN CGFloat const XMGTitlesViewH;
