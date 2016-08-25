@@ -36,8 +36,13 @@
 #pragma mark - 内部方法
 - (void)setupViews
 {
-	self.view.backgroundColor = [UIColor blueColor];
 	self.navigationController.navigationBar.hidden = YES;
+	
+	//背景图片
+	UIImageView *backgroundImage = [[UIImageView alloc] initWithFrame:[UIScreen mainScreen].bounds];
+	backgroundImage.image = [UIImage imageNamed:@"icon_bg.jpg"];
+	[self.view addSubview:backgroundImage];
+	
 	HRNavigationBar *navView = [[HRNavigationBar alloc] init];
 	navView.titleLabel.text = @"忘记密码";
 	[navView.leftButton setImage:[UIImage imageNamed:@"返回号"] forState:UIControlStateNormal];
@@ -77,6 +82,7 @@
 	userNameField.backgroundColor = [UIColor colorWithRed:255/255.0 green:255/255.0 blue:255/255.0 alpha:75 /255.0];
 	userNameField.font = [UIFont systemFontOfSize:17];
 	userNameField.placeholder = @"请输入";
+	userNameField.textColor = [UIColor colorWithRed:204 / 255.0 green:204 / 255.0 blue:204 / 255.0 alpha:1.0];
 	[self.view addSubview:userNameField];
 	self.userNameField = userNameField;
 	self.userNameField.delegate = self;

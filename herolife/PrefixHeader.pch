@@ -16,11 +16,16 @@
 #import <Masonry.h>
 #import "HRNavigationBar.h"
 #import "NSObject+Util.h"
+#import "AFHTTPSessionManager+Util.h"
+#import "NSString+Util.h"
+#import "AppDelegate.h"
 
 #define HRUIScreenW [UIScreen mainScreen].bounds.size.width
 #define HRUIScreenH [UIScreen mainScreen].bounds.size.height
 #define HRCommonScreenH (HRUIScreenH / 667 /2)
 #define HRCommonScreenW (HRUIScreenW / 375 /2)
+/* huarui API */
+#define TOKEN_HEADER_NAME	@"X-CSRF-Token"
 
 
 
@@ -34,6 +39,20 @@
 #define kNSUserDefaultsNickname @"kNSUserDefaultsNickname"
 /** 保存第三方QQ登陆Figureurl_1 的Key */
 #define kNSUserDefaultsFigureurl_1 @"kNSUserDefaultsFigureurl_1"
+
+/********************************************** HTTP URL key ******************************************/
+///用户注册POST请求URL
+#define HRHTTP_UserRegister_URL @""
+
+/********************************************** 通知 key ******************************************/
+/// 发送通知
+#define kNotification [NSNotificationCenter defaultCenter]
+// 用户注册传值 通知
+#define kNotificationRegister @"kNotificationRegister"
+// 创建锁 通知
+#define kNotificationQRCodeCreateLock @"kNotificationQRCodeCreateLock"
+
+
 
 
 #ifdef DEBUG

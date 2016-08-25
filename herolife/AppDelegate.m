@@ -18,7 +18,8 @@
 #define ShareSDKAppId @"164558e46c000"
 #define QQSDKAppId @"1105629306"
 #define QQSDKAppKey @"Ig2gYUcepC3rE9NH"
-//share 164558e46c000
+
+#import "RegisterViewController.h"
 
 @interface AppDelegate ()
 
@@ -103,7 +104,7 @@
 }
 - (void)setupWindow
 {
-	BOOL isLogin = NO;
+	BOOL isLogin = YES;
 	self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
 	
 	LoginController *loginVC = [[LoginController alloc] init];

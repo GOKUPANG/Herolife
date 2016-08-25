@@ -10,43 +10,37 @@
 
 //#import "AFHTTPSessionManager+Util.h"
 //#import <AFNetworking.h>
-#import "UIView+XD.h"
-#import "InputText.h"
-
-
 
 static NSTimeInterval const dimissTimer = 2;
-@interface RegisterViewController ()<UITextFieldDelegate>
-@property (nonatomic, weak)UITextField *userText;
-@property (nonatomic, weak)UILabel *userTextName;
-@property (nonatomic, weak)UITextField *emailText;
-@property (nonatomic, weak)UILabel *emailTextName;
-@property (nonatomic, weak)UITextField *passwordText;
-@property (nonatomic, weak)UILabel *passwordTextName;
+@interface RegisterViewController ()<UITextFieldDelegate,UIGestureRecognizerDelegate>
+/** 顶部条 */
+@property(nonatomic, weak) HRNavigationBar *navView;
 
-@property (nonatomic, weak)UITextField *passwordTextRepeat;
-@property (nonatomic, weak)UILabel *passwordTextNameRepeat;
+@property (nonatomic, weak)UITextField *userNameField;
+@property (nonatomic, weak)UITextField *passwdField;
+@property (nonatomic, weak)UITextField *passwdConfirmField;
+@property (nonatomic, weak)UITextField *emailField;
+@property (nonatomic, weak)UITextField *phoneField;
 
-@property (nonatomic, weak)UITextField *phoneText;
-@property (nonatomic, weak)UILabel *phoneTextName;
+/** userNameField下划线 */
+@property(nonatomic, weak) UIView *userLine;
+/** passwdField下划线 */
+@property(nonatomic, weak) UIView *passwdLine;
+/** passwdConfirmField下划线 */
+@property(nonatomic, weak) UIView *passwdConfirmLine;
+/** emailField下划线 */
+@property(nonatomic, weak) UIView *emailLine;
+/** phoneField下划线 */
+@property(nonatomic, weak) UIView *phoneLine;
 
-@property (nonatomic, weak)UIImageView *userImageView;
-@property (nonatomic, weak)UIImageView *emailImageView;
-@property (nonatomic, weak)UIImageView *passwordImageView;
-@property (nonatomic, weak)UIImageView *repPasswordImageView;
-@property (nonatomic, weak)UIImageView *phoneImageView;
-@property (nonatomic, weak)UIImageView *currentImageView;
-
-@property (nonatomic, weak)UIButton *loginBtn;
+/** 背景框view的Y值 */
+@property(nonatomic, assign) CGRect backgroundViewFrame;
+/** 背景框view */
+@property(nonatomic, weak) UIView *backgroundView;
+@property (nonatomic, weak)UIButton *registerButton;
 @property (nonatomic, weak)UIButton *cancleBtn;
-
-@property (nonatomic, assign) BOOL changUser;
-@property (nonatomic, assign) BOOL changEmail;
-@property (nonatomic, assign) BOOL changPsw;
-@property (nonatomic, assign) BOOL changRep;
-@property (nonatomic, assign) BOOL changPhone;
-@property (nonatomic, assign) BOOL chang;
-
+/** <#name#> */
+@property(nonatomic, weak) UIImageView *backgroundImage;
 @end
 
 @implementation RegisterViewController
@@ -54,639 +48,442 @@ static NSTimeInterval const dimissTimer = 2;
 - (void)viewDidLoad {
 	[super viewDidLoad];
 	
-	self.view.backgroundColor = [UIColor whiteColor];
-	self.navigationController.navigationBar.hidden = NO;
-	self.title = @"注册";
-//	self.navigationItem.leftBarButtonItem = [UIBarButtonItem xmg_itemWithImage:<#(NSString *)#> highImage:<#(NSString *)#> target:<#(id)#> action:<#(SEL)#>]
-	[self setupInputRectangle];
+	[self setupViews];
+	//全屏放回
+	[self goBack];
+	//监听器
+	[self addObservers];
+}
+- (void)viewDidAppear:(BOOL)animated
+{
+	[super viewDidAppear:animated];
+	self.backgroundViewFrame = self.backgroundView.frame;
+}
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
+{
+	//动画
+	[self setupAnimateWithIndex:0];
+	[self.view endEditing:YES];
 	
 }
-- (void)viewWillAppear:(BOOL)animated
+- (void)setupViews
 {
-	[super viewWillAppear:animated];
 	
-	self.navigationController.navigationBar.hidden = NO;
+	self.navigationController.navigationBar.hidden = YES;
+	//背景图片
+	UIImageView *backgroundImage = [[UIImageView alloc] init];
+	backgroundImage.image = [UIImage imageNamed:@"icon_bg.jpg"];
+	[self.view addSubview:backgroundImage];
+	self.backgroundImage = backgroundImage;
 	
+	UIView *backgroundView = [[UIView alloc] init];
+	backgroundView.backgroundColor = [UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:75 /255.0];
+	backgroundView.layer.cornerRadius = 5;
+	backgroundView.layer.masksToBounds = YES;
+	[self.view addSubview:backgroundView];
+	
+	self.backgroundView = backgroundView;
+	
+	//导航条
+	HRNavigationBar *navView = [[HRNavigationBar alloc] init];
+	navView.titleLabel.text = @"注册";
+	[navView.leftButton setImage:[UIImage imageNamed:@"返回号"] forState:UIControlStateNormal];
+	navView.backgroundColor = [UIColor colorWithRed:255/255.0 green:255/255.0 blue:255/255.0 alpha:25 /255.0];
+	[self.view addSubview:navView];
+	self.navView = navView;
+	
+	//用户名
+	self.userNameField = [self setupTextFieldWithImageName:@"用户" placeholder:@"用户名"];
+	UIView *userLine = [[UIView alloc] init];
+	userLine.backgroundColor = [UIColor whiteColor];
+	[self.view addSubview:userLine];
+	self.userLine = userLine;
+	
+	//密码
+	self.passwdField = [self setupTextFieldWithImageName:@"用户" placeholder:@"密码"];
+	UIView *passwdLine = [[UIView alloc] init];
+	passwdLine.backgroundColor = [UIColor whiteColor];
+	[self.view addSubview:passwdLine];
+	self.passwdLine = passwdLine;
+	
+	//确认密码
+	self.passwdConfirmField = [self setupTextFieldWithImageName:@"确认密码" placeholder:@"确认密码"];
+	UIView *passwdConfirmLine = [[UIView alloc] init];
+	passwdConfirmLine.backgroundColor = [UIColor whiteColor];
+	[self.view addSubview:passwdConfirmLine];
+	self.passwdConfirmLine = passwdConfirmLine;
+	
+	//常用邮箱
+	self.emailField = [self setupTextFieldWithImageName:@"邮箱" placeholder:@"常用邮箱"];
+	UIView *emailLine = [[UIView alloc] init];
+	emailLine.backgroundColor = [UIColor whiteColor];
+	[self.view addSubview:emailLine];
+	self.emailLine = emailLine;
+	//手机号码
+	self.phoneField = [self setupTextFieldWithImageName:@"手机" placeholder:@"手机号码"];
+	[self.phoneField setReturnKeyType:UIReturnKeyGo];
+	UIView *phoneLine = [[UIView alloc] init];
+	phoneLine.backgroundColor = [UIColor whiteColor];
+	[self.view addSubview:phoneLine];
+	self.phoneLine = phoneLine;
+	//注册
+	UIButton *registerButton = [UIButton buttonWithType:UIButtonTypeCustom];
+	[registerButton setTitle:@"注册" forState:UIControlStateNormal];
+	[registerButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+	registerButton.layer.cornerRadius = 5;
+	registerButton.layer.masksToBounds = YES;
+	registerButton.backgroundColor = [UIColor colorWithRed:255/255.0 green:255/255.0 blue:255/255.0 alpha:75 /255.0];
+	[registerButton addTarget:self action:@selector(registerButtonClick:) forControlEvents:UIControlEventTouchUpInside];
+	registerButton.titleLabel.font = [UIFont systemFontOfSize:17];
+	[self.view addSubview:registerButton];
+	self.registerButton = registerButton;
+}
+
+- (UITextField *)setupTextFieldWithImageName:(NSString *)imageName placeholder:(NSString *)placeholder
+{
+	UITextField *userNameField = [[UITextField alloc]init];
+	userNameField.borderStyle = UITextBorderStyleNone;
+	[userNameField setReturnKeyType:UIReturnKeyNext];
+	userNameField.backgroundColor = [UIColor clearColor];
+	userNameField.textColor = [UIColor whiteColor];
+	[userNameField setClearButtonMode:UITextFieldViewModeWhileEditing];
+	//设置光标位置
+	UIButton *leftButton = [UIButton buttonWithType:UIButtonTypeCustom];
+	leftButton.frame = CGRectMake(0,0,HRCommonScreenW * 82,HRCommonScreenW * 100);
+	[leftButton setImage:[UIImage imageNamed:imageName] forState:UIControlStateNormal];
+	leftButton.userInteractionEnabled = NO;
+	leftButton.imageEdgeInsets = UIEdgeInsetsMake(HRCommonScreenW *32, HRCommonScreenW *20, HRCommonScreenW *32, HRCommonScreenW *20);
+	
+	userNameField.leftView = leftButton;
+	userNameField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
+	userNameField.leftViewMode = UITextFieldViewModeAlways;
+	
+	
+	userNameField.font = [UIFont systemFontOfSize:14];
+	userNameField.placeholder = placeholder;
+	userNameField.textColor = [UIColor colorWithRed:204 / 255.0 green:204 / 255.0 blue:204 / 255.0 alpha:1.0];
+	userNameField.delegate = self;
+	[self.view addSubview:userNameField];
+	return userNameField;
 }
 - (void)viewWillLayoutSubviews
 {
 	[super viewWillLayoutSubviews];
 }
-- (void)viewDidAppear:(BOOL)animated
+- (void)viewDidLayoutSubviews
 {
-	[super viewDidAppear:animated];
+	[super viewDidLayoutSubviews];
 	
-}
-- (void)viewWillDisappear:(BOOL)animated
-{
-	[super viewWillDisappear:animated];
-	[self backKeyBrody];
-//	[self.view endEditing:YES];
-}
-- (void)viewDidDisappear:(BOOL)animated
-{
-	[super viewDidDisappear:animated];
-	[self backKeyBrody];
-	//	[self.view endEditing:YES];
-}
-- (void)setupInputRectangle
-{
-	//用户名
-	CGFloat centerX = self.view.width * 0.5;
-	InputText *inputText = [[InputText alloc] init];
-	CGFloat userY = 74;
-	UITextField *userText = [inputText setupWithIcon:@"userName" textY:userY centerX:centerX point:nil];
-	userText.delegate = self;
-	self.userText = userText;
-	self.userImageView = (UIImageView *)userText.leftView;
-	[userText setReturnKeyType:UIReturnKeyNext];
-	[userText addTarget:self action:@selector(textFieldDidChange) forControlEvents:UIControlEventEditingChanged];
-	[self.view addSubview:userText];
-	
-	UILabel *userTextName = [self setupTextName:@"用户名" frame:userText.frame];
-	self.userTextName = userTextName;
-	[self.view addSubview:userTextName];
-	
-	//密码
-	CGFloat passwordY = CGRectGetMaxY(userText.frame) + 5;
-	UITextField *passwordText = [inputText setupWithIcon:@"lock1" textY:passwordY centerX:centerX point:nil];
-	[passwordText setReturnKeyType:UIReturnKeyNext];
-	[passwordText setSecureTextEntry:YES];
-	passwordText.delegate = self;
-	self.passwordText = passwordText;
-	self.passwordImageView = (UIImageView *)passwordText.leftView;
-	[passwordText addTarget:self action:@selector(textFieldDidChange) forControlEvents:UIControlEventEditingChanged];
-	[self.view addSubview:passwordText];
-
-	UILabel *passwordTextName = [self setupTextName:[NSString stringWithFormat:@"密  \t码"] frame:passwordText.frame];
-	self.passwordTextName = passwordTextName;
-	[self.view addSubview:passwordTextName];
-	
-	//确认密码
-	CGFloat passwordRepeatY = CGRectGetMaxY(passwordText.frame) + 5;
-	UITextField *passwordRepeat = [inputText setupWithIcon:@"lock1" textY:passwordRepeatY centerX:centerX point:nil];
-	[passwordRepeat setReturnKeyType:UIReturnKeyNext];
-	[passwordRepeat setSecureTextEntry:YES];
-	passwordRepeat.delegate = self;
-	self.passwordTextRepeat = passwordRepeat;
-	self.repPasswordImageView = (UIImageView *)passwordRepeat.leftView;
-	[passwordRepeat addTarget:self action:@selector(textFieldDidChange) forControlEvents:UIControlEventEditingChanged];
-	[self.view addSubview:passwordRepeat];
-	
-	UILabel *passwordRepeatTextName = [self setupTextName:@"确认密码" frame:passwordRepeat.frame];
-	self.passwordTextNameRepeat = passwordRepeatTextName;
-	[self.view addSubview:passwordRepeatTextName];
-	
-	//邮箱
-	CGFloat emailY = CGRectGetMaxY(passwordRepeat.frame) + 5;
-	UITextField *emailText = [inputText setupWithIcon:@"ic_email1" textY:emailY centerX:centerX point:nil];
-	[emailText setReturnKeyType:UIReturnKeyNext];
-	emailText.delegate = self;
-	self.emailText = emailText;
-	self.emailImageView = (UIImageView *)emailText.leftView;
-	[emailText addTarget:self action:@selector(textFieldDidChange) forControlEvents:UIControlEventEditingChanged];
-	[self.view addSubview:emailText];
-	UILabel *emailTextName = [self setupTextName:@"常用邮箱" frame:emailText.frame];
-	self.emailTextName = emailTextName;
-	[self.view addSubview:emailTextName];
-	
-	//手机号码
-	CGFloat phoneY = CGRectGetMaxY(emailText.frame) + 5;
-	UITextField *phoneText = [inputText setupWithIcon:@"ic_phone1" textY:phoneY centerX:centerX point:nil];
-	[phoneText setReturnKeyType:UIReturnKeyDone];
-	[phoneText setKeyboardType:UIKeyboardTypeNumbersAndPunctuation];
-	phoneText.delegate = self;
-	self.phoneText = phoneText;
-	self.phoneImageView = (UIImageView *)phoneText.leftView;
-	[phoneText addTarget:self action:@selector(textFieldDidChange) forControlEvents:UIControlEventEditingChanged];
-	[self.view addSubview:phoneText];
-	UILabel *phoneTextName = [self setupTextName:@"手机号码" frame:phoneText.frame];
-	self.phoneTextName = phoneTextName;
-	[self.view addSubview:phoneTextName];
-	
-	
-	UIButton *loginBtn = [[UIButton alloc] init];
-	loginBtn.width = HRUIScreenW *0.5 -50;
-	
-	loginBtn.height = 40;
-	loginBtn.x = 20;
-	loginBtn.y = CGRectGetMaxY(phoneText.frame) + 20;
-	[loginBtn setTitle:@"注册" forState:UIControlStateNormal];
-	[loginBtn setBackgroundColor:[UIColor colorWithRed:0 green:173 blue:255 alpha:1.0]];
-	loginBtn.enabled = NO;
-	loginBtn.layer.cornerRadius = loginBtn.height *0.5;
-	self.loginBtn = loginBtn;
-	
-	[self loginBtnEnable];
-	[loginBtn addTarget:self action:@selector(loginBtnClick) forControlEvents:UIControlEventTouchUpInside];
-	[self.view addSubview:loginBtn];
-	
-	UIButton *cancelBtn = [[UIButton alloc] init];
-	cancelBtn.width = loginBtn.width;
-	cancelBtn.height = loginBtn.height;
-	cancelBtn.x = HRUIScreenW - cancelBtn.width - 20;
-	cancelBtn.y = CGRectGetMaxY(phoneText.frame) + 20;
-	[cancelBtn setTitle:@"取消" forState:UIControlStateNormal];
-	[cancelBtn setBackgroundColor:[UIColor colorWithRed:0 green:173 blue:255 alpha:1.0]];
-	cancelBtn.layer.cornerRadius = cancelBtn.height *0.5;
-	self.cancleBtn = cancelBtn;
-	[cancelBtn addTarget:self action:@selector(cancelBtnClick) forControlEvents:UIControlEventTouchUpInside];
-	[self.view addSubview:cancelBtn];
-}
-
-- (UILabel *)setupTextName:(NSString *)textName frame:(CGRect)frame
-{
-	UILabel *textNameLabel = [[UILabel alloc] init];
-	textNameLabel.text = textName;
-	textNameLabel.font = [UIFont systemFontOfSize:18];
-	textNameLabel.textColor = [UIColor grayColor];
-	textNameLabel.frame = frame;
-	return textNameLabel;
-}
-#pragma mark - UITextFieldDelegate
-- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
-{
-	if (textField == self.userText) {
-//		self.currentImageView.hidden = YES;
-//		UIImageView *imageV = (UIImageView *)textField.leftView;
-//		imageV.hidden = NO;
-		[self diminishTextName:self.userTextName];
-		[self restoreTextName:self.emailTextName textField:self.emailText];
-		[self restoreTextName:self.passwordTextName textField:self.passwordText];
-		[self restoreTextName:self.passwordTextNameRepeat textField:self.passwordTextRepeat];
-		[self restoreTextName:self.phoneTextName textField:self.phoneText];
-//		self.currentImageView = imageV;
-		
-	} else if (textField == self.passwordText) {
-		self.userImageView.hidden = YES;
-		self.passwordImageView.hidden = NO;
-		self.repPasswordImageView.hidden = YES;
-		self.emailImageView.hidden = YES;
-		self.phoneImageView.hidden = YES;
-//		self.currentImageView.hidden = YES;
-//		UIImageView *imageV = (UIImageView *)textField.leftView;
-//		imageV.hidden = NO;
-		[self diminishTextName:self.passwordTextName];
-		[self restoreTextName:self.userTextName textField:self.userText];
-		[self restoreTextName:self.emailTextName textField:self.emailText];
-		[self restoreTextName:self.passwordTextNameRepeat textField:self.passwordTextRepeat];
-		[self restoreTextName:self.phoneTextName textField:self.phoneText];
-//		self.currentImageView = imageV;
-	} else if (textField == self.passwordTextRepeat) {
-		self.userImageView.hidden = YES;
-		self.passwordImageView.hidden = YES;
-		self.repPasswordImageView.hidden = NO;
-		self.emailImageView.hidden = YES;
-		self.phoneImageView.hidden = YES;
-//		self.currentImageView.hidden = YES;
-//		UIImageView *imageV = (UIImageView *)textField.leftView;
-//		imageV.hidden = NO;
-		[self diminishTextName:self.passwordTextNameRepeat];
-		[self restoreTextName:self.userTextName textField:self.userText];
-		[self restoreTextName:self.emailTextName textField:self.emailText];
-		[self restoreTextName:self.phoneTextName textField:self.phoneText];
-		[self restoreTextName:self.passwordTextName textField:self.passwordText];
-//		self.currentImageView = imageV;
-	}else if (textField == self.emailText) {
-		
-		self.passwordImageView.hidden = YES;
-		self.repPasswordImageView.hidden = YES;
-		self.emailImageView.hidden = NO;
-		self.phoneImageView.hidden = YES;
-		self.userImageView.hidden = YES;
-//		self.currentImageView.hidden = YES;
-//		UIImageView *imageV = (UIImageView *)textField.leftView;
-//		imageV.hidden = NO;
-		[self diminishTextName:self.emailTextName];
-		[self restoreTextName:self.userTextName textField:self.userText];
-		[self restoreTextName:self.passwordTextName textField:self.passwordText];
-		[self restoreTextName:self.passwordTextNameRepeat textField:self.passwordTextRepeat];
-		[self restoreTextName:self.phoneTextName textField:self.phoneText];
-//		self.currentImageView = imageV;
-	}else if (textField == self.phoneText) {
-		self.currentImageView.hidden = YES;
-		UIImageView *imageV = (UIImageView *)textField.leftView;
-		imageV.hidden = NO;
-		[self diminishTextName:self.phoneTextName];
-		[self restoreTextName:self.userTextName textField:self.userText];
-		[self restoreTextName:self.emailTextName textField:self.emailText];
-		[self restoreTextName:self.passwordTextName textField:self.passwordText];
-		[self restoreTextName:self.passwordTextNameRepeat textField:self.passwordTextRepeat];
-		self.currentImageView = imageV;
-	}
-	[self setUpHiddenImageViewWithTextField:textField];
-	return YES;
-}
-
-- (BOOL)textFieldShouldEndEditing:(UITextField *)textField
-{
-	
-	return YES;
-}
-- (BOOL)textFieldShouldReturn:(UITextField *)textField
-{
-	if (textField == self.userText) {
-		return [self.passwordText becomeFirstResponder];
-	} else if (textField == self.passwordText){
-		return [self.passwordTextRepeat becomeFirstResponder];
-	} else if (textField == self.passwordTextRepeat) {
-		return [self.emailText becomeFirstResponder];
-	} else if (textField == self.emailText) {
-		return [self.phoneText becomeFirstResponder];
-	}else {
-		[self loginBtnClick];
-		[self restoreTextName:self.phoneTextName textField:self.phoneText];
-		return [self.passwordText resignFirstResponder];
-	}
-}
-- (void)diminishTextName:(UILabel *)label
-{
-	[UIView animateWithDuration:0.5 animations:^{
-		label.transform = CGAffineTransformMakeTranslation(0, -23);
-		label.font = [UIFont systemFontOfSize:14];
+	//导航条
+	[self.navView mas_makeConstraints:^(MASConstraintMaker *make) {
+		make.left.right.equalTo(self.view);
+		make.top.equalTo(self.view).offset(20);
+		make.height.mas_equalTo(HRNavH);
 	}];
-}
-- (void)restoreTextName:(UILabel *)label textField:(UITextField *)textFieled
-{
-	[self textFieldTextChange:textFieled];
-	if (self.chang) {
-		[UIView animateWithDuration:0.5 animations:^{
-			label.transform = CGAffineTransformIdentity;
-			label.font = [UIFont systemFontOfSize:18];
-		}];
-	}else{
-	}
 	
-
-}
-- (void)textFieldTextChange:(UITextField *)textField
-{
-	if (textField.text.length != 0) {
-		self.chang = NO;
-		
-	} else {
-		self.chang = YES;
-	}
-}
-- (void)textFieldDidChange
-{
+	[self.backgroundImage mas_makeConstraints:^(MASConstraintMaker *make) {
+		make.left.right.bottom.top.equalTo(self.view);
+	}];
 	
-	InputText *test = [[InputText alloc] init];
-	test.iconImage.hidden = NO;
-	if (self.userText.text.length != 0 && self.passwordText.text.length != 0 && self.passwordTextRepeat.text.length != 0 && self.emailText.text.length != 0 && self.phoneTextName.text.length != 0) {
-		self.loginBtn.enabled = YES;
-		[self loginBtnEnable];
-		
-	} else {
-		self.loginBtn.enabled = NO;
-		[self loginBtnEnable];
-	}
-}
-#pragma mark - touchesBegan
-- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
-{
-
-	[self.view endEditing:YES];
-	[self restoreTextName:self.userTextName textField:self.userText];
-	[self restoreTextName:self.emailTextName textField:self.emailText];
-	[self restoreTextName:self.passwordTextName textField:self.passwordText];
-	[self restoreTextName:self.passwordTextNameRepeat textField:self.passwordTextRepeat];
-	[self restoreTextName:self.phoneTextName textField:self.phoneText];
+	//背景框框
+	[self.backgroundView mas_makeConstraints:^(MASConstraintMaker *make) {
+		make.left.equalTo(self.view).offset(HRCommonScreenW *86);
+		make.right.equalTo(self.view).offset(- HRCommonScreenW *86);
+		make.top.equalTo(self.backgroundImage.mas_top).offset(HRCommonScreenH *200 + 64);
+		make.height.mas_equalTo(HRCommonScreenH *500);
+	}];
+	//用户名
+	[self.userNameField mas_makeConstraints:^(MASConstraintMaker *make) {
+		make.left.equalTo(self.backgroundView);
+		make.right.equalTo(self.backgroundView);
+		make.top.equalTo(self.backgroundView);
+		make.height.mas_equalTo(HRCommonScreenH *100);
+	}];
+	[self.userLine mas_makeConstraints:^(MASConstraintMaker *make) {
+		make.left.right.equalTo(self.userNameField);
+		make.bottom.equalTo(self.userNameField);
+		make.height.mas_equalTo(1);
+	}];
 	
-	[self setUpHiddenImageView];
-}
-#pragma mark - 判断 是否显示图片
-- (void)setUpHiddenImageView
-{
-	//用户
-	if (self.userText.text.length != 0) {
-		self.userImageView.hidden = NO;
-		
-	}else{
-		self.userImageView.hidden = YES;
-	}
 	//密码
-	if (self.passwordText.text.length != 0) {
-		self.passwordImageView.hidden = NO;
-		
-	}else{
-		self.passwordImageView.hidden = YES;
-	}
+	[self.passwdField mas_makeConstraints:^(MASConstraintMaker *make) {
+		make.left.right.equalTo(self.userNameField);
+		make.top.equalTo(self.userNameField.mas_bottom);
+		make.height.mas_equalTo(self.userNameField);
+	}];
+	[self.passwdLine mas_makeConstraints:^(MASConstraintMaker *make) {
+		make.left.right.equalTo(self.userLine);
+		make.bottom.equalTo(self.passwdField.mas_bottom);
+		make.height.mas_equalTo(self.userLine);
+	}];
+	
 	//确认密码
-	if (self.passwordTextRepeat.text.length != 0) {
-		self.repPasswordImageView.hidden = NO;
-		
-	}else{
-		self.repPasswordImageView.hidden = YES;
-	}
+	[self.passwdConfirmField mas_makeConstraints:^(MASConstraintMaker *make) {
+		make.left.right.equalTo(self.passwdField);
+		make.top.equalTo(self.passwdField.mas_bottom);
+		make.height.mas_equalTo(self.passwdField);
+	}];
+	[self.passwdConfirmLine mas_makeConstraints:^(MASConstraintMaker *make) {
+		make.left.right.equalTo(self.userLine);
+		make.bottom.equalTo(self.passwdConfirmField.mas_bottom);
+		make.height.mas_equalTo(self.userLine);
+	}];
 	
-	//email
-	if (self.emailText.text.length != 0) {
-		self.emailImageView.hidden = NO;
-		
-	}else{
-		self.emailImageView.hidden = YES;
-	}
-	//手机
-	if (self.phoneText.text.length != 0) {
-		self.phoneImageView.hidden = NO;
-		
-	}else{
-		self.phoneImageView.hidden = YES;
-	}
-}
-- (void)setUpHiddenImageViewWithTextField:(UITextField *)textField
-{
-	if (textField == self.userText) {
-		self.userImageView.hidden = NO;
-		//密码
-		if (self.passwordText.text.length != 0) {
-			self.passwordImageView.hidden = NO;
-			
-		}else{
-			self.passwordImageView.hidden = YES;
-		}
-		//确认密码
-		if (self.passwordTextRepeat.text.length != 0) {
-			self.repPasswordImageView.hidden = NO;
-			
-		}else{
-			self.repPasswordImageView.hidden = YES;
-		}
-		
-		//email
-		if (self.emailText.text.length != 0) {
-			self.emailImageView.hidden = NO;
-			
-		}else{
-			self.emailImageView.hidden = YES;
-		}
-		//手机
-		if (self.phoneText.text.length != 0) {
-			self.phoneImageView.hidden = NO;
-			
-		}else{
-			self.phoneImageView.hidden = YES;
-		}
+	//常用邮箱
+	[self.emailField mas_makeConstraints:^(MASConstraintMaker *make) {
+		make.left.right.equalTo(self.passwdConfirmField);
+		make.top.equalTo(self.passwdConfirmField.mas_bottom);
+		make.height.mas_equalTo(self.passwdConfirmField);
+	}];
+	[self.emailLine mas_makeConstraints:^(MASConstraintMaker *make) {
+		make.left.right.equalTo(self.passwdConfirmLine);
+		make.bottom.equalTo(self.emailField.mas_bottom);
+		make.height.mas_equalTo(self.passwdConfirmLine);
+	}];
+	//手机号码
+	[self.phoneField mas_makeConstraints:^(MASConstraintMaker *make) {
+		make.left.right.equalTo(self.emailField);
+		make.top.equalTo(self.emailField.mas_bottom);
+		make.height.mas_equalTo(self.emailField);
+	}];
+	[self.phoneLine mas_makeConstraints:^(MASConstraintMaker *make) {
+		make.left.equalTo(self.emailLine).offset(5);
+		make.right.equalTo(self.emailLine).offset(-5);
+		make.bottom.equalTo(self.phoneField.mas_bottom);
+		make.height.mas_equalTo(self.emailLine);
+	}];
+	
+	//注册
+	[self.registerButton mas_makeConstraints:^(MASConstraintMaker *make) {
+		make.left.right.equalTo(self.phoneField);
+		make.top.equalTo(self.phoneField.mas_bottom).offset(HRCommonScreenH *50);
+		make.height.mas_equalTo(HRCommonScreenH *80);
+	}];
 
-		
-	} else if (textField == self.passwordText) {
-		self.passwordImageView.hidden = NO;
-		//用户
-		if (self.userText.text.length != 0) {
-			self.userImageView.hidden = NO;
-			
-		}else{
-			self.userImageView.hidden = YES;
-		}
-		//确认密码
-		if (self.passwordTextRepeat.text.length != 0) {
-			self.repPasswordImageView.hidden = NO;
-			
-		}else{
-			self.repPasswordImageView.hidden = YES;
-		}
-		
-		//email
-		if (self.emailText.text.length != 0) {
-			self.emailImageView.hidden = NO;
-			
-		}else{
-			self.emailImageView.hidden = YES;
-		}
-		//手机
-		if (self.phoneText.text.length != 0) {
-			self.phoneImageView.hidden = NO;
-			
-		}else{
-			self.phoneImageView.hidden = YES;
-		}
-
-		
-	} else if (textField == self.passwordTextRepeat) {
-		self.repPasswordImageView.hidden = NO;
-		//用户
-		if (self.userText.text.length != 0) {
-			self.userImageView.hidden = NO;
-			
-		}else{
-			self.userImageView.hidden = YES;
-		}
-		//密码
-		if (self.passwordText.text.length != 0) {
-			self.passwordImageView.hidden = NO;
-			
-		}else{
-			self.passwordImageView.hidden = YES;
-		}
-		
-		//email
-		if (self.emailText.text.length != 0) {
-			self.emailImageView.hidden = NO;
-			
-		}else{
-			self.emailImageView.hidden = YES;
-		}
-		//手机
-		if (self.phoneText.text.length != 0) {
-			self.phoneImageView.hidden = NO;
-			
-		}else{
-			self.phoneImageView.hidden = YES;
-		}
-
-	}else if (textField == self.emailText) {
-		self.emailImageView.hidden = NO;
-		//用户
-		if (self.userText.text.length != 0) {
-			self.userImageView.hidden = NO;
-			
-		}else{
-			self.userImageView.hidden = YES;
-		}
-		//密码
-		if (self.passwordText.text.length != 0) {
-			self.passwordImageView.hidden = NO;
-			
-		}else{
-			self.passwordImageView.hidden = YES;
-		}
-		//确认密码
-		if (self.passwordTextRepeat.text.length != 0) {
-			self.repPasswordImageView.hidden = NO;
-			
-		}else{
-			self.repPasswordImageView.hidden = YES;
-		}
-		
-		//手机
-		if (self.phoneText.text.length != 0) {
-			self.phoneImageView.hidden = NO;
-			
-		}else{
-			self.phoneImageView.hidden = YES;
-		}
-
-	}else if (textField == self.phoneText) {
-		self.phoneImageView.hidden = NO;
-		//用户
-		if (self.userText.text.length != 0) {
-			self.userImageView.hidden = NO;
-			
-		}else{
-			self.userImageView.hidden = YES;
-		}
-		//密码
-		if (self.passwordText.text.length != 0) {
-			self.passwordImageView.hidden = NO;
-			
-		}else{
-			self.passwordImageView.hidden = YES;
-		}
-		//确认密码
-		if (self.passwordTextRepeat.text.length != 0) {
-			self.repPasswordImageView.hidden = NO;
-			
-		}else{
-			self.repPasswordImageView.hidden = YES;
-		}
-		
-		//email
-		if (self.emailText.text.length != 0) {
-			self.emailImageView.hidden = NO;
-			
-		}else{
-			self.emailImageView.hidden = YES;
-		}
-
-	}
 	
 }
-static BOOL ispush = YES;
-- (void)loginBtnClick
+#pragma mark - 通知
+- (void)addObservers
 {
-	[self backKeyBrody];
+	[kNotification addObserver:self selector:@selector(showKeyboard:) name:UIKeyboardDidShowNotification object:nil];
+}
+- (void)showKeyboard:(NSNotification *)note
+{
+}
+- (void)dealloc
+{
+	[kNotification removeObserver:self];
+}
+#pragma mark - UI事件
+- (void)registerButtonClick:(UIButton *)btn
+{
+	[self.view endEditing:YES];
+	//动画
+	[self setupAnimateWithIndex:0];
+	
 	//判断密码
-	if (![self.passwordText.text isEqualToString:self.passwordTextRepeat.text]) {
+	if (![self.passwdField.text isEqualToString:self.passwdConfirmField.text]) {
 		
 		[SVProgressTool hr_showErrorWithStatus:@"两次输入的密码不一致,请重新输入!"];
 		return;
 	}
 	//判断邮箱
-	if (![self.emailText.text containsString:@"@"]) {
+	if (![self.emailField.text containsString:@"@"]) {
 		[SVProgressTool hr_showErrorWithStatus:@"该邮箱号码格式错误,请重新输入!"];
 		return;
 	}
 	//判断手机号码
-	if (self.phoneText.text.length != 11) {
+	if (self.phoneField.text.length != 11) {
 		[SVProgressTool hr_showErrorWithStatus:@"该手机号码格式错误,请重新输入!"];
 		return;
 	}
-	[SVProgressTool hr_showWithStatus:@"正在注册..."];
-//	AFHTTPSessionManager *manager = [AFHTTPSessionManager hrPostManager];
-//	
-//	
-//	NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
-//	
-//	parameters[@"name"] = self.userText.text;
-//	parameters[@"mail"] = self.emailText.text;
-//	parameters[@"pass"] = self.passwordText.text;
-//	parameters[@"pass2"] = self.passwordTextRepeat.text;
-//	parameters[@"field_phone[und][0][value]"] = self.phoneText.text;
-//	
-//	
-//	[manager POST:HRAPI_XiaoRuiRegister_URL parameters: parameters success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-//		
-//		/// 这里返回的responseObject 不是json数据 是NSData数据
-//	
-//		[SVProgressHUD showSuccessWithStatus:@"注册成功!"];
-//		
-//		NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-//		dict[@"user"] = self.userText.text;
-//		dict[@"pass"] = self.passwordTextRepeat.text;
-//		[[NSNotificationCenter defaultCenter] postNotificationName:kNotificationRegister object:nil userInfo:dict];
-//		[self.navigationController popViewControllerAnimated:YES];
-//		
-//		
-//	} failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-//
-//		DDLogDebug(@"注册失败error %@", error);
-//		[self showRegisterError:error];
-//	}];
-
-}
-- (void)cancelBtnClick
-{
-	[self backKeyBrody];
-	[self.navigationController popViewControllerAnimated:YES];
-}
-//退出键盘
-- (void)backKeyBrody
-{
-	[self.userText resignFirstResponder];
-	[self.passwordText resignFirstResponder];
-	[self.passwordTextRepeat resignFirstResponder];
-	[self.emailText resignFirstResponder];
-	[self.phoneText resignFirstResponder];
-
-}
-- (void)loginBtnEnable
-{
-	if (self.loginBtn.enabled) {
-		[self.loginBtn setBackgroundColor:[UIColor colorWithRed:0 green:173 blue:255 alpha:1.0]];
-	}else{
-		[self.loginBtn setBackgroundColor:[UIColor colorWithRed:0 green:173 blue:255 alpha:0.4]];
+	if (self.userNameField.text.length > 0 && self.passwdField.text.length > 0 && self.passwdConfirmField.text.length > 0 && self.emailField.text.length > 0 && self.phoneField.text.length > 0) {
+		
+		
+		
+	}else
+	{
+		[SVProgressTool hr_showErrorWithStatus:@"用户名或密码或确认密码或常用邮箱或手机号码不能为空!"];
+		return;
 	}
 	
+	[SVProgressTool hr_showWithStatus:@"正在注册..."];
+	AFHTTPSessionManager *manager = [AFHTTPSessionManager hrPostManager];
+	
+	
+	NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
+	
+	parameters[@"name"] = self.userNameField.text;
+	parameters[@"mail"] = self.emailField.text;
+	parameters[@"pass"] = self.passwdField.text;
+	parameters[@"pass2"] = self.passwdConfirmField.text;
+	parameters[@"field_phone[und][0][value]"] = self.phoneField.text;
+	
+	
+	[manager POST:HRHTTP_UserRegister_URL parameters: parameters success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+		
+		/// 这里返回的responseObject 不是json数据 是NSData数据
+		
+		[SVProgressHUD showSuccessWithStatus:@"注册成功!"];
+		
+		NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+		dict[@"user"] = self.userNameField.text;
+		dict[@"pass"] = self.passwdConfirmField.text;
+		[[NSNotificationCenter defaultCenter] postNotificationName:kNotificationRegister object:nil userInfo:dict];
+		[self.navigationController popViewControllerAnimated:YES];
+		
+		
+	} failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+		
+		DDLogDebug(@"注册失败error %@", error);
+		[self showRegisterError:error];
+	}];
+
 }
-
-
 #pragma mark - 错误提示
 - (void)showRegisterError:(NSError *)error
 {
-//	[SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
-//	if (error == nil) {
-//		return;
-//	}
-//	NSDictionary *dict = error.userInfo;
-//	NSString * code = [dict valueForKeyPath:@"statusCode"];
-//	NSString *str = [dict valueForKeyPath:@"body"];
-//	if (str) {
-//		DDLogInfo(@"str|%@|", str);
-//		NSScanner *theScanner;
-//		NSString *text = nil;
-//		theScanner = [NSScanner scannerWithString:str];
-//		
-//		while ([theScanner isAtEnd] == NO) {
-//			// find start of tag
-//			[theScanner scanUpToString:@"<" intoString:NULL] ;
-//			// find end of tag
-//			[theScanner scanUpToString:@">" intoString:&text] ;
-//			// replace the found tag with a space
-//			//(you can filter multi-spaces out later if you wish)
-//			str = [str stringByReplacingOccurrencesOfString:
-//				   [NSString stringWithFormat:@"%@>", text]
-//												 withString:@""];
-//		}
-//		DDLogInfo(@"str2|%@|", str);
-//		
-//		str = [str replaceUnicode:str];
-//		NSRange range1 = [str rangeOfString:@":{"];
-//		str = [str substringFromIndex:range1.location + 2];
-//		NSRange range2 = [str rangeOfString:@"}"];
-//		str = [str substringToIndex:range2.location - 1];
-//		NSString *description = [NSString stringWithFormat:@"%@  %@", code,str];
-//		DDLogInfo(@"description|%@|", description);
-//		[SVProgressHUD showErrorWithStatus:description  ];
-//		dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(dimissTimer * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-//			[SVProgressHUD dismiss];
-//		});
-//	}else
-//	{
-//		
-//		[SVProgressTool hr_showErrorWithStatus:@"请求超时!"];
-//	}
+	[SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
+	if (error == nil) {
+		return;
+	}
+	NSDictionary *dict = error.userInfo;
+	NSString * code = [dict valueForKeyPath:@"statusCode"];
+	NSString *str = [dict valueForKeyPath:@"body"];
+	if (str) {
+		DDLogInfo(@"str|%@|", str);
+		NSScanner *theScanner;
+		NSString *text = nil;
+		theScanner = [NSScanner scannerWithString:str];
+		
+		while ([theScanner isAtEnd] == NO) {
+			// find start of tag
+			[theScanner scanUpToString:@"<" intoString:NULL] ;
+			// find end of tag
+			[theScanner scanUpToString:@">" intoString:&text] ;
+			// replace the found tag with a space
+			//(you can filter multi-spaces out later if you wish)
+			str = [str stringByReplacingOccurrencesOfString:
+				   [NSString stringWithFormat:@"%@>", text]
+												 withString:@""];
+		}
+		DDLogInfo(@"str2|%@|", str);
+		
+		str = [str replaceUnicode:str];
+		NSRange range1 = [str rangeOfString:@":{"];
+		str = [str substringFromIndex:range1.location + 2];
+		NSRange range2 = [str rangeOfString:@"}"];
+		str = [str substringToIndex:range2.location - 1];
+		NSString *description = [NSString stringWithFormat:@"%@  %@", code,str];
+		DDLogInfo(@"description|%@|", description);
+		[SVProgressHUD showErrorWithStatus:description  ];
+		dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(dimissTimer * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+			[SVProgressHUD dismiss];
+		});
+	}else
+	{
+		
+		[SVProgressTool hr_showErrorWithStatus:@"请求超时!"];
+	}
 	
 	
 }
+#pragma mark - 全屏放回
+- (void)goBack
+{
+	// 获取系统自带滑动手势的target对象
+	id target = self.navigationController.interactivePopGestureRecognizer.delegate;
+	// 创建全屏滑动手势，调用系统自带滑动手势的target的action方法
+	UIPanGestureRecognizer *pan = [[UIPanGestureRecognizer alloc] initWithTarget:target action:@selector(handleNavigationTransition:)];
+	// 设置手势代理，拦截手势触发
+	pan.delegate = self;
+	// 给导航控制器的view添加全屏滑动手势
+	[self.view addGestureRecognizer:pan];
+	// 禁止使用系统自带的滑动手势
+	self.navigationController.interactivePopGestureRecognizer.enabled = NO;
+}
+// 什么时候调用：每次触发手势之前都会询问下代理，是否触发。
+// 作用：拦截手势触发
+- (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer
+{
+	// 注意：只有非根控制器才有滑动返回功能，根控制器没有。
+	// 判断导航控制器是否只有一个子控制器，如果只有一个子控制器，肯定是根控制器
+	if (self.childViewControllers.count == 1) {
+		// 表示用户在根控制器界面，就不需要触发滑动手势，
+		return NO;
+	}
+	return YES;
+}
+#pragma mark - UITextFieldDelegate
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
+{
+	if (textField == self.userNameField) {
+		//动画
+		[self setupAnimateWithIndex:1];
+		
+	} else if (textField == self.passwdField) {
+		//动画
+		[self setupAnimateWithIndex:2];
+	} else if (textField == self.passwdConfirmField) {
+		//动画
+		[self setupAnimateWithIndex:3];
+		
+	}else if (textField == self.emailField) {
+		//动画
+		[self setupAnimateWithIndex:4];
+		
+		
+	}else if (textField == self.phoneField) {
+		//动画
+		[self setupAnimateWithIndex:5];
+		
+	}
+	
+	
+	return YES;
+}
+
+
+
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+	if (textField == self.userNameField) {
+		//动画
+		[self setupAnimateWithIndex:1];
+		return [self.passwdField becomeFirstResponder];
+	} else if (textField == self.passwdField){
+		[self setupAnimateWithIndex:2];
+		return [self.passwdConfirmField becomeFirstResponder];
+	} else if (textField == self.passwdConfirmField) {
+		[self setupAnimateWithIndex:3];
+		return [self.emailField becomeFirstResponder];
+	} else if (textField == self.emailField) {
+		[self setupAnimateWithIndex:4];
+		return [self.phoneField becomeFirstResponder];
+	}else {
+		[self setupAnimateWithIndex:5];
+		[self registerButtonClick:self.registerButton];
+		return [self.phoneField resignFirstResponder];
+	}
+}
+//动画
+- (void)setupAnimateWithIndex:(NSInteger)index
+{
+	
+	//导航条
+	[UIView animateWithDuration:0.25 animations:^{
+		//背景框框
+		[self.backgroundView mas_updateConstraints:^(MASConstraintMaker *make) {
+
+			make.top.equalTo(self.view).offset(64 + HRCommonScreenH *200 - HRCommonScreenH *50 * index);
+
+		}];
+		
+	}completion:^(BOOL finished) {
+		[self.view.layer removeAllAnimations];
+	}];
+	
+}
+
 @end

@@ -27,7 +27,7 @@
 		//左边view
 		UIButton *leftButton = [UIButton buttonWithType:UIButtonTypeCustom];
 		[leftButton addTarget:self action:@selector(leftButtonClick:) forControlEvents:UIControlEventTouchUpInside];
-		leftButton.imageEdgeInsets = UIEdgeInsetsMake(5, - HRNavH, 5, HRCommonScreenW - HRNavH);
+		leftButton.imageEdgeInsets = UIEdgeInsetsMake(5, - HRCommonScreenW *30, 5, HRCommonScreenW - HRCommonScreenW *30);
 		[self addSubview:leftButton];
 		self.leftButton = leftButton;
 		
@@ -54,6 +54,14 @@
 {
 	UINavigationController *nav = (UINavigationController *)[NSObject activityViewController];
 	UIViewController *VC = nav.childViewControllers.lastObject;
-	[VC.navigationController popViewControllerAnimated:YES];
+	
+	DDLogWarn(@"%@", NSStringFromClass([VC class]));
+	if ([@"HRTabBarViewController" isEqualToString:NSStringFromClass([VC class]) ]) {
+		
+	}else
+	{
+		
+		[VC.navigationController popViewControllerAnimated:YES];
+	}
 }
 @end

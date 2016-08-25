@@ -18,6 +18,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 	self.navigationController.navigationBar.hidden = YES;
+	
+	//背景图片
+	UIImageView *backgroundImage = [[UIImageView alloc] initWithFrame:[UIScreen mainScreen].bounds];
+	backgroundImage.image = [UIImage imageNamed:@"icon_bg.jpg"];
+	[self.view addSubview:backgroundImage];
+	
 	HRNavigationBar *navView = [[HRNavigationBar alloc] init];
 	navView.titleLabel.text = @"设备列表";
 	navView.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.1];

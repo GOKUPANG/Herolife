@@ -44,7 +44,7 @@
  */
 - (void)setupAllChildVcs
 {
-	[self setupOneChildVc:[[HRNavigationViewController alloc] initWithRootViewController:[[QRcodeController alloc] init]] title:@"扫描" image:@"扫描白" selectedImage:@"扫描蓝"];
+	[self setupOneChildVc:[[HRNavigationViewController alloc] initWithRootViewController:[[QRCodeController alloc] init]] title:@"扫描" image:@"扫描白" selectedImage:@"扫描蓝"];
 
 	[self setupOneChildVc:[[HRNavigationViewController alloc] initWithRootViewController:[[DeviceListController alloc] init]] title:@"首页" image:@"首页白" selectedImage:@"首页蓝"];
 

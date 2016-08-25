@@ -20,7 +20,14 @@
     [super viewDidLoad];
 	self.view.backgroundColor = [UIColor blueColor];
 	self.navigationController.navigationBar.hidden = YES;
+	
+	//背景图片
+	UIImageView *backgroundImage = [[UIImageView alloc] initWithFrame:[UIScreen mainScreen].bounds];
+	backgroundImage.image = [UIImage imageNamed:@"icon_bg.jpg"];
+	[self.view addSubview:backgroundImage];
 	HRNavigationBar *navView = [[HRNavigationBar alloc] init];
+	
+	
 	navView.titleLabel.text = @"设置";
 	navView.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.1];
 	[self.view addSubview:navView];

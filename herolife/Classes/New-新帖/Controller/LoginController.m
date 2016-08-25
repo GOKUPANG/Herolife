@@ -16,6 +16,8 @@
 #import "HRTabBarViewController.h"
 #import "ForgetController.h"
 
+#import "RegisterViewController.h"
+
 @interface LoginController ()<UITextFieldDelegate>
 /** 背景图片 */
 @property(nonatomic, weak)  UIImageView *backgroundImageView;
@@ -58,6 +60,16 @@
     [super viewDidLoad];
 	//初始化view
 	[self setupViews];
+	//设置所有监听器
+	[self setObserves];
+}
+- (void)setObserves
+{
+	[kNotification addObserver:self selector:@selector(recevedRegister:) name:kNotificationRegister object:nil];
+}
+- (void)dealloc
+{
+	[kNotification removeObserver:self];
 }
 - (void)viewWillAppear:(BOOL)animated
 {
@@ -181,6 +193,19 @@
 	}];
 	
 }
+#pragma mark - 通知
+- (void)recevedRegister:(NSNotification *)note
+{
+	NSDictionary *dict = note.userInfo;
+	NSString *user = dict[@"user"];
+	NSString *pass = dict[@"pass"];
+	self.userNameField.text = user;
+	self.passwdField.text = pass;
+	dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+		
+		[self loginButtonClick:self.loginButton];
+	});
+}
 #pragma mark - 内部方法
 /**
  *  初始化view
@@ -188,12 +213,13 @@
 - (void)setupViews
 {
 	self.navigationController.navigationBar.hidden = YES;
-	self.view.backgroundColor = [UIColor blueColor];
-	//背景
-	UIImageView *backgroundImageView = [[UIImageView alloc] init];
-	backgroundImageView.image = [UIImage imageNamed:@""];
-	[self.view addSubview:backgroundImageView];
-	self.backgroundImageView = backgroundImageView;
+	
+	//背景图片
+	UIImageView *backgroundImage = [[UIImageView alloc] initWithFrame:[UIScreen mainScreen].bounds];
+	backgroundImage.image = [UIImage imageNamed:@"icon_bg.jpg"];
+	[self.view addSubview:backgroundImage];
+	
+	
 	
 	//用户名
 	CGFloat centerX = self.view.width * 0.5;
@@ -326,7 +352,7 @@
 - (void)registerButtonClick:(UIButton *)button
 {
 	RegisterViewController *registerVC = [[RegisterViewController alloc] init];
-	[self presentViewController:registerVC animated:YES completion:nil];
+	[self.navigationController pushViewController:registerVC animated:YES];
 }
 //第三方登陆事件
 - (void)qqButtonClick:(UIButton *)button
