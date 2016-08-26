@@ -93,7 +93,6 @@ static NSString *cellID = @"cellID";
 	tableView.sectionFooterHeight = HRCommonScreenH *0;
 	tableView.sectionHeaderHeight = HRCommonScreenH *20;
 	tableView.tableHeaderView = [[UIView alloc] initWithFrame:CGRectZero];
-	UIView *view = [[UIView alloc] initWithFrame:CGRectZero];
 	
 	[self.view addSubview:tableView];
 	
