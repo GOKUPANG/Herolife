@@ -80,6 +80,7 @@ static NSString *cellID = @"cellID";
 	[self.tableView registerClass:[DeviceListCell class] forCellReuseIdentifier:cellID];
 	[self.collectionView registerClass:[CustomCollectionViewCollectionViewCell class] forCellWithReuseIdentifier:kCustomCellIdentifier];
 }
+
 #pragma mark - 内部方法
 //初始化
 - (void)setupViews
@@ -144,6 +145,7 @@ static NSString *cellID = @"cellID";
 	UIImageView *rightImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"下拉符号"]];
 	rightImageView.frame = rect;
 	[listButton addSubview:rightImageView];
+	rightImageView.layer.transform = CATransform3DMakeRotation(M_PI, 0, 0, 1);
 	self.rightImageView = rightImageView;
 	//半透明框
 	UIView *alphaView = [[UIView alloc] init];
@@ -251,6 +253,30 @@ static NSString *cellID = @"cellID";
 #pragma mark - UI事件
 - (void)listButtonClick:(UIButton *)btn
 {
+	btn.selected = !btn.selected;
+	if (btn.selected) {
+		
+		self.rightImageView.layer.transform = CATransform3DMakeRotation(M_PI* 2, 0, 0, 1);
+	}else
+	{
+		self.rightImageView.layer.transform = CATransform3DMakeRotation(M_PI, 0, 0, 1);
+		
+	}
+	
+	
+	[FTPopOverMenu showForSender:btn
+						withMenu:@[@"MenuOne",@"MenuTwo",@"MenuThr"]
+				  imageNameArray:@[@"标签",@"标签",@"标签"]
+					   doneBlock:^(NSInteger selectedIndex) {
+						   
+						   NSLog(@"done block. do something. selectedIndex : %ld", (long)selectedIndex);
+						   
+					   } dismissBlock:^{
+						   
+						   self.rightImageView.layer.transform = CATransform3DMakeRotation(M_PI, 0, 0, 1);
+						   NSLog(@"user canceled. do nothing.");
+						   
+					   }];
 	
 }
 #pragma mark - tableview代理

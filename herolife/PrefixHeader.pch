@@ -19,6 +19,7 @@
 #import "AFHTTPSessionManager+Util.h"
 #import "NSString+Util.h"
 #import "AppDelegate.h"
+#import "FTPopOverMenu.h"
 
 #define HRUIScreenW [UIScreen mainScreen].bounds.size.width
 #define HRUIScreenH [UIScreen mainScreen].bounds.size.height

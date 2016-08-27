@@ -16,6 +16,7 @@
 		D1089F6B1D711E85003E9FF2 /* MOBFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D1089F621D711E85003E9FF2 /* MOBFoundation.framework */; };
 		D1089F6C1D711E85003E9FF2 /* ShareSDK.bundle in Resources */ = {isa = PBXBuildFile; fileRef = D1089F631D711E85003E9FF2 /* ShareSDK.bundle */; };
 		D1089F6D1D711E85003E9FF2 /* ShareSDKConnector.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D1089F641D711E85003E9FF2 /* ShareSDKConnector.framework */; };
+		D1089F711D71421A003E9FF2 /* FTPopOverMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = D1089F701D71421A003E9FF2 /* FTPopOverMenu.m */; };
 		D11E7BAF1D6E9FDA001C2562 /* SettingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D11E7BAE1D6E9FDA001C2562 /* SettingCell.m */; };
 		D131E26C1D6C43E40044CF09 /* HRTabBarButton.m in Sources */ = {isa = PBXBuildFile; fileRef = D131E26B1D6C43E40044CF09 /* HRTabBarButton.m */; };
 		D131E2871D6C6C460044CF09 /* HRNavigationBar.m in Sources */ = {isa = PBXBuildFile; fileRef = D131E2861D6C6C460044CF09 /* HRNavigationBar.m */; };
@@ -113,6 +114,8 @@
 		D1089F621D711E85003E9FF2 /* MOBFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = MOBFoundation.framework; sourceTree = "<group>"; };
 		D1089F631D711E85003E9FF2 /* ShareSDK.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = ShareSDK.bundle; sourceTree = "<group>"; };
 		D1089F641D711E85003E9FF2 /* ShareSDKConnector.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ShareSDKConnector.framework; sourceTree = "<group>"; };
+		D1089F6F1D71421A003E9FF2 /* FTPopOverMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FTPopOverMenu.h; sourceTree = "<group>"; };
+		D1089F701D71421A003E9FF2 /* FTPopOverMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FTPopOverMenu.m; sourceTree = "<group>"; };
 		D11E7BAD1D6E9FDA001C2562 /* SettingCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingCell.h; sourceTree = "<group>"; };
 		D11E7BAE1D6E9FDA001C2562 /* SettingCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingCell.m; sourceTree = "<group>"; };
 		D131E26A1D6C43E40044CF09 /* HRTabBarButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HRTabBarButton.h; path = ../Controller/HRTabBarButton.h; sourceTree = "<group>"; };
@@ -325,6 +328,15 @@
 				D1089F641D711E85003E9FF2 /* ShareSDKConnector.framework */,
 			);
 			path = Required;
+			sourceTree = "<group>";
+		};
+		D1089F6E1D71421A003E9FF2 /* FTPopOverMenu */ = {
+			isa = PBXGroup;
+			children = (
+				D1089F6F1D71421A003E9FF2 /* FTPopOverMenu.h */,
+				D1089F701D71421A003E9FF2 /* FTPopOverMenu.m */,
+			);
+			path = FTPopOverMenu;
 			sourceTree = "<group>";
 		};
 		D131E2881D6C77BA0044CF09 /* Forget */ = {
@@ -630,6 +642,7 @@
 		D17CF2AD1D658C4B007C95DD /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				D1089F6E1D71421A003E9FF2 /* FTPopOverMenu */,
 				D1D4077C1D66B6D0007A9E5E /* Tools */,
 				D17CF1F01D658AF6007C95DD /* HRConst.h */,
 				D17CF1F11D658AF6007C95DD /* HRConst.m */,
@@ -960,6 +973,7 @@
 				D131E2971D6D51F30044CF09 /* NSString+Util.m in Sources */,
 				D1940E3C1D6BFAFA00A262EC /* UIImage+WebP.m in Sources */,
 				D1D407741D66AF94007A9E5E /* RegisterViewController.m in Sources */,
+				D1089F711D71421A003E9FF2 /* FTPopOverMenu.m in Sources */,
 				D1940E371D6BFAFA00A262EC /* SDWebImageManager.m in Sources */,
 				D17CF3131D65AC7E007C95DD /* SettingController.m in Sources */,
 				D1B5C5651D65D84F006E9BF2 /* HRNavigationViewController.m in Sources */,
