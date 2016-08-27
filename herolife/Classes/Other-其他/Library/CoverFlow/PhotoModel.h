@@ -1,16 +1,12 @@
 //
-//  PhotoModel.h
-//  CoverFlowLayoutDemo
+//  DeviceListController.h
+//  herolife
 //
-//  Created by Yuriy Romanchenko on 3/13/15.
-//  Copyright (c) 2015 solomidSF. All rights reserved.
+//  Created by sswukang on 16/8/18.
+//  Copyright © 2016年 huarui. All rights reserved.
 //
-
 @import UIKit;
 
-/**
- *  Simple photo model that acts as a datasource for collection view.
- */
 @interface PhotoModel : NSObject
 
 @property (nonatomic, readonly) UIImage *image;

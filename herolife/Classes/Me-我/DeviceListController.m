@@ -37,9 +37,40 @@
 @property(nonatomic, weak) UIImageView *rightImageView;
 /** <#name#> */
 @property(nonatomic, weak) UIView *alphaView;
+/** <#name#> */
+@property(nonatomic, strong) NSArray *photoModelArray;
+/** UICollectionView布局 */
+@property(nonatomic, weak) YRCoverFlowLayout *layout;
 @end
 
 @implementation DeviceListController
+- (NSArray *)photoModelArray
+{
+	if (!_photoModelArray) {
+		_photoModelArray = @[[PhotoModel modelWithImageNamed:@"图层-2"
+												 description:@""],
+							 [PhotoModel modelWithImageNamed:@"图层-3"
+												 description:@""],
+							 [PhotoModel modelWithImageNamed:@"图层-2"
+												 description:@""],
+							 [PhotoModel modelWithImageNamed:@"图层-3"
+												 description:@""],
+							 [PhotoModel modelWithImageNamed:@"图层-2"
+												 description:@""],
+							 [PhotoModel modelWithImageNamed:@"图层-3"
+												 description:@""],
+							 [PhotoModel modelWithImageNamed:@"图层-2"
+												 description:@""],
+							 [PhotoModel modelWithImageNamed:@"图层-3"
+												 description:@""],
+							 [PhotoModel modelWithImageNamed:@"图层-2"
+												 description:@""],
+							 [PhotoModel modelWithImageNamed:@"图层-3"
+												 description:@""]
+							 ];
+	}
+	return _photoModelArray;
+}
 static NSString *cellID = @"cellID";
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -47,12 +78,12 @@ static NSString *cellID = @"cellID";
 	[self setupViews];
 	//注册
 	[self.tableView registerClass:[DeviceListCell class] forCellReuseIdentifier:cellID];
+	[self.collectionView registerClass:[CustomCollectionViewCollectionViewCell class] forCellWithReuseIdentifier:kCustomCellIdentifier];
 }
 #pragma mark - 内部方法
 //初始化
 - (void)setupViews
 {
-	
 	self.navigationController.navigationBar.hidden = YES;
 	
 	//背景图片
@@ -66,25 +97,26 @@ static NSString *cellID = @"cellID";
 	navView.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.1];
 	[self.view addSubview:navView];
 	self.navView = navView;
-	self.view.backgroundColor = [UIColor grayColor];
 	
 	//cover flow
-//	YRCoverFlowLayout *layout = [[YRCoverFlowLayout alloc] init];
-//	layout.sectionInset = UIEdgeInsetsMake(10, 10, 10, 10);
+	YRCoverFlowLayout *layout = [[YRCoverFlowLayout alloc] init];
+//	layout.sectionInset = UIEdgeInsetsMake(30, 30, 30, 30);
 //	layout.minimumLineSpacing = 20;
 //	layout.minimumInteritemSpacing = 30;
-//	UICollectionView *collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, 0, 0) collectionViewLayout:layout];
-//	collectionView.dataSource = self;
-//	collectionView.delegate = self;
-//	
-//	[self.view addSubview:collectionView];
-//	self.collectionView = collectionView;
+	UICollectionView *collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, 0, 0) collectionViewLayout:layout];
+	collectionView.backgroundColor = [UIColor clearColor];
+	collectionView.dataSource = self;
+	collectionView.delegate = self;
 	
-	//站位的view
-	UIView *eptView = [[UIView alloc] init];
-	eptView.backgroundColor = [UIColor redColor];
-	[self.view addSubview:eptView];
-	self.eptView = eptView;
+	layout.maxCoverDegree = -40.8;
+	layout.coverDensity = 0.02;
+	layout.minCoverOpacity = 1.0;
+	layout.minCoverScale = 0.89;
+	
+	[self.view addSubview:collectionView];
+	self.layout = layout;
+	self.collectionView = collectionView;
+	
 	
 	//下拉列表按钮
 	UIButton *listButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -114,9 +146,6 @@ static NSString *cellID = @"cellID";
 	[listButton addSubview:rightImageView];
 	self.rightImageView = rightImageView;
 	//半透明框
-//	UIImageView *alphaImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"半透明框"]];
-//	[self.view addSubview:alphaImageView];
-//	self.alphaImageView = alphaImageView;
 	UIView *alphaView = [[UIView alloc] init];
 	alphaView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"半透明框"]];
 	[self.view addSubview:alphaView];
@@ -136,14 +165,36 @@ static NSString *cellID = @"cellID";
 	
 	tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
 	tableView.tableHeaderView = [[UIView alloc] initWithFrame:CGRectZero];
-	
 	[self.view addSubview:tableView];
 	
 	self.tableView = tableView;
 }
+
+- (void)viewDidAppear:(BOOL)animated {
+	[super viewDidAppear:animated];
+	dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+		[_collectionView reloadData];
+	});
+}
+- (void)viewWillLayoutSubviews {
+	[super viewWillLayoutSubviews];
+	
+	[_layout invalidateLayout];
+}
+
 - (void)viewDidLayoutSubviews
 {
 	[super viewDidLayoutSubviews];
+	
+	//collectionView相关
+	
+	_layout.itemSize = (CGSize){
+		HRCommonScreenW *272,
+		HRCommonScreenH *272};
+	
+	[_collectionView setNeedsLayout];
+	[_collectionView layoutIfNeeded];
+	[_collectionView reloadData];
 	
 	//导航条
 	[self.navView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -152,8 +203,8 @@ static NSString *cellID = @"cellID";
 		make.height.mas_equalTo(HRNavH);
 	}];
 	
-	//站位的view
-	[self.eptView mas_makeConstraints:^(MASConstraintMaker *make) {
+	//collectionView
+	[self.collectionView mas_makeConstraints:^(MASConstraintMaker *make) {
 		make.left.equalTo(self.view).offset(HRCommonScreenW * 30);
 		make.right.equalTo(self.view).offset(- HRCommonScreenW * 30);
 		make.top.equalTo(self.navView.mas_bottom).offset(HRCommonScreenH *63);
@@ -162,7 +213,7 @@ static NSString *cellID = @"cellID";
 	
 	//列表按钮
 	[self.listButton mas_makeConstraints:^(MASConstraintMaker *make) {
-		make.top.equalTo(self.eptView.mas_bottom).offset(HRCommonScreenH *20);
+		make.top.equalTo(self.collectionView.mas_bottom).offset(HRCommonScreenH *20);
 		make.centerX.equalTo(self.view);
 		make.width.mas_equalTo(HRCommonScreenW * 271);
 		make.height.mas_equalTo(HRCommonScreenH * 50);
@@ -269,57 +320,14 @@ static NSString *cellID = @"cellID";
 #pragma mark - UICollectionViewDelegate/Datasource
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-	return 3;
+	return self.photoModelArray.count;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
 	CustomCollectionViewCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kCustomCellIdentifier
 																							 forIndexPath:indexPath];
 	
-//	cell.photoModel = _photoModelsDatasource[indexPath.row];
-	
-	//	cell.layer.borderWidth = 2;
-	//	cell.layer.borderColor = [UIColor redColor].CGColor;
-	cell.layer.cornerRadius = 10;
-	cell.layer.masksToBounds = YES;
-	//
-	//	CAShapeLayer *leftLayer = [[CAShapeLayer alloc] init];
-	//	CGRect rect = cell.frame;
-	//	rect.origin.x = cell.frame.origin.x - 30;
-	//	rect.origin.y = cell.frame.origin.y - 30;
-	//	rect.size.width = cell.frame.size.width + 30;
-	//	rect.size.height = cell.frame.size.height + 30;
-	//	leftLayer.frame = rect;
-	//	leftLayer.cornerRadius = 10;
-	//	leftLayer.borderColor = [UIColor redColor].CGColor;
-	//	leftLayer.borderWidth = 2;
-	//	[cell.layer addSublayer:leftLayer];
-	
-	CAShapeLayer *border = [CAShapeLayer layer];
-	
-	border.strokeColor = [UIColor redColor].CGColor;
-	
-	border.fillColor = nil;
-	
-	CGRect rect = cell.frame;
-	rect.origin.x = cell.frame.origin.x - 30;
-	rect.origin.y = cell.frame.origin.y - 30;
-	rect.size.width = cell.frame.size.width + 30;
-	rect.size.height = cell.frame.size.height + 30;
-	
-	border.path = [UIBezierPath bezierPathWithRect:rect].CGPath;
-	
-	border.frame = rect;
-	
-	border.lineWidth = 1.f;
-	
-	border.lineCap = @"square";
-	
-	border.lineDashPattern = @[@8, @4];
-	border.cornerRadius = 10;
-	border.masksToBounds = YES;
-	[cell.layer addSublayer:border];
-	
+	cell.photoModel = self.photoModelArray[indexPath.row];
 	
 	return cell;
 }
