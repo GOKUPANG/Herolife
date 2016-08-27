@@ -13,7 +13,7 @@
 #define FTBackgroundColor           [UIColor clearColor]
 #define FTDefaultTintColor          [[UIColor blackColor] colorWithAlphaComponent:0.8]
 #define FTDefaultTextColor          [UIColor whiteColor]
-#define FTDefaultMenuFont           [UIFont systemFontOfSize:17]
+#define FTDefaultMenuFont           [UIFont systemFontOfSize:34]
 #define FTDefaultMenuWidth_MIN      50.0
 #define FTDefaultMenuWidth          200.0
 #define FTDefaultMenuIconWidth      20.0
@@ -47,6 +47,12 @@ typedef NS_ENUM(NSUInteger, FTPopOverMenuArrowDirection) {
 
 @property (nonatomic, strong) UIImageView *iconImageView;
 @property (nonatomic, strong) UILabel *menuNameLabel;
+/** listButton */
+@property(nonatomic, weak) UILabel *bottomLabel;
+/** <#name#> */
+@property(nonatomic, weak) UIImageView *listImageView;
+/** <#name#> */
+@property(nonatomic, weak) UILabel *listLabel;
 
 @end
 
@@ -54,36 +60,59 @@ typedef NS_ENUM(NSUInteger, FTPopOverMenuArrowDirection) {
 
 -(instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier menuName:(NSString *)menuName iconImageName:(NSString *)iconImageName textColor:(UIColor *)textColor
 {
-	
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         self.backgroundColor = [UIColor clearColor];
-        
-        UIImage *iconImage;
-        if (iconImageName.length) {
-            iconImage = [UIImage imageNamed:iconImageName];
-        }
-        CGFloat margin = (FTDefaultMenuRowHeight - FTDefaultMenuIconWidth)/2;
-        CGRect iconImageRect = CGRectMake(margin, margin, FTDefaultMenuIconWidth, FTDefaultMenuIconWidth);
-        CGRect menuNameRect = CGRectMake(FTDefaultMenuRowHeight, margin, self.bounds.size.width - FTDefaultMenuIconWidth - margin, FTDefaultMenuIconWidth);
-        if (iconImage) {
-            _iconImageView = [[UIImageView alloc]initWithFrame:iconImageRect];
-            _iconImageView.backgroundColor = [UIColor clearColor];
-            _iconImageView.image = iconImage;
-            [self addSubview:_iconImageView];
-        }else{
-            menuNameRect = CGRectMake(margin, margin, self.bounds.size.width - margin*2, FTDefaultMenuIconWidth);
-        }
-        _menuNameLabel = [[UILabel alloc]initWithFrame:menuNameRect];
-        _menuNameLabel.backgroundColor = [UIColor clearColor];
-        _menuNameLabel.font = [UIFont systemFontOfSize:13];
-        _menuNameLabel.textColor = textColor;
-        _menuNameLabel.text = menuName;
-        [self addSubview:_menuNameLabel];
+		
+		//下拉列表按钮
+		UILabel *bottomLabel = [[UILabel alloc] init];
+		bottomLabel.backgroundColor = [UIColor clearColor];
+		
+		[self addSubview:bottomLabel];
+		self.bottomLabel = bottomLabel;
+		
+		UIImageView *listImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:iconImageName]];
+		CGRect rect = listImageView.frame;
+		rect.origin = CGPointMake(HRUIScreenW *10, 0);
+		listImageView.frame = rect;
+		[bottomLabel addSubview:listImageView];
+		self.listImageView = listImageView;
+		
+		UILabel *listLabel = [[UILabel alloc] init];
+		listLabel.text = menuName;
+		listLabel.textColor = [UIColor whiteColor];
+		listLabel.font = [UIFont systemFontOfSize:17];
+		[bottomLabel addSubview:listLabel];
+		self.listLabel = listLabel;
+		
+		
     }
     return self;
 }
-
+- (void)layoutSubviews
+{
+	[super layoutSubviews];
+	
+	[self.bottomLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+		make.top.equalTo(self).offset(HRCommonScreenH *25);
+		make.centerX.equalTo(self);
+		make.width.mas_equalTo(HRCommonScreenW * 271);
+		make.height.mas_equalTo(HRCommonScreenH * 50);
+	}];
+	
+	
+	//列表按钮里左边的图片
+	[self.listImageView mas_makeConstraints:^(MASConstraintMaker *make) {
+		make.left.equalTo(self.bottomLabel).offset(HRCommonScreenW * 10);
+		make.centerY.equalTo(self.bottomLabel);
+	}];
+	//列表按钮里的文本
+	[self.listLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+		make.center.equalTo(self.bottomLabel);
+	}];
+	
+	
+}
 
 
 @end
@@ -242,7 +271,8 @@ typedef NS_ENUM(NSUInteger, FTPopOverMenuArrowDirection) {
                                                                  menuName:[NSString stringWithFormat:@"%@", _menuStringArray[indexPath.row]]
                                                             iconImageName:imageName
                                                                 textColor:self.textColor];
-
+	
+	menuCell.selectionStyle = UITableViewCellSelectionStyleNone;
     
     return menuCell;
 }

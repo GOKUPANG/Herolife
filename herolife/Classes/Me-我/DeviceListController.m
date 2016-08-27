@@ -254,6 +254,7 @@ static NSString *cellID = @"cellID";
 - (void)listButtonClick:(UIButton *)btn
 {
 	btn.selected = !btn.selected;
+	DDLogInfo(@"selected---%d",btn.selected);
 	if (btn.selected) {
 		
 		self.rightImageView.layer.transform = CATransform3DMakeRotation(M_PI* 2, 0, 0, 1);
@@ -262,17 +263,18 @@ static NSString *cellID = @"cellID";
 		self.rightImageView.layer.transform = CATransform3DMakeRotation(M_PI, 0, 0, 1);
 		
 	}
-	
+
 	
 	[FTPopOverMenu showForSender:btn
-						withMenu:@[@"MenuOne",@"MenuTwo",@"MenuThr"]
-				  imageNameArray:@[@"标签",@"标签",@"标签"]
+						withMenu:@[@"HEROLIFE",@"HEROLIFE",@"HEROLIFE",@"HEROLIFE",@"HEROLIFE"]
+				  imageNameArray:@[@"标签",@"标签",@"标签",@"标签",@"标签"]
 					   doneBlock:^(NSInteger selectedIndex) {
-						   
+						   btn.selected = NO;
+						   self.rightImageView.layer.transform = CATransform3DMakeRotation(M_PI, 0, 0, 1);
 						   NSLog(@"done block. do something. selectedIndex : %ld", (long)selectedIndex);
 						   
 					   } dismissBlock:^{
-						   
+						   btn.selected = NO;
 						   self.rightImageView.layer.transform = CATransform3DMakeRotation(M_PI, 0, 0, 1);
 						   NSLog(@"user canceled. do nothing.");
 						   
