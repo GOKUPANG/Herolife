@@ -47,6 +47,9 @@
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
+    
+    DDLogInfo(@"234");
+    
 	
 }
 
