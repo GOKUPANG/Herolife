@@ -29,7 +29,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
 	//显示界面
-//	[self setupWindow];
+	[self setupWindow];
 	
 	//集成ShareSDK
 	[self addShareSDK];
@@ -104,6 +104,7 @@
 - (void)setupWindow
 {
 	BOOL isLogin = YES;
+	
 	self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
 	
 	LoginController *loginVC = [[LoginController alloc] init];

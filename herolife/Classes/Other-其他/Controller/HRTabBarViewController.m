@@ -32,6 +32,11 @@
 	//默认选中第2个控制器
 	self.selectedIndex = 1;
 }
+- (UIStatusBarStyle)preferredStatusBarStyle
+{
+	return UIStatusBarStyleLightContent;
+}
+
 - (void)setupTabBar
 {
 	[self.tabBar removeFromSuperview];

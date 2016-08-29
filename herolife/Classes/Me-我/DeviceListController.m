@@ -101,9 +101,6 @@ static NSString *cellID = @"cellID";
 	
 	//cover flow
 	YRCoverFlowLayout *layout = [[YRCoverFlowLayout alloc] init];
-//	layout.sectionInset = UIEdgeInsetsMake(30, 30, 30, 30);
-//	layout.minimumLineSpacing = 20;
-//	layout.minimumInteritemSpacing = 30;
 	UICollectionView *collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, 0, 0) collectionViewLayout:layout];
 	collectionView.backgroundColor = [UIColor clearColor];
 	collectionView.dataSource = self;
@@ -354,8 +351,7 @@ static NSString *cellID = @"cellID";
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
 	CustomCollectionViewCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kCustomCellIdentifier
 																							 forIndexPath:indexPath];
-	
-	cell.photoModel = self.photoModelArray[indexPath.row];
+		cell.photoModel = self.photoModelArray[indexPath.row];
 	
 	return cell;
 }
