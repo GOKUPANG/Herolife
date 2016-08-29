@@ -26,6 +26,9 @@ static NSString *cellID = @"cellID";
     [super viewDidLoad];
 	//初始化
 	[self setupViews];
+	
+	
+	
 	//注册
 	[self.tableView registerClass:[WiFiListCell class] forCellReuseIdentifier:cellID];
 }
