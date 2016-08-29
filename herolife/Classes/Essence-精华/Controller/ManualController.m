@@ -55,22 +55,15 @@
 	NSMutableDictionary *dict = [NSMutableDictionary dictionary];
 	dict[NSFontAttributeName] = [UIFont systemFontOfSize:14];
 	//二维码按钮
-//	CGFloat tabbarMinY = HRUIScreenH - 49;
 	UIButton *qrButton = [UIButton buttonWithType:UIButtonTypeCustom];
 	[qrButton setBackgroundImage:[UIImage imageNamed:@"发光圆"] forState:UIControlStateNormal];
 	[qrButton setImage:[UIImage imageNamed:@"二维码"] forState:UIControlStateNormal];
-//	qrButton.frame = CGRectMake(0, tabbarMinY - HRCommonScreenH *(104 +72), HRCommonScreenW * 72, HRCommonScreenW * 72);
-//	qrButton.hr_centerX = 100;
 	[qrButton addTarget:self action:@selector(qrcodeButtonClick:) forControlEvents:UIControlEventTouchUpInside];
 	[self.view addSubview:qrButton];
 	self.qrButton = qrButton;
 	
 	//求字体长度
-	CGSize leftSize = [@"扫描二维码" sizeWithAttributes:dict];
-	
 	//二维码Label
-//	UILabel *qrLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(qrButton.frame) + HRCommonScreenH*10, leftSize.width, leftSize.height)];
-//	qrLabel.hr_centerX = qrButton.hr_centerX;
 	UILabel *qrLabel = [[UILabel alloc] init];
 	qrLabel.backgroundColor = [UIColor clearColor];
 	qrLabel.textColor = [UIColor whiteColor];
@@ -84,16 +77,11 @@
 	UIButton *manualButton = [UIButton buttonWithType:UIButtonTypeCustom];
 	[manualButton setBackgroundImage:[UIImage imageNamed:@"发光圆"] forState:UIControlStateNormal];
 	[manualButton setImage:[UIImage imageNamed:@"手指"] forState:UIControlStateNormal];
-//	manualButton.frame = CGRectMake(0, tabbarMinY - HRCommonScreenH *(104 +72), HRCommonScreenW * 72, HRCommonScreenW * 72);
-//	manualButton.hr_centerX = self.view.hr_centerX + HRCommonScreenW *134;
 	[manualButton addTarget:self action:@selector(manualButtonClick:) forControlEvents:UIControlEventTouchUpInside];
 	[self.view addSubview:manualButton];
 	self.manualButton = manualButton;
 	
-	CGSize rightSize = [@"手动添加" sizeWithAttributes:dict];
 	//手动添加label
-//	UILabel *manualLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(qrButton.frame) + HRCommonScreenH*10, rightSize.width, rightSize.height)];
-//	manualLabel.hr_centerX = manualButton.hr_centerX;
 	UILabel *manualLabel = [[UILabel alloc] init];
 	manualLabel.backgroundColor = [UIColor clearColor];
 	manualLabel.textColor = [UIColor whiteColor];

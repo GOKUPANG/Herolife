@@ -13,4 +13,6 @@
 @property(nonatomic, weak) UILabel *titleLabel;
 /** 左边 button */
 @property(nonatomic, weak) UIButton *leftButton;
+/** 右边Label */
+@property(nonatomic, weak) UILabel *rightLabel;
 @end

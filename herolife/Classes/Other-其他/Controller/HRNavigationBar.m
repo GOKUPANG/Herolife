@@ -31,6 +31,14 @@
 		[self addSubview:leftButton];
 		self.leftButton = leftButton;
 		
+		//右边label
+		UILabel *rightLabel = [[UILabel alloc] init];
+		rightLabel.font = [UIFont systemFontOfSize: 14];
+		rightLabel.textAlignment = NSTextAlignmentCenter;
+		rightLabel.textColor = [UIColor whiteColor];
+		[self addSubview:rightLabel];
+		self.rightLabel = rightLabel;
+		
 	}
 	return self;
 }
@@ -47,6 +55,10 @@
 		make.bottom.equalTo(self).offset(0);
 		make.top.equalTo(self).offset(0);
 		make.width.mas_offset(HRNavH);
+	}];
+	[self.rightLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+		make.right.equalTo(self).offset(- HRCommonScreenW *30);
+		make.centerY.equalTo(self);
 	}];
 }
 #pragma mark - UI事件

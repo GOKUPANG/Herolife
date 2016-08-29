@@ -7,6 +7,7 @@
 //
 
 #import "WaitController.h"
+#import "herolife-Swift.h"
 
 @interface WaitController ()
 /** 头像 */
@@ -63,9 +64,18 @@
 //	self.animImage = animImage;
 	
 	UIView *animView = [[UIView alloc] init];
-	animView.backgroundColor = [UIColor whiteColor];
+	animView.backgroundColor = [UIColor clearColor];
 	[self.view addSubview:animView];
 	self.animView = animView;
+	
+	//动画控件
+//	NVActivityIndicatorView *actView = [[NVActivityIndicatorView alloc] initWithFrame:<#(CGRect)#>;
+//	actView.frame = CGRectMake(0, 0, 200, 200);
+//	actView.padding = 20;
+//	[actView setValue:@"UIDynamicItemCollisionBoundsTypeEllipse" forKeyPath:@"collisionBoundsType"];
+//	
+//	[actView startAnimation];
+//	[self.animView addSubview:actView];
 	
 	
 	//提示  label
