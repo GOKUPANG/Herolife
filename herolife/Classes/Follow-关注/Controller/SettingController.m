@@ -8,6 +8,8 @@
 
 #import "SettingController.h"
 #import "SettingCell.h"
+#import "AccountManagementController.h"
+#import "GestureViewController.h"
 
 @interface SettingController ()<UITableViewDelegate, UITableViewDataSource>
 /** 顶部条 */
@@ -225,6 +227,42 @@ static NSString *cellID = @"cellID";
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
 	DDLogInfo(@"%ld", (long)indexPath.row);
+    
+    switch (indexPath.section) {
+        case 0:{
+            if (indexPath.row==0)
+            {
+                AccountManagementController *AMC = [AccountManagementController new];
+                [self.navigationController pushViewController:AMC animated:YES];
+                
+            }
+            
+            else if (indexPath.row == 1)
+            {
+                GestureViewController * GVC = [GestureViewController new];
+                [self.navigationController pushViewController:GVC animated:YES];
+                
+            }
+            
+            
+            else if(indexPath.row == 2)
+            {
+                
+            }
+            
+            
+            
+        }
+            
+            break;
+            
+        default:
+            break;
+    }
+
+    
+    
+    
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section

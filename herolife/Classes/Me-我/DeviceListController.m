@@ -16,6 +16,12 @@
 // Cells
 #import "CustomCollectionViewCollectionViewCell.h"
 #import "DeviceListCell.h"
+#import "OpenLockController.h"
+#import "DoorLockRecordConroller.h"
+#import "APPPSWController.h"
+#import "ShouQuanManagerController.h"
+
+
 
 #define HRNavigationBarFrame self.navigationController.navigationBar.bounds
 @interface DeviceListController ()<UICollectionViewDelegate,UICollectionViewDataSource,UITableViewDelegate,UITableViewDataSource>
@@ -339,6 +345,65 @@ static NSString *cellID = @"cellID";
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
 	DDLogInfo(@"%ld", (long)indexPath.row);
+    
+    switch (indexPath.row) {
+        case  0:
+            
+        {
+            OpenLockController * OLC = [OpenLockController new];
+            
+            
+            
+            
+            
+            [self.navigationController pushViewController:OLC animated:YES];
+            /** 跳转之后去除tabbar*/
+            
+            
+            
+        }
+            
+            break;
+            
+            
+            
+        case 1:
+        {
+            
+            DoorLockRecordConroller *  DLC = [DoorLockRecordConroller new];
+            [self.navigationController pushViewController:DLC animated:YES];
+            
+            
+        }
+            break;
+            
+            
+        case 2:
+        {
+            
+            APPPSWController * PSWC = [APPPSWController new];
+            
+            [self.navigationController pushViewController:PSWC animated:YES];
+            
+        }
+            
+            break;
+            
+        case 3:
+        {
+            ShouQuanManagerController *SQC = [ShouQuanManagerController new];
+            
+            [self.navigationController pushViewController:SQC animated:YES];
+            
+        }
+            
+            break;
+            
+        default:
+            break;
+    }
+
+    
 }
 
 
