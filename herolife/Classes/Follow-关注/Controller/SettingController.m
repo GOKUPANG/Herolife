@@ -20,6 +20,8 @@
 @property(nonatomic, weak) UILabel *emailLabel;
 /** <#name#> */
 @property(nonatomic, weak) UITableView *tableView;
+/** 头像底纹viwe */
+@property(nonatomic, weak) UIView *eptView;
 
 @end
 
@@ -49,6 +51,13 @@ static NSString *cellID = @"cellID";
 	navView.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.1];
 	[self.view addSubview:navView];
 	self.navView = navView;
+	
+	
+	//头像底纹viwe
+	UIView *eptView = [[UIView alloc] init];
+	eptView.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.2];
+	[self.view addSubview:eptView];
+	self.eptView = eptView;
 	
 	//头像
 	UIImageView *iconImage = [[UIImageView alloc] init];
@@ -109,11 +118,21 @@ static NSString *cellID = @"cellID";
 		make.height.mas_equalTo(HRNavH);
 	}];
 	
-	//头像
-	[self.iconImage mas_makeConstraints:^(MASConstraintMaker *make) {
-		make.top.equalTo(self.navView.mas_bottom).offset(HRCommonScreenH * 100);
+	[self.eptView mas_makeConstraints:^(MASConstraintMaker *make) {
+		
+		make.top.equalTo(self.navView.mas_bottom).offset(HRCommonScreenH *100);
 		make.centerX.equalTo(self.view);
 		make.height.width.mas_equalTo(HRCommonScreenW * 220);
+		
+	}];
+	
+	self.eptView.layer.cornerRadius = HRCommonScreenW *220*0.5;
+	self.eptView.layer.masksToBounds = YES;
+	//头像
+	[self.iconImage mas_makeConstraints:^(MASConstraintMaker *make) {
+		make.top.equalTo(self.navView.mas_bottom).offset(HRCommonScreenH * 110);
+		make.centerX.equalTo(self.view);
+		make.height.width.mas_equalTo(HRCommonScreenW * 200);
 	}];
 	
 	self.iconImage.layer.cornerRadius = self.iconImage.hr_height *0.5;

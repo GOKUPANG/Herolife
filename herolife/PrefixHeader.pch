@@ -20,6 +20,8 @@
 #import "NSString+Util.h"
 #import "AppDelegate.h"
 #import "FTPopOverMenu.h"
+#import "HRLabel.h"
+#import "HRButton.h"
 
 #define HRUIScreenW [UIScreen mainScreen].bounds.size.width
 #define HRUIScreenH [UIScreen mainScreen].bounds.size.height
