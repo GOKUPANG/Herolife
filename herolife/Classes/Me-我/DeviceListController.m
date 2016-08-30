@@ -65,6 +65,18 @@
 												 description:@""],
 							 [PhotoModel modelWithImageNamed:@"图层-3"
 												 description:@""],
+							 [PhotoModel modelWithImageNamed:@"图层-3"
+												 description:@""],
+							 [PhotoModel modelWithImageNamed:@"图层-2"
+												 description:@""],
+							 [PhotoModel modelWithImageNamed:@"图层-3"
+												 description:@""],
+							 [PhotoModel modelWithImageNamed:@"图层-2"
+												 description:@""],
+							 [PhotoModel modelWithImageNamed:@"图层-3"
+												 description:@""],
+							 [PhotoModel modelWithImageNamed:@"图层-3"
+												 description:@""],
 							 [PhotoModel modelWithImageNamed:@"图层-2"
 												 description:@""],
 							 [PhotoModel modelWithImageNamed:@"图层-3"
@@ -109,6 +121,7 @@ static NSString *cellID = @"cellID";
 	YRCoverFlowLayout *layout = [[YRCoverFlowLayout alloc] init];
 	UICollectionView *collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, 0, 0) collectionViewLayout:layout];
 	collectionView.backgroundColor = [UIColor clearColor];
+	collectionView.showsHorizontalScrollIndicator = NO;
 	collectionView.dataSource = self;
 	collectionView.delegate = self;
 	
@@ -418,7 +431,41 @@ static NSString *cellID = @"cellID";
 																							 forIndexPath:indexPath];
 		cell.photoModel = self.photoModelArray[indexPath.row];
 	
+	DDLogInfo(@"frame%@", NSStringFromCGRect(cell.frame));
 	return cell;
+}
+
+#pragma mark - scrollView delegate
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+	DDLogInfo(@"%f", scrollView.contentOffset.x);
+	
+}
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
+{
+	[self setupContentOffsetWithScrollView:scrollView];
+	
+}
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
+{
+	[self setupContentOffsetWithScrollView:scrollView];
+}
+- (void)setupContentOffsetWithScrollView:(UIScrollView *)scrollView
+{
+	
+	CGFloat totalconsizeW = HRCommonScreenW *345 *2 ;
+	if (scrollView.contentOffset.x < 0.001) {
+		return;
+	}
+	int index = scrollView.contentOffset.x / totalconsizeW;
+	int yu = (int)scrollView.contentOffset.x % (int)totalconsizeW;
+	
+	if (yu >= HRCommonScreenW *345 *2 *0.5) {
+		index += 1;
+	}
+	DDLogInfo(@"index%d", index);
+	DDLogInfo(@"yu%d", yu);
+	[self.collectionView setContentOffset:CGPointMake(index * HRCommonScreenW *345 *2, 0) animated:YES];
 }
 
 @end
