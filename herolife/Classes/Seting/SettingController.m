@@ -16,14 +16,14 @@
 @property(nonatomic, weak) HRNavigationBar *navView;
 /** 头像 */
 @property(nonatomic, weak) UIImageView *iconImage;
+/** 头像底纹viwe */
+@property(nonatomic, weak) UIView *eptView;
 /** <#name#> */
 @property(nonatomic, weak) UILabel *userLabel;
 /** <#name#> */
 @property(nonatomic, weak) UILabel *emailLabel;
 /** <#name#> */
 @property(nonatomic, weak) UITableView *tableView;
-/** 头像底纹viwe */
-@property(nonatomic, weak) UIView *eptView;
 
 @end
 
@@ -53,7 +53,6 @@ static NSString *cellID = @"cellID";
 	navView.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.1];
 	[self.view addSubview:navView];
 	self.navView = navView;
-	
 	
 	//头像底纹viwe
 	UIView *eptView = [[UIView alloc] init];

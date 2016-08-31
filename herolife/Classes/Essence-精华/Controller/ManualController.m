@@ -6,9 +6,22 @@
 //  Copyright © 2016年 huarui. All rights reserved.
 //
 
-#import "ManualController.h"
+/** 屏幕高度*/
+#define SCREEN_H [UIScreen mainScreen].bounds.size.height
+/** 屏幕宽度*/
+#define SCREEN_W [UIScreen mainScreen].bounds.size.width
 
-@interface ManualController ()
+
+#define HRUIScreenW [UIScreen mainScreen].bounds.size.width
+#define HRUIScreenH [UIScreen mainScreen].bounds.size.height
+#define HRCommonScreenH (HRUIScreenH / 667 /2)
+#define HRCommonScreenW (HRUIScreenW / 375 /2)
+
+
+#import "ManualController.h"
+#import "NextController.h"
+#import "AddDeivcecell.h"
+@interface ManualController ()<UITableViewDelegate,UITableViewDataSource>
 /** 顶部条 */
 @property(nonatomic, weak) HRNavigationBar *navView;
 /** 二维码按钮 */
@@ -19,6 +32,8 @@
 @property(nonatomic, weak) UIButton *manualButton;
 /** 手动添加label */
 @property(nonatomic, weak) UILabel *manualLabel;
+
+@property(nonatomic,strong)UITableView *tableView;
 
 @end
 
@@ -92,6 +107,37 @@
 	
 	self.manualLabel = manualLabel;
 	
+	
+	[self setTableViewUI];
+	
+}
+
+-(void)setTableViewUI
+{
+	_tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 84.0, SCREEN_W, SCREEN_H-84.0 -200) style:UITableViewStylePlain];
+	_tableView.delegate =self;
+	_tableView.dataSource = self;
+	
+	_tableView.rowHeight = 120 * HRCommonScreenH;
+	
+	_tableView.backgroundColor = [UIColor clearColor];
+	self.automaticallyAdjustsScrollViewInsets = NO;
+	self.tableView.bounces = NO;
+	
+	_tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+	
+	
+	UIView *footView = [UIView new];
+	
+	_tableView.tableFooterView = footView   ;
+	
+	// _tableView.separatorInset =UIEdgeInsetsMake(0, 100, 0, 0);
+	
+	
+	
+	[self.view addSubview:_tableView];
+	
+	
 }
 
 - (void)viewDidLayoutSubviews
@@ -122,8 +168,13 @@
 		make.bottom.equalTo(self.manualLabel.mas_top).offset(- HRCommonScreenH * 10);
 		
 	}];
+	
 }
 
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
+{
+	
+}
 #pragma mark - UI事件
 - (void)qrcodeButtonClick:(UIButton *)btn
 {
@@ -162,6 +213,66 @@
 		return NO;
 	}
 	return YES;
+}
+
+#pragma mark - tableView 代理方法
+
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+	return 4;
+	
+}
+
+
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	
+	
+	
+	
+	AddDeivcecell * cell = [tableView dequeueReusableCellWithIdentifier:@"cellID"];
+	
+	if (cell == nil) {
+		cell = [[AddDeivcecell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cellID"];
+		
+	}
+	
+	cell.backgroundColor = [UIColor clearColor];
+	
+	cell.DeviceNameLabel.text = @"智能设备";
+	
+	// cell.textLabel.textColor = [UIColor whiteColor];
+	
+	
+	cell.phoneImage.image = [UIImage imageNamed:@"门锁"];
+	
+	
+	//设置分割线的偏移
+	
+ //   cell.separatorInset =UIEdgeInsetsMake(0, -50, 0, 0);
+	
+	//设置右边的小箭头
+	cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+	
+	//设置选中cell的背景颜色
+	cell.selectionStyle = UITableViewCellSelectionStyleNone;
+	
+	
+	
+	
+	return cell;
+	
+	
+}
+
+
+
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	NSLog(@"选中了第%ld行",(long)indexPath.row);
+	NextController *nextVC = [[NextController alloc] init];
+	[self.navigationController pushViewController:nextVC animated:YES];
 }
 
 @end

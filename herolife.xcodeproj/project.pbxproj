@@ -31,17 +31,14 @@
 		18C697AD1D7462B9004DA2B1 /* PCLockLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 18C697901D7462B9004DA2B1 /* PCLockLabel.m */; };
 		18C697AE1D7462B9004DA2B1 /* GestureVerifyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18C697951D7462B9004DA2B1 /* GestureVerifyViewController.m */; };
 		18C697AF1D7462B9004DA2B1 /* GestureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18C697971D7462B9004DA2B1 /* GestureViewController.m */; };
-		18C697B21D746355004DA2B1 /* DeviceListController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18C697B11D746354004DA2B1 /* DeviceListController.m */; };
 		D1089F711D71421A003E9FF2 /* FTPopOverMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = D1089F701D71421A003E9FF2 /* FTPopOverMenu.m */; };
 		D1089F751D717FE6003E9FF2 /* WaitController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1089F741D717FE6003E9FF2 /* WaitController.m */; };
 		D1089F791D7180AF003E9FF2 /* AddLockController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1089F781D7180AF003E9FF2 /* AddLockController.m */; };
 		D1089F7D1D7180EF003E9FF2 /* WiFiListController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1089F7C1D7180EF003E9FF2 /* WiFiListController.m */; };
 		D1089F801D718373003E9FF2 /* HRLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = D1089F7F1D718373003E9FF2 /* HRLabel.m */; };
 		D1089F831D7185BF003E9FF2 /* HRButton.m in Sources */ = {isa = PBXBuildFile; fileRef = D1089F821D7185BF003E9FF2 /* HRButton.m */; };
-		D11E7BAF1D6E9FDA001C2562 /* SettingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D11E7BAE1D6E9FDA001C2562 /* SettingCell.m */; };
 		D131E26C1D6C43E40044CF09 /* HRTabBarButton.m in Sources */ = {isa = PBXBuildFile; fileRef = D131E26B1D6C43E40044CF09 /* HRTabBarButton.m */; };
 		D131E2871D6C6C460044CF09 /* HRNavigationBar.m in Sources */ = {isa = PBXBuildFile; fileRef = D131E2861D6C6C460044CF09 /* HRNavigationBar.m */; };
-		D131E28B1D6C77DF0044CF09 /* ForgetController.m in Sources */ = {isa = PBXBuildFile; fileRef = D131E28A1D6C77DF0044CF09 /* ForgetController.m */; };
 		D131E28E1D6C7F390044CF09 /* NSObject+Util.m in Sources */ = {isa = PBXBuildFile; fileRef = D131E28D1D6C7F390044CF09 /* NSObject+Util.m */; };
 		D131E2931D6D4D4A0044CF09 /* AFHTTPSessionManager+Util.m in Sources */ = {isa = PBXBuildFile; fileRef = D131E2901D6D4D4A0044CF09 /* AFHTTPSessionManager+Util.m */; };
 		D131E2941D6D4D4A0044CF09 /* AFNJSONResponseSerializerWithData.m in Sources */ = {isa = PBXBuildFile; fileRef = D131E2921D6D4D4A0044CF09 /* AFNJSONResponseSerializerWithData.m */; };
@@ -55,19 +52,18 @@
 		D131E2AC1D6D86290044CF09 /* Scanning line@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D131E2A41D6D86290044CF09 /* Scanning line@2x.png */; };
 		D131E2AD1D6D86290044CF09 /* whiteBack@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D131E2A51D6D86290044CF09 /* whiteBack@2x.png */; };
 		D131E2B11D6DD98D0044CF09 /* ManualController.m in Sources */ = {isa = PBXBuildFile; fileRef = D131E2AF1D6DD98D0044CF09 /* ManualController.m */; };
-		D14440C91D7510670025D61C /* ShareSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D14440BB1D7510670025D61C /* ShareSDK.framework */; };
-		D14440CA1D7510670025D61C /* ShareSDKExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D14440BE1D7510670025D61C /* ShareSDKExtension.framework */; };
-		D14440CB1D7510670025D61C /* ShareSDKUI.bundle in Resources */ = {isa = PBXBuildFile; fileRef = D14440BF1D7510670025D61C /* ShareSDKUI.bundle */; };
-		D14440CC1D7510670025D61C /* ShareSDKUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D14440C01D7510670025D61C /* ShareSDKUI.framework */; };
-		D14440CD1D7510670025D61C /* TencentOpenAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D14440C31D7510670025D61C /* TencentOpenAPI.framework */; };
-		D14440CE1D7510670025D61C /* TencentOpenApi_IOS_Bundle.bundle in Resources */ = {isa = PBXBuildFile; fileRef = D14440C41D7510670025D61C /* TencentOpenApi_IOS_Bundle.bundle */; };
-		D14440CF1D7510670025D61C /* MOBFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D14440C61D7510670025D61C /* MOBFoundation.framework */; };
-		D14440D01D7510670025D61C /* ShareSDK.bundle in Resources */ = {isa = PBXBuildFile; fileRef = D14440C71D7510670025D61C /* ShareSDK.bundle */; };
-		D14440D11D7510670025D61C /* ShareSDKConnector.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D14440C81D7510670025D61C /* ShareSDKConnector.framework */; };
-		D15FBF801D706DCF005BA85D /* DeviceListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D15FBF7F1D706DCF005BA85D /* DeviceListCell.m */; };
 		D1616AD01D70245B0073AEF4 /* YRCoverFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = D1616ACF1D70245B0073AEF4 /* YRCoverFlowLayout.m */; };
 		D1616AD31D7024690073AEF4 /* PhotoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = D1616AD21D7024690073AEF4 /* PhotoModel.m */; };
 		D1616AD61D7024740073AEF4 /* CustomCollectionViewCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D1616AD51D7024740073AEF4 /* CustomCollectionViewCollectionViewCell.m */; };
+		D16B14021D766164005CE35B /* ShareSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D16B13F41D766164005CE35B /* ShareSDK.framework */; };
+		D16B14031D766164005CE35B /* ShareSDKExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D16B13F71D766164005CE35B /* ShareSDKExtension.framework */; };
+		D16B14041D766164005CE35B /* ShareSDKUI.bundle in Resources */ = {isa = PBXBuildFile; fileRef = D16B13F81D766164005CE35B /* ShareSDKUI.bundle */; };
+		D16B14051D766164005CE35B /* ShareSDKUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D16B13F91D766164005CE35B /* ShareSDKUI.framework */; };
+		D16B14061D766164005CE35B /* TencentOpenAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D16B13FC1D766164005CE35B /* TencentOpenAPI.framework */; };
+		D16B14071D766164005CE35B /* TencentOpenApi_IOS_Bundle.bundle in Resources */ = {isa = PBXBuildFile; fileRef = D16B13FD1D766164005CE35B /* TencentOpenApi_IOS_Bundle.bundle */; };
+		D16B14081D766164005CE35B /* MOBFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D16B13FF1D766164005CE35B /* MOBFoundation.framework */; };
+		D16B14091D766164005CE35B /* ShareSDK.bundle in Resources */ = {isa = PBXBuildFile; fileRef = D16B14001D766164005CE35B /* ShareSDK.bundle */; };
+		D16B140A1D766164005CE35B /* ShareSDKConnector.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D16B14011D766164005CE35B /* ShareSDKConnector.framework */; };
 		D17CF0F11D6567E7007C95DD /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D17CF0F01D6567E7007C95DD /* main.m */; };
 		D17CF0F41D6567E7007C95DD /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D17CF0F31D6567E7007C95DD /* AppDelegate.m */; };
 		D17CF0FA1D6567E7007C95DD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D17CF0F81D6567E7007C95DD /* Main.storyboard */; };
@@ -77,7 +73,6 @@
 		D17CF1151D6567E7007C95DD /* herolifeUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = D17CF1141D6567E7007C95DD /* herolifeUITests.m */; };
 		D17CF2341D658AF6007C95DD /* HRConst.m in Sources */ = {isa = PBXBuildFile; fileRef = D17CF1F11D658AF6007C95DD /* HRConst.m */; };
 		D17CF2FF1D6594C3007C95DD /* LoginController.m in Sources */ = {isa = PBXBuildFile; fileRef = D17CF2FD1D6594C3007C95DD /* LoginController.m */; };
-		D17CF3131D65AC7E007C95DD /* SettingController.m in Sources */ = {isa = PBXBuildFile; fileRef = D17CF3111D65AC7E007C95DD /* SettingController.m */; };
 		D1940DCF1D6AF72400A262EC /* libicucore.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D1940DCE1D6AF72400A262EC /* libicucore.tbd */; };
 		D1940DD11D6AF73300A262EC /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D1940DD01D6AF73300A262EC /* libz.tbd */; };
 		D1940DD31D6AF73C00A262EC /* libstdc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D1940DD21D6AF73C00A262EC /* libstdc++.tbd */; };
@@ -141,6 +136,14 @@
 		D1B565971D740AEE00A852B2 /* WiFiListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D1B565961D740AEE00A852B2 /* WiFiListCell.m */; };
 		D1B5C5621D65D799006E9BF2 /* HRTabBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1B5C5611D65D799006E9BF2 /* HRTabBarViewController.m */; };
 		D1B5C5651D65D84F006E9BF2 /* HRNavigationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1B5C5641D65D84F006E9BF2 /* HRNavigationViewController.m */; };
+		D1D23DEF1D7570A100FCB5C9 /* AddDeivcecell.m in Sources */ = {isa = PBXBuildFile; fileRef = D1D23DEC1D7570A100FCB5C9 /* AddDeivcecell.m */; };
+		D1D23DF61D7578E900FCB5C9 /* SettingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D1D23DF31D7578E900FCB5C9 /* SettingCell.m */; };
+		D1D23DF71D7578E900FCB5C9 /* SettingController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1D23DF51D7578E900FCB5C9 /* SettingController.m */; };
+		D1D23DFC1D757A3000FCB5C9 /* DeviceListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D1D23DF91D757A3000FCB5C9 /* DeviceListCell.m */; };
+		D1D23DFD1D757A3000FCB5C9 /* DeviceListController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1D23DFB1D757A3000FCB5C9 /* DeviceListController.m */; };
+		D1D23E011D757AFF00FCB5C9 /* ForgetController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1D23E001D757AFF00FCB5C9 /* ForgetController.m */; };
+		D1D23E051D757D6400FCB5C9 /* NextController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1D23E041D757D6400FCB5C9 /* NextController.m */; };
+		D1D23E071D758AFD00FCB5C9 /* EnterPSWController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1D23E061D758AFD00FCB5C9 /* EnterPSWController.m */; };
 		D1D407741D66AF94007A9E5E /* RegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1D407701D66AF94007A9E5E /* RegisterViewController.m */; };
 		D1D407781D66B23F007A9E5E /* SVProgressTool.m in Sources */ = {isa = PBXBuildFile; fileRef = D1D407771D66B23F007A9E5E /* SVProgressTool.m */; };
 		D1D4077F1D66B718007A9E5E /* UIView+HRExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = D1D4077E1D66B718007A9E5E /* UIView+HRExtension.m */; };
@@ -210,8 +213,6 @@
 		18C697951D7462B9004DA2B1 /* GestureVerifyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GestureVerifyViewController.m; sourceTree = "<group>"; };
 		18C697961D7462B9004DA2B1 /* GestureViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GestureViewController.h; sourceTree = "<group>"; };
 		18C697971D7462B9004DA2B1 /* GestureViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GestureViewController.m; sourceTree = "<group>"; };
-		18C697B01D746354004DA2B1 /* DeviceListController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DeviceListController.h; path = "herolife/Classes/Me-我/DeviceListController.h"; sourceTree = SOURCE_ROOT; };
-		18C697B11D746354004DA2B1 /* DeviceListController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DeviceListController.m; path = "herolife/Classes/Me-我/DeviceListController.m"; sourceTree = SOURCE_ROOT; };
 		B1A28F2C2DAB37DA40A8D5EB /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		D1089F6F1D71421A003E9FF2 /* FTPopOverMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FTPopOverMenu.h; sourceTree = "<group>"; };
 		D1089F701D71421A003E9FF2 /* FTPopOverMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FTPopOverMenu.m; sourceTree = "<group>"; };
@@ -225,14 +226,10 @@
 		D1089F7F1D718373003E9FF2 /* HRLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HRLabel.m; sourceTree = "<group>"; };
 		D1089F811D7185BF003E9FF2 /* HRButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HRButton.h; sourceTree = "<group>"; };
 		D1089F821D7185BF003E9FF2 /* HRButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HRButton.m; sourceTree = "<group>"; };
-		D11E7BAD1D6E9FDA001C2562 /* SettingCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingCell.h; sourceTree = "<group>"; };
-		D11E7BAE1D6E9FDA001C2562 /* SettingCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingCell.m; sourceTree = "<group>"; };
 		D131E26A1D6C43E40044CF09 /* HRTabBarButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HRTabBarButton.h; path = ../Controller/HRTabBarButton.h; sourceTree = "<group>"; };
 		D131E26B1D6C43E40044CF09 /* HRTabBarButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HRTabBarButton.m; path = ../Controller/HRTabBarButton.m; sourceTree = "<group>"; };
 		D131E2851D6C6C460044CF09 /* HRNavigationBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HRNavigationBar.h; path = ../Controller/HRNavigationBar.h; sourceTree = "<group>"; };
 		D131E2861D6C6C460044CF09 /* HRNavigationBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HRNavigationBar.m; path = ../Controller/HRNavigationBar.m; sourceTree = "<group>"; };
-		D131E2891D6C77DF0044CF09 /* ForgetController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ForgetController.h; sourceTree = "<group>"; };
-		D131E28A1D6C77DF0044CF09 /* ForgetController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ForgetController.m; sourceTree = "<group>"; };
 		D131E28C1D6C7F390044CF09 /* NSObject+Util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+Util.h"; sourceTree = "<group>"; };
 		D131E28D1D6C7F390044CF09 /* NSObject+Util.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Util.m"; sourceTree = "<group>"; };
 		D131E28F1D6D4D4A0044CF09 /* AFHTTPSessionManager+Util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AFHTTPSessionManager+Util.h"; sourceTree = "<group>"; };
@@ -251,25 +248,23 @@
 		D131E2A31D6D86290044CF09 /* Scanning frame@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Scanning frame@2x.png"; sourceTree = "<group>"; };
 		D131E2A41D6D86290044CF09 /* Scanning line@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Scanning line@2x.png"; sourceTree = "<group>"; };
 		D131E2A51D6D86290044CF09 /* whiteBack@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "whiteBack@2x.png"; sourceTree = "<group>"; };
-		D131E2AE1D6DD98D0044CF09 /* ManualController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ManualController.h; sourceTree = "<group>"; };
-		D131E2AF1D6DD98D0044CF09 /* ManualController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ManualController.m; sourceTree = "<group>"; };
-		D14440BB1D7510670025D61C /* ShareSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ShareSDK.framework; sourceTree = "<group>"; };
-		D14440BE1D7510670025D61C /* ShareSDKExtension.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ShareSDKExtension.framework; sourceTree = "<group>"; };
-		D14440BF1D7510670025D61C /* ShareSDKUI.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = ShareSDKUI.bundle; sourceTree = "<group>"; };
-		D14440C01D7510670025D61C /* ShareSDKUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ShareSDKUI.framework; sourceTree = "<group>"; };
-		D14440C31D7510670025D61C /* TencentOpenAPI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = TencentOpenAPI.framework; sourceTree = "<group>"; };
-		D14440C41D7510670025D61C /* TencentOpenApi_IOS_Bundle.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = TencentOpenApi_IOS_Bundle.bundle; sourceTree = "<group>"; };
-		D14440C61D7510670025D61C /* MOBFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = MOBFoundation.framework; sourceTree = "<group>"; };
-		D14440C71D7510670025D61C /* ShareSDK.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = ShareSDK.bundle; sourceTree = "<group>"; };
-		D14440C81D7510670025D61C /* ShareSDKConnector.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ShareSDKConnector.framework; sourceTree = "<group>"; };
-		D15FBF7E1D706DCF005BA85D /* DeviceListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeviceListCell.h; sourceTree = "<group>"; };
-		D15FBF7F1D706DCF005BA85D /* DeviceListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeviceListCell.m; sourceTree = "<group>"; };
+		D131E2AE1D6DD98D0044CF09 /* ManualController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ManualController.h; path = Controller/ManualController.h; sourceTree = "<group>"; };
+		D131E2AF1D6DD98D0044CF09 /* ManualController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ManualController.m; path = Controller/ManualController.m; sourceTree = "<group>"; };
 		D1616ACE1D70245B0073AEF4 /* YRCoverFlowLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YRCoverFlowLayout.h; sourceTree = "<group>"; };
 		D1616ACF1D70245B0073AEF4 /* YRCoverFlowLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YRCoverFlowLayout.m; sourceTree = "<group>"; };
 		D1616AD11D7024690073AEF4 /* PhotoModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoModel.h; sourceTree = "<group>"; };
 		D1616AD21D7024690073AEF4 /* PhotoModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoModel.m; sourceTree = "<group>"; };
 		D1616AD41D7024740073AEF4 /* CustomCollectionViewCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomCollectionViewCollectionViewCell.h; sourceTree = "<group>"; };
 		D1616AD51D7024740073AEF4 /* CustomCollectionViewCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomCollectionViewCollectionViewCell.m; sourceTree = "<group>"; };
+		D16B13F41D766164005CE35B /* ShareSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ShareSDK.framework; sourceTree = "<group>"; };
+		D16B13F71D766164005CE35B /* ShareSDKExtension.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ShareSDKExtension.framework; sourceTree = "<group>"; };
+		D16B13F81D766164005CE35B /* ShareSDKUI.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = ShareSDKUI.bundle; sourceTree = "<group>"; };
+		D16B13F91D766164005CE35B /* ShareSDKUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ShareSDKUI.framework; sourceTree = "<group>"; };
+		D16B13FC1D766164005CE35B /* TencentOpenAPI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = TencentOpenAPI.framework; sourceTree = "<group>"; };
+		D16B13FD1D766164005CE35B /* TencentOpenApi_IOS_Bundle.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = TencentOpenApi_IOS_Bundle.bundle; sourceTree = "<group>"; };
+		D16B13FF1D766164005CE35B /* MOBFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = MOBFoundation.framework; sourceTree = "<group>"; };
+		D16B14001D766164005CE35B /* ShareSDK.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = ShareSDK.bundle; sourceTree = "<group>"; };
+		D16B14011D766164005CE35B /* ShareSDKConnector.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ShareSDKConnector.framework; sourceTree = "<group>"; };
 		D17CF0EC1D6567E7007C95DD /* herolife.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = herolife.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D17CF0F01D6567E7007C95DD /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		D17CF0F21D6567E7007C95DD /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = ../../AppDelegate.h; sourceTree = "<group>"; };
@@ -287,10 +282,8 @@
 		D17CF1F01D658AF6007C95DD /* HRConst.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HRConst.h; path = ../HRConst.h; sourceTree = "<group>"; };
 		D17CF1F11D658AF6007C95DD /* HRConst.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HRConst.m; path = ../HRConst.m; sourceTree = "<group>"; };
 		D17CF2FB1D658F9D007C95DD /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
-		D17CF2FC1D6594C3007C95DD /* LoginController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginController.h; sourceTree = "<group>"; };
-		D17CF2FD1D6594C3007C95DD /* LoginController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginController.m; sourceTree = "<group>"; };
-		D17CF3101D65AC7E007C95DD /* SettingController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingController.h; sourceTree = "<group>"; };
-		D17CF3111D65AC7E007C95DD /* SettingController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingController.m; sourceTree = "<group>"; };
+		D17CF2FC1D6594C3007C95DD /* LoginController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LoginController.h; path = Controller/LoginController.h; sourceTree = "<group>"; };
+		D17CF2FD1D6594C3007C95DD /* LoginController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LoginController.m; path = Controller/LoginController.m; sourceTree = "<group>"; };
 		D1940DCE1D6AF72400A262EC /* libicucore.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libicucore.tbd; path = usr/lib/libicucore.tbd; sourceTree = SDKROOT; };
 		D1940DD01D6AF73300A262EC /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		D1940DD21D6AF73C00A262EC /* libstdc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libstdc++.tbd"; path = "usr/lib/libstdc++.tbd"; sourceTree = SDKROOT; };
@@ -378,6 +371,22 @@
 		D1B5C5611D65D799006E9BF2 /* HRTabBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HRTabBarViewController.m; sourceTree = "<group>"; };
 		D1B5C5631D65D84F006E9BF2 /* HRNavigationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HRNavigationViewController.h; sourceTree = "<group>"; };
 		D1B5C5641D65D84F006E9BF2 /* HRNavigationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HRNavigationViewController.m; sourceTree = "<group>"; };
+		D1D23DEB1D7570A100FCB5C9 /* AddDeivcecell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AddDeivcecell.h; path = ../AddDeivcecell.h; sourceTree = "<group>"; };
+		D1D23DEC1D7570A100FCB5C9 /* AddDeivcecell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AddDeivcecell.m; path = ../AddDeivcecell.m; sourceTree = "<group>"; };
+		D1D23DF21D7578E900FCB5C9 /* SettingCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingCell.h; sourceTree = "<group>"; };
+		D1D23DF31D7578E900FCB5C9 /* SettingCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingCell.m; sourceTree = "<group>"; };
+		D1D23DF41D7578E900FCB5C9 /* SettingController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingController.h; sourceTree = "<group>"; };
+		D1D23DF51D7578E900FCB5C9 /* SettingController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingController.m; sourceTree = "<group>"; };
+		D1D23DF81D757A3000FCB5C9 /* DeviceListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeviceListCell.h; sourceTree = "<group>"; };
+		D1D23DF91D757A3000FCB5C9 /* DeviceListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeviceListCell.m; sourceTree = "<group>"; };
+		D1D23DFA1D757A3000FCB5C9 /* DeviceListController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeviceListController.h; sourceTree = "<group>"; };
+		D1D23DFB1D757A3000FCB5C9 /* DeviceListController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeviceListController.m; sourceTree = "<group>"; };
+		D1D23DFF1D757AFF00FCB5C9 /* ForgetController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ForgetController.h; sourceTree = "<group>"; };
+		D1D23E001D757AFF00FCB5C9 /* ForgetController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ForgetController.m; sourceTree = "<group>"; };
+		D1D23E031D757D6400FCB5C9 /* NextController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NextController.h; sourceTree = "<group>"; };
+		D1D23E041D757D6400FCB5C9 /* NextController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NextController.m; sourceTree = "<group>"; };
+		D1D23E061D758AFD00FCB5C9 /* EnterPSWController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EnterPSWController.m; sourceTree = "<group>"; };
+		D1D23E081D758B0700FCB5C9 /* EnterPSWController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EnterPSWController.h; sourceTree = "<group>"; };
 		D1D4076F1D66AF94007A9E5E /* RegisterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegisterViewController.h; sourceTree = "<group>"; };
 		D1D407701D66AF94007A9E5E /* RegisterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegisterViewController.m; sourceTree = "<group>"; };
 		D1D407761D66B23F007A9E5E /* SVProgressTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SVProgressTool.h; path = ../SVProgressTool.h; sourceTree = "<group>"; };
@@ -393,13 +402,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				D1940DD71D6AF76400A262EC /* libsqlite3.tbd in Frameworks */,
-				D14440CF1D7510670025D61C /* MOBFoundation.framework in Frameworks */,
-				D14440CC1D7510670025D61C /* ShareSDKUI.framework in Frameworks */,
-				D14440CA1D7510670025D61C /* ShareSDKExtension.framework in Frameworks */,
+				D16B14081D766164005CE35B /* MOBFoundation.framework in Frameworks */,
+				D16B14051D766164005CE35B /* ShareSDKUI.framework in Frameworks */,
+				D16B14031D766164005CE35B /* ShareSDKExtension.framework in Frameworks */,
 				D1940DD51D6AF74A00A262EC /* JavaScriptCore.framework in Frameworks */,
-				D14440C91D7510670025D61C /* ShareSDK.framework in Frameworks */,
-				D14440CD1D7510670025D61C /* TencentOpenAPI.framework in Frameworks */,
-				D14440D11D7510670025D61C /* ShareSDKConnector.framework in Frameworks */,
+				D16B14021D766164005CE35B /* ShareSDK.framework in Frameworks */,
+				D16B14061D766164005CE35B /* TencentOpenAPI.framework in Frameworks */,
+				D16B140A1D766164005CE35B /* ShareSDKConnector.framework in Frameworks */,
 				D1940DD31D6AF73C00A262EC /* libstdc++.tbd in Frameworks */,
 				D1940DD11D6AF73300A262EC /* libz.tbd in Frameworks */,
 				D1940DCF1D6AF72400A262EC /* libicucore.tbd in Frameworks */,
@@ -427,6 +436,8 @@
 		18C6975E1D7462B9004DA2B1 /* 斌 */ = {
 			isa = PBXGroup;
 			children = (
+				D1D23E081D758B0700FCB5C9 /* EnterPSWController.h */,
+				D1D23E061D758AFD00FCB5C9 /* EnterPSWController.m */,
 				18C6975F1D7462B9004DA2B1 /* cell */,
 				18C697621D7462B9004DA2B1 /* 图片 */,
 				18C697651D7462B9004DA2B1 /* 控制器 */,
@@ -438,6 +449,8 @@
 		18C6975F1D7462B9004DA2B1 /* cell */ = {
 			isa = PBXGroup;
 			children = (
+				D1D23DEB1D7570A100FCB5C9 /* AddDeivcecell.h */,
+				D1D23DEC1D7570A100FCB5C9 /* AddDeivcecell.m */,
 				18C697601D7462B9004DA2B1 /* DoorRecordCell.h */,
 				18C697611D7462B9004DA2B1 /* DoorRecordCell.m */,
 			);
@@ -619,16 +632,6 @@
 			path = WiFiList;
 			sourceTree = "<group>";
 		};
-		D131E2881D6C77BA0044CF09 /* Forget */ = {
-			isa = PBXGroup;
-			children = (
-				D131E2891D6C77DF0044CF09 /* ForgetController.h */,
-				D131E28A1D6C77DF0044CF09 /* ForgetController.m */,
-			);
-			name = Forget;
-			path = "New-新帖/Forget";
-			sourceTree = "<group>";
-		};
 		D131E29B1D6D86290044CF09 /* QRcode */ = {
 			isa = PBXGroup;
 			children = (
@@ -641,77 +644,79 @@
 				D131E2A41D6D86290044CF09 /* Scanning line@2x.png */,
 				D131E2A51D6D86290044CF09 /* whiteBack@2x.png */,
 			);
-			path = QRcode;
-			sourceTree = "<group>";
-		};
-		D14440BA1D7510670025D61C /* ShareSDK  */ = {
-			isa = PBXGroup;
-			children = (
-				D14440BB1D7510670025D61C /* ShareSDK.framework */,
-				D14440BC1D7510670025D61C /* Support */,
-			);
-			path = "ShareSDK ";
-			sourceTree = "<group>";
-		};
-		D14440BC1D7510670025D61C /* Support */ = {
-			isa = PBXGroup;
-			children = (
-				D14440BD1D7510670025D61C /* Optional */,
-				D14440C11D7510670025D61C /* PlatformSDK */,
-				D14440C51D7510670025D61C /* Required */,
-			);
-			path = Support;
-			sourceTree = "<group>";
-		};
-		D14440BD1D7510670025D61C /* Optional */ = {
-			isa = PBXGroup;
-			children = (
-				D14440BE1D7510670025D61C /* ShareSDKExtension.framework */,
-				D14440BF1D7510670025D61C /* ShareSDKUI.bundle */,
-				D14440C01D7510670025D61C /* ShareSDKUI.framework */,
-			);
-			path = Optional;
-			sourceTree = "<group>";
-		};
-		D14440C11D7510670025D61C /* PlatformSDK */ = {
-			isa = PBXGroup;
-			children = (
-				D14440C21D7510670025D61C /* QQSDK */,
-			);
-			path = PlatformSDK;
-			sourceTree = "<group>";
-		};
-		D14440C21D7510670025D61C /* QQSDK */ = {
-			isa = PBXGroup;
-			children = (
-				D14440C31D7510670025D61C /* TencentOpenAPI.framework */,
-				D14440C41D7510670025D61C /* TencentOpenApi_IOS_Bundle.bundle */,
-			);
-			path = QQSDK;
-			sourceTree = "<group>";
-		};
-		D14440C51D7510670025D61C /* Required */ = {
-			isa = PBXGroup;
-			children = (
-				D14440C61D7510670025D61C /* MOBFoundation.framework */,
-				D14440C71D7510670025D61C /* ShareSDK.bundle */,
-				D14440C81D7510670025D61C /* ShareSDKConnector.framework */,
-			);
-			path = Required;
+			name = QRcode;
+			path = "../Other-其他/Library/QRcode";
 			sourceTree = "<group>";
 		};
 		D1616ACD1D7024410073AEF4 /* CoverFlow */ = {
 			isa = PBXGroup;
 			children = (
+				D1616AD41D7024740073AEF4 /* CustomCollectionViewCollectionViewCell.h */,
+				D1616AD51D7024740073AEF4 /* CustomCollectionViewCollectionViewCell.m */,
 				D1616ACE1D70245B0073AEF4 /* YRCoverFlowLayout.h */,
 				D1616ACF1D70245B0073AEF4 /* YRCoverFlowLayout.m */,
 				D1616AD11D7024690073AEF4 /* PhotoModel.h */,
 				D1616AD21D7024690073AEF4 /* PhotoModel.m */,
-				D1616AD41D7024740073AEF4 /* CustomCollectionViewCollectionViewCell.h */,
-				D1616AD51D7024740073AEF4 /* CustomCollectionViewCollectionViewCell.m */,
 			);
 			name = CoverFlow;
 			path = "../Other-其他/Library/CoverFlow";
+			sourceTree = "<group>";
+		};
+		D16B13F31D766164005CE35B /* ShareSDK  */ = {
+			isa = PBXGroup;
+			children = (
+				D16B13F41D766164005CE35B /* ShareSDK.framework */,
+				D16B13F51D766164005CE35B /* Support */,
+			);
+			name = "ShareSDK ";
+			path = "../ShareSDK ";
+			sourceTree = "<group>";
+		};
+		D16B13F51D766164005CE35B /* Support */ = {
+			isa = PBXGroup;
+			children = (
+				D16B13F61D766164005CE35B /* Optional */,
+				D16B13FA1D766164005CE35B /* PlatformSDK */,
+				D16B13FE1D766164005CE35B /* Required */,
+			);
+			path = Support;
+			sourceTree = "<group>";
+		};
+		D16B13F61D766164005CE35B /* Optional */ = {
+			isa = PBXGroup;
+			children = (
+				D16B13F71D766164005CE35B /* ShareSDKExtension.framework */,
+				D16B13F81D766164005CE35B /* ShareSDKUI.bundle */,
+				D16B13F91D766164005CE35B /* ShareSDKUI.framework */,
+			);
+			path = Optional;
+			sourceTree = "<group>";
+		};
+		D16B13FA1D766164005CE35B /* PlatformSDK */ = {
+			isa = PBXGroup;
+			children = (
+				D16B13FB1D766164005CE35B /* QQSDK */,
+			);
+			path = PlatformSDK;
+			sourceTree = "<group>";
+		};
+		D16B13FB1D766164005CE35B /* QQSDK */ = {
+			isa = PBXGroup;
+			children = (
+				D16B13FC1D766164005CE35B /* TencentOpenAPI.framework */,
+				D16B13FD1D766164005CE35B /* TencentOpenApi_IOS_Bundle.bundle */,
+			);
+			path = QQSDK;
+			sourceTree = "<group>";
+		};
+		D16B13FE1D766164005CE35B /* Required */ = {
+			isa = PBXGroup;
+			children = (
+				D16B13FF1D766164005CE35B /* MOBFoundation.framework */,
+				D16B14001D766164005CE35B /* ShareSDK.bundle */,
+				D16B14011D766164005CE35B /* ShareSDKConnector.framework */,
+			);
+			path = Required;
 			sourceTree = "<group>";
 		};
 		D17CF0E31D6567E7007C95DD = {
@@ -780,126 +785,43 @@
 		D17CF1641D658AF6007C95DD /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				D14440BA1D7510670025D61C /* ShareSDK  */,
+				D16B13F31D766164005CE35B /* ShareSDK  */,
 				D17CF1C41D658AF6007C95DD /* Other-其他 */,
 				D17CF3071D65ABE9007C95DD /* QRcode */,
-				D17CF19B1D658AF6007C95DD /* Setting */,
 				D17CF1A41D658AF6007C95DD /* DeviceList */,
-				D131E2881D6C77BA0044CF09 /* Forget */,
+				D1D23DF11D75784700FCB5C9 /* Seting */,
 				D17CF1BE1D658AF6007C95DD /* Login */,
 				D1D4076C1D66AF94007A9E5E /* register */,
+				D1D23DFE1D757AFF00FCB5C9 /* Forget */,
 				D1089F721D717FCA003E9FF2 /* Wait */,
+				D1D23E021D757CDC00FCB5C9 /* Next */,
 				D1089F761D71808D003E9FF2 /* AddLock */,
 				D1089F7A1D7180DD003E9FF2 /* WiFiList */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
 		};
-		D17CF19B1D658AF6007C95DD /* Setting */ = {
-			isa = PBXGroup;
-			children = (
-				D17CF19C1D658AF6007C95DD /* Controller */,
-				D17CF1A21D658AF6007C95DD /* Model */,
-				D17CF1A31D658AF6007C95DD /* View */,
-			);
-			name = Setting;
-			path = "Follow-关注";
-			sourceTree = "<group>";
-		};
-		D17CF19C1D658AF6007C95DD /* Controller */ = {
-			isa = PBXGroup;
-			children = (
-				D17CF3101D65AC7E007C95DD /* SettingController.h */,
-				D17CF3111D65AC7E007C95DD /* SettingController.m */,
-			);
-			path = Controller;
-			sourceTree = "<group>";
-		};
-		D17CF1A21D658AF6007C95DD /* Model */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
-		D17CF1A31D658AF6007C95DD /* View */ = {
-			isa = PBXGroup;
-			children = (
-				D11E7BAD1D6E9FDA001C2562 /* SettingCell.h */,
-				D11E7BAE1D6E9FDA001C2562 /* SettingCell.m */,
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
 		D17CF1A41D658AF6007C95DD /* DeviceList */ = {
 			isa = PBXGroup;
 			children = (
 				D1616ACD1D7024410073AEF4 /* CoverFlow */,
-				D17CF1A51D658AF6007C95DD /* Controller */,
-				D17CF1AD1D658AF6007C95DD /* Model */,
-				D17CF1B01D658AF6007C95DD /* View */,
+				D1D23DFB1D757A3000FCB5C9 /* DeviceListController.m */,
+				D1D23DFA1D757A3000FCB5C9 /* DeviceListController.h */,
+				D1D23DF81D757A3000FCB5C9 /* DeviceListCell.h */,
+				D1D23DF91D757A3000FCB5C9 /* DeviceListCell.m */,
 			);
 			name = DeviceList;
 			path = "Me-我";
 			sourceTree = "<group>";
 		};
-		D17CF1A51D658AF6007C95DD /* Controller */ = {
-			isa = PBXGroup;
-			children = (
-				18C697B01D746354004DA2B1 /* DeviceListController.h */,
-				18C697B11D746354004DA2B1 /* DeviceListController.m */,
-			);
-			path = Controller;
-			sourceTree = "<group>";
-		};
-		D17CF1AD1D658AF6007C95DD /* Model */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
-		D17CF1B01D658AF6007C95DD /* View */ = {
-			isa = PBXGroup;
-			children = (
-				D15FBF7E1D706DCF005BA85D /* DeviceListCell.h */,
-				D15FBF7F1D706DCF005BA85D /* DeviceListCell.m */,
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
 		D17CF1BE1D658AF6007C95DD /* Login */ = {
-			isa = PBXGroup;
-			children = (
-				D17CF1BF1D658AF6007C95DD /* Controller */,
-				D17CF1C21D658AF6007C95DD /* Model */,
-				D17CF1C31D658AF6007C95DD /* View */,
-			);
-			name = Login;
-			path = "New-新帖";
-			sourceTree = "<group>";
-		};
-		D17CF1BF1D658AF6007C95DD /* Controller */ = {
 			isa = PBXGroup;
 			children = (
 				D17CF2FC1D6594C3007C95DD /* LoginController.h */,
 				D17CF2FD1D6594C3007C95DD /* LoginController.m */,
 			);
-			path = Controller;
-			sourceTree = "<group>";
-		};
-		D17CF1C21D658AF6007C95DD /* Model */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
-		D17CF1C31D658AF6007C95DD /* View */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = View;
+			name = Login;
+			path = "New-新帖";
 			sourceTree = "<group>";
 		};
 		D17CF1C41D658AF6007C95DD /* Other-其他 */ = {
@@ -969,7 +891,6 @@
 			isa = PBXGroup;
 			children = (
 				D1B565481D73C86E00A852B2 /* NVActivityIndicatorView */,
-				D131E29B1D6D86290044CF09 /* QRcode */,
 				D1940E0E1D6BFAFA00A262EC /* SDWebImage */,
 			);
 			path = Library;
@@ -992,35 +913,12 @@
 		D17CF3071D65ABE9007C95DD /* QRcode */ = {
 			isa = PBXGroup;
 			children = (
-				D17CF3081D65ABE9007C95DD /* Controller */,
-				D17CF3091D65ABE9007C95DD /* Model */,
-				D17CF30A1D65ABE9007C95DD /* View */,
-			);
-			name = QRcode;
-			path = "Essence-精华";
-			sourceTree = "<group>";
-		};
-		D17CF3081D65ABE9007C95DD /* Controller */ = {
-			isa = PBXGroup;
-			children = (
+				D131E29B1D6D86290044CF09 /* QRcode */,
 				D131E2AE1D6DD98D0044CF09 /* ManualController.h */,
 				D131E2AF1D6DD98D0044CF09 /* ManualController.m */,
 			);
-			path = Controller;
-			sourceTree = "<group>";
-		};
-		D17CF3091D65ABE9007C95DD /* Model */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
-		D17CF30A1D65ABE9007C95DD /* View */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = View;
+			name = QRcode;
+			path = "Essence-精华";
 			sourceTree = "<group>";
 		};
 		D1940E0E1D6BFAFA00A262EC /* SDWebImage */ = {
@@ -1113,6 +1011,36 @@
 				D1B565691D73C86E00A852B2 /* NVActivityIndicatorAnimationTriangleSkewSpin.swift */,
 			);
 			path = Animations;
+			sourceTree = "<group>";
+		};
+		D1D23DF11D75784700FCB5C9 /* Seting */ = {
+			isa = PBXGroup;
+			children = (
+				D1D23DF21D7578E900FCB5C9 /* SettingCell.h */,
+				D1D23DF31D7578E900FCB5C9 /* SettingCell.m */,
+				D1D23DF41D7578E900FCB5C9 /* SettingController.h */,
+				D1D23DF51D7578E900FCB5C9 /* SettingController.m */,
+			);
+			path = Seting;
+			sourceTree = "<group>";
+		};
+		D1D23DFE1D757AFF00FCB5C9 /* Forget */ = {
+			isa = PBXGroup;
+			children = (
+				D1D23DFF1D757AFF00FCB5C9 /* ForgetController.h */,
+				D1D23E001D757AFF00FCB5C9 /* ForgetController.m */,
+			);
+			name = Forget;
+			path = WiFiList/Forget;
+			sourceTree = "<group>";
+		};
+		D1D23E021D757CDC00FCB5C9 /* Next */ = {
+			isa = PBXGroup;
+			children = (
+				D1D23E031D757D6400FCB5C9 /* NextController.h */,
+				D1D23E041D757D6400FCB5C9 /* NextController.m */,
+			);
+			path = Next;
 			sourceTree = "<group>";
 		};
 		D1D4076C1D66AF94007A9E5E /* register */ = {
@@ -1267,8 +1195,8 @@
 			files = (
 				D17CF0FF1D6567E7007C95DD /* LaunchScreen.storyboard in Resources */,
 				18C6979A1D7462B9004DA2B1 /* 键盘@3x.png in Resources */,
-				D14440CB1D7510670025D61C /* ShareSDKUI.bundle in Resources */,
-				D14440CE1D7510670025D61C /* TencentOpenApi_IOS_Bundle.bundle in Resources */,
+				D16B14041D766164005CE35B /* ShareSDKUI.bundle in Resources */,
+				D16B14071D766164005CE35B /* TencentOpenApi_IOS_Bundle.bundle in Resources */,
 				D131E2AB1D6D86290044CF09 /* Scanning frame@2x.png in Resources */,
 				D17CF0FC1D6567E7007C95DD /* Assets.xcassets in Resources */,
 				D131E2AC1D6D86290044CF09 /* Scanning line@2x.png in Resources */,
@@ -1277,7 +1205,7 @@
 				18C697A71D7462B9004DA2B1 /* JCAlertView.bundle in Resources */,
 				D131E2AD1D6D86290044CF09 /* whiteBack@2x.png in Resources */,
 				18C697991D7462B9004DA2B1 /* 键盘@2x.png in Resources */,
-				D14440D01D7510670025D61C /* ShareSDK.bundle in Resources */,
+				D16B14091D766164005CE35B /* ShareSDK.bundle in Resources */,
 				D131E2A81D6D86290044CF09 /* instructions.rtf in Resources */,
 				18C6979F1D7462B9004DA2B1 /* arrow_down@2x.png in Resources */,
 				D131E2A61D6D86290044CF09 /* backWhite@2x.png in Resources */,
@@ -1356,6 +1284,7 @@
 				D131E28E1D6C7F390044CF09 /* NSObject+Util.m in Sources */,
 				D1B5658C1D73C86E00A852B2 /* NVActivityIndicatorAnimationPacman.swift in Sources */,
 				D1616AD01D70245B0073AEF4 /* YRCoverFlowLayout.m in Sources */,
+				D1D23DF71D7578E900FCB5C9 /* SettingController.m in Sources */,
 				D1B565871D73C86E00A852B2 /* NVActivityIndicatorAnimationLineScaleParty.swift in Sources */,
 				D1B565771D73C86E00A852B2 /* NVActivityIndicatorAnimationBallPulse.swift in Sources */,
 				D131E2931D6D4D4A0044CF09 /* AFHTTPSessionManager+Util.m in Sources */,
@@ -1364,7 +1293,6 @@
 				18C697A01D7462B9004DA2B1 /* CustomerInfoSectionView.m in Sources */,
 				18C6979D1D7462B9004DA2B1 /* DoorLockRecordConroller.m in Sources */,
 				18C697AB1D7462B9004DA2B1 /* UIView+SDAutoLayout.m in Sources */,
-				D15FBF801D706DCF005BA85D /* DeviceListCell.m in Sources */,
 				18C697A41D7462B9004DA2B1 /* PCCircleView.m in Sources */,
 				D1B5658A1D73C86E00A852B2 /* NVActivityIndicatorAnimationLineSpinFadeLoader.swift in Sources */,
 				D1B565911D73C86E00A852B2 /* NVActivityIndicatorAnimationDelegate.swift in Sources */,
@@ -1388,13 +1316,13 @@
 				18C6979B1D7462B9004DA2B1 /* AccountManagementController.m in Sources */,
 				D1089F711D71421A003E9FF2 /* FTPopOverMenu.m in Sources */,
 				D1940E371D6BFAFA00A262EC /* SDWebImageManager.m in Sources */,
-				D17CF3131D65AC7E007C95DD /* SettingController.m in Sources */,
 				D1B565861D73C86E00A852B2 /* NVActivityIndicatorAnimationLineScale.swift in Sources */,
+				D1D23E011D757AFF00FCB5C9 /* ForgetController.m in Sources */,
 				D1B5657D1D73C86E00A852B2 /* NVActivityIndicatorAnimationBallScaleMultiple.swift in Sources */,
 				18C697A31D7462B9004DA2B1 /* PCCircle.m in Sources */,
+				D1D23DF61D7578E900FCB5C9 /* SettingCell.m in Sources */,
 				D1089F831D7185BF003E9FF2 /* HRButton.m in Sources */,
 				D1B5C5651D65D84F006E9BF2 /* HRNavigationViewController.m in Sources */,
-				18C697B21D746355004DA2B1 /* DeviceListController.m in Sources */,
 				D1089F801D718373003E9FF2 /* HRLabel.m in Sources */,
 				D1B565721D73C86E00A852B2 /* NVActivityIndicatorAnimationBallClipRotate.swift in Sources */,
 				D17CF2341D658AF6007C95DD /* HRConst.m in Sources */,
@@ -1403,6 +1331,7 @@
 				D1B565971D740AEE00A852B2 /* WiFiListCell.m in Sources */,
 				D17CF2FF1D6594C3007C95DD /* LoginController.m in Sources */,
 				18C697AF1D7462B9004DA2B1 /* GestureViewController.m in Sources */,
+				D1D23E051D757D6400FCB5C9 /* NextController.m in Sources */,
 				18C6979E1D7462B9004DA2B1 /* OpenLockController.m in Sources */,
 				D17CF0F41D6567E7007C95DD /* AppDelegate.m in Sources */,
 				D131E2B11D6DD98D0044CF09 /* ManualController.m in Sources */,
@@ -1413,6 +1342,7 @@
 				18C697981D7462B9004DA2B1 /* DoorRecordCell.m in Sources */,
 				D17CF0F11D6567E7007C95DD /* main.m in Sources */,
 				D1089F751D717FE6003E9FF2 /* WaitController.m in Sources */,
+				D1D23E071D758AFD00FCB5C9 /* EnterPSWController.m in Sources */,
 				D1B565941D73C86E00A852B2 /* NVActivityIndicatorViewable.swift in Sources */,
 				D1940DDD1D6B00B000A262EC /* UIView+XD.m in Sources */,
 				18C697A11D7462B9004DA2B1 /* ShouQuanManagerController.m in Sources */,
@@ -1425,6 +1355,7 @@
 				D1940E311D6BFAFA00A262EC /* NSData+ImageContentType.m in Sources */,
 				D1940E3A1D6BFAFA00A262EC /* UIImage+GIF.m in Sources */,
 				D1B565851D73C86E00A852B2 /* NVActivityIndicatorAnimationCubeTransition.swift in Sources */,
+				D1D23DFD1D757A3000FCB5C9 /* DeviceListController.m in Sources */,
 				18C697A21D7462B9004DA2B1 /* ViewOfCustomerTableViewCell.m in Sources */,
 				D1089F7D1D7180EF003E9FF2 /* WiFiListController.m in Sources */,
 				D1940E391D6BFAFA00A262EC /* UIButton+WebCache.m in Sources */,
@@ -1433,7 +1364,6 @@
 				D1B565751D73C86E00A852B2 /* NVActivityIndicatorAnimationBallGridBeat.swift in Sources */,
 				D1940E381D6BFAFA00A262EC /* SDWebImagePrefetcher.m in Sources */,
 				D1940E341D6BFAFA00A262EC /* SDWebImageDecoder.m in Sources */,
-				D131E28B1D6C77DF0044CF09 /* ForgetController.m in Sources */,
 				D1940E421D6C3C4200A262EC /* HRTabBar.m in Sources */,
 				D1B5657E1D73C86E00A852B2 /* NVActivityIndicatorAnimationBallScaleRipple.swift in Sources */,
 				D1B565801D73C86E00A852B2 /* NVActivityIndicatorAnimationBallSpinFadeLoader.swift in Sources */,
@@ -1441,6 +1371,7 @@
 				D1B565831D73C86E00A852B2 /* NVActivityIndicatorAnimationBallZigZagDeflect.swift in Sources */,
 				D1940E321D6BFAFA00A262EC /* SDImageCache.m in Sources */,
 				18C6979C1D7462B9004DA2B1 /* APPPSWController.m in Sources */,
+				D1D23DFC1D757A3000FCB5C9 /* DeviceListCell.m in Sources */,
 				18C697AA1D7462B9004DA2B1 /* UITableView+SDAutoTableViewCellHeight.m in Sources */,
 				D1940E331D6BFAFA00A262EC /* SDWebImageCompat.m in Sources */,
 				D1089F791D7180AF003E9FF2 /* AddLockController.m in Sources */,
@@ -1455,8 +1386,8 @@
 				D1B5C5621D65D799006E9BF2 /* HRTabBarViewController.m in Sources */,
 				D1B565741D73C86E00A852B2 /* NVActivityIndicatorAnimationBallClipRotatePulse.swift in Sources */,
 				D1940E361D6BFAFA00A262EC /* SDWebImageDownloaderOperation.m in Sources */,
+				D1D23DEF1D7570A100FCB5C9 /* AddDeivcecell.m in Sources */,
 				D1D407781D66B23F007A9E5E /* SVProgressTool.m in Sources */,
-				D11E7BAF1D6E9FDA001C2562 /* SettingCell.m in Sources */,
 				D1940E3E1D6BFAFA00A262EC /* UIImageView+WebCache.m in Sources */,
 				D1B5658F1D73C86E00A852B2 /* NVActivityIndicatorAnimationTriangleSkewSpin.swift in Sources */,
 				D1940E3D1D6BFAFA00A262EC /* UIImageView+HighlightedWebCache.m in Sources */,
@@ -1716,6 +1647,20 @@
 					/Support/PlatformSDK/QQSDK,
 					"$(PROJECT_DIR)/herolife/Classes/ShareSDK",
 					/Support/Required,
+					"$(PROJECT_DIR)/herolife/Classes/ShareSDK",
+					"$(PROJECT_DIR)/herolife/Classes/ShareSDK",
+					/Support/Optional,
+					"$(PROJECT_DIR)/herolife/Classes/ShareSDK",
+					/Support/PlatformSDK/QQSDK,
+					"$(PROJECT_DIR)/herolife/Classes/ShareSDK",
+					/Support/Required,
+					"$(PROJECT_DIR)/herolife/ShareSDK",
+					"$(PROJECT_DIR)/herolife/ShareSDK",
+					/Support/Optional,
+					"$(PROJECT_DIR)/herolife/ShareSDK",
+					/Support/PlatformSDK/QQSDK,
+					"$(PROJECT_DIR)/herolife/ShareSDK",
+					/Support/Required,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/herolife/PrefixHeader.pch";
@@ -1846,6 +1791,20 @@
 					"$(PROJECT_DIR)/herolife/Classes/ShareSDK",
 					/Support/PlatformSDK/QQSDK,
 					"$(PROJECT_DIR)/herolife/Classes/ShareSDK",
+					/Support/Required,
+					"$(PROJECT_DIR)/herolife/Classes/ShareSDK",
+					"$(PROJECT_DIR)/herolife/Classes/ShareSDK",
+					/Support/Optional,
+					"$(PROJECT_DIR)/herolife/Classes/ShareSDK",
+					/Support/PlatformSDK/QQSDK,
+					"$(PROJECT_DIR)/herolife/Classes/ShareSDK",
+					/Support/Required,
+					"$(PROJECT_DIR)/herolife/ShareSDK",
+					"$(PROJECT_DIR)/herolife/ShareSDK",
+					/Support/Optional,
+					"$(PROJECT_DIR)/herolife/ShareSDK",
+					/Support/PlatformSDK/QQSDK,
+					"$(PROJECT_DIR)/herolife/ShareSDK",
 					/Support/Required,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
