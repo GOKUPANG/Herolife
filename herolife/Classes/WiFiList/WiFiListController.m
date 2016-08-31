@@ -41,6 +41,10 @@ static NSString *cellID = @"cellID";
 	backgroundImage.image = [UIImage imageNamed:@"Snip20160825_3"];
 	[self.view addSubview:backgroundImage];
 	
+	UIView *view = [[UIView alloc] initWithFrame:[UIScreen mainScreen].bounds];
+	view.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.2];
+	[self.view addSubview:view];
+	
 	self.navigationController.navigationBar.hidden = YES;
 	HRNavigationBar *navView = [[HRNavigationBar alloc] init];
 	navView.titleLabel.text = @"WiFi列表";

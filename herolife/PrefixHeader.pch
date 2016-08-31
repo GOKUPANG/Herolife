@@ -22,6 +22,10 @@
 #import "FTPopOverMenu.h"
 #import "HRLabel.h"
 #import "HRButton.h"
+#import "ErrorCodeManager.h"
+#import "AsyncSocket.h"
+
+#import "HRSqlite.h"
 
 #define HRUIScreenW [UIScreen mainScreen].bounds.size.width
 #define HRUIScreenH [UIScreen mainScreen].bounds.size.height
@@ -29,12 +33,215 @@
 #define HRCommonScreenW (HRUIScreenW / 375 /2)
 /* huarui API */
 #define TOKEN_HEADER_NAME	@"X-CSRF-Token"
+/****************************** 小睿项目key start**********************************/
+
+#import <QuartzCore/CAAnimation.h>
+
+#import "AppDelegate.h"
+#import "UIColor+Util.h"
+#import "UIImageView+Util.h"
+#import "UIImage+Util.h"
+#import "NSObject+Util.h"
+#import "NSString+Util.h"
+#import "HRServicesManager.h"
+#import "HRUser.h"
+#import "Login.h"
+#import "UIBarButtonItem+XMGExtension.h"
+#import "ErrorCodeManager.h"
+#import "UIImageView+WebCache.h"
+
+#import "AFNetworking.h"
+#import "AFHTTPSessionManager+Util.h"
+#import <CocoaLumberjack/CocoaLumberjack.h>
+
+#import "UIView+HRExtension.h"
+#import "PCCircleViewConst.h"
+#import <MJExtension.h>
+#import <SVProgressHUD.h>
+#import "QRTools.h"
+#import "CreateXRHttpTools.h"
+
+#define UIScreenH [UIScreen mainScreen].bounds.size.height
+#define UIScreenW [UIScreen mainScreen].bounds.size.width
+#define kDefaultsToken       @"token"
+#define kDefaultsSessid      @"sessid"
+#define kDefaultsSessionName @"session_name"
+
+/** 弱引用 */
+#define HRWeakSelf __weak typeof(self) weakSelf = self;
+/** 保存的用户名Key */
+#define kDefaultsUserName @"UserName"
+/** 保存的用户密码Key */
+#define kDefaultsPassWord @"PassWord"
+/** 保存的用户ID uid */
+#define kDefaultsUid @"kDefaultsUid"
+/** 保存的用户头像URL  */
+#define kDefaultsIconURL @"kDefaultsIconURL"
+/** 保存的用户email  */
+#define kDefaultsUserMail @"kDefaultsUserMail"
+
+
+/** 保存的socket 推送的 token */
+#define PushToken @"PushToken"
+
+/** 发送 创建成功 红外控制 */
+#define kdefaultCreateIrac @"kdefaultCreateIrac"
+/** 保存一个小睿 对应的数据  */
+#define kdefaultsPm @"kdefaultsPm"
+/** 保存一个irac 对应的数据  */
+#define kdefaultsIracMid @"kdefaultsIracMid"
+#define kdefaultsIracUid @"kdefaultsIracUid"
+#define kdefaultsIracUuid @"kdefaultsIracUuid"
+#define kdefaultsIracDid @"kdefaultsIracDid"
+#define kdefaultsIracTitle @"kdefaultsIracTitle"
+/** 保存一个小睿的品牌  */
+#define kdefaultsIracBrand @"kdefaultsIracBrand"
+/** 保存一个小睿的固件版本  */
+#define kdefaultsIracVersion @"kdefaultsIracVersion"
+
+/** 保存温湿度类型  */
+#define kdefaultsHumitureType @"kdefaultsHumitureType"
+/** 保存温湿度类型  */
+#define kdefaultsPm2_5Type @"kdefaultsPm2_5Type"
+/** 保存温湿度类型  */
+#define kdefaultsVocType @"kdefaultsVocType"
+/** 保存温湿度类型  */
+#define kdefaultsXiaoruiType @"kdefaultsXiaoruiType"
 
 
 
+/** 将服务器返回的数据写成plist */
+#define HRAFNWriteToPlist(fileName) [responseObject writeToFile:[NSString stringWithFormat:@"/Users/sswukang/Desktop/%@.plist", fileName] atomically:YES];
+/// 创建数据库文件路径
+#define HRSqliteFileName(fileName) [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).lastObject stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.sqlite", fileName]];
+
+#define HRNSSearchPathForDirectoriesInDomains(fileName) [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).lastObject stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.plist", fileName]]
 
 
-/********************************************** 存储的key ***********************************************/
+#define isRepeatLock @"isRepeatLock"
+
+/// 从登录界面跳转到主界面
+#define loginPushHomeVC @"loginPushHomeVC"
+/// 从解锁界面跳到登入界面  再跳到主界面 解决跳到主界面是又先跳到锁屏界面
+#define lockToLoginPushHomeVC @"lockToLoginPushHomeVC"
+
+/// -----------------创建通知----------------------------------
+#define kUserDefault [NSUserDefaults standardUserDefaults]
+/// 手机UUID
+#define kUserDefaultUUID @"kUserDefaultUUID"
+/// 用户昵称
+#define kUserDefaultTextVCUserName @"kUserDefaultTextVCUserName"
+/// 保存添加小睿时用户输入的UUID
+#define kUserDefaultUserInputUUID @"kUserDefaultUserInputUUID"
+
+
+/// 创建空调 通知
+#define kNotificationNotOnline @"kNotificationNotOnline"
+/// 创建空调 通知
+#define kNotificationCreateIrac @"kNotificationCreateIrac"
+/// 删除空调 通知
+#define kNotificationDeleteIrac @"kNotificationDeleteIrac"
+/// 更新空调 通知
+#define kNotificationUpdateIrac @"kNotificationUpdateIrac"
+/// 测试空调 通知
+#define kNotificationTestingIrac @"kNotificationTestingIrac"
+/// 控制空调 通知
+#define kNotificationControlIrac @"kNotificationControlIrac"
+
+/// 创建通用 通知
+#define kNotificationCreateIrgm @"kNotificationCreateIrgm"
+/// 删除通用 通知
+#define kNotificationDeleteIrgm @"kNotificationDeleteIrgm"
+/// 更新通用 通知
+#define kNotificationUpdateIrgm @"kNotificationUpdateIrgm"
+/// 更新通用 通知 改变通用控制  导航栏标题
+#define kNotificationUpdateIrgmWithTitle @"kNotificationUpdateIrgmWithTitle"
+/// 测试通用 通知
+#define kNotificationTestingIrgm @"kNotificationTestingIrgm"
+/// 控制通用 通知
+#define kNotificationControlIrgm @"kNotificationControlIrgm"
+
+
+/// 创建开关 通知
+#define kNotificationCreateDo @"kNotificationCreateDo"
+/// 删除开关 通知
+#define kNotificationDeleteDo @"kNotificationDeleteDo"
+/// 更新开关 通知
+#define kNotificationUpdateDo @"kNotificationUpdateDo"
+/// 测试开关 通知
+#define kNotificationTestingDo @"kNotificationTestingDo"
+/// 控制开关 通知
+#define kNotificationControlDo @"kNotificationControlDo"
+/// 文本交互 通知
+#define kNotificationMessage @"kNotificationMessage"
+/// 创建情景 通知
+#define kNotificationCreateScene @"kNotificationCreateScene"
+/// 更新情景 通知
+#define kNotificationUpDataScene @"kNotificationUpDataScene"
+/// 删除情景 通知
+#define kNotificationDeleteScene @"kNotificationDeleteScene"
+/// 控制情景 通知
+#define kNotificationControlScene @"kNotificationControlScene"
+
+/// ---------------------------添加小睿
+/// 小睿删除 通知
+#define kNotificationDeleteXiaoRui @"kNotificationDeleteXiaoRui"
+/// 小睿创建 通知
+#define kNotificationCreateXiaoRui @"kNotificationCreateXiaoRui"
+/// 小睿更新名称 通知
+#define kNotificationUpdataXiaoRui @"kNotificationUpdataXiaoRui"
+
+/// 登陆认证 通知
+#define kNotificationLogin @"kNotificationLogin"
+/// 发送通知
+#define kNotification [NSNotificationCenter defaultCenter]
+/// 用户注册传值 通知
+#define kNotificationRegister @"kNotificationRegister"
+/// 文本交互界面 传到上一个界面 传值 通知
+#define kNotificationTextToDevice @"kNotificationTextToDevice"
+
+/// 空调编辑测试 品牌和型号 文本传值 通知
+#define kNotificationAirEditTestKeyboard @"kNotificationAirEditTestKeyboard"
+/// 情景底部调显示或隐藏的  通知
+#define kNotificationSceneTabBarView @"kNotificationSceneTabBarView"
+/// 情景 时间弹框window,让他消失  通知
+#define kNotificationSceneTimeWindow @"kNotificationSceneTimeWindow"
+/// 情景 空调选择情景,选好之后,回到上一界面让底部调显示window,  通知
+#define kNotificationSceneAirDismiss @"kNotificationSceneAirDismiss"
+/// 情景 空调选择情景,选好之后,传值给上一界面,  通知
+#define kNotificationSceneAirData @"kNotificationSceneAirData"
+/// 情景 左边view是DVSwitch的这个cell,点击这个view给tableview传值, 通知
+#define kNotificationSceneCellDVSwitchToHeadCell @"kNotificationSceneCellDVSwitchToHeadCell"
+/// 情景 点击存储时 情景界面pop掉, 通知
+#define kNotificationSceneVCToInfrared @"kNotificationSceneVCToInfrared"
+
+/// 情景 选择空调 模式后 移动的view 显示不准确  通知
+#define kNotificationSceneLine5Center @"kNotificationSceneLine5Center"
+/// 情景 pop SceneModellView出来后让导航条"存储不能点"  通知
+#define kNotificationSceneIsYesSaveButtonClick @"kNotificationSceneIsYesSaveButtonClick"
+/// 情景 pop SceneModellView出来后让导航条"存储不能点"  通知
+#define kNotificationSceneIsNoSaveButtonClick @"kNotificationSceneIsNoSaveButtonClick"
+
+//---------------------扫描二维码添加 相关--------------------------------
+/// 扫描到二维码之后 跳转到创建设备的CreateXiaoRui, 通知
+#define kNotificationQRCodeCreateXiaoRui @"kNotificationQRCodeCreateXiaoRui"
+/// 扫描到二维码之后 跳转到创建设备的ManualCreateXiaoRui, 通知
+#define kNotificationQRCodeManualCreateXiaoRui @"kNotificationQRCodeManualCreateXiaoRui"
+
+/// 超时时间
+#define HRTimeInterval 5.0
+
+#define SERVER_IP1		"192.168.0.8"
+#define SERVER_IP		"120.24.183.44"
+#define SERVER_DOMAIN	"www.gzhuarui.cn"
+#define SERVER_PORT		9888
+
+
+/****************************** 小睿项目key end**********************************/
+
+
+
+/****************************** 存储的key ********************/
 #define kNSUserDefaults [NSUserDefaults standardUserDefaults]
 /** 保存第三方QQ登陆Openid 的Key */
 #define kNSUserDefaultsOpenid @"kNSUserDefaultsOpenid"
@@ -43,11 +250,11 @@
 /** 保存第三方QQ登陆Figureurl_1 的Key */
 #define kNSUserDefaultsFigureurl_1 @"kNSUserDefaultsFigureurl_1"
 
-/********************************************** HTTP URL key ******************************************/
+/******************************* HTTP URL key ************************/
 ///用户注册POST请求URL
 #define HRHTTP_UserRegister_URL @""
 
-/********************************************** 通知 key ******************************************/
+/********************************************** 通知 key *******************/
 /// 发送通知
 #define kNotification [NSNotificationCenter defaultCenter]
 // 用户注册传值 通知

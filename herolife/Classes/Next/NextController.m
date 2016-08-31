@@ -47,6 +47,11 @@
 	UIImageView *backgroundImage = [[UIImageView alloc] initWithFrame:[UIScreen mainScreen].bounds];
 	backgroundImage.image = [UIImage imageNamed:@"Snip20160825_3"];
 	[self.view addSubview:backgroundImage];
+	
+	UIView *view = [[UIView alloc] initWithFrame:[UIScreen mainScreen].bounds];
+	view.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.2];
+	[self.view addSubview:view];
+	
 	//导航条
 	HRNavigationBar *navView = [[HRNavigationBar alloc] init];
 	navView.titleLabel.text = @"设备列表";
@@ -160,6 +165,7 @@
 }
 - (void)nextButtonClick:(UIButton *)btn
 {
+	[self IsTabBarHidden:YES];
 	GoToSetUpController *enterVC = [[GoToSetUpController alloc] init];
 	[self.navigationController pushViewController:enterVC animated:YES];
 }

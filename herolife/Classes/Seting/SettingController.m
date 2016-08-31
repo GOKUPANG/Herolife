@@ -10,7 +10,6 @@
 #import "SettingCell.h"
 #import "AccountManagementController.h"
 #import "GestureViewController.h"
-#import "BackPicSetController.h"
 
 @interface SettingController ()<UITableViewDelegate, UITableViewDataSource>
 /** 顶部条 */
@@ -48,6 +47,11 @@ static NSString *cellID = @"cellID";
 	UIImageView *backgroundImage = [[UIImageView alloc] initWithFrame:[UIScreen mainScreen].bounds];
 	backgroundImage.image = [UIImage imageNamed:@"Snip20160825_3"];
 	[self.view addSubview:backgroundImage];
+	
+	UIView *view = [[UIView alloc] initWithFrame:[UIScreen mainScreen].bounds];
+	view.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.2];
+	[self.view addSubview:view];
+	
 	//导航条
 	HRNavigationBar *navView = [[HRNavigationBar alloc] init];
 	navView.titleLabel.text = @"设置";
@@ -153,11 +157,23 @@ static NSString *cellID = @"cellID";
 		make.centerX.equalTo(self.iconImage);
 	}];
 	//tableview
-	[self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
-		make.top.equalTo(self.emailLabel.mas_bottom).offset(HRCommonScreenH * 70);
-		make.left.right.equalTo(self.view);
-		make.bottom.equalTo(self.view).offset(HRCommonScreenH * 116 + 49);
-	}];
+	
+	if (HRUIScreenH < 667) {
+		
+		[self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
+			make.top.equalTo(self.emailLabel.mas_bottom).offset(HRCommonScreenH * 25);
+			make.left.right.equalTo(self.view);
+			make.bottom.equalTo(self.view).offset(HRCommonScreenH * 116 + 49);
+		}];
+	}else
+	{
+		[self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
+			make.top.equalTo(self.emailLabel.mas_bottom).offset(HRCommonScreenH * 70);
+			make.left.right.equalTo(self.view);
+			make.bottom.equalTo(self.view).offset(HRCommonScreenH * 116 + 49);
+		}];
+		
+	}
 }
 
 #pragma mark - tableview代理
@@ -247,8 +263,6 @@ static NSString *cellID = @"cellID";
             
             else if(indexPath.row == 2)
             {
-                BackPicSetController *BPC = [BackPicSetController new];
-                [self.navigationController pushViewController:BPC animated:YES];
                 
             }
             
