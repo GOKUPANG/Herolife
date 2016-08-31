@@ -14,12 +14,17 @@
 
 #import "EnterPSWController.h"
 #import "UIView+SDAutoLayout.h"
+#import "WiFiListController.h"
+
+#import "WaitController.h"
 
 @interface EnterPSWController ()<UITableViewDelegate,UITableViewDataSource>
 
 
 @property(nonatomic,strong)UIView * lineView2;
 
+/** 顶部条 */
+@property(nonatomic, weak) HRNavigationBar *navView;
 
 @property(nonatomic,strong)UITableView * tableView;
 
@@ -49,15 +54,44 @@
     
     [self MakeStartAddView];
     
-    
+	
+	//haibo 全屏放回
+	[self goBack];
+	
+	//haibo 隐藏底部条
+	[self IsTabBarHidden:YES];
+	
 }
-
-#pragma mark - 创建前面两行的View
-
+//海波代码
+- (void)viewDidLayoutSubviews
+{
+	[super viewDidLayoutSubviews];
+	
+	//导航条
+	[self.navView mas_makeConstraints:^(MASConstraintMaker *make) {
+		make.left.right.equalTo(self.view);
+		make.top.equalTo(self.view).offset(20);
+		make.height.mas_equalTo(HRNavH);
+	}];
+}
 -(void)makeUI
 {
-    //先 创建 第一条线
-    
+	//海波代码----------------------start-------------------------------------
+	self.navigationController.navigationBar.hidden = YES;
+	
+	//背景图片
+	UIImageView *backgroundImage = [[UIImageView alloc] initWithFrame:[UIScreen mainScreen].bounds];
+	backgroundImage.image = [UIImage imageNamed:@"Snip20160825_3"];
+	[self.view addSubview:backgroundImage];
+	//导航条
+	HRNavigationBar *navView = [[HRNavigationBar alloc] init];
+	navView.titleLabel.text = @"输入密码";
+	navView.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.1];
+	[navView.leftButton setImage:[UIImage imageNamed:@"返回号"] forState:UIControlStateNormal];
+	[navView.leftButton addTarget:self action:@selector(leftButtonClick:) forControlEvents:UIControlEventTouchUpInside];
+	[self.view addSubview:navView];
+	self.navView = navView;
+	//海波代码----------------------end-------------------------------------
     UIView  * lineView1 = [[UIView alloc]init];
     
     [self.view addSubview:lineView1];
@@ -188,12 +222,18 @@
 
     
 }
-
+#pragma mark - UI事件  -haibo
+- (void)leftButtonClick:(UIButton *)btn
+{
+	[self.navigationController popViewControllerAnimated:YES];
+}
 #pragma mark -点击WiFiView 实现的方法
 -(void)WIFIClick
 {
     
     NSLog(@"点击了WIFI");
+	WiFiListController *WiFiVC = [[WiFiListController alloc] init];
+	[self.navigationController pushViewController:WiFiVC animated:YES];
     
     
 }
@@ -267,7 +307,8 @@
 -(void)StartViewClick
 {
     NSLog(@"点击了开始添加");
-    
+	WaitController *waitVC = [[WaitController alloc] init];
+	[self.navigationController pushViewController:waitVC animated:YES];
 }
 
 #pragma mark - tableView的UI设置
@@ -322,20 +363,45 @@
     return cell;
     
 }
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+#pragma mark  - 海波代码
+- (void)viewWillDisappear:(BOOL)animated
+{
+	[self IsTabBarHidden:YES];
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+#pragma mark - 隐藏底部条 - 海波代码
+- (void)IsTabBarHidden:(BOOL)hidden
+{
+	for (UIView *view  in self.tabBarController.view.subviews) {
+		if ([NSStringFromClass([view class]) isEqualToString:@"HRTabBar"]) {
+			view.hidden = hidden;
+		}
+	}
 }
-*/
+#pragma mark - 全屏放回 - 海波代码
+- (void)goBack
+{
+	// 获取系统自带滑动手势的target对象
+	id target = self.navigationController.interactivePopGestureRecognizer.delegate;
+	// 创建全屏滑动手势，调用系统自带滑动手势的target的action方法
+	UIPanGestureRecognizer *pan = [[UIPanGestureRecognizer alloc] initWithTarget:target action:@selector(handleNavigationTransition:)];
+	// 设置手势代理，拦截手势触发
+	pan.delegate = self;
+	// 给导航控制器的view添加全屏滑动手势
+	[self.view addGestureRecognizer:pan];
+	// 禁止使用系统自带的滑动手势
+	self.navigationController.interactivePopGestureRecognizer.enabled = NO;
+}
+// 什么时候调用：每次触发手势之前都会询问下代理，是否触发。
+// 作用：拦截手势触发
+- (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer
+{
+	// 注意：只有非根控制器才有滑动返回功能，根控制器没有。
+	// 判断导航控制器是否只有一个子控制器，如果只有一个子控制器，肯定是根控制器
+	if (self.childViewControllers.count == 1) {
+		// 表示用户在根控制器界面，就不需要触发滑动手势，
+		return NO;
+	}
+	return YES;
+}
 
 @end

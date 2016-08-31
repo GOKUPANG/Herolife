@@ -8,7 +8,7 @@
 
 #import "NextController.h"
 
-#import "EnterPSWController.h"
+#import "GoToSetUpController.h"
 
 @interface NextController ()
 /** 顶部条 */
@@ -33,6 +33,8 @@
 	
 	[self setupViews];
 	[self goBack];
+	//隐藏底部条
+	[self IsTabBarHidden:YES];
 }
 #pragma mark - 内部方法
 //初始化
@@ -158,8 +160,21 @@
 }
 - (void)nextButtonClick:(UIButton *)btn
 {
-	EnterPSWController *enterVC = [[EnterPSWController alloc] init];
+	GoToSetUpController *enterVC = [[GoToSetUpController alloc] init];
 	[self.navigationController pushViewController:enterVC animated:YES];
+}
+- (void)viewWillDisappear:(BOOL)animated
+{
+	[self IsTabBarHidden:YES];
+}
+#pragma mark - 隐藏底部条
+- (void)IsTabBarHidden:(BOOL)hidden
+{
+	for (UIView *view  in self.tabBarController.view.subviews) {
+		if ([NSStringFromClass([view class]) isEqualToString:@"HRTabBar"]) {
+			view.hidden = hidden;
+		}
+	}
 }
 #pragma mark - 全屏放回
 - (void)goBack

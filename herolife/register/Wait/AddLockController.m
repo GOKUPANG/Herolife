@@ -157,7 +157,7 @@
 - (void)saveButtonClick:(UIButton *)btn
 {
 	[self.view endEditing:YES];
-	DDLogInfo(@"------saveButtonClick");
+	
 }
 
 #pragma mark - UITextFieldDelegate

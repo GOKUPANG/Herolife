@@ -7,6 +7,7 @@
 //
 
 #import "WaitController.h"
+#import "AddLockController.h"
 #import "herolife-Swift.h"
 
 @interface WaitController ()
@@ -24,14 +25,24 @@
 @property(nonatomic, weak) HRButton *cancelButton;
 /** 头像底纹viwe */
 @property(nonatomic, weak) UIView *eptView;
+
+/** 停留时间 */
+@property(nonatomic, assign) int leftTime;
+
+/** 定时器 */
+@property (nonatomic, weak) NSTimer *timer;
 @end
 
 @implementation WaitController
-
+/** 停留时间 */
+static int const HRTimeDuration = 2;
 - (void)viewDidLoad {
     [super viewDidLoad];
 	
+	//添加定时器
+	[self addTimer];
 	[self setupViews];
+	
 }
 
 #pragma mark - 内部方法
@@ -42,7 +53,7 @@
 	
 	//背景图片
 	UIImageView *backgroundImage = [[UIImageView alloc] initWithFrame:[UIScreen mainScreen].bounds];
-	backgroundImage.image = [UIImage imageNamed:@"Snip20160825_3"];
+	backgroundImage.image = [UIImage imageNamed:@"icon_bg.jpg"];
 	[self.view addSubview:backgroundImage];
 	
 	//头像底纹viwe
@@ -86,13 +97,15 @@
 	
 	//倒计时  label
 	HRLabel *timeLabel = [[HRLabel alloc] init];
-	timeLabel.text = @"57秒";
+	NSString *title = [NSString stringWithFormat:@"%zd秒", self.leftTime];
+	timeLabel.text = title;
 	[self.view addSubview:timeLabel];
 	self.timeLabel = timeLabel;
 	
 	//取消按钮
 	HRButton *cancelButton = [HRButton buttonWithType:UIButtonTypeCustom];
 	cancelButton.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.1];
+	[cancelButton addTarget:self action:@selector(cancelButtonClick:) forControlEvents:UIControlEventTouchUpInside];
 	[cancelButton setTitle:@"取消" forState:UIControlStateNormal];
 	[self.view addSubview:cancelButton];
 	self.cancelButton = cancelButton;
@@ -161,11 +174,38 @@
 	self.cancelButton.layer.masksToBounds = YES;
 }
 
+#pragma mark - 添加定时器
+- (void)addTimer
+{
+	self.leftTime = HRTimeDuration;
+	self.timer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(updateTimeLabel) userInfo:nil repeats:YES];
+	
+	
+}
 
+- (void)updateTimeLabel
+{
+	self.leftTime--;
+	// 更新文字
+	NSString *title = [NSString stringWithFormat:@"%zd秒", self.leftTime];
+	self.timeLabel.text = title;
+	if (self.leftTime == 0) {
+		AddLockController *addLockVC = [[AddLockController alloc] init];
+		[self.navigationController pushViewController:addLockVC animated:YES];
+		[self.timer invalidate];
+	}
+	
+}
 
+- (void)dealloc
+{
+	[self.timer invalidate];
+}
 
-
-
+- (void)cancelButtonClick:(UIButton *)btn
+{
+	[self.navigationController popViewControllerAnimated:YES];
+}
 
 
 

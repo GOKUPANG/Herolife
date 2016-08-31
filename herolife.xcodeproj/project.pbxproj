@@ -64,6 +64,7 @@
 		D16B14081D766164005CE35B /* MOBFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D16B13FF1D766164005CE35B /* MOBFoundation.framework */; };
 		D16B14091D766164005CE35B /* ShareSDK.bundle in Resources */ = {isa = PBXBuildFile; fileRef = D16B14001D766164005CE35B /* ShareSDK.bundle */; };
 		D16B140A1D766164005CE35B /* ShareSDKConnector.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D16B14011D766164005CE35B /* ShareSDKConnector.framework */; };
+		D16B140D1D7674EA005CE35B /* GoToSetUpController.m in Sources */ = {isa = PBXBuildFile; fileRef = D16B140C1D7674EA005CE35B /* GoToSetUpController.m */; };
 		D17CF0F11D6567E7007C95DD /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D17CF0F01D6567E7007C95DD /* main.m */; };
 		D17CF0F41D6567E7007C95DD /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D17CF0F31D6567E7007C95DD /* AppDelegate.m */; };
 		D17CF0FA1D6567E7007C95DD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D17CF0F81D6567E7007C95DD /* Main.storyboard */; };
@@ -265,6 +266,8 @@
 		D16B13FF1D766164005CE35B /* MOBFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = MOBFoundation.framework; sourceTree = "<group>"; };
 		D16B14001D766164005CE35B /* ShareSDK.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = ShareSDK.bundle; sourceTree = "<group>"; };
 		D16B14011D766164005CE35B /* ShareSDKConnector.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ShareSDKConnector.framework; sourceTree = "<group>"; };
+		D16B140B1D7674E6005CE35B /* GoToSetUpController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoToSetUpController.h; sourceTree = "<group>"; };
+		D16B140C1D7674EA005CE35B /* GoToSetUpController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GoToSetUpController.m; sourceTree = "<group>"; };
 		D17CF0EC1D6567E7007C95DD /* herolife.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = herolife.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D17CF0F01D6567E7007C95DD /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		D17CF0F21D6567E7007C95DD /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = ../../AppDelegate.h; sourceTree = "<group>"; };
@@ -436,6 +439,8 @@
 		18C6975E1D7462B9004DA2B1 /* 斌 */ = {
 			isa = PBXGroup;
 			children = (
+				D16B140B1D7674E6005CE35B /* GoToSetUpController.h */,
+				D16B140C1D7674EA005CE35B /* GoToSetUpController.m */,
 				D1D23E081D758B0700FCB5C9 /* EnterPSWController.h */,
 				D1D23E061D758AFD00FCB5C9 /* EnterPSWController.m */,
 				18C6975F1D7462B9004DA2B1 /* cell */,
@@ -1343,6 +1348,7 @@
 				D17CF0F11D6567E7007C95DD /* main.m in Sources */,
 				D1089F751D717FE6003E9FF2 /* WaitController.m in Sources */,
 				D1D23E071D758AFD00FCB5C9 /* EnterPSWController.m in Sources */,
+				D16B140D1D7674EA005CE35B /* GoToSetUpController.m in Sources */,
 				D1B565941D73C86E00A852B2 /* NVActivityIndicatorViewable.swift in Sources */,
 				D1940DDD1D6B00B000A262EC /* UIView+XD.m in Sources */,
 				18C697A11D7462B9004DA2B1 /* ShouQuanManagerController.m in Sources */,

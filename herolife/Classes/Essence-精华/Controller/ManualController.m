@@ -44,6 +44,9 @@
 	//初始化
 	[self setupViews];
 	[self goBack];
+	
+	//隐藏底部条
+	[self IsTabBarHidden:YES];
 }
 
 #pragma mark - 内部方法
@@ -171,6 +174,7 @@
 	
 }
 
+
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
 	
@@ -183,6 +187,20 @@
 - (void)manualButtonClick:(UIButton *)btn
 {
 	
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+	[self IsTabBarHidden:NO];
+}
+#pragma mark - 隐藏底部条
+- (void)IsTabBarHidden:(BOOL)hidden
+{
+	for (UIView *view  in self.tabBarController.view.subviews) {
+		if ([NSStringFromClass([view class]) isEqualToString:@"HRTabBar"]) {
+			view.hidden = hidden;
+		}
+	}
 }
 #pragma mark - 全屏放回
 - (void)backButtonClick:(UIButton *)btn
