@@ -20,6 +20,7 @@
 		1868B8ED1D76C4B300D19386 /* 后退@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1868B8EC1D76C4B300D19386 /* 后退@3x.png */; };
 		1868B8EF1D76CD3C00D19386 /* 智能开锁@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1868B8EE1D76CD3C00D19386 /* 智能开锁@2x.png */; };
 		1868B8F11D76CD4A00D19386 /* 智能开锁@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1868B8F01D76CD4A00D19386 /* 智能开锁@3x.png */; };
+		1868B8F71D76DDD400D19386 /* BackPicSetController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1868B8F61D76DDD400D19386 /* BackPicSetController.m */; };
 		18C697981D7462B9004DA2B1 /* DoorRecordCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 18C697611D7462B9004DA2B1 /* DoorRecordCell.m */; };
 		18C697991D7462B9004DA2B1 /* 键盘@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 18C697631D7462B9004DA2B1 /* 键盘@2x.png */; };
 		18C6979A1D7462B9004DA2B1 /* 键盘@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 18C697641D7462B9004DA2B1 /* 键盘@3x.png */; };
@@ -187,6 +188,8 @@
 		1868B8EC1D76C4B300D19386 /* 后退@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "后退@3x.png"; sourceTree = "<group>"; };
 		1868B8EE1D76CD3C00D19386 /* 智能开锁@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "智能开锁@2x.png"; sourceTree = "<group>"; };
 		1868B8F01D76CD4A00D19386 /* 智能开锁@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "智能开锁@3x.png"; sourceTree = "<group>"; };
+		1868B8F51D76DDD400D19386 /* BackPicSetController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BackPicSetController.h; sourceTree = "<group>"; };
+		1868B8F61D76DDD400D19386 /* BackPicSetController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BackPicSetController.m; sourceTree = "<group>"; };
 		18C697601D7462B9004DA2B1 /* DoorRecordCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DoorRecordCell.h; sourceTree = "<group>"; };
 		18C697611D7462B9004DA2B1 /* DoorRecordCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DoorRecordCell.m; sourceTree = "<group>"; };
 		18C697631D7462B9004DA2B1 /* 键盘@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "键盘@2x.png"; sourceTree = "<group>"; };
@@ -542,6 +545,8 @@
 		18C697651D7462B9004DA2B1 /* 控制器 */ = {
 			isa = PBXGroup;
 			children = (
+				1868B8F51D76DDD400D19386 /* BackPicSetController.h */,
+				1868B8F61D76DDD400D19386 /* BackPicSetController.m */,
 				18C697661D7462B9004DA2B1 /* AccountManagementController.h */,
 				18C697671D7462B9004DA2B1 /* AccountManagementController.m */,
 				18C697681D7462B9004DA2B1 /* APPPSWController.h */,
@@ -1317,6 +1322,7 @@
 				D1B5658A1D73C86E00A852B2 /* NVActivityIndicatorAnimationLineSpinFadeLoader.swift in Sources */,
 				D1B565911D73C86E00A852B2 /* NVActivityIndicatorAnimationDelegate.swift in Sources */,
 				18C697AC1D7462B9004DA2B1 /* PCCircleInfoView.m in Sources */,
+				1868B8F71D76DDD400D19386 /* BackPicSetController.m in Sources */,
 				D1940E3B1D6BFAFA00A262EC /* UIImage+MultiFormat.m in Sources */,
 				D1B565841D73C86E00A852B2 /* NVActivityIndicatorAnimationBlank.swift in Sources */,
 				D1B565761D73C86E00A852B2 /* NVActivityIndicatorAnimationBallGridPulse.swift in Sources */,

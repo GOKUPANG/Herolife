@@ -10,6 +10,7 @@
 #import "SettingCell.h"
 #import "AccountManagementController.h"
 #import "GestureViewController.h"
+#import "BackPicSetController.h"
 
 @interface SettingController ()<UITableViewDelegate, UITableViewDataSource>
 /** 顶部条 */
@@ -246,6 +247,8 @@ static NSString *cellID = @"cellID";
             
             else if(indexPath.row == 2)
             {
+                BackPicSetController *BPC = [BackPicSetController new];
+                [self.navigationController pushViewController:BPC animated:YES];
                 
             }
             
