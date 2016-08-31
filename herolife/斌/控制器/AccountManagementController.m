@@ -132,6 +132,9 @@
     [navView.leftButton addTarget:self action:@selector(popToLastVC) forControlEvents:UIControlEventTouchUpInside];
     
     navView.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.1];
+    
+    [navView.leftButton setImage:[UIImage imageNamed:@"返回号"] forState:UIControlStateNormal];
+    [navView.leftButton addTarget:self action:@selector(backButtonClick:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:navView];
     self.navView = navView;
 
@@ -143,6 +146,13 @@
     
     
 }
+
+#pragma mark - UI事件  -haibo
+- (void)backButtonClick:(UIButton *)btn
+{
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
 
 #pragma mark -跳转到下一个界面  
 
@@ -242,7 +252,11 @@
     
     _alphaView.hidden =YES;
     
-    self.navigationController.navigationBar.hidden =YES;
+   // self.navigationController.navigationBar.hidden =YES;
+    
+    
+    self.navView.hidden = YES;
+    
     
     
     self.title = @"";
@@ -313,8 +327,11 @@
     p.y+=150;
     
     [self.view setCenter:p];
-    _alphaView.hidden = NO;
-    self.navigationController.navigationBar.hidden = NO;
+   // _alphaView.hidden = NO;
+  //  self.navigationController.navigationBar.hidden = NO;
+    
+    self.navView.hidden= NO;
+    
     
     self.title = @"账号管理";
     

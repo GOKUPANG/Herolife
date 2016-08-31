@@ -94,11 +94,14 @@
     
     //导航条
     HRNavigationBar *navView = [[HRNavigationBar alloc] init];
-    navView.titleLabel.text = @"智能开锁";
+    navView.titleLabel.text = @"门锁记录";
     [navView.leftButton addTarget:self action:@selector(popToLastVC) forControlEvents:UIControlEventTouchUpInside];
     
     navView.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.1];
     [self.view addSubview:navView];
+    [navView.leftButton setImage:[UIImage imageNamed:@"返回号"] forState:UIControlStateNormal];
+    [navView.leftButton addTarget:self action:@selector(backButtonClick:) forControlEvents:UIControlEventTouchUpInside];
+    
     self.navView = navView;
     
     [self setNavbar];
@@ -107,6 +110,13 @@
     
 
     // Do any additional setup after loading the view.
+}
+
+
+#pragma mark - UI事件  -haibo
+- (void)backButtonClick:(UIButton *)btn
+{
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 #pragma mark -推送开关

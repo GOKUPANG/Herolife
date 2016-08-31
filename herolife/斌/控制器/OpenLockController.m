@@ -106,10 +106,12 @@
     
     navView.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.1];
     [self.view addSubview:navView];
+    
+    [navView.leftButton setImage:[UIImage imageNamed:@"返回号"] forState:UIControlStateNormal];
+    [navView.leftButton addTarget:self action:@selector(backButtonClick:) forControlEvents:UIControlEventTouchUpInside];
+    
+    
     self.navView = navView;
-
-
-    //self.title = @"智能开锁";
     
     
     [self makeUI];
@@ -239,7 +241,7 @@
     
     
     
-    /** 回退按钮 X */
+    /** 回退图片 X */
     
    UIImageView *BackSpaceImg = [[UIImageView alloc]init];
     
@@ -255,20 +257,38 @@
     
     
     
-   
-    /** 回退删除功能 点击事件*/
-   // [backSpaceBtn addTarget:self action:@selector(BackSpace) forControlEvents:UIControlEventTouchUpInside];
+    /** 回退按钮*/
     
+    UIButton *backBtn = [[UIButton alloc]init];
+    
+    [self.view addSubview:backBtn];
+    
+    backBtn.sd_layout
+    .topEqualToView(imageView1)
+    .bottomEqualToView(self.view)
+    .rightEqualToView(self.view)
+    .widthIs(125.0/375.0 * SCREEN_W);
+    /** 回退删除功能 点击事件*/
+
+    [backBtn addTarget:self action:@selector(BackSpace) forControlEvents:UIControlEventTouchUpInside];
     
    
     /** 为按钮添加长按手势*/
     
     UILongPressGestureRecognizer * LPGR = [[ UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(LongPress)];
     
-   // [backSpaceBtn addGestureRecognizer:LPGR];
+    [backBtn addGestureRecognizer:LPGR];
     
     
 }
+
+
+#pragma mark - UI事件  -haibo
+- (void)backButtonClick:(UIButton *)btn
+{
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
 
 #pragma mark - 长按删除全部
 

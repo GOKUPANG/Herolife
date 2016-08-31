@@ -114,10 +114,15 @@ static NSString *ViewOfCustomerTableViewCellIdentifier = @"ViewOfCustomerTableVi
     
     //导航条
     HRNavigationBar *navView = [[HRNavigationBar alloc] init];
-    navView.titleLabel.text = @"智能开锁";
+    navView.titleLabel.text = @"授权管理";
     [navView.leftButton addTarget:self action:@selector(popToLastVC) forControlEvents:UIControlEventTouchUpInside];
     
+    
     navView.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.1];
+    
+    [navView.leftButton setImage:[UIImage imageNamed:@"返回号"] forState:UIControlStateNormal];
+    [navView.leftButton addTarget:self action:@selector(backButtonClick:) forControlEvents:UIControlEventTouchUpInside];
+    
     [self.view addSubview:navView];
     self.navView = navView;
 
@@ -134,6 +139,12 @@ static NSString *ViewOfCustomerTableViewCellIdentifier = @"ViewOfCustomerTableVi
     _listTableView.allowsSelection = YES;
     _listTableView.backgroundColor = [UIColor clearColor];
     [self.view addSubview:_listTableView];
+}
+
+#pragma mark - UI事件  -haibo
+- (void)backButtonClick:(UIButton *)btn
+{
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 
