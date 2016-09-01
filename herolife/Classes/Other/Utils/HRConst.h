@@ -47,6 +47,11 @@ UIKIT_EXTERN CGFloat const HRNavH;
 /// 获取小睿情景设备信息GET请求URL
 #define HRAPI_XiaoRuiIHRScene_URL @"http://www.gzhuarui.cn/?q=huaruiapi/xiaorui-scene"
 
+
+/// 忘记密码POST请求URL
+#define HRAPI_ForgetPasswd_URL @"http://www.gzhuarui.cn/?q=huaruiapi/user/request_new_password"
+
+
 /* Error domains and codes*/
 #define HRERR_DOMAIN		@"com.huarui"
 #define HRERR_HTTP			@".http"

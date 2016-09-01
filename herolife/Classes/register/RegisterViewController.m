@@ -106,6 +106,7 @@ static NSTimeInterval const dimissTimer = 2;
 	
 	//密码
 	self.passwdField = [self setupTextFieldWithImageName:@"用户" placeholder:@"密码"];
+	[self.passwdField setSecureTextEntry:YES];
 	UIView *passwdLine = [[UIView alloc] init];
 	passwdLine.backgroundColor = [UIColor whiteColor];
 	[self.view addSubview:passwdLine];
@@ -113,6 +114,7 @@ static NSTimeInterval const dimissTimer = 2;
 	
 	//确认密码
 	self.passwdConfirmField = [self setupTextFieldWithImageName:@"确认密码" placeholder:@"确认密码"];
+	[self.passwdConfirmField setSecureTextEntry:YES];
 	UIView *passwdConfirmLine = [[UIView alloc] init];
 	passwdConfirmLine.backgroundColor = [UIColor whiteColor];
 	[self.view addSubview:passwdConfirmLine];
@@ -124,6 +126,7 @@ static NSTimeInterval const dimissTimer = 2;
 	emailLine.backgroundColor = [UIColor whiteColor];
 	[self.view addSubview:emailLine];
 	self.emailLine = emailLine;
+	
 	//手机号码
 	self.phoneField = [self setupTextFieldWithImageName:@"手机" placeholder:@"手机号码"];
 	[self.phoneField setReturnKeyType:UIReturnKeyGo];
@@ -430,10 +433,21 @@ static NSTimeInterval const dimissTimer = 2;
 		//动画
 		[self setupAnimateWithIndex:2];
 	} else if (textField == self.passwdConfirmField) {
+		
 		//动画
 		[self setupAnimateWithIndex:3];
 		
 	}else if (textField == self.emailField) {
+		NSString *pass = self.passwdField.text;
+		DDLogInfo(@"length-------------------------%lu",(unsigned long)pass.length);
+		if (self.passwdField.text.length < 0.1 &&self.passwdConfirmField.text.length < 0.1) {
+			[SVProgressTool hr_showErrorWithStatus:@"密码或确认密码不能为空!"];
+			return NO;
+		}
+		if (![self.passwdField.text isEqualToString:self.passwdConfirmField.text]) {
+			[SVProgressTool hr_showErrorWithStatus:@"两次输入的密码不一样,请重新输入!"];
+			return NO;
+		}
 		//动画
 		[self setupAnimateWithIndex:4];
 		
@@ -461,6 +475,16 @@ static NSTimeInterval const dimissTimer = 2;
 		[self setupAnimateWithIndex:2];
 		return [self.passwdConfirmField becomeFirstResponder];
 	} else if (textField == self.passwdConfirmField) {
+		
+		
+		if (self.passwdField.text.length < 0.1 &&self.passwdConfirmField.text.length < 0.1) {
+			[SVProgressTool hr_showErrorWithStatus:@"密码或确认密码不能为空!"];
+			return NO;
+		}
+		if (![self.passwdField.text isEqualToString:self.passwdConfirmField.text]) {
+			[SVProgressTool hr_showErrorWithStatus:@"两次输入的密码不一样,请重新输入!"];
+			return NO;
+		}
 		[self setupAnimateWithIndex:3];
 		return [self.emailField becomeFirstResponder];
 	} else if (textField == self.emailField) {

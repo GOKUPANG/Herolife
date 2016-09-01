@@ -72,6 +72,18 @@ static NSTimeInterval const dimissTimer = 2;
 		DDLogInfo(@"str2|%@|", str);
 		
 		str = [str replaceUnicode:str];
+		if ([str containsString:@"[\""]) {
+			
+			NSRange range1 = [str rangeOfString:@"[\""];
+			str = [str substringFromIndex:range1.location + 2];
+			NSRange range2 = [str rangeOfString:@"\"]"];
+			str = [str substringToIndex:range2.location - 1];
+			NSString *description = [NSString stringWithFormat:@"%@  %@", code,str];
+			DDLogInfo(@"description|%@|", description);
+			[SVProgressTool hr_showErrorWithStatus:description];
+			
+			return;
+		}
 		NSRange range1 = [str rangeOfString:@":{"];
 		str = [str substringFromIndex:range1.location + 2];
 		NSRange range2 = [str rangeOfString:@"}"];

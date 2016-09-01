@@ -60,6 +60,7 @@
 #import <SVProgressHUD.h>
 #import "QRTools.h"
 #import "CreateXRHttpTools.h"
+#import "HRHTTPTool.h"
 
 #define UIScreenH [UIScreen mainScreen].bounds.size.height
 #define UIScreenW [UIScreen mainScreen].bounds.size.width
@@ -252,7 +253,7 @@
 
 /******************************* HTTP URL key ************************/
 ///用户注册POST请求URL
-#define HRHTTP_UserRegister_URL @""
+#define HRHTTP_UserRegister_URL @"http://www.gzhuarui.cn/?q=huaruiapi/user"
 
 /********************************************** 通知 key *******************/
 /// 发送通知

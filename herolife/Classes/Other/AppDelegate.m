@@ -947,7 +947,6 @@ static NSUInteger lengthInteger = 0;
 }
 - (void)setupWindow
 {
-	BOOL isLogin = YES;
 	
 	self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
 	
@@ -955,7 +954,7 @@ static NSUInteger lengthInteger = 0;
 	HRNavigationViewController *nav = [[HRNavigationViewController alloc] initWithRootViewController:loginVC];
 	HRTabBarViewController *tabBarVC = [[HRTabBarViewController alloc] init];
 	
-	if (isLogin) {
+	if ([Login isLogined]) {
 		self.window.rootViewController = tabBarVC;
 	}else
 	{

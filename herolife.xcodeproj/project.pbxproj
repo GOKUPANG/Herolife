@@ -156,15 +156,6 @@
 		D16B18EB1D771B2E005CE35B /* RegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D16B186F1D771B2E005CE35B /* RegisterViewController.m */; };
 		D16B18EC1D771B2E005CE35B /* AddLockController.m in Sources */ = {isa = PBXBuildFile; fileRef = D16B18731D771B2E005CE35B /* AddLockController.m */; };
 		D16B18ED1D771B2E005CE35B /* WaitController.m in Sources */ = {isa = PBXBuildFile; fileRef = D16B18751D771B2E005CE35B /* WaitController.m */; };
-		D16B18FE1D771B79005CE35B /* ShareSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D16B18F01D771B79005CE35B /* ShareSDK.framework */; };
-		D16B18FF1D771B79005CE35B /* ShareSDKExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D16B18F31D771B79005CE35B /* ShareSDKExtension.framework */; };
-		D16B19001D771B79005CE35B /* ShareSDKUI.bundle in Resources */ = {isa = PBXBuildFile; fileRef = D16B18F41D771B79005CE35B /* ShareSDKUI.bundle */; };
-		D16B19011D771B79005CE35B /* ShareSDKUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D16B18F51D771B79005CE35B /* ShareSDKUI.framework */; };
-		D16B19021D771B79005CE35B /* TencentOpenAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D16B18F81D771B79005CE35B /* TencentOpenAPI.framework */; };
-		D16B19031D771B79005CE35B /* TencentOpenApi_IOS_Bundle.bundle in Resources */ = {isa = PBXBuildFile; fileRef = D16B18F91D771B79005CE35B /* TencentOpenApi_IOS_Bundle.bundle */; };
-		D16B19041D771B79005CE35B /* MOBFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D16B18FB1D771B79005CE35B /* MOBFoundation.framework */; };
-		D16B19051D771B79005CE35B /* ShareSDK.bundle in Resources */ = {isa = PBXBuildFile; fileRef = D16B18FC1D771B79005CE35B /* ShareSDK.bundle */; };
-		D16B19061D771B79005CE35B /* ShareSDKConnector.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D16B18FD1D771B79005CE35B /* ShareSDKConnector.framework */; };
 		D16B190B1D771BF0005CE35B /* WiFiListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D16B19081D771BF0005CE35B /* WiFiListCell.m */; };
 		D16B190C1D771BF0005CE35B /* WiFiListController.m in Sources */ = {isa = PBXBuildFile; fileRef = D16B190A1D771BF0005CE35B /* WiFiListController.m */; };
 		D16B19111D771C3E005CE35B /* SettingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D16B190E1D771C3D005CE35B /* SettingCell.m */; };
@@ -175,6 +166,16 @@
 		D17CF0FF1D6567E7007C95DD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D17CF0FD1D6567E7007C95DD /* LaunchScreen.storyboard */; };
 		D17CF10A1D6567E7007C95DD /* herolifeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D17CF1091D6567E7007C95DD /* herolifeTests.m */; };
 		D17CF1151D6567E7007C95DD /* herolifeUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = D17CF1141D6567E7007C95DD /* herolifeUITests.m */; };
+		D181EC471D77D6B400AC1533 /* ShareSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D181EC391D77D6B400AC1533 /* ShareSDK.framework */; };
+		D181EC481D77D6B400AC1533 /* ShareSDKExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D181EC3C1D77D6B400AC1533 /* ShareSDKExtension.framework */; };
+		D181EC491D77D6B400AC1533 /* ShareSDKUI.bundle in Resources */ = {isa = PBXBuildFile; fileRef = D181EC3D1D77D6B400AC1533 /* ShareSDKUI.bundle */; };
+		D181EC4A1D77D6B400AC1533 /* ShareSDKUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D181EC3E1D77D6B400AC1533 /* ShareSDKUI.framework */; };
+		D181EC4B1D77D6B400AC1533 /* TencentOpenAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D181EC411D77D6B400AC1533 /* TencentOpenAPI.framework */; };
+		D181EC4C1D77D6B400AC1533 /* TencentOpenApi_IOS_Bundle.bundle in Resources */ = {isa = PBXBuildFile; fileRef = D181EC421D77D6B400AC1533 /* TencentOpenApi_IOS_Bundle.bundle */; };
+		D181EC4D1D77D6B400AC1533 /* MOBFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D181EC441D77D6B400AC1533 /* MOBFoundation.framework */; };
+		D181EC4E1D77D6B400AC1533 /* ShareSDK.bundle in Resources */ = {isa = PBXBuildFile; fileRef = D181EC451D77D6B400AC1533 /* ShareSDK.bundle */; };
+		D181EC4F1D77D6B400AC1533 /* ShareSDKConnector.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D181EC461D77D6B400AC1533 /* ShareSDKConnector.framework */; };
+		D181EC521D77FDC800AC1533 /* HRHTTPTool.m in Sources */ = {isa = PBXBuildFile; fileRef = D181EC511D77FDC800AC1533 /* HRHTTPTool.m */; };
 		D1940DCF1D6AF72400A262EC /* libicucore.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D1940DCE1D6AF72400A262EC /* libicucore.tbd */; };
 		D1940DD11D6AF73300A262EC /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D1940DD01D6AF73300A262EC /* libz.tbd */; };
 		D1940DD31D6AF73C00A262EC /* libstdc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D1940DD21D6AF73C00A262EC /* libstdc++.tbd */; };
@@ -402,8 +403,8 @@
 		D16B18361D771B2E005CE35B /* HRTabBarButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HRTabBarButton.m; sourceTree = "<group>"; };
 		D16B18371D771B2E005CE35B /* HRTabBarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HRTabBarViewController.h; sourceTree = "<group>"; };
 		D16B18381D771B2E005CE35B /* HRTabBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HRTabBarViewController.m; sourceTree = "<group>"; };
-		D16B18391D771B2E005CE35B /* HRConst.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HRConst.h; sourceTree = "<group>"; };
-		D16B183A1D771B2E005CE35B /* HRConst.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HRConst.m; sourceTree = "<group>"; };
+		D16B18391D771B2E005CE35B /* HRConst.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HRConst.h; path = Classes/Other/Utils/HRConst.h; sourceTree = "<group>"; };
+		D16B183A1D771B2E005CE35B /* HRConst.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HRConst.m; path = Classes/Other/Utils/HRConst.m; sourceTree = "<group>"; };
 		D16B183C1D771B2E005CE35B /* HRDOData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HRDOData.h; sourceTree = "<group>"; };
 		D16B183D1D771B2E005CE35B /* HRDOData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HRDOData.m; sourceTree = "<group>"; };
 		D16B183E1D771B2E005CE35B /* HRInfraredDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HRInfraredDevice.h; sourceTree = "<group>"; };
@@ -452,20 +453,11 @@
 		D16B186C1D771B2E005CE35B /* ManualController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ManualController.m; sourceTree = "<group>"; };
 		D16B186E1D771B2E005CE35B /* RegisterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegisterViewController.h; sourceTree = "<group>"; };
 		D16B186F1D771B2E005CE35B /* RegisterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegisterViewController.m; sourceTree = "<group>"; };
-		D16B18721D771B2E005CE35B /* AddLockController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddLockController.h; sourceTree = "<group>"; };
-		D16B18731D771B2E005CE35B /* AddLockController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddLockController.m; sourceTree = "<group>"; };
+		D16B18721D771B2E005CE35B /* AddLockController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AddLockController.h; path = ../Wait/AddLockController.h; sourceTree = "<group>"; };
+		D16B18731D771B2E005CE35B /* AddLockController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AddLockController.m; path = ../Wait/AddLockController.m; sourceTree = "<group>"; };
 		D16B18741D771B2E005CE35B /* WaitController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WaitController.h; sourceTree = "<group>"; };
 		D16B18751D771B2E005CE35B /* WaitController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WaitController.m; sourceTree = "<group>"; };
 		D16B18EE1D771B59005CE35B /* PrefixHeader.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
-		D16B18F01D771B79005CE35B /* ShareSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ShareSDK.framework; sourceTree = "<group>"; };
-		D16B18F31D771B79005CE35B /* ShareSDKExtension.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ShareSDKExtension.framework; sourceTree = "<group>"; };
-		D16B18F41D771B79005CE35B /* ShareSDKUI.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = ShareSDKUI.bundle; sourceTree = "<group>"; };
-		D16B18F51D771B79005CE35B /* ShareSDKUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ShareSDKUI.framework; sourceTree = "<group>"; };
-		D16B18F81D771B79005CE35B /* TencentOpenAPI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = TencentOpenAPI.framework; sourceTree = "<group>"; };
-		D16B18F91D771B79005CE35B /* TencentOpenApi_IOS_Bundle.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = TencentOpenApi_IOS_Bundle.bundle; sourceTree = "<group>"; };
-		D16B18FB1D771B79005CE35B /* MOBFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = MOBFoundation.framework; sourceTree = "<group>"; };
-		D16B18FC1D771B79005CE35B /* ShareSDK.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = ShareSDK.bundle; sourceTree = "<group>"; };
-		D16B18FD1D771B79005CE35B /* ShareSDKConnector.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ShareSDKConnector.framework; sourceTree = "<group>"; };
 		D16B19071D771BF0005CE35B /* WiFiListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WiFiListCell.h; sourceTree = "<group>"; };
 		D16B19081D771BF0005CE35B /* WiFiListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WiFiListCell.m; sourceTree = "<group>"; };
 		D16B19091D771BF0005CE35B /* WiFiListController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WiFiListController.h; sourceTree = "<group>"; };
@@ -486,6 +478,17 @@
 		D17CF1101D6567E7007C95DD /* herolifeUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = herolifeUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D17CF1141D6567E7007C95DD /* herolifeUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = herolifeUITests.m; sourceTree = "<group>"; };
 		D17CF1161D6567E7007C95DD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D181EC391D77D6B400AC1533 /* ShareSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ShareSDK.framework; sourceTree = "<group>"; };
+		D181EC3C1D77D6B400AC1533 /* ShareSDKExtension.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ShareSDKExtension.framework; sourceTree = "<group>"; };
+		D181EC3D1D77D6B400AC1533 /* ShareSDKUI.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = ShareSDKUI.bundle; sourceTree = "<group>"; };
+		D181EC3E1D77D6B400AC1533 /* ShareSDKUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ShareSDKUI.framework; sourceTree = "<group>"; };
+		D181EC411D77D6B400AC1533 /* TencentOpenAPI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = TencentOpenAPI.framework; sourceTree = "<group>"; };
+		D181EC421D77D6B400AC1533 /* TencentOpenApi_IOS_Bundle.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = TencentOpenApi_IOS_Bundle.bundle; sourceTree = "<group>"; };
+		D181EC441D77D6B400AC1533 /* MOBFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = MOBFoundation.framework; sourceTree = "<group>"; };
+		D181EC451D77D6B400AC1533 /* ShareSDK.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = ShareSDK.bundle; sourceTree = "<group>"; };
+		D181EC461D77D6B400AC1533 /* ShareSDKConnector.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ShareSDKConnector.framework; sourceTree = "<group>"; };
+		D181EC501D77FDC800AC1533 /* HRHTTPTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HRHTTPTool.h; sourceTree = "<group>"; };
+		D181EC511D77FDC800AC1533 /* HRHTTPTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HRHTTPTool.m; sourceTree = "<group>"; };
 		D1940DCE1D6AF72400A262EC /* libicucore.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libicucore.tbd; path = usr/lib/libicucore.tbd; sourceTree = SDKROOT; };
 		D1940DD01D6AF73300A262EC /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		D1940DD21D6AF73C00A262EC /* libstdc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libstdc++.tbd"; path = "usr/lib/libstdc++.tbd"; sourceTree = SDKROOT; };
@@ -504,13 +507,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				D1940DD71D6AF76400A262EC /* libsqlite3.tbd in Frameworks */,
-				D16B19041D771B79005CE35B /* MOBFoundation.framework in Frameworks */,
-				D16B19011D771B79005CE35B /* ShareSDKUI.framework in Frameworks */,
-				D16B18FF1D771B79005CE35B /* ShareSDKExtension.framework in Frameworks */,
+				D181EC4D1D77D6B400AC1533 /* MOBFoundation.framework in Frameworks */,
+				D181EC4A1D77D6B400AC1533 /* ShareSDKUI.framework in Frameworks */,
+				D181EC481D77D6B400AC1533 /* ShareSDKExtension.framework in Frameworks */,
 				D1940DD51D6AF74A00A262EC /* JavaScriptCore.framework in Frameworks */,
-				D16B18FE1D771B79005CE35B /* ShareSDK.framework in Frameworks */,
-				D16B19021D771B79005CE35B /* TencentOpenAPI.framework in Frameworks */,
-				D16B19061D771B79005CE35B /* ShareSDKConnector.framework in Frameworks */,
+				D181EC471D77D6B400AC1533 /* ShareSDK.framework in Frameworks */,
+				D181EC4B1D77D6B400AC1533 /* TencentOpenAPI.framework in Frameworks */,
+				D181EC4F1D77D6B400AC1533 /* ShareSDKConnector.framework in Frameworks */,
 				D1940DD31D6AF73C00A262EC /* libstdc++.tbd in Frameworks */,
 				D1940DD11D6AF73300A262EC /* libz.tbd in Frameworks */,
 				D1940DCF1D6AF72400A262EC /* libicucore.tbd in Frameworks */,
@@ -723,6 +726,8 @@
 		D16B17961D771B2D005CE35B /* AddLock */ = {
 			isa = PBXGroup;
 			children = (
+				D16B18721D771B2E005CE35B /* AddLockController.h */,
+				D16B18731D771B2E005CE35B /* AddLockController.m */,
 			);
 			path = AddLock;
 			sourceTree = "<group>";
@@ -750,10 +755,10 @@
 		D16B179F1D771B2D005CE35B /* Login */ = {
 			isa = PBXGroup;
 			children = (
-				D16B17A01D771B2D005CE35B /* InputText.h */,
-				D16B17A11D771B2D005CE35B /* InputText.m */,
 				D16B17A21D771B2D005CE35B /* LoginController.h */,
 				D16B17A31D771B2D005CE35B /* LoginController.m */,
+				D16B17A01D771B2D005CE35B /* InputText.h */,
+				D16B17A11D771B2D005CE35B /* InputText.m */,
 				D16B17A41D771B2D005CE35B /* UIView+XD.h */,
 				D16B17A51D771B2D005CE35B /* UIView+XD.m */,
 			);
@@ -783,7 +788,7 @@
 		D16B17AC1D771B2D005CE35B /* Library */ = {
 			isa = PBXGroup;
 			children = (
-				D16B18EF1D771B79005CE35B /* ShareSDK  */,
+				D181EC381D77D6B400AC1533 /* ShareSDK  */,
 				D16B17AD1D771B2D005CE35B /* CoverFlow */,
 				D16B17B41D771B2D005CE35B /* fmdb */,
 				D16B17C01D771B2D005CE35B /* FTPopOverMenu */,
@@ -956,8 +961,6 @@
 			children = (
 				D16B18191D771B2E005CE35B /* Category */,
 				D16B182E1D771B2E005CE35B /* Controller */,
-				D16B18391D771B2E005CE35B /* HRConst.h */,
-				D16B183A1D771B2E005CE35B /* HRConst.m */,
 				D16B183B1D771B2E005CE35B /* Models */,
 				D16B18561D771B2E005CE35B /* Tools */,
 				D16B18631D771B2E005CE35B /* View */,
@@ -1057,6 +1060,8 @@
 				D16B18601D771B2E005CE35B /* QRTools.m */,
 				D16B18611D771B2E005CE35B /* SVProgressTool.h */,
 				D16B18621D771B2E005CE35B /* SVProgressTool.m */,
+				D181EC501D77FDC800AC1533 /* HRHTTPTool.h */,
+				D181EC511D77FDC800AC1533 /* HRHTTPTool.m */,
 			);
 			path = Tools;
 			sourceTree = "<group>";
@@ -1106,8 +1111,6 @@
 		D16B18711D771B2E005CE35B /* Wait */ = {
 			isa = PBXGroup;
 			children = (
-				D16B18721D771B2E005CE35B /* AddLockController.h */,
-				D16B18731D771B2E005CE35B /* AddLockController.m */,
 				D16B18741D771B2E005CE35B /* WaitController.h */,
 				D16B18751D771B2E005CE35B /* WaitController.m */,
 			);
@@ -1123,62 +1126,6 @@
 				D16B190A1D771BF0005CE35B /* WiFiListController.m */,
 			);
 			path = WiFiList;
-			sourceTree = "<group>";
-		};
-		D16B18EF1D771B79005CE35B /* ShareSDK  */ = {
-			isa = PBXGroup;
-			children = (
-				D16B18F01D771B79005CE35B /* ShareSDK.framework */,
-				D16B18F11D771B79005CE35B /* Support */,
-			);
-			path = "ShareSDK ";
-			sourceTree = "<group>";
-		};
-		D16B18F11D771B79005CE35B /* Support */ = {
-			isa = PBXGroup;
-			children = (
-				D16B18F21D771B79005CE35B /* Optional */,
-				D16B18F61D771B79005CE35B /* PlatformSDK */,
-				D16B18FA1D771B79005CE35B /* Required */,
-			);
-			path = Support;
-			sourceTree = "<group>";
-		};
-		D16B18F21D771B79005CE35B /* Optional */ = {
-			isa = PBXGroup;
-			children = (
-				D16B18F31D771B79005CE35B /* ShareSDKExtension.framework */,
-				D16B18F41D771B79005CE35B /* ShareSDKUI.bundle */,
-				D16B18F51D771B79005CE35B /* ShareSDKUI.framework */,
-			);
-			path = Optional;
-			sourceTree = "<group>";
-		};
-		D16B18F61D771B79005CE35B /* PlatformSDK */ = {
-			isa = PBXGroup;
-			children = (
-				D16B18F71D771B79005CE35B /* QQSDK */,
-			);
-			path = PlatformSDK;
-			sourceTree = "<group>";
-		};
-		D16B18F71D771B79005CE35B /* QQSDK */ = {
-			isa = PBXGroup;
-			children = (
-				D16B18F81D771B79005CE35B /* TencentOpenAPI.framework */,
-				D16B18F91D771B79005CE35B /* TencentOpenApi_IOS_Bundle.bundle */,
-			);
-			path = QQSDK;
-			sourceTree = "<group>";
-		};
-		D16B18FA1D771B79005CE35B /* Required */ = {
-			isa = PBXGroup;
-			children = (
-				D16B18FB1D771B79005CE35B /* MOBFoundation.framework */,
-				D16B18FC1D771B79005CE35B /* ShareSDK.bundle */,
-				D16B18FD1D771B79005CE35B /* ShareSDKConnector.framework */,
-			);
-			path = Required;
 			sourceTree = "<group>";
 		};
 		D17CF0E31D6567E7007C95DD = {
@@ -1220,6 +1167,8 @@
 				D17CF0FD1D6567E7007C95DD /* LaunchScreen.storyboard */,
 				D17CF0FB1D6567E7007C95DD /* Assets.xcassets */,
 				D16B18EE1D771B59005CE35B /* PrefixHeader.pch */,
+				D16B18391D771B2E005CE35B /* HRConst.h */,
+				D16B183A1D771B2E005CE35B /* HRConst.m */,
 				D17CF1001D6567E7007C95DD /* Info.plist */,
 				D17CF0F01D6567E7007C95DD /* main.m */,
 			);
@@ -1242,6 +1191,62 @@
 				D17CF1161D6567E7007C95DD /* Info.plist */,
 			);
 			path = herolifeUITests;
+			sourceTree = "<group>";
+		};
+		D181EC381D77D6B400AC1533 /* ShareSDK  */ = {
+			isa = PBXGroup;
+			children = (
+				D181EC391D77D6B400AC1533 /* ShareSDK.framework */,
+				D181EC3A1D77D6B400AC1533 /* Support */,
+			);
+			path = "ShareSDK ";
+			sourceTree = "<group>";
+		};
+		D181EC3A1D77D6B400AC1533 /* Support */ = {
+			isa = PBXGroup;
+			children = (
+				D181EC3B1D77D6B400AC1533 /* Optional */,
+				D181EC3F1D77D6B400AC1533 /* PlatformSDK */,
+				D181EC431D77D6B400AC1533 /* Required */,
+			);
+			path = Support;
+			sourceTree = "<group>";
+		};
+		D181EC3B1D77D6B400AC1533 /* Optional */ = {
+			isa = PBXGroup;
+			children = (
+				D181EC3C1D77D6B400AC1533 /* ShareSDKExtension.framework */,
+				D181EC3D1D77D6B400AC1533 /* ShareSDKUI.bundle */,
+				D181EC3E1D77D6B400AC1533 /* ShareSDKUI.framework */,
+			);
+			path = Optional;
+			sourceTree = "<group>";
+		};
+		D181EC3F1D77D6B400AC1533 /* PlatformSDK */ = {
+			isa = PBXGroup;
+			children = (
+				D181EC401D77D6B400AC1533 /* QQSDK */,
+			);
+			path = PlatformSDK;
+			sourceTree = "<group>";
+		};
+		D181EC401D77D6B400AC1533 /* QQSDK */ = {
+			isa = PBXGroup;
+			children = (
+				D181EC411D77D6B400AC1533 /* TencentOpenAPI.framework */,
+				D181EC421D77D6B400AC1533 /* TencentOpenApi_IOS_Bundle.bundle */,
+			);
+			path = QQSDK;
+			sourceTree = "<group>";
+		};
+		D181EC431D77D6B400AC1533 /* Required */ = {
+			isa = PBXGroup;
+			children = (
+				D181EC441D77D6B400AC1533 /* MOBFoundation.framework */,
+				D181EC451D77D6B400AC1533 /* ShareSDK.bundle */,
+				D181EC461D77D6B400AC1533 /* ShareSDKConnector.framework */,
+			);
+			path = Required;
 			sourceTree = "<group>";
 		};
 		EFE49747F7B44972AEF6CB46 /* Frameworks */ = {
@@ -1383,15 +1388,15 @@
 				D17CF0FC1D6567E7007C95DD /* Assets.xcassets in Resources */,
 				D17CF0FA1D6567E7007C95DD /* Main.storyboard in Resources */,
 				18C697A71D7462B9004DA2B1 /* JCAlertView.bundle in Resources */,
-				D16B19031D771B79005CE35B /* TencentOpenApi_IOS_Bundle.bundle in Resources */,
+				D181EC4C1D77D6B400AC1533 /* TencentOpenApi_IOS_Bundle.bundle in Resources */,
 				1868B8ED1D76C4B300D19386 /* 后退@3x.png in Resources */,
 				D16B18B11D771B2E005CE35B /* Scanning line@2x.png in Resources */,
 				1868B8F11D76CD4A00D19386 /* 智能开锁@3x.png in Resources */,
 				18C697991D7462B9004DA2B1 /* 键盘@2x.png in Resources */,
 				1868B8EF1D76CD3C00D19386 /* 智能开锁@2x.png in Resources */,
-				D16B19051D771B79005CE35B /* ShareSDK.bundle in Resources */,
+				D181EC4E1D77D6B400AC1533 /* ShareSDK.bundle in Resources */,
 				18C6979F1D7462B9004DA2B1 /* arrow_down@2x.png in Resources */,
-				D16B19001D771B79005CE35B /* ShareSDKUI.bundle in Resources */,
+				D181EC491D77D6B400AC1533 /* ShareSDKUI.bundle in Resources */,
 				D16B18AC1D771B2E005CE35B /* backWhite@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1576,6 +1581,7 @@
 				18C697A91D7462B9004DA2B1 /* MyButton.m in Sources */,
 				D16B18881D771B2E005CE35B /* NVActivityIndicatorAnimationAudioEqualizer.swift in Sources */,
 				D16B18901D771B2E005CE35B /* NVActivityIndicatorAnimationBallPulseRise.swift in Sources */,
+				D181EC521D77FDC800AC1533 /* HRHTTPTool.m in Sources */,
 				D16B18B91D771B2E005CE35B /* SDWebImageDownloader.m in Sources */,
 				D16B19121D771C3E005CE35B /* SettingController.m in Sources */,
 				D16B18E51D771B2E005CE35B /* QRTools.m in Sources */,
@@ -1912,6 +1918,34 @@
 					/Support/PlatformSDK/QQSDK,
 					"$(PROJECT_DIR)/herolife/Classes/Other/Library/ShareSDK",
 					/Support/Required,
+					"$(PROJECT_DIR)/herolife/Classes/Other/Library/ShareSDK",
+					"$(PROJECT_DIR)/herolife/Classes/Other/Library/ShareSDK",
+					/Support/Optional,
+					"$(PROJECT_DIR)/herolife/Classes/Other/Library/ShareSDK",
+					/Support/PlatformSDK/QQSDK,
+					"$(PROJECT_DIR)/herolife/Classes/Other/Library/ShareSDK",
+					/Support/Required,
+					"$(PROJECT_DIR)/herolife/Classes/Other/Library/ShareSDK",
+					"$(PROJECT_DIR)/herolife/Classes/Other/Library/ShareSDK",
+					/Support/Optional,
+					"$(PROJECT_DIR)/herolife/Classes/Other/Library/ShareSDK",
+					/Support/PlatformSDK/QQSDK,
+					"$(PROJECT_DIR)/herolife/Classes/Other/Library/ShareSDK",
+					/Support/Required,
+					"$(PROJECT_DIR)/herolife/Classes/Other/Library/ShareSDK",
+					"$(PROJECT_DIR)/herolife/Classes/Other/Library/ShareSDK",
+					/Support/Optional,
+					"$(PROJECT_DIR)/herolife/Classes/Other/Library/ShareSDK",
+					/Support/PlatformSDK/QQSDK,
+					"$(PROJECT_DIR)/herolife/Classes/Other/Library/ShareSDK",
+					/Support/Required,
+					"$(PROJECT_DIR)/herolife/Classes/Other/Library/ShareSDK",
+					"$(PROJECT_DIR)/herolife/Classes/Other/Library/ShareSDK",
+					/Support/Optional,
+					"$(PROJECT_DIR)/herolife/Classes/Other/Library/ShareSDK",
+					/Support/PlatformSDK/QQSDK,
+					"$(PROJECT_DIR)/herolife/Classes/Other/Library/ShareSDK",
+					/Support/Required,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/herolife/PrefixHeader.pch";
@@ -2086,6 +2120,34 @@
 					"$(PROJECT_DIR)/herolife/Classes/ShareSDK",
 					/Support/PlatformSDK/QQSDK,
 					"$(PROJECT_DIR)/herolife/Classes/ShareSDK",
+					/Support/Required,
+					"$(PROJECT_DIR)/herolife/Classes/Other/Library/ShareSDK",
+					"$(PROJECT_DIR)/herolife/Classes/Other/Library/ShareSDK",
+					/Support/Optional,
+					"$(PROJECT_DIR)/herolife/Classes/Other/Library/ShareSDK",
+					/Support/PlatformSDK/QQSDK,
+					"$(PROJECT_DIR)/herolife/Classes/Other/Library/ShareSDK",
+					/Support/Required,
+					"$(PROJECT_DIR)/herolife/Classes/Other/Library/ShareSDK",
+					"$(PROJECT_DIR)/herolife/Classes/Other/Library/ShareSDK",
+					/Support/Optional,
+					"$(PROJECT_DIR)/herolife/Classes/Other/Library/ShareSDK",
+					/Support/PlatformSDK/QQSDK,
+					"$(PROJECT_DIR)/herolife/Classes/Other/Library/ShareSDK",
+					/Support/Required,
+					"$(PROJECT_DIR)/herolife/Classes/Other/Library/ShareSDK",
+					"$(PROJECT_DIR)/herolife/Classes/Other/Library/ShareSDK",
+					/Support/Optional,
+					"$(PROJECT_DIR)/herolife/Classes/Other/Library/ShareSDK",
+					/Support/PlatformSDK/QQSDK,
+					"$(PROJECT_DIR)/herolife/Classes/Other/Library/ShareSDK",
+					/Support/Required,
+					"$(PROJECT_DIR)/herolife/Classes/Other/Library/ShareSDK",
+					"$(PROJECT_DIR)/herolife/Classes/Other/Library/ShareSDK",
+					/Support/Optional,
+					"$(PROJECT_DIR)/herolife/Classes/Other/Library/ShareSDK",
+					/Support/PlatformSDK/QQSDK,
+					"$(PROJECT_DIR)/herolife/Classes/Other/Library/ShareSDK",
 					/Support/Required,
 					"$(PROJECT_DIR)/herolife/Classes/Other/Library/ShareSDK",
 					"$(PROJECT_DIR)/herolife/Classes/Other/Library/ShareSDK",

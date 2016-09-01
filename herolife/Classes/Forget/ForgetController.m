@@ -43,6 +43,11 @@
 	backgroundImage.image = [UIImage imageNamed:@"icon_bg.jpg"];
 	[self.view addSubview:backgroundImage];
 	
+	
+	UIView *view = [[UIView alloc] initWithFrame:[UIScreen mainScreen].bounds];
+	view.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.2];
+	[self.view addSubview:view];
+	
 	HRNavigationBar *navView = [[HRNavigationBar alloc] init];
 	navView.titleLabel.text = @"忘记密码";
 	[navView.leftButton setImage:[UIImage imageNamed:@"返回号"] forState:UIControlStateNormal];
@@ -127,9 +132,23 @@
 #pragma mark - UI事件
 - (void)passwdButtonClick:(UIButton *)btn
 {
+	[self.view endEditing:YES];
 	if (self.userNameField.text.length > 0) {
+		NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+		dict[@"name"] = self.userNameField.text;
+		[HRHTTPTool hr_postHttpWithURL:HRAPI_ForgetPasswd_URL parameters:dict responseDict:^(id array, NSError *error) {
+			NSArray *arr = (NSArray *)array;
+			if ((BOOL)arr.lastObject) {
+				
+				[SVProgressTool hr_showSuccessWithStatus:@"发送成功!"];
+				return ;
+			}
+			if (error) {
+				[ErrorCodeManager showPostError:error];
+			}
+		}];
 		
-		[SVProgressTool hr_showSuccessWithStatus:@"发送成功!"];
+		
 	}else
 	{
 		[SVProgressTool hr_showErrorWithStatus:@"用户名或电子邮箱地址不能为空!"];
