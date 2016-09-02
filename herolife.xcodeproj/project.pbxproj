@@ -12,6 +12,20 @@
 		1868B8EF1D76CD3C00D19386 /* 智能开锁@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1868B8EE1D76CD3C00D19386 /* 智能开锁@2x.png */; };
 		1868B8F11D76CD4A00D19386 /* 智能开锁@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1868B8F01D76CD4A00D19386 /* 智能开锁@3x.png */; };
 		1868B8F71D76DDD400D19386 /* BackPicSetController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1868B8F61D76DDD400D19386 /* BackPicSetController.m */; };
+		1868B9071D7811DC00D19386 /* ShareSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1868B8F91D7811DC00D19386 /* ShareSDK.framework */; };
+		1868B9081D7811DC00D19386 /* ShareSDKExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1868B8FC1D7811DC00D19386 /* ShareSDKExtension.framework */; };
+		1868B9091D7811DC00D19386 /* ShareSDKUI.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 1868B8FD1D7811DC00D19386 /* ShareSDKUI.bundle */; };
+		1868B90A1D7811DC00D19386 /* ShareSDKUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1868B8FE1D7811DC00D19386 /* ShareSDKUI.framework */; };
+		1868B90B1D7811DC00D19386 /* TencentOpenAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1868B9011D7811DC00D19386 /* TencentOpenAPI.framework */; };
+		1868B90C1D7811DC00D19386 /* TencentOpenApi_IOS_Bundle.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 1868B9021D7811DC00D19386 /* TencentOpenApi_IOS_Bundle.bundle */; };
+		1868B90D1D7811DC00D19386 /* MOBFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1868B9041D7811DC00D19386 /* MOBFoundation.framework */; };
+		1868B90E1D7811DC00D19386 /* ShareSDK.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 1868B9051D7811DC00D19386 /* ShareSDK.bundle */; };
+		1868B90F1D7811DC00D19386 /* ShareSDKConnector.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1868B9061D7811DC00D19386 /* ShareSDKConnector.framework */; };
+		1868B9131D79200200D19386 /* ChooseBackPicCtl.m in Sources */ = {isa = PBXBuildFile; fileRef = 1868B9121D79200200D19386 /* ChooseBackPicCtl.m */; };
+		1868B9191D79289500D19386 /* 1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 1868B9151D79289500D19386 /* 1.jpg */; };
+		1868B91A1D79289500D19386 /* 2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 1868B9161D79289500D19386 /* 2.jpg */; };
+		1868B91B1D79289500D19386 /* 3.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 1868B9171D79289500D19386 /* 3.jpg */; };
+		1868B91C1D79289500D19386 /* 4.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 1868B9181D79289500D19386 /* 4.jpg */; };
 		18C697981D7462B9004DA2B1 /* DoorRecordCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 18C697611D7462B9004DA2B1 /* DoorRecordCell.m */; };
 		18C697991D7462B9004DA2B1 /* 键盘@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 18C697631D7462B9004DA2B1 /* 键盘@2x.png */; };
 		18C6979A1D7462B9004DA2B1 /* 键盘@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 18C697641D7462B9004DA2B1 /* 键盘@3x.png */; };
@@ -166,15 +180,6 @@
 		D17CF0FF1D6567E7007C95DD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D17CF0FD1D6567E7007C95DD /* LaunchScreen.storyboard */; };
 		D17CF10A1D6567E7007C95DD /* herolifeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D17CF1091D6567E7007C95DD /* herolifeTests.m */; };
 		D17CF1151D6567E7007C95DD /* herolifeUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = D17CF1141D6567E7007C95DD /* herolifeUITests.m */; };
-		D181EC471D77D6B400AC1533 /* ShareSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D181EC391D77D6B400AC1533 /* ShareSDK.framework */; };
-		D181EC481D77D6B400AC1533 /* ShareSDKExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D181EC3C1D77D6B400AC1533 /* ShareSDKExtension.framework */; };
-		D181EC491D77D6B400AC1533 /* ShareSDKUI.bundle in Resources */ = {isa = PBXBuildFile; fileRef = D181EC3D1D77D6B400AC1533 /* ShareSDKUI.bundle */; };
-		D181EC4A1D77D6B400AC1533 /* ShareSDKUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D181EC3E1D77D6B400AC1533 /* ShareSDKUI.framework */; };
-		D181EC4B1D77D6B400AC1533 /* TencentOpenAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D181EC411D77D6B400AC1533 /* TencentOpenAPI.framework */; };
-		D181EC4C1D77D6B400AC1533 /* TencentOpenApi_IOS_Bundle.bundle in Resources */ = {isa = PBXBuildFile; fileRef = D181EC421D77D6B400AC1533 /* TencentOpenApi_IOS_Bundle.bundle */; };
-		D181EC4D1D77D6B400AC1533 /* MOBFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D181EC441D77D6B400AC1533 /* MOBFoundation.framework */; };
-		D181EC4E1D77D6B400AC1533 /* ShareSDK.bundle in Resources */ = {isa = PBXBuildFile; fileRef = D181EC451D77D6B400AC1533 /* ShareSDK.bundle */; };
-		D181EC4F1D77D6B400AC1533 /* ShareSDKConnector.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D181EC461D77D6B400AC1533 /* ShareSDKConnector.framework */; };
 		D181EC521D77FDC800AC1533 /* HRHTTPTool.m in Sources */ = {isa = PBXBuildFile; fileRef = D181EC511D77FDC800AC1533 /* HRHTTPTool.m */; };
 		D1940DCF1D6AF72400A262EC /* libicucore.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D1940DCE1D6AF72400A262EC /* libicucore.tbd */; };
 		D1940DD11D6AF73300A262EC /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D1940DD01D6AF73300A262EC /* libz.tbd */; };
@@ -211,6 +216,21 @@
 		1868B8F01D76CD4A00D19386 /* 智能开锁@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "智能开锁@3x.png"; sourceTree = "<group>"; };
 		1868B8F51D76DDD400D19386 /* BackPicSetController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BackPicSetController.h; sourceTree = "<group>"; };
 		1868B8F61D76DDD400D19386 /* BackPicSetController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BackPicSetController.m; sourceTree = "<group>"; };
+		1868B8F91D7811DC00D19386 /* ShareSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ShareSDK.framework; sourceTree = "<group>"; };
+		1868B8FC1D7811DC00D19386 /* ShareSDKExtension.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ShareSDKExtension.framework; sourceTree = "<group>"; };
+		1868B8FD1D7811DC00D19386 /* ShareSDKUI.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = ShareSDKUI.bundle; sourceTree = "<group>"; };
+		1868B8FE1D7811DC00D19386 /* ShareSDKUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ShareSDKUI.framework; sourceTree = "<group>"; };
+		1868B9011D7811DC00D19386 /* TencentOpenAPI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = TencentOpenAPI.framework; sourceTree = "<group>"; };
+		1868B9021D7811DC00D19386 /* TencentOpenApi_IOS_Bundle.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = TencentOpenApi_IOS_Bundle.bundle; sourceTree = "<group>"; };
+		1868B9041D7811DC00D19386 /* MOBFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = MOBFoundation.framework; sourceTree = "<group>"; };
+		1868B9051D7811DC00D19386 /* ShareSDK.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = ShareSDK.bundle; sourceTree = "<group>"; };
+		1868B9061D7811DC00D19386 /* ShareSDKConnector.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ShareSDKConnector.framework; sourceTree = "<group>"; };
+		1868B9111D79200200D19386 /* ChooseBackPicCtl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChooseBackPicCtl.h; sourceTree = "<group>"; };
+		1868B9121D79200200D19386 /* ChooseBackPicCtl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChooseBackPicCtl.m; sourceTree = "<group>"; };
+		1868B9151D79289500D19386 /* 1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 1.jpg; sourceTree = "<group>"; };
+		1868B9161D79289500D19386 /* 2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 2.jpg; sourceTree = "<group>"; };
+		1868B9171D79289500D19386 /* 3.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 3.jpg; sourceTree = "<group>"; };
+		1868B9181D79289500D19386 /* 4.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 4.jpg; sourceTree = "<group>"; };
 		18C697601D7462B9004DA2B1 /* DoorRecordCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DoorRecordCell.h; sourceTree = "<group>"; };
 		18C697611D7462B9004DA2B1 /* DoorRecordCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DoorRecordCell.m; sourceTree = "<group>"; };
 		18C697631D7462B9004DA2B1 /* 键盘@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "键盘@2x.png"; sourceTree = "<group>"; };
@@ -478,15 +498,6 @@
 		D17CF1101D6567E7007C95DD /* herolifeUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = herolifeUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D17CF1141D6567E7007C95DD /* herolifeUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = herolifeUITests.m; sourceTree = "<group>"; };
 		D17CF1161D6567E7007C95DD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		D181EC391D77D6B400AC1533 /* ShareSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ShareSDK.framework; sourceTree = "<group>"; };
-		D181EC3C1D77D6B400AC1533 /* ShareSDKExtension.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ShareSDKExtension.framework; sourceTree = "<group>"; };
-		D181EC3D1D77D6B400AC1533 /* ShareSDKUI.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = ShareSDKUI.bundle; sourceTree = "<group>"; };
-		D181EC3E1D77D6B400AC1533 /* ShareSDKUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ShareSDKUI.framework; sourceTree = "<group>"; };
-		D181EC411D77D6B400AC1533 /* TencentOpenAPI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = TencentOpenAPI.framework; sourceTree = "<group>"; };
-		D181EC421D77D6B400AC1533 /* TencentOpenApi_IOS_Bundle.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = TencentOpenApi_IOS_Bundle.bundle; sourceTree = "<group>"; };
-		D181EC441D77D6B400AC1533 /* MOBFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = MOBFoundation.framework; sourceTree = "<group>"; };
-		D181EC451D77D6B400AC1533 /* ShareSDK.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = ShareSDK.bundle; sourceTree = "<group>"; };
-		D181EC461D77D6B400AC1533 /* ShareSDKConnector.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ShareSDKConnector.framework; sourceTree = "<group>"; };
 		D181EC501D77FDC800AC1533 /* HRHTTPTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HRHTTPTool.h; sourceTree = "<group>"; };
 		D181EC511D77FDC800AC1533 /* HRHTTPTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HRHTTPTool.m; sourceTree = "<group>"; };
 		D1940DCE1D6AF72400A262EC /* libicucore.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libicucore.tbd; path = usr/lib/libicucore.tbd; sourceTree = SDKROOT; };
@@ -507,13 +518,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				D1940DD71D6AF76400A262EC /* libsqlite3.tbd in Frameworks */,
-				D181EC4D1D77D6B400AC1533 /* MOBFoundation.framework in Frameworks */,
-				D181EC4A1D77D6B400AC1533 /* ShareSDKUI.framework in Frameworks */,
-				D181EC481D77D6B400AC1533 /* ShareSDKExtension.framework in Frameworks */,
+				1868B90D1D7811DC00D19386 /* MOBFoundation.framework in Frameworks */,
+				1868B90A1D7811DC00D19386 /* ShareSDKUI.framework in Frameworks */,
+				1868B9081D7811DC00D19386 /* ShareSDKExtension.framework in Frameworks */,
 				D1940DD51D6AF74A00A262EC /* JavaScriptCore.framework in Frameworks */,
-				D181EC471D77D6B400AC1533 /* ShareSDK.framework in Frameworks */,
-				D181EC4B1D77D6B400AC1533 /* TencentOpenAPI.framework in Frameworks */,
-				D181EC4F1D77D6B400AC1533 /* ShareSDKConnector.framework in Frameworks */,
+				1868B9071D7811DC00D19386 /* ShareSDK.framework in Frameworks */,
+				1868B90B1D7811DC00D19386 /* TencentOpenAPI.framework in Frameworks */,
+				1868B90F1D7811DC00D19386 /* ShareSDKConnector.framework in Frameworks */,
 				D1940DD31D6AF73C00A262EC /* libstdc++.tbd in Frameworks */,
 				D1940DD11D6AF73300A262EC /* libz.tbd in Frameworks */,
 				D1940DCF1D6AF72400A262EC /* libicucore.tbd in Frameworks */,
@@ -538,6 +549,82 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1868B8F81D7811DC00D19386 /* ShareSDK  */ = {
+			isa = PBXGroup;
+			children = (
+				1868B8F91D7811DC00D19386 /* ShareSDK.framework */,
+				1868B8FA1D7811DC00D19386 /* Support */,
+			);
+			path = "ShareSDK ";
+			sourceTree = "<group>";
+		};
+		1868B8FA1D7811DC00D19386 /* Support */ = {
+			isa = PBXGroup;
+			children = (
+				1868B8FB1D7811DC00D19386 /* Optional */,
+				1868B8FF1D7811DC00D19386 /* PlatformSDK */,
+				1868B9031D7811DC00D19386 /* Required */,
+			);
+			path = Support;
+			sourceTree = "<group>";
+		};
+		1868B8FB1D7811DC00D19386 /* Optional */ = {
+			isa = PBXGroup;
+			children = (
+				1868B8FC1D7811DC00D19386 /* ShareSDKExtension.framework */,
+				1868B8FD1D7811DC00D19386 /* ShareSDKUI.bundle */,
+				1868B8FE1D7811DC00D19386 /* ShareSDKUI.framework */,
+			);
+			path = Optional;
+			sourceTree = "<group>";
+		};
+		1868B8FF1D7811DC00D19386 /* PlatformSDK */ = {
+			isa = PBXGroup;
+			children = (
+				1868B9001D7811DC00D19386 /* QQSDK */,
+			);
+			path = PlatformSDK;
+			sourceTree = "<group>";
+		};
+		1868B9001D7811DC00D19386 /* QQSDK */ = {
+			isa = PBXGroup;
+			children = (
+				1868B9011D7811DC00D19386 /* TencentOpenAPI.framework */,
+				1868B9021D7811DC00D19386 /* TencentOpenApi_IOS_Bundle.bundle */,
+			);
+			path = QQSDK;
+			sourceTree = "<group>";
+		};
+		1868B9031D7811DC00D19386 /* Required */ = {
+			isa = PBXGroup;
+			children = (
+				1868B9041D7811DC00D19386 /* MOBFoundation.framework */,
+				1868B9051D7811DC00D19386 /* ShareSDK.bundle */,
+				1868B9061D7811DC00D19386 /* ShareSDKConnector.framework */,
+			);
+			path = Required;
+			sourceTree = "<group>";
+		};
+		1868B9101D791FAD00D19386 /* 背景选择 */ = {
+			isa = PBXGroup;
+			children = (
+				1868B9111D79200200D19386 /* ChooseBackPicCtl.h */,
+				1868B9121D79200200D19386 /* ChooseBackPicCtl.m */,
+			);
+			path = "背景选择";
+			sourceTree = "<group>";
+		};
+		1868B9141D79289500D19386 /* 背景图 */ = {
+			isa = PBXGroup;
+			children = (
+				1868B9151D79289500D19386 /* 1.jpg */,
+				1868B9161D79289500D19386 /* 2.jpg */,
+				1868B9171D79289500D19386 /* 3.jpg */,
+				1868B9181D79289500D19386 /* 4.jpg */,
+			);
+			path = "背景图";
+			sourceTree = "<group>";
+		};
 		18C6975E1D7462B9004DA2B1 /* 斌 */ = {
 			isa = PBXGroup;
 			children = (
@@ -567,6 +654,7 @@
 		18C697621D7462B9004DA2B1 /* 图片 */ = {
 			isa = PBXGroup;
 			children = (
+				1868B9141D79289500D19386 /* 背景图 */,
 				1868B8EE1D76CD3C00D19386 /* 智能开锁@2x.png */,
 				1868B8F01D76CD4A00D19386 /* 智能开锁@3x.png */,
 				1868B8EA1D76C4A200D19386 /* 后退@2x.png */,
@@ -580,6 +668,7 @@
 		18C697651D7462B9004DA2B1 /* 控制器 */ = {
 			isa = PBXGroup;
 			children = (
+				1868B9101D791FAD00D19386 /* 背景选择 */,
 				1868B8F51D76DDD400D19386 /* BackPicSetController.h */,
 				1868B8F61D76DDD400D19386 /* BackPicSetController.m */,
 				18C697661D7462B9004DA2B1 /* AccountManagementController.h */,
@@ -788,7 +877,7 @@
 		D16B17AC1D771B2D005CE35B /* Library */ = {
 			isa = PBXGroup;
 			children = (
-				D181EC381D77D6B400AC1533 /* ShareSDK  */,
+				1868B8F81D7811DC00D19386 /* ShareSDK  */,
 				D16B17AD1D771B2D005CE35B /* CoverFlow */,
 				D16B17B41D771B2D005CE35B /* fmdb */,
 				D16B17C01D771B2D005CE35B /* FTPopOverMenu */,
@@ -1193,62 +1282,6 @@
 			path = herolifeUITests;
 			sourceTree = "<group>";
 		};
-		D181EC381D77D6B400AC1533 /* ShareSDK  */ = {
-			isa = PBXGroup;
-			children = (
-				D181EC391D77D6B400AC1533 /* ShareSDK.framework */,
-				D181EC3A1D77D6B400AC1533 /* Support */,
-			);
-			path = "ShareSDK ";
-			sourceTree = "<group>";
-		};
-		D181EC3A1D77D6B400AC1533 /* Support */ = {
-			isa = PBXGroup;
-			children = (
-				D181EC3B1D77D6B400AC1533 /* Optional */,
-				D181EC3F1D77D6B400AC1533 /* PlatformSDK */,
-				D181EC431D77D6B400AC1533 /* Required */,
-			);
-			path = Support;
-			sourceTree = "<group>";
-		};
-		D181EC3B1D77D6B400AC1533 /* Optional */ = {
-			isa = PBXGroup;
-			children = (
-				D181EC3C1D77D6B400AC1533 /* ShareSDKExtension.framework */,
-				D181EC3D1D77D6B400AC1533 /* ShareSDKUI.bundle */,
-				D181EC3E1D77D6B400AC1533 /* ShareSDKUI.framework */,
-			);
-			path = Optional;
-			sourceTree = "<group>";
-		};
-		D181EC3F1D77D6B400AC1533 /* PlatformSDK */ = {
-			isa = PBXGroup;
-			children = (
-				D181EC401D77D6B400AC1533 /* QQSDK */,
-			);
-			path = PlatformSDK;
-			sourceTree = "<group>";
-		};
-		D181EC401D77D6B400AC1533 /* QQSDK */ = {
-			isa = PBXGroup;
-			children = (
-				D181EC411D77D6B400AC1533 /* TencentOpenAPI.framework */,
-				D181EC421D77D6B400AC1533 /* TencentOpenApi_IOS_Bundle.bundle */,
-			);
-			path = QQSDK;
-			sourceTree = "<group>";
-		};
-		D181EC431D77D6B400AC1533 /* Required */ = {
-			isa = PBXGroup;
-			children = (
-				D181EC441D77D6B400AC1533 /* MOBFoundation.framework */,
-				D181EC451D77D6B400AC1533 /* ShareSDK.bundle */,
-				D181EC461D77D6B400AC1533 /* ShareSDKConnector.framework */,
-			);
-			path = Required;
-			sourceTree = "<group>";
-		};
 		EFE49747F7B44972AEF6CB46 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -1378,25 +1411,29 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1868B91C1D79289500D19386 /* 4.jpg in Resources */,
+				1868B91A1D79289500D19386 /* 2.jpg in Resources */,
 				D16B18AD1D771B2E005CE35B /* Default-568h@3x-1.png in Resources */,
 				D16B18AE1D771B2E005CE35B /* instructions.rtf in Resources */,
 				D16B18B21D771B2E005CE35B /* whiteBack@2x.png in Resources */,
 				D17CF0FF1D6567E7007C95DD /* LaunchScreen.storyboard in Resources */,
+				1868B91B1D79289500D19386 /* 3.jpg in Resources */,
 				18C6979A1D7462B9004DA2B1 /* 键盘@3x.png in Resources */,
 				1868B8EB1D76C4A200D19386 /* 后退@2x.png in Resources */,
+				1868B9191D79289500D19386 /* 1.jpg in Resources */,
 				D16B18B01D771B2E005CE35B /* Scanning frame@2x.png in Resources */,
 				D17CF0FC1D6567E7007C95DD /* Assets.xcassets in Resources */,
 				D17CF0FA1D6567E7007C95DD /* Main.storyboard in Resources */,
 				18C697A71D7462B9004DA2B1 /* JCAlertView.bundle in Resources */,
-				D181EC4C1D77D6B400AC1533 /* TencentOpenApi_IOS_Bundle.bundle in Resources */,
+				1868B90C1D7811DC00D19386 /* TencentOpenApi_IOS_Bundle.bundle in Resources */,
 				1868B8ED1D76C4B300D19386 /* 后退@3x.png in Resources */,
 				D16B18B11D771B2E005CE35B /* Scanning line@2x.png in Resources */,
 				1868B8F11D76CD4A00D19386 /* 智能开锁@3x.png in Resources */,
 				18C697991D7462B9004DA2B1 /* 键盘@2x.png in Resources */,
 				1868B8EF1D76CD3C00D19386 /* 智能开锁@2x.png in Resources */,
-				D181EC4E1D77D6B400AC1533 /* ShareSDK.bundle in Resources */,
+				1868B90E1D7811DC00D19386 /* ShareSDK.bundle in Resources */,
 				18C6979F1D7462B9004DA2B1 /* arrow_down@2x.png in Resources */,
-				D181EC491D77D6B400AC1533 /* ShareSDKUI.bundle in Resources */,
+				1868B9091D7811DC00D19386 /* ShareSDKUI.bundle in Resources */,
 				D16B18AC1D771B2E005CE35B /* backWhite@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1548,6 +1585,7 @@
 				D16B189D1D771B2E005CE35B /* NVActivityIndicatorAnimationCubeTransition.swift in Sources */,
 				D16B18E71D771B2E005CE35B /* HRButton.m in Sources */,
 				D16B18BC1D771B2E005CE35B /* SDWebImagePrefetcher.m in Sources */,
+				1868B9131D79200200D19386 /* ChooseBackPicCtl.m in Sources */,
 				D16B18E31D771B2E005CE35B /* HRServicesManager.m in Sources */,
 				D16B18851D771B2E005CE35B /* FMDatabaseQueue.m in Sources */,
 				D16B18CB1D771B2E005CE35B /* UIImage+Util.m in Sources */,
@@ -1946,6 +1984,13 @@
 					/Support/PlatformSDK/QQSDK,
 					"$(PROJECT_DIR)/herolife/Classes/Other/Library/ShareSDK",
 					/Support/Required,
+					"$(PROJECT_DIR)/herolife/Classes/Other/Library/ShareSDK",
+					"$(PROJECT_DIR)/herolife/Classes/Other/Library/ShareSDK",
+					/Support/Optional,
+					"$(PROJECT_DIR)/herolife/Classes/Other/Library/ShareSDK",
+					/Support/PlatformSDK/QQSDK,
+					"$(PROJECT_DIR)/herolife/Classes/Other/Library/ShareSDK",
+					/Support/Required,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/herolife/PrefixHeader.pch";
@@ -2120,6 +2165,13 @@
 					"$(PROJECT_DIR)/herolife/Classes/ShareSDK",
 					/Support/PlatformSDK/QQSDK,
 					"$(PROJECT_DIR)/herolife/Classes/ShareSDK",
+					/Support/Required,
+					"$(PROJECT_DIR)/herolife/Classes/Other/Library/ShareSDK",
+					"$(PROJECT_DIR)/herolife/Classes/Other/Library/ShareSDK",
+					/Support/Optional,
+					"$(PROJECT_DIR)/herolife/Classes/Other/Library/ShareSDK",
+					/Support/PlatformSDK/QQSDK,
+					"$(PROJECT_DIR)/herolife/Classes/Other/Library/ShareSDK",
 					/Support/Required,
 					"$(PROJECT_DIR)/herolife/Classes/Other/Library/ShareSDK",
 					"$(PROJECT_DIR)/herolife/Classes/Other/Library/ShareSDK",

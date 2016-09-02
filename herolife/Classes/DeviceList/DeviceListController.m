@@ -47,9 +47,45 @@
 @property(nonatomic, strong) NSArray *photoModelArray;
 /** UICollectionView布局 */
 @property(nonatomic, weak) YRCoverFlowLayout *layout;
+
+/** 背景图片*/
+
+@property(nonatomic,strong)UIImageView *backImgView;
+
+
 @end
 
 @implementation DeviceListController
+
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    NSInteger  PicNum =   [[NSUserDefaults standardUserDefaults] integerForKey:@"PicNum"];
+    
+    if (!PicNum) {
+        
+        
+        
+        self.backImgView.image = [UIImage imageNamed:@"Snip20160825_3"];
+    }
+    
+    
+    else if (PicNum == -1)
+    {
+        NSString *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES).lastObject;
+        path = [path stringByAppendingPathComponent:@"image.png"];
+        
+        self.backImgView.image =[UIImage imageWithContentsOfFile:path];
+    }
+    
+    else{
+        
+        NSString * imgName = [NSString stringWithFormat:@"%ld.jpg",PicNum];
+        
+        self.backImgView.image =[UIImage imageNamed:imgName];
+    }
+}
+
 - (NSArray *)photoModelArray
 {
 	if (!_photoModelArray) {
@@ -108,6 +144,9 @@ static NSString *cellID = @"cellID";
 	//背景图片
 	UIImageView *backgroundImage = [[UIImageView alloc] initWithFrame:[UIScreen mainScreen].bounds];
 	backgroundImage.image = [UIImage imageNamed:@"Snip20160825_3"];
+    
+    self.backImgView=backgroundImage;
+    
 	[self.view addSubview:backgroundImage];
 	
 	

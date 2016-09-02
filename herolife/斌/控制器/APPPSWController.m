@@ -14,6 +14,11 @@
 /** 顶部条 */
 @property(nonatomic, weak) HRNavigationBar *navView;
 
+/** 背景图片*/
+
+@property(nonatomic,strong)UIImageView *backImgView;
+
+
 
 
 @end
@@ -32,6 +37,32 @@
             view.hidden = YES;
         }
     }
+    
+    NSInteger  PicNum =   [[NSUserDefaults standardUserDefaults] integerForKey:@"PicNum"];
+    
+    if (!PicNum) {
+        
+        
+        
+        self.backImgView.image = [UIImage imageNamed:@"Snip20160825_3"];
+    }
+    
+    
+    else if (PicNum == -1)
+    {
+        NSString *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES).lastObject;
+        path = [path stringByAppendingPathComponent:@"image.png"];
+        
+        self.backImgView.image =[UIImage imageWithContentsOfFile:path];
+    }
+    
+    else{
+        
+        NSString * imgName = [NSString stringWithFormat:@"%ld.jpg",PicNum];
+        
+        self.backImgView.image =[UIImage imageNamed:imgName];
+    }
+
 }
 
 
@@ -66,12 +97,7 @@
 }
 
 
-#pragma mark - 导航条左边返回方法
--(void)popToLastVC
-{
-    [self.navigationController popViewControllerAnimated:YES];
-    
-}
+
 
 
 - (void)viewDidLoad {
@@ -80,13 +106,20 @@
     
     UIImageView *backgroundImage = [[UIImageView alloc] initWithFrame:[UIScreen mainScreen].bounds];
     backgroundImage.image = [UIImage imageNamed:@"Snip20160825_3"];
-    [self.view addSubview:backgroundImage];
+    self.backImgView = backgroundImage;
+    
+    
+    [self.view addSubview:self.backImgView];
+    
+    UIView *view = [[UIView alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    view.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.2];
+    [self.view addSubview:view];
+
     
     
     //导航条
     HRNavigationBar *navView = [[HRNavigationBar alloc] init];
     navView.titleLabel.text = @"APP软件密码";
-    [navView.leftButton addTarget:self action:@selector(popToLastVC) forControlEvents:UIControlEventTouchUpInside];
     
     navView.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.1];
     

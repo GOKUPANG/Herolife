@@ -10,6 +10,7 @@
 #import "UIView+SDAutoLayout.h"
 #import "JCAlertView.h"
 #import "DoorLockRecordConroller.h"
+#import "LoginController.h"
 
 @interface AccountManagementController ()<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate>
 
@@ -56,6 +57,12 @@
 /** 顶部条 */
 @property(nonatomic, weak) HRNavigationBar *navView;
 
+/** 背景图片*/
+
+@property(nonatomic,strong)UIImageView *backImgView;
+
+
+
 
 
 
@@ -75,8 +82,39 @@
             view.hidden = YES;
         }
     }
+    
+    [self setBackPicture];
+    
 }
 
+
+-(void)setBackPicture
+{
+    NSInteger  PicNum =   [[NSUserDefaults standardUserDefaults] integerForKey:@"PicNum"];
+    
+    if (!PicNum) {
+        
+        
+        
+        self.backImgView.image = [UIImage imageNamed:@"Snip20160825_3"];
+    }
+    
+    
+    else if (PicNum == -1)
+    {
+        NSString *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES).lastObject;
+        path = [path stringByAppendingPathComponent:@"image.png"];
+        
+        self.backImgView.image =[UIImage imageWithContentsOfFile:path];
+    }
+    
+    else{
+        
+        NSString * imgName = [NSString stringWithFormat:@"%ld.jpg",PicNum];
+        
+        self.backImgView.image =[UIImage imageNamed:imgName];
+    }
+}
 
 - (void)viewWillDisappear:(BOOL)animated
 {
@@ -124,7 +162,14 @@
     //背景图片
     UIImageView *backgroundImage = [[UIImageView alloc] initWithFrame:[UIScreen mainScreen].bounds];
     backgroundImage.image = [UIImage imageNamed:@"Snip20160825_3"];
-    [self.view addSubview:backgroundImage];
+    self.backImgView = backgroundImage;
+    
+    [self.view addSubview:self.backImgView];
+    
+    UIView *view = [[UIView alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    view.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.2];
+    [self.view addSubview:view];
+
     
     //导航条
     HRNavigationBar *navView = [[HRNavigationBar alloc] init];
@@ -188,10 +233,98 @@
     }
 }
 
-#pragma mark - 确认修改方法
+#pragma mark - 确认修改方法 修改密码
 
 -(void)changePsw
 {
+    
+    
+    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
+    
+    //用户密码
+    
+    NSString * pass = [kUserDefault objectForKey:kDefaultsPassWord];
+    
+    NSLog(@"原来的密码是%@",pass);
+    
+    
+    
+    NSString * uid = [kUserDefault objectForKey:kDefaultsUid];
+    if (![self.OldPswTF.text isEqualToString:pass]) {
+        [SVProgressTool hr_showErrorWithStatus:@"原密码错误!"];
+        return;
+    }
+    
+    //判断密码
+    if (![self.NewPswTF.text isEqualToString:self.confirmTF.text]) {
+        [SVProgressTool hr_showErrorWithStatus:@"两次输入的密码不一致,请重新输入!"];
+        return;
+    }
+    [SVProgressTool hr_showWithStatus:@"正在修改密码..."];
+    
+    
+    AFHTTPSessionManager * manager =[AFHTTPSessionManager hrPostManager];
+    
+    
+    //请求参数
+    
+    NSMutableDictionary * parameters = [NSMutableDictionary dictionary];
+    
+    parameters[@"current_pass"] = self.OldPswTF.text;
+    
+    parameters[@"pass"] = self.NewPswTF.text;
+    
+    parameters[@"pass2"] = self.confirmTF.text;
+    
+    NSString * requestStr = [NSString stringWithFormat:@"%@%@", HRAPI_XiaoRuiModifyPassword_URL, uid];
+
+    
+    
+    [manager PUT:requestStr parameters:parameters success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        
+        /// 这里返回的responseObject 不是json数据 是NSData数据
+        
+        NSDictionary * dict;
+        
+        if ([[responseObject class] isSubclassOfClass:[NSDictionary class]]) {
+            dict = (NSDictionary *)responseObject;
+            
+        }
+     else
+     {
+         //NSString * str = [[NSString alloc]initWithData:(NSData *)responseObject encoding:NSUTF8StringEncoding];
+         
+         dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableLeaves error:nil];
+         
+     }
+        [SVProgressHUD showSuccessWithStatus:@"修改密码成功"];
+        
+        //设置密码保存
+        [kUserDefault setObject:dict[@"pass2"] forKey:kDefaultsPassWord];
+        
+        //设置uid
+        [kUserDefault setObject:dict[@"uid"] forKey:kDefaultsUid];
+        
+        
+        [kUserDefault synchronize];
+        
+     //   LoginController * loginVC = [LoginController new];
+        
+    //    [self presentViewController:loginVC animated:YES completion:nil];
+        
+        
+        
+
+        
+        
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        
+        [ErrorCodeManager showError:error];
+
+        
+    }];
+    
+    
     NSLog(@"已经修改了密码，么么哒");
     
 }

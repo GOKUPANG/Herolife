@@ -45,6 +45,10 @@
 @property(nonatomic, weak) HRNavigationBar *navView;
 
 
+/** 背景图片*/
+
+@property(nonatomic,strong)UIImageView *backImgView;
+
 
 
 @end
@@ -64,6 +68,35 @@
             view.hidden = YES;
         }
     }
+    
+    
+    
+    NSInteger  PicNum =   [[NSUserDefaults standardUserDefaults] integerForKey:@"PicNum"];
+    
+    if (!PicNum) {
+        
+        
+        
+        self.backImgView.image = [UIImage imageNamed:@"Snip20160825_3"];
+    }
+    
+    
+    else if (PicNum == -1)
+    {
+        NSString *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES).lastObject;
+        path = [path stringByAppendingPathComponent:@"image.png"];
+        
+        self.backImgView.image =[UIImage imageWithContentsOfFile:path];
+    }
+    
+    else{
+        
+        NSString * imgName = [NSString stringWithFormat:@"%ld.jpg",PicNum];
+        
+        self.backImgView.image =[UIImage imageNamed:imgName];
+    }
+    
+
 }
 
 
@@ -76,6 +109,8 @@
             view.hidden = NO;
         }
     }
+    
+    
 }
 
 #pragma mark - 导航条 设置
@@ -96,7 +131,15 @@
     //背景图片
     UIImageView *backgroundImage = [[UIImageView alloc] initWithFrame:[UIScreen mainScreen].bounds];
     backgroundImage.image = [UIImage imageNamed:@"Snip20160825_3"];
+    self.backImgView = backgroundImage;
+    
+    
     [self.view addSubview:backgroundImage];
+    
+    
+    UIView *view = [[UIView alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    view.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.3];
+    [self.view addSubview:view];
     
     
     //导航条
@@ -388,7 +431,7 @@
         
         
         
-         _MimaTF.text =  [oldtext stringByAppendingString:[NSString stringWithFormat:@"%d",tag-11 ]];
+         _MimaTF.text =  [oldtext stringByAppendingString:[NSString stringWithFormat:@"%ld",tag-11 ]];
         
     }
     

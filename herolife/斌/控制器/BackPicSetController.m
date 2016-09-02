@@ -14,8 +14,13 @@
 
 #import "BackPicSetController.h"
 #import "UIView+SDAutoLayout.h"
+#import "ChooseBackPicCtl.h"
 
-@interface BackPicSetController ()
+extern NSInteger showNum;
+
+
+
+@interface BackPicSetController ()<UINavigationControllerDelegate,UIImagePickerControllerDelegate>
 
 /** 选择背景图片按钮*/
 @property(nonatomic,strong)UIButton *  ChooseBP;
@@ -43,6 +48,13 @@
 @property(nonatomic, weak) HRNavigationBar *navView;
 
 
+/** 背景图片*/
+
+@property(nonatomic,strong)UIImageView *backImgView;
+
+
+
+
 
 
 
@@ -61,6 +73,32 @@
             view.hidden = YES;
         }
     }
+    
+    
+     NSInteger  PicNum =   [[NSUserDefaults standardUserDefaults] integerForKey:@"PicNum"];
+    
+    if (!PicNum) {
+        
+        
+        
+        self.backImgView.image = [UIImage imageNamed:@"Snip20160825_3"];
+    }
+    
+    
+    else if (PicNum == -1)
+    {
+        NSString *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES).lastObject;
+        path = [path stringByAppendingPathComponent:@"image.png"];
+        
+        self.backImgView.image =[UIImage imageWithContentsOfFile:path];
+    }
+    
+    else{
+
+    NSString * imgName = [NSString stringWithFormat:@"%ld.jpg",PicNum];
+        
+    self.backImgView.image =[UIImage imageNamed:imgName];
+    }
 }
 
 
@@ -73,6 +111,8 @@
             view.hidden = NO;
         }
     }
+    
+  
     
     
     
@@ -97,15 +137,26 @@
     [super viewDidLoad];
     
     
+    
+    NSLog(@"extern的值是%ld",showNum);
+    
     //背景图片
     UIImageView *backgroundImage = [[UIImageView alloc] initWithFrame:[UIScreen mainScreen].bounds];
     backgroundImage.image = [UIImage imageNamed:@"Snip20160825_3"];
-    [self.view addSubview:backgroundImage];
+    self.backImgView = backgroundImage;
+    
+    [self.view addSubview:self.backImgView];
+    
+    
+    UIView *view = [[UIView alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    view.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.2];
+    [self.view addSubview:view];
+
     
     //导航条
     HRNavigationBar *navView = [[HRNavigationBar alloc] init];
     navView.titleLabel.text = @"背景图设置";
-  //  [navView.leftButton addTarget:self action:@selector(popToLastVC) forControlEvents:UIControlEventTouchUpInside];
+    //  [navView.leftButton addTarget:self action:@selector(popToLastVC) forControlEvents:UIControlEventTouchUpInside];
     
     navView.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.1];
     [self.view addSubview:navView];
@@ -116,10 +167,12 @@
     
     self.navView = navView;
 
+
     
+     [self makeUI];
     
+   
     
-    [self makeUI];
     
 
 }
@@ -223,6 +276,30 @@
 -(void)ChooseBPIC
 {
     NSLog(@"选择背景图");
+    
+    
+    
+    
+    ChooseBackPicCtl * CBP = [ChooseBackPicCtl new];
+    
+    
+    __weak BackPicSetController * BPC =self;
+    
+    CBP.finishBlock = ^(NSInteger showNum){
+        
+        NSLog(@"传回来的值是 %ld",showNum);
+        
+        NSString * imgName = [NSString stringWithFormat:@"%ld.jpg",showNum];
+        
+        
+        BPC.backImgView.image = [UIImage imageNamed:imgName];
+    }
+    ;
+    
+    
+    [self.navigationController pushViewController:CBP animated:YES];
+    
+
 }
 
 
@@ -230,16 +307,83 @@
 {
     NSLog(@"拍照");
     
+    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+        
+        UIImagePickerController *pickVC = [[UIImagePickerController alloc]init];
+        
+        
+        pickVC.delegate =self;
+        
+        pickVC.sourceType = UIImagePickerControllerSourceTypeCamera;
+        
+        
+        [self presentViewController:pickVC animated:YES completion:nil];
+    
+    }
 }
 
 -(void)PicFromPhone
 {
     NSLog(@"从手机相册选择");
+    
+    UIImagePickerController * pickVC = [[UIImagePickerController alloc]init];
+    
+    /** 设置图片来源*/
+    
+    pickVC.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+    
+    // pickVC.sourceType = UIImagePickerControllerSourceTypeCamera;
+    
+    
+    pickVC.delegate =self;
+    
+    [self presentViewController:pickVC animated:YES completion:nil];
+    
+    
+
 }
+
+
+-(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info
+{
+    NSLog(@"进入系统相册");
+    
+    UIImage * photo = info[UIImagePickerControllerOriginalImage];
+    
+    
+    NSFileManager *manager = [NSFileManager defaultManager];
+    NSString *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES).lastObject;
+    path = [path stringByAppendingPathComponent:@"image.png"];
+    
+    NSLog(@"沙盒路径是%@",path);
+    
+    
+    NSError *err;
+    [manager removeItemAtPath:path error:&err];
+    
+    [UIImagePNGRepresentation(photo) writeToFile:path atomically:YES];
+    
+     self.backImgView.image = photo;
+    
+    showNum = -1;
+    
+    [[NSUserDefaults standardUserDefaults ] setInteger:showNum forKey:@"PicNum"];
+    
+    
+    
+    
+    [self dismissViewControllerAnimated:YES completion:nil];
+    
+}
+
 
 -(void)CancelBtn
 {
     NSLog(@"取消");
+    
+    
+    [self.navigationController popViewControllerAnimated:YES];
+    
 }
 
 - (void)didReceiveMemoryWarning {

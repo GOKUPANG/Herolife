@@ -10,6 +10,7 @@
 #import "SettingCell.h"
 #import "AccountManagementController.h"
 #import "GestureViewController.h"
+#import "BackPicSetController.h"
 
 @interface SettingController ()<UITableViewDelegate, UITableViewDataSource>
 /** 顶部条 */
@@ -25,13 +26,54 @@
 /** <#name#> */
 @property(nonatomic, weak) UITableView *tableView;
 
+/** 背景图片*/
+
+@property(nonatomic,strong)UIImageView *backImgView;
+
 @end
 
 @implementation SettingController
 
 static NSString *cellID = @"cellID";
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    NSInteger  PicNum =   [[NSUserDefaults standardUserDefaults] integerForKey:@"PicNum"];
+    
+    if (!PicNum) {
+        
+        
+        
+        self.backImgView.image = [UIImage imageNamed:@"Snip20160825_3"];
+    }
+    
+    
+    else if (PicNum == -1)
+    {
+        NSString *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES).lastObject;
+        path = [path stringByAppendingPathComponent:@"image.png"];
+        
+        self.backImgView.image =[UIImage imageWithContentsOfFile:path];
+    }
+    
+    else{
+        
+        NSString * imgName = [NSString stringWithFormat:@"%ld.jpg",PicNum];
+        
+        self.backImgView.image =[UIImage imageNamed:imgName];
+    }
+
+    
+    NSLog(@"设置页面ViewWillappear");
+    
+}
+
+
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    NSLog(@"设置页面ViewDidLoad");
+    
 	[self setupViews];
 	//注册
 	[self.tableView registerClass:[SettingCell class] forCellReuseIdentifier:cellID];
@@ -40,13 +82,20 @@ static NSString *cellID = @"cellID";
 //初始化
 - (void)setupViews
 {
+    
+    
+    
+    NSLog(@"设置页面setupViews");
+    
 	
 	self.navigationController.navigationBar.hidden = YES;
 	
 	//背景图片
 	UIImageView *backgroundImage = [[UIImageView alloc] initWithFrame:[UIScreen mainScreen].bounds];
 	backgroundImage.image = [UIImage imageNamed:@"Snip20160825_3"];
-	[self.view addSubview:backgroundImage];
+    self.backImgView=backgroundImage;
+    
+	[self.view addSubview:self.backImgView];
 	
 	UIView *view = [[UIView alloc] initWithFrame:[UIScreen mainScreen].bounds];
 	view.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.2];
@@ -263,6 +312,8 @@ static NSString *cellID = @"cellID";
             
             else if(indexPath.row == 2)
             {
+                BackPicSetController *BPC = [BackPicSetController new];
+                [self.navigationController pushViewController:BPC animated:YES];
                 
             }
             
