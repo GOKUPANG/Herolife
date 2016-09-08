@@ -21,7 +21,7 @@
 #define FTDefaultMenuArrowHeight    10.0
 #define FTDefaultMenuArrowWidth     7.0
 #define FTDefaultMenuCornerRadius   4.0
-#define FTDefaultMargin             4.0
+#define FTDefaultMargin             59.0
 #define FTDefaultAnimationDuration  0.2
 
 #define FTPopOverMenuTableViewCellIndentifier @"FTPopOverMenuTableViewCellIndentifier"

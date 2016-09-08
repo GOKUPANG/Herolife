@@ -173,11 +173,11 @@
 	parameters[@"title"] = self.nameField.text;
 	
 	NSString *http = @"http://www.gzhuarui.cn/?q=huaruiapi/node";
-	NSString *httplast = [NSString stringWithFormat:@"%@/%@", http, self.did.lastObject];
+	NSString *httplast = [NSString stringWithFormat:@"%@/%@", http, self.did];
 	[HRHTTPTool hr_PutHttpWithURL:httplast parameters:parameters responseDict:^(id dictionary, NSError *error) {
 		
 		NSDictionary *dict = (NSDictionary *)dictionary;
-		if (dict) {
+		if ([dict valueForKeyPath:@"nid"]) {
 			[self goToHomeList];
 		}
 		DDLogWarn(@"array--%@---error---%@", dictionary,error);

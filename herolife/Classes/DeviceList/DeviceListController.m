@@ -20,6 +20,7 @@
 #import "DoorLockRecordConroller.h"
 #import "APPPSWController.h"
 #import "ShouQuanManagerController.h"
+#import "DeviceListModel.h"
 
 
 
@@ -44,28 +45,37 @@
 /** <#name#> */
 @property(nonatomic, weak) UIView *alphaView;
 /** <#name#> */
-@property(nonatomic, strong) NSArray *photoModelArray;
+@property(nonatomic, strong) NSMutableArray *photoModelArray;
 /** UICollectionView布局 */
 @property(nonatomic, weak) YRCoverFlowLayout *layout;
 
 /** 背景图片*/
 
 @property(nonatomic,strong)UIImageView *backImgView;
+/** appDelegte */
+@property(nonatomic, weak) AppDelegate *appDelegte;
+
+/** 模型数组 */
+@property(nonatomic, strong) NSMutableArray *homeArray;
 
 
 @end
 
 @implementation DeviceListController
 
-
+- (NSMutableArray *)homeArray
+{
+	if (!_homeArray) {
+		_homeArray = [NSMutableArray array];
+	}
+	return _homeArray;
+}
 -(void)viewWillAppear:(BOOL)animated
 {
-    NSInteger  PicNum =   [[NSUserDefaults standardUserDefaults] integerForKey:@"PicNum"];
+    NSInteger  PicNum =  [[NSUserDefaults standardUserDefaults] integerForKey:@"PicNum"];
     
     if (!PicNum) {
-        
-        
-        
+		
         self.backImgView.image = [UIImage imageNamed:@"Snip20160825_3"];
     }
     
@@ -86,42 +96,10 @@
     }
 }
 
-- (NSArray *)photoModelArray
+- (NSMutableArray *)photoModelArray
 {
 	if (!_photoModelArray) {
-		_photoModelArray = @[[PhotoModel modelWithImageNamed:@"图层-2"
-												 description:@""],
-							 [PhotoModel modelWithImageNamed:@"图层-3"
-												 description:@""],
-							 [PhotoModel modelWithImageNamed:@"图层-2"
-												 description:@""],
-							 [PhotoModel modelWithImageNamed:@"图层-3"
-												 description:@""],
-							 [PhotoModel modelWithImageNamed:@"图层-2"
-												 description:@""],
-							 [PhotoModel modelWithImageNamed:@"图层-3"
-												 description:@""],
-							 [PhotoModel modelWithImageNamed:@"图层-3"
-												 description:@""],
-							 [PhotoModel modelWithImageNamed:@"图层-2"
-												 description:@""],
-							 [PhotoModel modelWithImageNamed:@"图层-3"
-												 description:@""],
-							 [PhotoModel modelWithImageNamed:@"图层-2"
-												 description:@""],
-							 [PhotoModel modelWithImageNamed:@"图层-3"
-												 description:@""],
-							 [PhotoModel modelWithImageNamed:@"图层-3"
-												 description:@""],
-							 [PhotoModel modelWithImageNamed:@"图层-2"
-												 description:@""],
-							 [PhotoModel modelWithImageNamed:@"图层-3"
-												 description:@""],
-							 [PhotoModel modelWithImageNamed:@"图层-2"
-												 description:@""],
-							 [PhotoModel modelWithImageNamed:@"图层-3"
-												 description:@""]
-							 ];
+		_photoModelArray = [NSMutableArray array];
 	}
 	return _photoModelArray;
 }
@@ -133,6 +111,11 @@ static NSString *cellID = @"cellID";
 	//注册
 	[self.tableView registerClass:[DeviceListCell class] forCellReuseIdentifier:cellID];
 	[self.collectionView registerClass:[CustomCollectionViewCollectionViewCell class] forCellWithReuseIdentifier:kCustomCellIdentifier];
+	
+	//建立连接 -- 用户登录认证
+	[self postTokenWithTCPSocket];
+	//获取设备信息
+	[self getHttpRequset];
 }
 
 #pragma mark - 内部方法
@@ -194,7 +177,7 @@ static NSString *cellID = @"cellID";
 	self.listImageView = listImageView;
 	
 	UILabel *listLabel = [[UILabel alloc] init];
-	listLabel.text = @"HEROLIFE";
+	listLabel.text = @"  ";
 	listLabel.textColor = [UIColor whiteColor];
 	if (HRUIScreenH < 667) {
 		listLabel.font = [UIFont systemFontOfSize:12];
@@ -275,13 +258,13 @@ static NSString *cellID = @"cellID";
 	[self.collectionView mas_makeConstraints:^(MASConstraintMaker *make) {
 		make.left.equalTo(self.view).offset(HRCommonScreenW * 30);
 		make.right.equalTo(self.view).offset(- HRCommonScreenW * 30);
-		make.top.equalTo(self.navView.mas_bottom).offset(HRCommonScreenH *63);
+		make.top.equalTo(self.navView.mas_bottom).offset(HRCommonScreenH *62);
 		make.height.mas_equalTo(HRCommonScreenH * 272);
 	}];
 	
 	//列表按钮
 	[self.listButton mas_makeConstraints:^(MASConstraintMaker *make) {
-		make.top.equalTo(self.collectionView.mas_bottom).offset(HRCommonScreenH *20);
+		make.top.equalTo(self.collectionView.mas_bottom).offset(HRCommonScreenH *32);
 		make.centerX.equalTo(self.view);
 		make.width.mas_equalTo(HRCommonScreenW * 271);
 		make.height.mas_equalTo(HRCommonScreenH * 50);
@@ -295,14 +278,13 @@ static NSString *cellID = @"cellID";
 	//列表按钮里左边的图片
 	[self.listImageView mas_makeConstraints:^(MASConstraintMaker *make) {
 		make.left.equalTo(self.listButton).offset(HRCommonScreenW * 10);
-		make.top.bottom.equalTo(self.listButton);
-		make.right.equalTo(self.listLabel.mas_left).offset(- HRCommonScreenW * 4);
+		make.centerY.equalTo(self.listButton);
 	}];
 	//列表按钮里的右边图片
 	[self.rightImageView mas_makeConstraints:^(MASConstraintMaker *make) {
 		make.right.equalTo(self.listButton).offset(- HRCommonScreenW *10);
 		make.centerY.equalTo(self.listButton);
-		make.left.equalTo(self.listLabel.mas_right).offset(HRCommonScreenW * 10);
+//		make.left.equalTo(self.listLabel.mas_right).offset(HRCommonScreenW * 10);
 	}];
 	
 	[self.alphaView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -333,14 +315,25 @@ static NSString *cellID = @"cellID";
 		self.rightImageView.layer.transform = CATransform3DMakeRotation(M_PI, 0, 0, 1);
 		
 	}
-
+	NSMutableArray *titleArray = [NSMutableArray array];
+	NSMutableArray *iconArray = [NSMutableArray array];
+	for (DeviceListModel *home in self.homeArray) {
+		NSString *title = home.title;
+		[titleArray addObject:title];
+		[iconArray addObject:@"标签"];
+	}
 	
 	[FTPopOverMenu showForSender:btn
-						withMenu:@[@"HEROLIFE",@"HEROLIFE",@"HEROLIFE",@"HEROLIFE",@"HEROLIFE"]
-				  imageNameArray:@[@"标签",@"标签",@"标签",@"标签",@"标签"]
+						withMenu:titleArray
+				  imageNameArray:iconArray
 					   doneBlock:^(NSInteger selectedIndex) {
 						   btn.selected = NO;
 						   self.rightImageView.layer.transform = CATransform3DMakeRotation(M_PI, 0, 0, 1);
+						   
+						   //显示选择的title
+						   DeviceListModel *home = self.homeArray[selectedIndex];
+						   self.listLabel.text = home.title;
+						   [self.collectionView setContentOffset:CGPointMake(selectedIndex * HRCommonScreenW *345 *2, 0) animated:YES];
 						   NSLog(@"done block. do something. selectedIndex : %ld", (long)selectedIndex);
 						   
 					   } dismissBlock:^{
@@ -476,7 +469,6 @@ static NSString *cellID = @"cellID";
 																							 forIndexPath:indexPath];
 		cell.photoModel = self.photoModelArray[indexPath.row];
 	
-	DDLogInfo(@"frame%@", NSStringFromCGRect(cell.frame));
 	return cell;
 }
 
@@ -510,7 +502,85 @@ static NSString *cellID = @"cellID";
 	}
 	DDLogInfo(@"index%d", index);
 	DDLogInfo(@"yu%d", yu);
+	
+	//显示选择的title
+	DeviceListModel *home = self.homeArray[index];
+	self.listLabel.text = home.title;
+	
 	[self.collectionView setContentOffset:CGPointMake(index * HRCommonScreenW *345 *2, 0) animated:YES];
+}
+
+#pragma mark - 建立socket连接 并组帧 发送请求数据
+/// 建立socket连接 并组帧 发送请求数据
+- (void)postTokenWithTCPSocket
+{
+	
+	AppDelegate *appDelegte = (AppDelegate *)[UIApplication sharedApplication].delegate;
+	
+	[appDelegte connectToHost];
+	self.appDelegte = appDelegte;
+	
+	NSString *passWold = [[NSUserDefaults standardUserDefaults] objectForKey:kDefaultsPassWord];
+	NSString *userName = [[NSUserDefaults standardUserDefaults] objectForKey:kDefaultsUserName];
+	DDLogWarn(@"%@", userName);
+	NSMutableDictionary *bodyDict = [NSMutableDictionary dictionary];
+	bodyDict[@"user"] = userName;
+	bodyDict[@"pass"] = passWold;
+	
+	//登入认证  组登入认证
+	NSString *str = [NSString stringWithPostTCPJsonVersion:@"0.0.1" status:@"200" token:@"token" msgType:@"login" msgExplain:@"login" fromUserName:userName destUserName:@"huaruicloud" destDevName:@"huaruiPushServer" msgBodyStringDict:bodyDict];
+	DDLogWarn(@"登入认证登入认证--%@", str);
+	[self.appDelegte sendMessageWithString:str];
+	
+}
+#pragma mark - 获取设备信息  发送HTTP请求
+- (void)getHttpRequset
+{
+	/// 从偏好设置里加载数据
+	NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
+	NSString *user = [userDefault objectForKey:kDefaultsUserName];
+	
+	NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
+	parameters[@"user"] = user;
+	HRWeakSelf
+	[HRHTTPTool hr_getHttpWithURL:HRAPI_LockInFo_URL parameters:parameters responseDict:^(id responseObject, NSError *error) {
+		
+		if (error) {
+			[ErrorCodeManager showError:error];
+			return ;
+		}
+		
+		DDLogWarn(@"listArray%@", responseObject);
+		//如果responseObject不是数组类型就不是我们想要的数据，应该过滤掉
+		if (![responseObject isKindOfClass:[NSArray class]]) {
+			[weakSelf.homeArray removeAllObjects];
+			[self.tableView reloadData];
+			DDLogDebug(@"responseObject不是NSArray");
+			return;
+		}
+		//去除服务器发过来的数据里没有值的情况
+		if (((NSArray*)responseObject).count < 1 ) {
+			DDLogDebug(@"responseObject count == 0");
+			return;
+		}
+		
+		[weakSelf.homeArray removeAllObjects];
+		NSArray *responseArr = (NSArray*)responseObject;
+		
+		for (NSDictionary *dict in responseArr) {
+			DeviceListModel *home = [DeviceListModel mj_objectWithKeyValues:dict];
+			[weakSelf.photoModelArray addObject:
+			[PhotoModel modelWithImageNamed:@"图层-3"
+								description:@""]];
+			[weakSelf.homeArray addObject:home];
+		}
+		
+		DeviceListModel *home = self.homeArray.firstObject;
+		self.listLabel.text = home.title;
+		
+		
+	}];
+	
 }
 
 @end

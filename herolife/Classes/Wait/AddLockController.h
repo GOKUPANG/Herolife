@@ -10,5 +10,5 @@
 
 @interface AddLockController : UIViewController
 /** did */
-@property(nonatomic, copy) NSArray *did;
+@property(nonatomic, copy) NSString *did;
 @end

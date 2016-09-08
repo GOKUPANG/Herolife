@@ -25,8 +25,8 @@ UIKIT_EXTERN CGFloat const HRNavH;
 /// 获取温湿度数据的GET请求URL
 #define HRAPI_TempHumid_URL @"http://www.gzhuarui.cn/?q=huaruiapi/xiaorui-humiture"
 
-/// 获取小睿信息数据的GET请求URL
-#define HRAPI_XiaoRuiInFo_URL @"http://www.gzhuarui.cn/?q=huaruiapi/xiaorui-info"
+/// 获取锁信息数据的GET请求URL
+#define HRAPI_LockInFo_URL @"http://www.gzhuarui.cn/?q=huaruiapi/herolife-dev"
 /// 创建小睿GET请求URL
 #define HRAPI_XiaoRuiNode_URL @"http://www.gzhuarui.cn/?q=huaruiapi/node"
 /// 获取小睿PM2.5值数据的GET请求URL

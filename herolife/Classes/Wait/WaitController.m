@@ -52,7 +52,6 @@ static int const HRTimeDuration = 30;
 	NSString *user = [kUserDefault objectForKey:kDefaultsUserName];
 	AppDelegate *app = (AppDelegate *)[UIApplication sharedApplication].delegate;
 	NSDictionary *msg = app.msgDictionary;
-//	NSString *ssid = msg[@"ssid"];
 	NSString *ssid = msg[@"ssid"];
 	NSMutableDictionary *dict = [NSMutableDictionary dictionary];
 	dict[@"user"] = user;
@@ -61,31 +60,42 @@ static int const HRTimeDuration = 30;
 	[HRHTTPTool hr_getHttpWithURL:HRAPI_QueryLock_URL parameters:dict responseDict:^(id dictionary, NSError *error) {
 		DDLogWarn(@"array--%@---error---%@", dictionary,error);
 		DDLogWarn(@"class--%@", [dictionary class]);
-		NSDictionary *dict = (NSDictionary *)dictionary;
-		if (dict) {
-			
-			AddLockController *addLockVC = [[AddLockController alloc] init];
-			addLockVC.did = [dict valueForKeyPath:@"did"];
-			[self.navigationController pushViewController:addLockVC animated:YES];
-		}else
-		{
-			//创建门锁HTTP
-			[self createLockHTTP];
+		if ([[dictionary class] isSubclassOfClass:[NSArray class]]) {
+			NSArray *arr = (NSArray *)dictionary;
+			if (arr.count > 0) {
+				
+				for (NSDictionary *dict in arr) {
+					NSString *uuid = [dict valueForKeyPath:@"uuid"];
+					if ([uuid isEqualToString:ssid]) {
+						
+						AddLockController *addLockVC = [[AddLockController alloc] init];
+						addLockVC.did = [dict valueForKeyPath:@"did"];
+						[self.navigationController pushViewController:addLockVC animated:YES];
+					}
+				}
+			}else
+			{
+				//创建门锁HTTP
+				[self createLockHTTPWithUUID:ssid];
+				
+			}
 		}
-		
+
 	}];
 	
 }
 #pragma mark - 创建门锁HTTP
-- (void)createLockHTTP
+- (void)createLockHTTPWithUUID:(NSString *)uuid
 {
+	NSString *licence = [NSString hr_stringWithBase64];
+	
 	NSMutableDictionary *dict = [NSMutableDictionary dictionary];
 	dict[@"type"] = @"hrsc";
-	dict[@"field_uuid[und][0][value]"] = @"dev uuid";
+	dict[@"field_uuid[und][0][value]"] = uuid;
 	dict[@"field_version[und][0][value]"] = @"dev version";
 	dict[@"title"] = @"智能门锁";
 	dict[@"field_brand[und][0][value]"] = @"dev brand";
-	dict[@"field_licence[und][0][value]"] = @"dev licence";
+	dict[@"field_licence[und][0][value]"] = licence;
 	dict[@"field_level[und][0][value]"] = @"90%";
 	dict[@"field_state[und][0][value]"] = @"0";
 	dict[@"field_online[und][0][value]"] = @"off";
@@ -103,9 +113,9 @@ static int const HRTimeDuration = 30;
 	[HRHTTPTool hr_postHttpWithURL:HRAPI_AddLock_URL parameters:dict responseDict:^(id dictionary, NSError *error) {
 		NSDictionary *dict = (NSDictionary *)dictionary;
 		AddLockController *addLockVC = [[AddLockController alloc] init];
-		addLockVC.did = [dict valueForKeyPath:@"did"];
+		addLockVC.did = [dict valueForKeyPath:@"nid"];
 		[self.navigationController pushViewController:addLockVC animated:YES];
-		DDLogWarn(@"array--%@---error---%@", dictionary,error);
+		DDLogWarn(@"createLockHTTP--%@---error---%@", dictionary,error);
 		
 	}];
 }

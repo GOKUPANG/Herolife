@@ -216,6 +216,8 @@
 		D1A7DDCF1D811ED100D051B0 /* SettingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D1A7DDCC1D811ED100D051B0 /* SettingCell.m */; };
 		D1A7DDD01D811ED100D051B0 /* SettingController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1A7DDCE1D811ED100D051B0 /* SettingController.m */; };
 		D1A7DDD31D811F4A00D051B0 /* DeviceListController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1A7DDD21D811F4A00D051B0 /* DeviceListController.m */; };
+		D1A7DDD51D813C6400D051B0 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D1A7DDD41D813C6400D051B0 /* Info.plist */; };
+		D1A7DDF01D81592E00D051B0 /* DeviceListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = D1A7DDEF1D81592E00D051B0 /* DeviceListModel.m */; };
 		D1D23DEF1D7570A100FCB5C9 /* AddDeivcecell.m in Sources */ = {isa = PBXBuildFile; fileRef = D1D23DEC1D7570A100FCB5C9 /* AddDeivcecell.m */; };
 		DAE2A790C81C0FDB9C617E84 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DC40F28764523F49428DB0CE /* libPods.a */; };
 /* End PBXBuildFile section */
@@ -307,7 +309,6 @@
 		D17CF0F91D6567E7007C95DD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		D17CF0FB1D6567E7007C95DD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D17CF0FE1D6567E7007C95DD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		D17CF1001D6567E7007C95DD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D17CF1051D6567E7007C95DD /* herolifeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = herolifeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D17CF1091D6567E7007C95DD /* herolifeTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = herolifeTests.m; sourceTree = "<group>"; };
 		D17CF10B1D6567E7007C95DD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -594,6 +595,9 @@
 		D1A7DDCE1D811ED100D051B0 /* SettingController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingController.m; sourceTree = "<group>"; };
 		D1A7DDD11D811F4A00D051B0 /* DeviceListController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeviceListController.h; sourceTree = "<group>"; };
 		D1A7DDD21D811F4A00D051B0 /* DeviceListController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeviceListController.m; sourceTree = "<group>"; };
+		D1A7DDD41D813C6400D051B0 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D1A7DDEE1D81592E00D051B0 /* DeviceListModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeviceListModel.h; sourceTree = "<group>"; };
+		D1A7DDEF1D81592E00D051B0 /* DeviceListModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeviceListModel.m; sourceTree = "<group>"; };
 		D1D23DEB1D7570A100FCB5C9 /* AddDeivcecell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AddDeivcecell.h; path = ../AddDeivcecell.h; sourceTree = "<group>"; };
 		D1D23DEC1D7570A100FCB5C9 /* AddDeivcecell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AddDeivcecell.m; path = ../AddDeivcecell.m; sourceTree = "<group>"; };
 		DC40F28764523F49428DB0CE /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -895,8 +899,8 @@
 				D17CF0FB1D6567E7007C95DD /* Assets.xcassets */,
 				D1A7DDC81D811BB900D051B0 /* HRConst.h */,
 				D1A7DDC91D811BB900D051B0 /* HRConst.m */,
+				D1A7DDD41D813C6400D051B0 /* Info.plist */,
 				D1A7DDC41D81190200D051B0 /* PrefixHeader.pch */,
-				D17CF1001D6567E7007C95DD /* Info.plist */,
 				D17CF0F01D6567E7007C95DD /* main.m */,
 			);
 			name = "Supporting Files";
@@ -923,12 +927,12 @@
 		D1A7DBE91D8117DD00D051B0 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				D1A7DBFD1D8117DD00D051B0 /* Other */,
 				D1A7DBEA1D8117DD00D051B0 /* AddLock */,
 				D1A7DBEB1D8117DD00D051B0 /* DeviceList */,
 				D1A7DBF01D8117DD00D051B0 /* Forget */,
 				D1A7DBF31D8117DD00D051B0 /* Login */,
 				D1A7DBFA1D8117DD00D051B0 /* Next */,
-				D1A7DBFD1D8117DD00D051B0 /* Other */,
 				D1A7DD041D8117DD00D051B0 /* QRcode */,
 				D1A7DD071D8117DD00D051B0 /* register */,
 				D1A7DD0A1D8117DD00D051B0 /* Seting */,
@@ -952,6 +956,8 @@
 				D1A7DBED1D8117DD00D051B0 /* DeviceListCell.m */,
 				D1A7DDD11D811F4A00D051B0 /* DeviceListController.h */,
 				D1A7DDD21D811F4A00D051B0 /* DeviceListController.m */,
+				D1A7DDEE1D81592E00D051B0 /* DeviceListModel.h */,
+				D1A7DDEF1D81592E00D051B0 /* DeviceListModel.m */,
 			);
 			path = DeviceList;
 			sourceTree = "<group>";
@@ -1648,6 +1654,7 @@
 				1868B8EB1D76C4A200D19386 /* 后退@2x.png in Resources */,
 				1868B9191D79289500D19386 /* 1.jpg in Resources */,
 				D1A7DD6D1D8117DD00D051B0 /* Scanning line@2x.png in Resources */,
+				D1A7DDD51D813C6400D051B0 /* Info.plist in Resources */,
 				D17CF0FC1D6567E7007C95DD /* Assets.xcassets in Resources */,
 				D1A7DD6C1D8117DD00D051B0 /* Scanning frame@2x.png in Resources */,
 				D1A7DD681D8117DD00D051B0 /* backWhite@2x.png in Resources */,
@@ -1833,6 +1840,7 @@
 				D1A7DD501D8117DD00D051B0 /* NVActivityIndicatorAnimationBallScale.swift in Sources */,
 				D1A7DDA61D8117DD00D051B0 /* Push.m in Sources */,
 				D1A7DD441D8117DD00D051B0 /* NVActivityIndicatorAnimationAudioEqualizer.swift in Sources */,
+				D1A7DDF01D81592E00D051B0 /* DeviceListModel.m in Sources */,
 				D1A7DD461D8117DD00D051B0 /* NVActivityIndicatorAnimationBallClipRotate.swift in Sources */,
 				D1A7DD7D1D8117DD00D051B0 /* UIImage+WebP.m in Sources */,
 				D1A7DD7E1D8117DD00D051B0 /* UIImageView+HighlightedWebCache.m in Sources */,

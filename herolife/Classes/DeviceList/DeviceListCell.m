@@ -50,9 +50,7 @@
 	
 	[self.leftImage mas_makeConstraints:^(MASConstraintMaker *make) {
 		make.left.equalTo(self).offset(HRCommonScreenW * 73);
-		make.top.equalTo(self).offset(HRCommonScreenH * 22);
-		make.bottom.equalTo(self).offset(- HRCommonScreenH * 22);
-		make.width.mas_equalTo(HRCommonScreenH * 52 );
+		make.centerY.equalTo(self);
 	}];
 	
 	[self.leftLabel mas_makeConstraints:^(MASConstraintMaker *make) {
