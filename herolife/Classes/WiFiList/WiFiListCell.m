@@ -9,8 +9,53 @@
 
 #import "WiFiListCell.h"
 
-@implementation WiFiListCell
 
+@interface WiFiListCell ()
+
+/** wifi信号图片 */
+@property(nonatomic, weak) UIImageView *wifiImage;
+@end
+
+@implementation WiFiListCell
+- (void)setRssilistString:(NSString *)rssilistString
+{
+	_rssilistString = rssilistString;
+	int index = [rssilistString intValue];
+	switch (index) {
+  case 0:
+		{
+			self.wifiImage.image = [UIImage imageNamed:@"没有"];
+		}
+			break;
+  case 1:
+		{
+			self.wifiImage.image = [UIImage imageNamed:@"很弱"];
+			
+		}
+			break;
+  case 2:
+		{
+			self.wifiImage.image = [UIImage imageNamed:@"弱"];
+			
+		}
+			break;
+  case 3:
+		{
+			self.wifiImage.image = [UIImage imageNamed:@"微弱"];
+			
+		}
+			break;
+  case 4:
+		{
+			
+			self.wifiImage.image = [UIImage imageNamed:@"满格"];
+		}
+			break;
+			
+  default:
+			break;
+	}
+}
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {

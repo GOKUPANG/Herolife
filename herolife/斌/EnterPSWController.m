@@ -17,6 +17,9 @@
 #import "WiFiListController.h"
 
 #import "WaitController.h"
+#import "WIFIListModel.h"
+#import "UDPModel.h"
+#import "HRPushMode.h"
 
 @interface EnterPSWController ()<UITableViewDelegate,UITableViewDataSource>
 
@@ -27,8 +30,19 @@
 @property(nonatomic, weak) HRNavigationBar *navView;
 
 @property(nonatomic,strong)UITableView * tableView;
+/** wifi名称 */
+@property(nonatomic, weak)  UILabel * WIFILabel;
+/**  */
+@property(nonatomic, weak)  UITextField *WIFITextField;
+/** 选中wifi时 传过来的值 */
+@property(nonatomic, copy) NSString *name;
+/** 选中wifi时 传过来的下标 */
+@property(nonatomic, assign) NSInteger index;
+
+@property(nonatomic, strong) HRUDPSocketTool  *udpSocket;
 
 @end
+
 
 @implementation EnterPSWController
 
@@ -46,9 +60,6 @@
     
 
     
-    
-  //  [self makeTableViewUI];
-    
     [self makeUI];
     
     
@@ -61,7 +72,58 @@
 	//haibo 隐藏底部条
 	[self IsTabBarHidden:YES];
 	
+	//通知
+	[self addObserverNotification];
+	
 }
+- (void)addObserverNotification
+{
+	[kNotification addObserver:self selector:@selector(receiveStratAddWiFiLink) name:kNotificationReceiveStratAddWiFiLink object:nil];
+}
+static BOOL isOvertime = NO;
+static BOOL ispush = YES;
+- (void)receiveStratAddWiFiLink
+{
+	isOvertime = YES;
+	AppDelegate *app = (AppDelegate *)[UIApplication sharedApplication].delegate;
+	NSDictionary *dic = app.msgDictionary;
+	NSString *set = dic[@"set"];
+	if ([set isEqualToString:@"5"]) {
+		[SVProgressTool hr_dismiss];
+		
+		if (ispush) {
+			WaitController *waitVC = [[WaitController alloc] init];
+			[self.navigationController pushViewController:waitVC animated:YES];
+			ispush = NO;
+		}
+	}else if ([set isEqualToString:@"6"]) {
+		[SVProgressTool hr_showErrorWithStatus:@"添加wifi失败, 请重试!"];
+	}
+}
+- (void)viewDidAppear:(BOOL)animated
+{
+	[super viewDidAppear:animated];
+	ispush = YES;
+	[SVProgressTool hr_dismiss];
+	if (self.name.length > 0) {
+		self.WIFILabel.text = self.name;
+		return;
+	}
+	//从单例中获取数据
+	AppDelegate *app = (AppDelegate *)[UIApplication sharedApplication].delegate;
+	NSString *fisterWifi = app.wifiNameArray.firstObject;
+	if (fisterWifi.length < 1) {
+		dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+			self.WIFILabel.text = app.wifiNameArray.firstObject;
+		});
+	}else
+	{
+		
+		self.WIFILabel.text = app.wifiNameArray.firstObject;
+	}
+	
+}
+
 //海波代码
 - (void)viewDidLayoutSubviews
 {
@@ -153,13 +215,13 @@
     
     WIFILabel.textAlignment= NSTextAlignmentLeft;
     
-    WIFILabel.text = @"HUARUIKEJI";
+    WIFILabel.text = @"";
     
     
     
     WIFILabel.textColor = [UIColor whiteColor];
-    
-    
+	self.WIFILabel = WIFILabel;
+	
     /** WiFi cell的 最右边的图片*/
     
     UIImageView *WIFIImageView  = [[UIImageView alloc]init];
@@ -196,8 +258,8 @@
     [WIFITextField setValue:[UIColor colorWithRed:153.0/255.0 green:153.0/255.0 blue:153.0/255.0 alpha:1] forKeyPath:@"_placeholderLabel.textColor"];
     
     WIFITextField.clearButtonMode =    UITextFieldViewModeAlways;
-    
-
+	WIFITextField.text = @"HRKJ39026922";
+	self.WIFITextField = WIFITextField;
     
     
     /** WIFI密码输入框最右边的图片 */
@@ -233,6 +295,13 @@
     
     NSLog(@"点击了WIFI");
 	WiFiListController *WiFiVC = [[WiFiListController alloc] init];
+	__weak __typeof__(self) weakSelf = self;
+	[WiFiVC selectWifiBlockWithBlock:^(NSString *name, NSInteger index) {
+		__strong __typeof__ (weakSelf) strongSelf = weakSelf;
+		strongSelf.WIFILabel.text = name;
+		strongSelf.name = name;
+		strongSelf.index = index;
+	}];
 	[self.navigationController pushViewController:WiFiVC animated:YES];
     
     
@@ -241,9 +310,6 @@
 #pragma mark - 开始添加按钮的设置
 -(void)MakeStartAddView
 {
-    
-  
-    
     
     UIView * StartView = [[UIView alloc]init];
     [self.view addSubview:StartView];
@@ -307,8 +373,71 @@
 -(void)StartViewClick
 {
     NSLog(@"点击了开始添加");
-	WaitController *waitVC = [[WaitController alloc] init];
-	[self.navigationController pushViewController:waitVC animated:YES];
+	if (self.WIFILabel.text.length < 0.5 || self.WIFITextField.text.length < 0.5) {
+		[SVProgressTool hr_showErrorWithStatus:@"wifi名或密码不能为空!"];
+	}else
+	{
+		[SVProgressTool hr_showWithStatus:@"正在添加..."];
+		[self setupUDPSocket];
+		
+	}
+}
+
+#pragma mark - haibo 建立UDP连接
+- (void)setupUDPSocket
+{
+//	NSInteger index = 0;
+//	self.udpSocket = [HRUDPSocketTool shareHRUDPSocketTool];
+//	[self.udpSocket connectWithUDPSocket];
+//	
+//	NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+//	dict[@"set"] = @"4";
+//	dict[@"ssid"] = self.WIFILabel.text;
+//	AppDelegate *app = (AppDelegate *)[UIApplication sharedApplication].delegate;
+//	for (int i = 0; i < app.wifiNameArray.count -1; i++) {
+//		if ([app.wifiNameArray[i] isEqualToString:self.WIFILabel.text]) {
+//			index = i;
+//		}
+//	}
+//	dict[@"pass"] = self.WIFITextField.text;
+//	dict[@"auth"] = app.authlistArray[index];
+//	
+//	NSString *sendString = [NSString stringWithUDPMsgDict:dict];
+	
+//	[NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(updateTime) userInfo:nil repeats:YES	];
+	[self updateTime];
+	
+	
+}
+- (void)updateTime
+{
+	NSInteger index = 0;
+	self.udpSocket = [HRUDPSocketTool shareHRUDPSocketTool];
+	[self.udpSocket connectWithUDPSocket];
+	
+	NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+	dict[@"set"] = @"4";
+	dict[@"ssid"] = self.WIFILabel.text;
+	AppDelegate *app = (AppDelegate *)[UIApplication sharedApplication].delegate;
+	for (int i = 0; i < app.wifiNameArray.count -1; i++) {
+		if ([app.wifiNameArray[i] isEqualToString:self.WIFILabel.text]) {
+			index = i;
+		}
+	}
+	dict[@"pass"] = self.WIFITextField.text;
+	dict[@"auth"] = app.authlistArray[index];
+	
+	NSString *sendString = [NSString stringWithUDPMsgDict:dict];
+	
+	[_udpSocket sendUDPSockeWithString:sendString];
+	
+	DDLogWarn(@"--------------------------------sendUDPSockeWithString");
+	isOvertime = NO;
+	dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(30.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+		if (!isOvertime) {
+			[SVProgressTool hr_showErrorWithStatus:@"请求超时!"];
+		}
+	});
 }
 
 #pragma mark - tableView的UI设置
@@ -348,18 +477,18 @@
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell    = [tableView dequeueReusableCellWithIdentifier:@"cellID"];
-
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cellID"];
+    
     if (cell == nil) {
-    cell                     = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cellID"];
-    cell.textLabel.text      = @"输入密码";
-    cell.textLabel.textColor = [UIColor whiteColor];
-
-
+        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cellID"];
+        cell.textLabel.text = @"输入密码";
+        cell.textLabel.textColor = [UIColor whiteColor];
+        
+        
     }
-
-    cell.backgroundColor     = [UIColor clearColor];
-
+    
+    cell.backgroundColor = [UIColor clearColor];
+    
     return cell;
     
 }
@@ -367,6 +496,7 @@
 - (void)viewWillDisappear:(BOOL)animated
 {
 	[self IsTabBarHidden:YES];
+	[SVProgressTool hr_dismiss];
 }
 #pragma mark - 隐藏底部条 - 海波代码
 - (void)IsTabBarHidden:(BOOL)hidden

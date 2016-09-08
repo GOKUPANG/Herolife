@@ -50,6 +50,13 @@ UIKIT_EXTERN CGFloat const HRNavH;
 
 /// 忘记密码POST请求URL
 #define HRAPI_ForgetPasswd_URL @"http://www.gzhuarui.cn/?q=huaruiapi/user/request_new_password"
+/// 添加门锁POST请求URL
+#define HRAPI_QueryLock_URL @"http://www.gzhuarui.cn/?q=huaruiapi/herolife-dev"
+/// 添加门锁POST请求URL
+#define HRAPI_AddLock_URL @"http://www.gzhuarui.cn/?q=huaruiapi/node"
+/// 修改门锁名称PUT请求URL
+//#define HRAPI_ModifyLock_URL @"http://www.gzhuarui.cn/?q=huaruiapi/node/did"
+
 
 
 /* Error domains and codes*/

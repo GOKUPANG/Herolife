@@ -26,6 +26,14 @@
 + (NSString *)stringWithHRDOVersion:(NSString *)version status:(NSString *)status token:(NSString *)token type:(NSString *)type desc:(NSString *)desc srcUserName:(NSString *)srcUserName dstUserName:(NSString *)dstUserName dstDevName:(NSString *)dstDevName uid:(NSString *)uid mid:(NSString *)mid did:(NSString *)did uuid:(NSString *)uuid types:(NSString *)types newVersion:(NSString *)newVersion title:(NSString *)title brand:(NSString *)brand created:(NSString *)created update:(NSString *)update state:(NSString *)state picture:(NSArray *)picture regional:(NSArray *)regional parameter:(NSArray *)parameter;
 /// 情景 请求帧
 + (NSString *)stringWithSceneType:(NSString *)type did:(NSString *)did title:(NSString *)title picture:(NSArray *)picture data:(NSArray *)data;
+
+
+/// UDP  请求帧
++ (NSString *)stringWithUDPMsgDict:(NSMutableDictionary *)msgDict;
+
+///获取当前wifi的名称
++ (NSString *)stringWithGetWifiName;
+
 /// 获取当前时间
 + (NSString *)loadCurrentDate;
 /// 获取用户UUID
@@ -45,4 +53,5 @@
  *  @return 加密好的数据
  */
 + (NSString *)hr_stringWithBase64;
++ (NSString *)hr_stringWithBase64String:(NSString *)baseString;
 @end

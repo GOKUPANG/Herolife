@@ -35,16 +35,80 @@
 
 @implementation WaitController
 /** 停留时间 */
-static int const HRTimeDuration = 2;
+static int const HRTimeDuration = 30;
 - (void)viewDidLoad {
     [super viewDidLoad];
 	
 	//添加定时器
 	[self addTimer];
 	[self setupViews];
+	[self sendHTTPData];
 	
 }
-
+#pragma mark - HTTP
+- (void)sendHTTPData
+{
+	//先去查询, HTTP查询如果有数据就去更新, 如果没有就创建&uid=uid&type=hrsc&uuid=uuid
+	NSString *user = [kUserDefault objectForKey:kDefaultsUserName];
+	AppDelegate *app = (AppDelegate *)[UIApplication sharedApplication].delegate;
+	NSDictionary *msg = app.msgDictionary;
+//	NSString *ssid = msg[@"ssid"];
+	NSString *ssid = msg[@"ssid"];
+	NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+	dict[@"user"] = user;
+	dict[@"types"] = @"hrsc";
+	dict[@"uuid"] = ssid;
+	[HRHTTPTool hr_getHttpWithURL:HRAPI_QueryLock_URL parameters:dict responseDict:^(id dictionary, NSError *error) {
+		DDLogWarn(@"array--%@---error---%@", dictionary,error);
+		DDLogWarn(@"class--%@", [dictionary class]);
+		NSDictionary *dict = (NSDictionary *)dictionary;
+		if (dict) {
+			
+			AddLockController *addLockVC = [[AddLockController alloc] init];
+			addLockVC.did = [dict valueForKeyPath:@"did"];
+			[self.navigationController pushViewController:addLockVC animated:YES];
+		}else
+		{
+			//创建门锁HTTP
+			[self createLockHTTP];
+		}
+		
+	}];
+	
+}
+#pragma mark - 创建门锁HTTP
+- (void)createLockHTTP
+{
+	NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+	dict[@"type"] = @"hrsc";
+	dict[@"field_uuid[und][0][value]"] = @"dev uuid";
+	dict[@"field_version[und][0][value]"] = @"dev version";
+	dict[@"title"] = @"智能门锁";
+	dict[@"field_brand[und][0][value]"] = @"dev brand";
+	dict[@"field_licence[und][0][value]"] = @"dev licence";
+	dict[@"field_level[und][0][value]"] = @"90%";
+	dict[@"field_state[und][0][value]"] = @"0";
+	dict[@"field_online[und][0][value]"] = @"off";
+	dict[@"field_op[und][0][value]"] = @"0";
+	dict[@"field_op[und][1][value]"] = @"0";
+	dict[@"field_op[und][2][value]"] = @"0";
+	dict[@"field_op[und][3][value]"] = @"0";
+	dict[@"field_op[und][4][value]"] = @"none/phone number";
+	dict[@"field_op[und][5][value]"] = @"none/emergency contact";
+	dict[@"field_op[und][6][value]"] = @"none/your name";
+	dict[@"field_op[und][7][value]"] = @"none/lock address";
+	dict[@"field_op[und][8][value]"] = @"none/phone number";
+	dict[@"field_op[und][9][value]"] = @"none/your name";
+	
+	[HRHTTPTool hr_postHttpWithURL:HRAPI_AddLock_URL parameters:dict responseDict:^(id dictionary, NSError *error) {
+		NSDictionary *dict = (NSDictionary *)dictionary;
+		AddLockController *addLockVC = [[AddLockController alloc] init];
+		addLockVC.did = [dict valueForKeyPath:@"did"];
+		[self.navigationController pushViewController:addLockVC animated:YES];
+		DDLogWarn(@"array--%@---error---%@", dictionary,error);
+		
+	}];
+}
 #pragma mark - 内部方法
 - (void)setupViews
 {
@@ -194,8 +258,6 @@ static int const HRTimeDuration = 2;
 	NSString *title = [NSString stringWithFormat:@"%zd秒", self.leftTime];
 	self.timeLabel.text = title;
 	if (self.leftTime == 0) {
-		AddLockController *addLockVC = [[AddLockController alloc] init];
-		[self.navigationController pushViewController:addLockVC animated:YES];
 		[self.timer invalidate];
 	}
 	
@@ -208,7 +270,19 @@ static int const HRTimeDuration = 2;
 
 - (void)cancelButtonClick:(UIButton *)btn
 {
-	[self.navigationController popViewControllerAnimated:YES];
+	for (UIView *view  in self.tabBarController.view.subviews) {
+		if ([NSStringFromClass([view class]) isEqualToString:@"HRTabBar"]) {
+			view.hidden = NO;
+			for (UIButton *btn in view.subviews) {
+    
+				if (btn.tag == 2) {
+					btn.selected = YES;
+				}
+			}
+		}
+	}
+	self.tabBarController.selectedIndex = 1;
+	[self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 

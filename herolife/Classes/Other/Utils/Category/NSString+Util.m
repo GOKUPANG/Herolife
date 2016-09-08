@@ -8,6 +8,7 @@
 
 #import "NSString+Util.h"
 #import <CommonCrypto/CommonDigest.h>
+#import <SystemConfiguration/CaptiveNetwork.h>
 
 @implementation NSString (Util)
 
@@ -387,7 +388,73 @@
 	
 	return urlString;
 }
+#pragma mark - UDP
+/// UDP  请求帧
++ (NSString *)stringWithUDPMsgDict:(NSMutableDictionary *)msgDict
+{
+	
+	NSMutableDictionary *msgFromDict = [NSMutableDictionary dictionary];
+	
+	msgFromDict[@"user"] = @"none";
+	msgFromDict[@"dev"] = @"none";
+	
+	NSMutableDictionary *msgDestDict = [NSMutableDictionary dictionary];
+	
+	msgDestDict[@"user"] = @"none";
+	msgDestDict[@"dev"] = @"none";
+	
+	NSMutableDictionary *hrpushDict = [NSMutableDictionary dictionary];
+	hrpushDict[@"version"] = @"0.0.1";
+	hrpushDict[@"status"] = @"200";
+	hrpushDict[@"time"] = @"none";
+	
+	//从偏好设置里 取token
+	hrpushDict[@"token"] = @"none";
+	hrpushDict[@"type"] = @"set";
+	hrpushDict[@"desc"] = @"none";
+	hrpushDict[@"src"] = msgFromDict;
+	hrpushDict[@"dst"] = msgDestDict;
+	
+	
+	NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+	dict[@"hrpush"] = hrpushDict;
+	dict[@"msg"] = msgDict;
+	
+	NSData *jsonDataDict = [NSJSONSerialization dataWithJSONObject:dict options:kNilOptions error:nil];
+	
+	NSString *dictStr = [[NSString alloc] initWithData:jsonDataDict encoding:NSUTF8StringEncoding];
+	
+	NSString *hrpush = @"hrpush\r\n";
+	
+	NSString *hrlength = [NSString stringWithFormat:@"length\r\n%lu\r\n", (unsigned long)dictStr.length];
+	
+	NSString *footerStr = @"\r\n\0";
+	NSString *urlString = [NSString stringWithFormat:@"%@%@%@%@", hrpush, hrlength, dictStr, footerStr];
+	
+	return urlString;
 
+}
+#pragma mark - 获取当前wifi的名称
++ (NSString *)stringWithGetWifiName
+{
+	NSString *wifiName = nil;
+	CFArrayRef wifiInterfaces = CNCopySupportedInterfaces();
+	if (!wifiInterfaces) {
+		return nil;
+	}
+	NSArray *interfaces = (__bridge NSArray *)wifiInterfaces;
+	for (NSString *interfaceName in interfaces) {
+		CFDictionaryRef dictRef = CNCopyCurrentNetworkInfo((__bridge CFStringRef)(interfaceName));
+		if (dictRef) {
+			NSDictionary *networkInfo = (__bridge NSDictionary *)dictRef;
+			NSLog(@"network info -> %@", networkInfo);
+			wifiName = [networkInfo objectForKey:(__bridge NSString *)kCNNetworkInfoKeySSID];
+			CFRelease(dictRef);
+		}
+	}
+	CFRelease(wifiInterfaces);
+	return wifiName;
+}
 
 /// 获取用户UUID
 + (NSString *)stringWithUUID
@@ -518,6 +585,18 @@
 	NSString *string = @(result);
 	
 //	NSString *string = nil;
+	DDLogWarn(@"%@",string);
+	return string;
+}
++ (NSString *)hr_stringWithBase64String:(NSString *)baseString
+{
+	//组帧
+	NSString *str = baseString;
+	DDLogWarn(@"str--%@",str);
+	char *result = hrencode((char *)[str UTF8String]);
+	NSString *string = @(result);
+	
+	//	NSString *string = nil;
 	DDLogWarn(@"%@",string);
 	return string;
 }

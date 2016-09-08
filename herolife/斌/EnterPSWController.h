@@ -10,6 +10,4 @@
 
 @interface EnterPSWController : UIViewController
 
-
-
 @end

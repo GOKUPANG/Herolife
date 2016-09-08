@@ -13,6 +13,8 @@
 
 /** 圆形ImageView */
 @property(nonatomic,strong)UIImageView * CircleImage;
+/** <#name#> */
+@property(nonatomic, weak) UIButton * ConfirmBtn;
 
 
 @end

@@ -9,5 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface AddLockController : UIViewController
-
+/** did */
+@property(nonatomic, copy) NSArray *did;
 @end

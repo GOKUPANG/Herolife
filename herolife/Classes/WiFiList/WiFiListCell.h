@@ -16,8 +16,8 @@
 @property(nonatomic, weak) UILabel *leftLabel;
 /** 锁图标 按钮 */
 @property(nonatomic, weak) UIButton *LockButton;
-/** wifi信号图片 */
-@property(nonatomic, weak) UIImageView *wifiImage;
 /** 线 */
 @property(nonatomic, weak) UIView *lineView;
+/** authlist */
+@property(nonatomic, copy) NSString *rssilistString;
 @end

@@ -9,6 +9,10 @@
 #import "WiFiListController.h"
 
 #import "WiFiListCell.h"
+#import "WIFIListModel.h"
+#import "UDPModel.h"
+#import "HRPushMode.h"
+#import "HRRefreshHeader.h"
 
 @interface WiFiListController ()<UITableViewDelegate, UITableViewDataSource>
 /**  */
@@ -17,11 +21,30 @@
 @property(nonatomic, weak) UITableView *tableView;
 /** 记录当前的cell */
 @property(nonatomic, weak) WiFiListCell *currentCell;
+/** 存放wifi名称 */
+@property(nonatomic, strong) NSArray *wifiArray;
+/** <#name#> */
+@property(nonatomic, weak) UIButton *refreshButton;
+/** 存放型号 数组 */
+@property(nonatomic, strong) NSArray *rssilist;
 @end
 
 static NSString *cellID = @"cellID";
 @implementation WiFiListController
-
+- (NSArray *)wifiArray
+{
+	if (!_wifiArray) {
+		_wifiArray = [NSArray array];
+	}
+	return _wifiArray;
+}
+- (NSArray *)rssilist
+{
+	if (!_rssilist) {
+		_rssilist = [NSArray array];
+	}
+	return _rssilist;
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
 	//初始化
@@ -31,11 +54,36 @@ static NSString *cellID = @"cellID";
 	
 	//注册
 	[self.tableView registerClass:[WiFiListCell class] forCellReuseIdentifier:cellID];
+	[self setupRefresh];
+	
 }
-
+#pragma mark - 内部方法
+// 集成刷新控件
+- (void)setupRefresh
+{
+	// header - 下拉刷新
+	self.tableView.mj_header = [HRRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(getHomeHTTPRequest)];
+	// 进入刷新状态
+	[self.tableView.mj_header beginRefreshing];
+}
+- (void)getHomeHTTPRequest
+{
+	AppDelegate *app = (AppDelegate *)[UIApplication sharedApplication].delegate;
+	self.wifiArray = app.wifiNameArray;
+	self.rssilist = app.rssilistArray;
+	
+	[self.tableView reloadData];
+	dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+		
+		[self.tableView.mj_header endRefreshing];
+	});
+}
+- (void)dealloc
+{
+	[kNotification removeObserver:self];
+}
 - (void)setupViews
 {
-	
 	//背景图片
 	UIImageView *backgroundImage = [[UIImageView alloc] initWithFrame:[UIScreen mainScreen].bounds];
 	backgroundImage.image = [UIImage imageNamed:@"Snip20160825_3"];
@@ -50,29 +98,30 @@ static NSString *cellID = @"cellID";
 	navView.titleLabel.text = @"WiFi列表";
 	[navView.leftButton setImage:[UIImage imageNamed:@"返回号"] forState:UIControlStateNormal];
 	navView.rightLabel.text = @"刷新";
+	
 	[navView.leftButton addTarget:self action:@selector(backButtonClick:) forControlEvents:UIControlEventTouchUpInside];
 	navView.backgroundColor = [UIColor colorWithRed:255/255.0 green:255/255.0 blue:255/255.0 alpha:25 /255.0];
 	[self.view addSubview:navView];
 	self.navView = navView;
 	
+	
+	UIButton *refreshButton = [UIButton buttonWithType:UIButtonTypeCustom];
+	
+	refreshButton.backgroundColor = [UIColor clearColor];
+	[refreshButton addTarget:self action:@selector(refreshButtonClick:) forControlEvents:UIControlEventTouchUpInside];
+	[self.view addSubview:refreshButton];
+	self.refreshButton = refreshButton;
+	
 	//WiFi列表 tabelview
 	UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, 0, 0) style:UITableViewStylePlain];
 	tableView.delegate        = self;
 	tableView.dataSource      = self;
-	tableView.bounces = NO;
-//	tableView.scrollEnabled = NO;
 	tableView.backgroundColor = [UIColor clearColor];
 	tableView.rowHeight = HRCommonScreenH * 84;
 	tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
 	
 	[self.view addSubview:tableView];
 	self.tableView = tableView;
-	
-	
-	
-	
-	
-	
 	
 }
 - (void)viewDidLayoutSubviews
@@ -86,15 +135,28 @@ static NSString *cellID = @"cellID";
 		make.height.mas_equalTo(HRNavH);
 	}];
 	
+	[self.refreshButton mas_makeConstraints:^(MASConstraintMaker *make) {
+		make.right.equalTo(self.navView);
+		make.bottom.top.equalTo(self.navView);
+		
+		make.width.mas_equalTo(HRNavH);
+	}];
+	
 	[self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
 		
-		make.top.equalTo(self.navView.mas_bottom).offset(HRCommonScreenH * 127);
+		make.top.equalTo(self.navView.mas_bottom).offset(0);
 		make.left.equalTo(self.view).offset(HRCommonScreenW *30);
 		make.right.equalTo(self.view).offset(- HRCommonScreenW *30);
 		make.bottom.equalTo(self.view);
 	}];
 }
 #pragma mark - UI事件
+//刷新
+- (void)refreshButtonClick:(UIButton *)btn
+{
+	[self.tableView.mj_header beginRefreshing];
+	[self getHomeHTTPRequest];
+}
 - (void)backButtonClick:(UIButton *)btn
 {
 	
@@ -103,7 +165,7 @@ static NSString *cellID = @"cellID";
 #pragma mark - UITableViewDelegate
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-	return 5;
+	return self.wifiArray.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -113,8 +175,9 @@ static NSString *cellID = @"cellID";
 	if (cell == nil) {
 		cell = [[WiFiListCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
 	}
-	
+	cell.leftLabel.text = self.wifiArray[indexPath.row];
 	cell.selectionStyle = UITableViewCellSelectionStyleNone;
+	cell.rssilistString = self.rssilist[indexPath.row];
 	return cell;
 }
 
@@ -125,7 +188,11 @@ static NSString *cellID = @"cellID";
 	cell.backgroundColor = [UIColor clearColor];
 	self.currentCell = cell;
 	cell.leftImage.image = [UIImage imageNamed:@"选择"];
-	dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+	dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+		NSString *name = self.wifiArray[indexPath.row];
+		if (self.wifiBlock) {
+			self.wifiBlock(name, indexPath.row);
+		}
 		[self.navigationController popViewControllerAnimated:YES];
 	});
 }
@@ -154,6 +221,11 @@ static NSString *cellID = @"cellID";
 		return NO;
 	}
 	return YES;
+}
+#pragma mark - block
+- (void)selectWifiBlockWithBlock:(selectWifiBlock)block
+{
+	self.wifiBlock = block;
 }
 
 @end

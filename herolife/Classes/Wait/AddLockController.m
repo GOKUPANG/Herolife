@@ -163,6 +163,30 @@
 - (void)saveButtonClick:(UIButton *)btn
 {
 	[self.view endEditing:YES];
+	
+	[self createModifyLock];
+}
+- (void)createModifyLock
+{
+	NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
+	parameters[@"type"] = @"hrsc";
+	parameters[@"title"] = self.nameField.text;
+	
+	NSString *http = @"http://www.gzhuarui.cn/?q=huaruiapi/node";
+	NSString *httplast = [NSString stringWithFormat:@"%@/%@", http, self.did.lastObject];
+	[HRHTTPTool hr_PutHttpWithURL:httplast parameters:parameters responseDict:^(id dictionary, NSError *error) {
+		
+		NSDictionary *dict = (NSDictionary *)dictionary;
+		if (dict) {
+			[self goToHomeList];
+		}
+		DDLogWarn(@"array--%@---error---%@", dictionary,error);
+		
+	}];
+
+}
+- (void)goToHomeList
+{
 	for (UIView *view  in self.tabBarController.view.subviews) {
 		if ([NSStringFromClass([view class]) isEqualToString:@"HRTabBar"]) {
 			view.hidden = NO;
@@ -176,9 +200,7 @@
 	}
 	self.tabBarController.selectedIndex = 1;
 	[self.navigationController popToRootViewControllerAnimated:YES];
-	
 }
-
 #pragma mark - UITextFieldDelegate
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {

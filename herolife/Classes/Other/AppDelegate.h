@@ -16,6 +16,14 @@
 @property(nonatomic, strong) NSMutableArray *irgmArray;
 @property(nonatomic, strong) NSMutableArray *doArray;
 @property(nonatomic, strong) NSMutableArray *sceneArray;
+//wift 名称
+@property(nonatomic, strong) NSArray *wifiNameArray;
+/** 授权列表 */
+@property(nonatomic, strong) NSArray *authlistArray;
+/** 信号强弱 */
+@property(nonatomic, strong) NSArray *rssilistArray;
+/** 第4步 连接用户自己的wifi 成功后保存的数据 */
+@property(nonatomic, strong) NSDictionary *msgDictionary;
 /**
  *  外界发数据的接口
  *

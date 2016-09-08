@@ -35,6 +35,7 @@
 
 @property(nonatomic,strong)UITableView *tableView;
 
+
 @end
 
 @implementation ManualController
@@ -286,9 +287,6 @@
 	
 	
 }
-
-
-
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {

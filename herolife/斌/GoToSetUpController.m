@@ -15,11 +15,19 @@
 
 #import "EnterPSWController.h"
 
+
 @interface GoToSetUpController ()
 
 /** 顶部条 */
 @property(nonatomic, weak) HRNavigationBar *navView;
+/** 停留时间 */
+@property(nonatomic, assign) int leftTime;
+
+/** 定时器 */
+@property (nonatomic, weak) NSTimer *timer;
 @end
+/** 停留时间 */
+static int const HRTimeDuration = 601;
 
 @implementation GoToSetUpController
 
@@ -29,9 +37,7 @@
     backgroundImage.image = [UIImage imageNamed:@"2"];
     [self.view addSubview:backgroundImage];
     
-  
-    
-    
+	
 
     [self makeUI];
 	//haibo 全屏放回
@@ -39,6 +45,12 @@
 	
 	//haibo 隐藏底部条
 	[self IsTabBarHidden:YES];
+}
+- (void)viewDidAppear:(BOOL)animated
+{
+	[super viewDidAppear:animated];
+	
+	self.ConfirmBtn.enabled = YES;
 }
 
 -(void)makeUI
@@ -129,7 +141,8 @@
     
     /** 点击确定按钮 事件*/
 	[ConfirmBtn addTarget:self action:@selector(nextStep:) forControlEvents:UIControlEventTouchUpInside];
-    
+	
+	self.ConfirmBtn = ConfirmBtn;
     
     
     /** 文字说明 View */
@@ -149,9 +162,7 @@
     infoLabel.font= [UIFont systemFontOfSize:17];
     
     infoLabel.numberOfLines = 0;
-    
-    
-    infoLabel.text = @"请在iPhone“设置-无线局域网”中选择名称为“HUARUIKEJI”的无线网络，等待WiFi连接成功后返回此页";
+    infoLabel.text = @"请在iPhone“设置-无线局域网”中选择名称为“HEROLIFE_SC_AP”的无线网络，等待WiFi连接成功后返回此页";
     
     
     
@@ -174,18 +185,99 @@
 
 -(void)nextStep:(UIButton *)btn
 {
-    
+	//跳转到系统wifi界面
+	NSURL *url = [NSURL URLWithString:@"prefs:root=WIFI"];
+	if ([[UIApplication sharedApplication] canOpenURL:url])
+	{
+		[[UIApplication sharedApplication] openURL:url];
+	}
     NSLog(@"点击了下一步按钮");
 	
 	//三秒跳转下个界面-----------------海波代码start-------------------------------
 	btn.enabled = NO;
 	dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-		btn.enabled = YES;
-		EnterPSWController *enterVC = [[EnterPSWController alloc] init];
-		[self.navigationController pushViewController:enterVC animated:YES];
+		btn.enabled = NO;
+		DDLogWarn(@"点击了下一步按钮");
 	});
+	
+	[kNotification postNotificationName:kNotificationLocal object:nil];
+	
+	//添加定时器
+	[self addTimer];
 	//三秒跳转下个界面-----------------海波代码end-------------------------------
-    
+	
+}
+// 设置本地通知
+- (void)registerLocalNotification:(NSInteger)alertTime {
+	UILocalNotification *notification = [[UILocalNotification alloc] init];
+	// 设置触发通知的时间
+	NSDate *fireDate = [NSDate dateWithTimeIntervalSinceNow:alertTime];
+	NSLog(@"fireDate=%@",fireDate);
+	
+	notification.fireDate = fireDate;
+	// 时区
+	notification.timeZone = [NSTimeZone defaultTimeZone];
+	// 设置重复的间隔
+	notification.repeatInterval = 0;
+	
+	// 通知内容
+	notification.alertBody =  @"连接成功,点我返回!";
+	notification.applicationIconBadgeNumber = 0;
+	// 通知被触发时播放的声音
+	notification.soundName = UILocalNotificationDefaultSoundName;
+	// 通知参数
+	NSDictionary *userDict = [NSDictionary dictionaryWithObject:@"开始学习iOS开发了" forKey:@"key"];
+	notification.userInfo = userDict;
+	
+	// ios8后，需要添加这个注册，才能得到授权
+	if ([[UIApplication sharedApplication] respondsToSelector:@selector(registerUserNotificationSettings:)]) {
+		UIUserNotificationType type =  UIUserNotificationTypeAlert | UIUserNotificationTypeBadge | UIUserNotificationTypeSound;
+		UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:type
+																				 categories:nil];
+		[[UIApplication sharedApplication] registerUserNotificationSettings:settings];
+		// 通知重复提示的单位，可以是天、周、月
+		notification.repeatInterval = 0;
+	} else {
+		// 通知重复提示的单位，可以是天、周、月
+		notification.repeatInterval = 0;
+	}
+	
+	// 执行通知注册
+	[[UIApplication sharedApplication] scheduleLocalNotification:notification];
+}
+#pragma mark - 添加定时器
+- (void)addTimer
+{
+	self.leftTime = HRTimeDuration;
+	self.timer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(updateTimeLabel) userInfo:nil repeats:YES];
+	
+}
+static NSString *wift;
+- (void)updateTimeLabel
+{
+	
+	self.leftTime--;
+	DDLogWarn(@"--------连上了--------%d", self.leftTime);
+	wift = [NSString stringWithGetWifiName];
+	if ([wift isEqualToString:@"HEROLIFE_SC_AP"]) {
+		
+		
+		[self registerLocalNotification:0.5];
+		
+		[self.timer invalidate];
+		self.timer = nil;
+	}
+	if (self.leftTime == 0) {
+		
+		[self.timer invalidate];
+		self.timer = nil;
+	}
+	
+}
+- (void)dealloc
+{
+	[self.timer invalidate];
+	self.timer = nil;
 }
 #pragma mark - UI事件  -haibo
 - (void)backButtonClick:(UIButton *)btn

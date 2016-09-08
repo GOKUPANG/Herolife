@@ -328,23 +328,24 @@ static NSTimeInterval const dimissTimer = 2;
 	parameters[@"field_phone[und][0][value]"] = self.phoneField.text;
 	
 	
-	[manager POST:HRHTTP_UserRegister_URL parameters: parameters success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-		
-		/// 这里返回的responseObject 不是json数据 是NSData数据
-		
-		[SVProgressHUD showSuccessWithStatus:@"注册成功!"];
-		
-		NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-		dict[@"user"] = self.userNameField.text;
-		dict[@"pass"] = self.passwdConfirmField.text;
-		[[NSNotificationCenter defaultCenter] postNotificationName:kNotificationRegister object:nil userInfo:dict];
-		[self.navigationController popViewControllerAnimated:YES];
-		
-		
-	} failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-		
-		DDLogDebug(@"注册失败error %@", error);
-		[self showRegisterError:error];
+	[HRHTTPTool hr_postHttpWithURL:HRHTTP_UserRegister_URL parameters:parameters responseDict:^(id array, NSError *error) {
+		if (array) {
+			/// 这里返回的responseObject 不是json数据 是NSData数据
+			
+			[SVProgressHUD showSuccessWithStatus:@"注册成功!"];
+			
+			NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+			dict[@"user"] = self.userNameField.text;
+			dict[@"pass"] = self.passwdConfirmField.text;
+			[[NSNotificationCenter defaultCenter] postNotificationName:kNotificationRegister object:nil userInfo:dict];
+			[self.navigationController popViewControllerAnimated:YES];
+			return ;
+		}
+		if (error) {
+			
+			DDLogDebug(@"注册失败error %@", error);
+			[self showRegisterError:error];
+		}
 	}];
 
 }

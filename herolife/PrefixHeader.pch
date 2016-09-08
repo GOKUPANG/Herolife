@@ -27,8 +27,8 @@
 
 #import "HRSqlite.h"
 
-#import "UIView+SDAutoLayout.h"
 
+#import "UIView+SDAutoLayout.h"
 #define HRUIScreenW [UIScreen mainScreen].bounds.size.width
 #define HRUIScreenH [UIScreen mainScreen].bounds.size.height
 #define HRCommonScreenH (HRUIScreenH / 667 /2)
@@ -63,6 +63,8 @@
 #import "QRTools.h"
 #import "CreateXRHttpTools.h"
 #import "HRHTTPTool.h"
+#import "AsyncUdpSocket.h"
+#import "HRUDPSocketTool.h"
 
 #define UIScreenH [UIScreen mainScreen].bounds.size.height
 #define UIScreenW [UIScreen mainScreen].bounds.size.width
@@ -232,12 +234,15 @@
 #define kNotificationQRCodeManualCreateXiaoRui @"kNotificationQRCodeManualCreateXiaoRui"
 
 /// 超时时间
-#define HRTimeInterval 5.0
+#define HRTimeInterval 10.0
 
 #define SERVER_IP1		"192.168.0.8"
 #define SERVER_IP		"120.24.183.44"
 #define SERVER_DOMAIN	"www.gzhuarui.cn"
 #define SERVER_PORT		9888
+
+#define SERVER_APIP		"192.168.5.1"
+#define SERVER_APPORT		1200
 
 
 /****************************** 小睿项目key end**********************************/
@@ -264,6 +269,12 @@
 #define kNotificationRegister @"kNotificationRegister"
 // 创建锁 通知
 #define kNotificationQRCodeCreateLock @"kNotificationQRCodeCreateLock"
+// 创建本地消息 通知
+#define kNotificationLocal @"kNotificationLocal"
+// 接收到wifi列表 UDP 通知
+#define kNotificationReceiveWiFiList @"kNotificationReceiveWiFiList"
+// 接收到"开始添加 返回的UDP 通知
+#define kNotificationReceiveStratAddWiFiLink @"kNotificationReceiveStratAddWiFiLink"
 
 
 

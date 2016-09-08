@@ -8,6 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
+typedef void(^selectWifiBlock)(NSString *name, NSInteger index);
+
 @interface WiFiListController : UIViewController
+
+/** <#name#> */
+@property(nonatomic, copy) selectWifiBlock wifiBlock;
+
+- (void)selectWifiBlockWithBlock:(selectWifiBlock)block;
 
 @end

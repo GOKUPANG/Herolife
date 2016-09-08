@@ -385,20 +385,87 @@
 			 NSString *urlStr = [rawDict valueForKeyPath:@"figureurl_1"];
 			 [kNSUserDefaults setObject:urlStr forKey:kNSUserDefaultsNickname];
 			 
+			 [self loginSSDKWithOpenID: openid];
+			 
 		 }
 		 
 		 else
 		 {
-			 NSLog(@"%@",error);
+			 NSLog(@"error-000-----%@",error);
 		 }
 		 
 	 }];
+}
+
+#pragma mark - 登陆授权 用OPENID 注册账号
+- (void)loginSSDKWithOpenID:(NSString *)openid
+{
+	
+	//加密
+	NSString *muString = [NSString hr_stringWithBase64String:openid];
+	
+	[HRServicesManager loginWithUsername:openid
+								password:muString
+								  result:^(NSError *error) {
+									  
+									  
+									  if (error) {
+										  NSDictionary *dict = error.userInfo;
+										  NSNumber * code = [dict valueForKeyPath:@"statusCode"];
+										  NSString *codeString = [code stringValue];
+										  //如果没有注册就去注册
+										  if ([codeString isEqualToString:@"401"]) {
+											  
+											  [self registerWithOpenID:openid muString:muString];
+											  
+										  }
+										  
+									  } else {
+										  
+										  [SVProgressTool hr_dismiss];
+										  HRTabBarViewController *tabBarVC = [[HRTabBarViewController alloc] init];
+										  [self.navigationController pushViewController:tabBarVC animated:YES];
+										  
+									  }
+								  }];
+}
+
+#pragma mark - 注册
+- (void)registerWithOpenID:(NSString *)openId muString:(NSString *)muString
+{
+	
+	NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
+	
+	parameters[@"name"] = openId;
+	parameters[@"mail"] = [NSString stringWithFormat:@"%@@gzhuarui.cn", openId];
+	parameters[@"pass"] = muString;
+	parameters[@"pass2"] = muString;
+//	parameters[@"name"] = @"4EB2618888E358E8B777B0C03CC54BDE";
+//	parameters[@"mail"] = @"4EB2618888E358E8B777B0C03CC54BDE@gzhuarui.cn";
+//	parameters[@"pass"] =@"AHZ1VERZS2p9DRFkAX8jXyleAgE7BXdJW3V3YQE2DBw=";
+//	parameters[@"pass2"] = @"AHZ1VERZS2p9DRFkAX8jXyleAgE7BXdJW3V3YQE2DBw=";
+
+	
+	[HRHTTPTool hr_postHttpWithURL:HRHTTP_UserRegister_URL parameters:parameters responseDict:^(id array, NSError *error) {
+		if (array) {
+			[SVProgressTool hr_dismiss];
+			HRTabBarViewController *tabBarVC = [[HRTabBarViewController alloc] init];
+			[self.navigationController pushViewController:tabBarVC animated:YES];
+			return ;
+		}
+		if (error) {
+			
+			DDLogDebug(@"注册失败error %@", error);
+			[self showRegisterError:error];
+		}
+	}];
 }
 #pragma mark - touchesBegan
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
 	
 	[self.view endEditing:YES];
+	
 	[self restoreTextName:self.userNameLabel textField:self.userNameField];
 	[self restoreTextName:self.passwdLabel textField:self.passwdField];
 	

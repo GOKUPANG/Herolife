@@ -28,6 +28,8 @@
 #import "HRSceneData.h"
 #import "TipsLabel.h"
 #import "Push.h"
+#import "EnterPSWController.h"
+#import "GoToSetUpController.h"
 
 
 @interface AppDelegate ()<AsyncSocketDelegate>
@@ -41,7 +43,18 @@
 /** UILabel */
 @property(nonatomic, weak) UILabel *label;
 
+@property(nonatomic, strong) HRUDPSocketTool  *udpSocket;
+/** 停留时间 */
+@property(nonatomic, assign) int leftTime;
+
+/** 定时器 */
+@property (nonatomic, weak) NSTimer *timer;
+/** 超时定时器 */
+@property(nonatomic, weak) NSTimer *overTimer;
 @end
+/** 停留时间 */
+static int const HRTimeDuration = 3;
+
 
 @implementation AppDelegate
 
@@ -73,23 +86,182 @@ static NSInteger disconnectCount = 0;
 		[kUserDefault synchronize];
 	}
 	
+	//处理iOS8本地推送不能收到
+	float sysVersion=[[UIDevice currentDevice]systemVersion].floatValue;
+	if (sysVersion>=8.0) {
+		UIUserNotificationType type=UIUserNotificationTypeBadge | UIUserNotificationTypeAlert | UIUserNotificationTypeSound;
+		UIUserNotificationSettings *setting=[UIUserNotificationSettings settingsForTypes:type categories:nil];
+		[[UIApplication sharedApplication]registerUserNotificationSettings:setting];
+	}
+	
+	[application setMinimumBackgroundFetchInterval:1.0];
+	
+	//添加通知
+	[kNotification addObserver:self selector:@selector(receiveWiFiList) name:kNotificationReceiveWiFiList object:nil];
+	
 	return YES;
 }
-
+static BOOL isOverTime = NO;
+- (void)receiveWiFiList
+{
+	isOverTime = YES;
+	UIViewController *topController = [AppDelegate currentViewController];
+	if ([topController isKindOfClass:[EnterPSWController class]]) {
+		DDLogWarn(@"VC-%@",NSStringFromClass([topController class]));
+	}else
+	{
+		//收到通知跳转到wifi 输入密码这个界面
+		EnterPSWController *enterVC = [[EnterPSWController alloc] init];
+		DDLogWarn(@"VC2-%@",NSStringFromClass([topController class]));
+		
+		[topController.navigationController pushViewController:enterVC animated:YES];
+		
+	}
+}
 
 - (void)applicationWillResignActive:(UIApplication *)application {
 	
 }
-
-- (void)applicationDidEnterBackground:(UIApplication *)application {
-    
-    DDLogInfo(@"234");
-    
+- (void)application:(UIApplication *)application handleEventsForBackgroundURLSession:(NSString *)identifier completionHandler:(void (^)())completionHandler
+{
 	
+}
+- (void)applicationDidEnterBackground:(UIApplication *)application {
+	[UIApplication sharedApplication].applicationIconBadgeNumber = 0;
+	DDLogInfo(@"234");
+//	__block UIBackgroundTaskIdentifier bgTask;// 后台任务标识
+//	// 结束后台任务
+//	void (^endBackgroundTask)() = ^(){
+//		[application endBackgroundTask:bgTask];
+//		bgTask = UIBackgroundTaskInvalid;
+//	};
+//	
+//	bgTask = [application beginBackgroundTaskWithExpirationHandler:^{
+//		endBackgroundTask();
+//	}];
+//	
+//	dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+//		
+//
+//		
+//		
+//	});
+	//延时后台进程
+	[self beginBackgroundTask];
+	//后台任务
+	[self endBackgroundTask];
+}
+- (void)beginBackgroundTask {
+	UIBackgroundTaskIdentifier bgTask;
+	UIApplication *application = [UIApplication sharedApplication];
+	bgTask = [application beginBackgroundTaskWithExpirationHandler:^{
+		[self endBackgroundTask];
+	}];
+}
+
+- (void)endBackgroundTask {
+	UIBackgroundTaskIdentifier bgTask;
+	UIApplication *application = [UIApplication sharedApplication];
+	[application endBackgroundTask:bgTask];
+	bgTask = UIBackgroundTaskInvalid;
+}
+
+// 本地通知回调函数，当应用程序在前台时调用
+- (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification {
+	//建立UDP连接
+	[self setupUDPSocket];
+	
+	dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+		[SVProgressTool hr_showWithStatus:@"正在加载数据, 请稍后..."];
+		
+		// 启动定时器
+		isOverTime = NO;
+		[_overTimer invalidate];
+		_overTimer = [NSTimer scheduledTimerWithTimeInterval:HRTimeInterval target:self selector:@selector(startTimer) userInfo:nil repeats:NO];
+	});
+	
+	
+	
+	NSLog(@"noti:%@",notification);
+	// 这里真实需要处理交互的地方
+	// 获取通知所带的数据
+//	NSString *notMess = [notification.userInfo objectForKey:@"key"];
+}
+- (void)startTimer
+{
+	if (!isOverTime) {
+		[SVProgressTool hr_showErrorWithStatus:@"请求超时, 请重试!"];
+		
+		UIViewController *topController = [AppDelegate currentViewController];
+		if ([topController isKindOfClass:[EnterPSWController class]]) {
+			DDLogWarn(@"VC-%@",NSStringFromClass([topController class]));
+		}else
+		{
+			[topController.navigationController popViewControllerAnimated:YES];
+			
+		}
+	}
+}
++ (UIViewController *)currentViewController
+{
+ UIWindow *keyWindow = [UIApplication sharedApplication].keyWindow;
+ // modal展现方式的底层视图不同
+ // 取到第一层时，取到的是UITransitionView，通过这个view拿不到控制器
+ UIView *firstView = [keyWindow.subviews firstObject];
+
+ UIViewController *viewC ;
+ UIResponder *responder = [firstView nextResponder];
+ while (responder) {
+	 if ([responder isKindOfClass:[UIViewController class]]) {
+		viewC = (UIViewController *)responder;
+	 }
+	 responder = [responder nextResponder];
+ }
+	
+ UIViewController *vc = viewC;
+ if ([vc isKindOfClass:[UITabBarController class]]) {
+	 UITabBarController *tab = (UITabBarController *)vc;
+	 if ([tab.selectedViewController isKindOfClass:[UINavigationController class]]) {
+		 UINavigationController *nav = (UINavigationController *)tab.selectedViewController;
+		 return [nav.viewControllers lastObject];
+	 } else {
+		 return tab.selectedViewController;
+	 }
+ } else if ([vc isKindOfClass:[UINavigationController class]]) {
+	 UINavigationController *nav = (UINavigationController *)vc;
+	 return [nav.viewControllers lastObject];
+ } else {
+	 return vc;
+ }
+ return nil;
+}
+- (UIViewController *)parentController
+{
+ UIResponder *responder = [self nextResponder];
+ while (responder) {
+	 if ([responder isKindOfClass:[UIViewController class]]) {
+		 return (UIViewController *)responder;
+	 }
+	 responder = [responder nextResponder];
+ }
+ return nil;
+}
+- (UIViewController *)getCurrentVC
+{
+	UIViewController *topController = [UIApplication sharedApplication].keyWindow.rootViewController;
+	
+	while (topController.presentedViewController) {
+		topController = topController.presentedViewController;
+	}
+	
+	return topController;
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
+	NSString *wifi = [NSString stringWithGetWifiName];
 	
+	[UIApplication sharedApplication].applicationIconBadgeNumber = 0;
+	DDLogInfo(@"wifi----------------%@",wifi);
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
@@ -123,8 +295,6 @@ static NSInteger disconnectCount = 0;
 		else
 		{
 			DDLogInfo(@"已连接!");
-            
-            
 		}
 	}
 	else
@@ -907,6 +1077,7 @@ static NSUInteger lengthInteger = 0;
 	self.sceneArray = array;
 	
 }
+
 #pragma mark - 一些自定义的方法
 - (void)addShareSDK
 {
@@ -965,6 +1136,52 @@ static NSUInteger lengthInteger = 0;
 	
 	[self.window makeKeyAndVisible];
 }
+
+#pragma mark - haibo 建立UDP连接
+- (void)setupUDPSocket
+{
+	self.udpSocket = [HRUDPSocketTool shareHRUDPSocketTool];
+	[self.udpSocket connectWithUDPSocket];
+	[self addTimer];
+}
+
+#pragma mark - 添加定时器
+- (void)addTimer
+{
+	self.leftTime = HRTimeDuration;
+	self.timer = [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(updateTimeLabel) userInfo:nil repeats:YES];
+	
+}
+static NSString *wift;
+- (void)updateTimeLabel
+{
+	self.leftTime--;
+	[self sendUDPSockeWithString:@"0"];
+	
+	if (self.leftTime == 1) {
+		[self sendUDPSockeWithString:@"2"];
+		[self.timer invalidate];
+		self.timer = nil;
+	}
+	
+	if (self.leftTime == 0) {
+		
+		[self.timer invalidate];
+		self.timer = nil;
+	}
+	
+}
+/// 发送UDPSocke数据
+- (void)sendUDPSockeWithString:(NSString *)string
+{
+	
+	NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+	dict[@"set"] = string;
+	NSString *sendString = [NSString stringWithUDPMsgDict:dict];
+	
+	[_udpSocket sendUDPSockeWithString:sendString];
+}
+
 -(void) setLogger {
 	
 	DDTTYLogger *logger = [DDTTYLogger sharedInstance];
