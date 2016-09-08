@@ -79,6 +79,7 @@
     _arrow = [[UIImageView alloc]initWithFrame:CGRectMake([UIScreen mainScreen].bounds.size.width - 51, CGRectGetMinY(nameLabel.frame), 18, 9)];
     _arrow.backgroundColor = [UIColor clearColor];
     _arrow.image = [UIImage imageNamed:@"下拉符号"];
+    // self.arrow.transform = CGAffineTransformMakeRotation(M_PI * -0.5);
     [self addSubview:_arrow];
     
     UIView *lineView = [[UIView alloc]initWithFrame:CGRectMake(0, 49.f, CGRectGetWidth([UIScreen mainScreen].applicationFrame) - 20, 1)];
@@ -114,6 +115,8 @@
         if (_isOpen) {
             [UIView animateWithDuration:.3 animations:^{
                 self.arrow.transform = CGAffineTransformMakeRotation(M_PI);
+               // self.arrow.transform = CGAffineTransformIdentity;
+
             }];
             if ([self.delegate respondsToSelector:@selector(sectionHeaderView:sectionOpened:)]) {
                 [self.delegate sectionHeaderView:self sectionOpened:self.section];
@@ -121,7 +124,9 @@
         }
         else {
             [UIView animateWithDuration:.3 animations:^{
-                self.arrow.transform = CGAffineTransformIdentity;
+               self.arrow.transform = CGAffineTransformIdentity;
+                
+               // self.arrow.transform = CGAffineTransformMakeRotation(M_PI * -0.5);
             }];
             if ([self.delegate respondsToSelector:@selector(sectionHeaderView:sectionClosed:)]) {
                 [self.delegate sectionHeaderView:self sectionClosed:self.section];

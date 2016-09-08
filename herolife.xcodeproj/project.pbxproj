@@ -12,15 +12,6 @@
 		1868B8EF1D76CD3C00D19386 /* 智能开锁@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1868B8EE1D76CD3C00D19386 /* 智能开锁@2x.png */; };
 		1868B8F11D76CD4A00D19386 /* 智能开锁@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1868B8F01D76CD4A00D19386 /* 智能开锁@3x.png */; };
 		1868B8F71D76DDD400D19386 /* BackPicSetController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1868B8F61D76DDD400D19386 /* BackPicSetController.m */; };
-		1868B9071D7811DC00D19386 /* ShareSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1868B8F91D7811DC00D19386 /* ShareSDK.framework */; };
-		1868B9081D7811DC00D19386 /* ShareSDKExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1868B8FC1D7811DC00D19386 /* ShareSDKExtension.framework */; };
-		1868B9091D7811DC00D19386 /* ShareSDKUI.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 1868B8FD1D7811DC00D19386 /* ShareSDKUI.bundle */; };
-		1868B90A1D7811DC00D19386 /* ShareSDKUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1868B8FE1D7811DC00D19386 /* ShareSDKUI.framework */; };
-		1868B90B1D7811DC00D19386 /* TencentOpenAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1868B9011D7811DC00D19386 /* TencentOpenAPI.framework */; };
-		1868B90C1D7811DC00D19386 /* TencentOpenApi_IOS_Bundle.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 1868B9021D7811DC00D19386 /* TencentOpenApi_IOS_Bundle.bundle */; };
-		1868B90D1D7811DC00D19386 /* MOBFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1868B9041D7811DC00D19386 /* MOBFoundation.framework */; };
-		1868B90E1D7811DC00D19386 /* ShareSDK.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 1868B9051D7811DC00D19386 /* ShareSDK.bundle */; };
-		1868B90F1D7811DC00D19386 /* ShareSDKConnector.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1868B9061D7811DC00D19386 /* ShareSDKConnector.framework */; };
 		1868B9131D79200200D19386 /* ChooseBackPicCtl.m in Sources */ = {isa = PBXBuildFile; fileRef = 1868B9121D79200200D19386 /* ChooseBackPicCtl.m */; };
 		1868B9191D79289500D19386 /* 1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 1868B9151D79289500D19386 /* 1.jpg */; };
 		1868B91A1D79289500D19386 /* 2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 1868B9161D79289500D19386 /* 2.jpg */; };
@@ -50,6 +41,18 @@
 		18C697AD1D7462B9004DA2B1 /* PCLockLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 18C697901D7462B9004DA2B1 /* PCLockLabel.m */; };
 		18C697AE1D7462B9004DA2B1 /* GestureVerifyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18C697951D7462B9004DA2B1 /* GestureVerifyViewController.m */; };
 		18C697AF1D7462B9004DA2B1 /* GestureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18C697971D7462B9004DA2B1 /* GestureViewController.m */; };
+		AA029EA01D7D75B500EFF91C /* HWPopTool.m in Sources */ = {isa = PBXBuildFile; fileRef = AA029E9F1D7D75B500EFF91C /* HWPopTool.m */; };
+		AAFFDDD71D7FAA39005669BA /* PushSettingController.m in Sources */ = {isa = PBXBuildFile; fileRef = AAFFDDD61D7FAA39005669BA /* PushSettingController.m */; };
+		AAFFDDE71D7FB695005669BA /* ShareSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AAFFDDD91D7FB695005669BA /* ShareSDK.framework */; };
+		AAFFDDE81D7FB695005669BA /* ShareSDKExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AAFFDDDC1D7FB695005669BA /* ShareSDKExtension.framework */; };
+		AAFFDDE91D7FB695005669BA /* ShareSDKUI.bundle in Resources */ = {isa = PBXBuildFile; fileRef = AAFFDDDD1D7FB695005669BA /* ShareSDKUI.bundle */; };
+		AAFFDDEA1D7FB695005669BA /* ShareSDKUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AAFFDDDE1D7FB695005669BA /* ShareSDKUI.framework */; };
+		AAFFDDEB1D7FB695005669BA /* TencentOpenAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AAFFDDE11D7FB695005669BA /* TencentOpenAPI.framework */; };
+		AAFFDDEC1D7FB695005669BA /* TencentOpenApi_IOS_Bundle.bundle in Resources */ = {isa = PBXBuildFile; fileRef = AAFFDDE21D7FB695005669BA /* TencentOpenApi_IOS_Bundle.bundle */; };
+		AAFFDDED1D7FB695005669BA /* MOBFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AAFFDDE41D7FB695005669BA /* MOBFoundation.framework */; };
+		AAFFDDEE1D7FB695005669BA /* ShareSDK.bundle in Resources */ = {isa = PBXBuildFile; fileRef = AAFFDDE51D7FB695005669BA /* ShareSDK.bundle */; };
+		AAFFDDEF1D7FB695005669BA /* ShareSDKConnector.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AAFFDDE61D7FB695005669BA /* ShareSDKConnector.framework */; };
+		AAFFDDF31D800EFC005669BA /* SRActionSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = AAFFDDF21D800EFC005669BA /* SRActionSheet.m */; };
 		D16B140D1D7674EA005CE35B /* GoToSetUpController.m in Sources */ = {isa = PBXBuildFile; fileRef = D16B140C1D7674EA005CE35B /* GoToSetUpController.m */; };
 		D16B18771D771B2E005CE35B /* DeviceListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D16B17991D771B2D005CE35B /* DeviceListCell.m */; };
 		D16B18781D771B2E005CE35B /* DeviceListController.m in Sources */ = {isa = PBXBuildFile; fileRef = D16B179B1D771B2D005CE35B /* DeviceListController.m */; };
@@ -216,15 +219,6 @@
 		1868B8F01D76CD4A00D19386 /* 智能开锁@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "智能开锁@3x.png"; sourceTree = "<group>"; };
 		1868B8F51D76DDD400D19386 /* BackPicSetController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BackPicSetController.h; sourceTree = "<group>"; };
 		1868B8F61D76DDD400D19386 /* BackPicSetController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BackPicSetController.m; sourceTree = "<group>"; };
-		1868B8F91D7811DC00D19386 /* ShareSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ShareSDK.framework; sourceTree = "<group>"; };
-		1868B8FC1D7811DC00D19386 /* ShareSDKExtension.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ShareSDKExtension.framework; sourceTree = "<group>"; };
-		1868B8FD1D7811DC00D19386 /* ShareSDKUI.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = ShareSDKUI.bundle; sourceTree = "<group>"; };
-		1868B8FE1D7811DC00D19386 /* ShareSDKUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ShareSDKUI.framework; sourceTree = "<group>"; };
-		1868B9011D7811DC00D19386 /* TencentOpenAPI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = TencentOpenAPI.framework; sourceTree = "<group>"; };
-		1868B9021D7811DC00D19386 /* TencentOpenApi_IOS_Bundle.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = TencentOpenApi_IOS_Bundle.bundle; sourceTree = "<group>"; };
-		1868B9041D7811DC00D19386 /* MOBFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = MOBFoundation.framework; sourceTree = "<group>"; };
-		1868B9051D7811DC00D19386 /* ShareSDK.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = ShareSDK.bundle; sourceTree = "<group>"; };
-		1868B9061D7811DC00D19386 /* ShareSDKConnector.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ShareSDKConnector.framework; sourceTree = "<group>"; };
 		1868B9111D79200200D19386 /* ChooseBackPicCtl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChooseBackPicCtl.h; sourceTree = "<group>"; };
 		1868B9121D79200200D19386 /* ChooseBackPicCtl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChooseBackPicCtl.m; sourceTree = "<group>"; };
 		1868B9151D79289500D19386 /* 1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 1.jpg; sourceTree = "<group>"; };
@@ -275,6 +269,21 @@
 		18C697951D7462B9004DA2B1 /* GestureVerifyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GestureVerifyViewController.m; sourceTree = "<group>"; };
 		18C697961D7462B9004DA2B1 /* GestureViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GestureViewController.h; sourceTree = "<group>"; };
 		18C697971D7462B9004DA2B1 /* GestureViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GestureViewController.m; sourceTree = "<group>"; };
+		AA029E9E1D7D75B500EFF91C /* HWPopTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HWPopTool.h; sourceTree = "<group>"; };
+		AA029E9F1D7D75B500EFF91C /* HWPopTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HWPopTool.m; sourceTree = "<group>"; };
+		AAFFDDD51D7FAA39005669BA /* PushSettingController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PushSettingController.h; sourceTree = "<group>"; };
+		AAFFDDD61D7FAA39005669BA /* PushSettingController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PushSettingController.m; sourceTree = "<group>"; };
+		AAFFDDD91D7FB695005669BA /* ShareSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ShareSDK.framework; sourceTree = "<group>"; };
+		AAFFDDDC1D7FB695005669BA /* ShareSDKExtension.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ShareSDKExtension.framework; sourceTree = "<group>"; };
+		AAFFDDDD1D7FB695005669BA /* ShareSDKUI.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = ShareSDKUI.bundle; sourceTree = "<group>"; };
+		AAFFDDDE1D7FB695005669BA /* ShareSDKUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ShareSDKUI.framework; sourceTree = "<group>"; };
+		AAFFDDE11D7FB695005669BA /* TencentOpenAPI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = TencentOpenAPI.framework; sourceTree = "<group>"; };
+		AAFFDDE21D7FB695005669BA /* TencentOpenApi_IOS_Bundle.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = TencentOpenApi_IOS_Bundle.bundle; sourceTree = "<group>"; };
+		AAFFDDE41D7FB695005669BA /* MOBFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = MOBFoundation.framework; sourceTree = "<group>"; };
+		AAFFDDE51D7FB695005669BA /* ShareSDK.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = ShareSDK.bundle; sourceTree = "<group>"; };
+		AAFFDDE61D7FB695005669BA /* ShareSDKConnector.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ShareSDKConnector.framework; sourceTree = "<group>"; };
+		AAFFDDF11D800EFC005669BA /* SRActionSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SRActionSheet.h; sourceTree = "<group>"; };
+		AAFFDDF21D800EFC005669BA /* SRActionSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SRActionSheet.m; sourceTree = "<group>"; };
 		B1A28F2C2DAB37DA40A8D5EB /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		D16B140B1D7674E6005CE35B /* GoToSetUpController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoToSetUpController.h; sourceTree = "<group>"; };
 		D16B140C1D7674EA005CE35B /* GoToSetUpController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GoToSetUpController.m; sourceTree = "<group>"; };
@@ -518,13 +527,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				D1940DD71D6AF76400A262EC /* libsqlite3.tbd in Frameworks */,
-				1868B90D1D7811DC00D19386 /* MOBFoundation.framework in Frameworks */,
-				1868B90A1D7811DC00D19386 /* ShareSDKUI.framework in Frameworks */,
-				1868B9081D7811DC00D19386 /* ShareSDKExtension.framework in Frameworks */,
+				AAFFDDED1D7FB695005669BA /* MOBFoundation.framework in Frameworks */,
+				AAFFDDEA1D7FB695005669BA /* ShareSDKUI.framework in Frameworks */,
+				AAFFDDE81D7FB695005669BA /* ShareSDKExtension.framework in Frameworks */,
 				D1940DD51D6AF74A00A262EC /* JavaScriptCore.framework in Frameworks */,
-				1868B9071D7811DC00D19386 /* ShareSDK.framework in Frameworks */,
-				1868B90B1D7811DC00D19386 /* TencentOpenAPI.framework in Frameworks */,
-				1868B90F1D7811DC00D19386 /* ShareSDKConnector.framework in Frameworks */,
+				AAFFDDE71D7FB695005669BA /* ShareSDK.framework in Frameworks */,
+				AAFFDDEB1D7FB695005669BA /* TencentOpenAPI.framework in Frameworks */,
+				AAFFDDEF1D7FB695005669BA /* ShareSDKConnector.framework in Frameworks */,
 				D1940DD31D6AF73C00A262EC /* libstdc++.tbd in Frameworks */,
 				D1940DD11D6AF73300A262EC /* libz.tbd in Frameworks */,
 				D1940DCF1D6AF72400A262EC /* libicucore.tbd in Frameworks */,
@@ -549,62 +558,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		1868B8F81D7811DC00D19386 /* ShareSDK  */ = {
-			isa = PBXGroup;
-			children = (
-				1868B8F91D7811DC00D19386 /* ShareSDK.framework */,
-				1868B8FA1D7811DC00D19386 /* Support */,
-			);
-			path = "ShareSDK ";
-			sourceTree = "<group>";
-		};
-		1868B8FA1D7811DC00D19386 /* Support */ = {
-			isa = PBXGroup;
-			children = (
-				1868B8FB1D7811DC00D19386 /* Optional */,
-				1868B8FF1D7811DC00D19386 /* PlatformSDK */,
-				1868B9031D7811DC00D19386 /* Required */,
-			);
-			path = Support;
-			sourceTree = "<group>";
-		};
-		1868B8FB1D7811DC00D19386 /* Optional */ = {
-			isa = PBXGroup;
-			children = (
-				1868B8FC1D7811DC00D19386 /* ShareSDKExtension.framework */,
-				1868B8FD1D7811DC00D19386 /* ShareSDKUI.bundle */,
-				1868B8FE1D7811DC00D19386 /* ShareSDKUI.framework */,
-			);
-			path = Optional;
-			sourceTree = "<group>";
-		};
-		1868B8FF1D7811DC00D19386 /* PlatformSDK */ = {
-			isa = PBXGroup;
-			children = (
-				1868B9001D7811DC00D19386 /* QQSDK */,
-			);
-			path = PlatformSDK;
-			sourceTree = "<group>";
-		};
-		1868B9001D7811DC00D19386 /* QQSDK */ = {
-			isa = PBXGroup;
-			children = (
-				1868B9011D7811DC00D19386 /* TencentOpenAPI.framework */,
-				1868B9021D7811DC00D19386 /* TencentOpenApi_IOS_Bundle.bundle */,
-			);
-			path = QQSDK;
-			sourceTree = "<group>";
-		};
-		1868B9031D7811DC00D19386 /* Required */ = {
-			isa = PBXGroup;
-			children = (
-				1868B9041D7811DC00D19386 /* MOBFoundation.framework */,
-				1868B9051D7811DC00D19386 /* ShareSDK.bundle */,
-				1868B9061D7811DC00D19386 /* ShareSDKConnector.framework */,
-			);
-			path = Required;
-			sourceTree = "<group>";
-		};
 		1868B9101D791FAD00D19386 /* 背景选择 */ = {
 			isa = PBXGroup;
 			children = (
@@ -668,6 +621,7 @@
 		18C697651D7462B9004DA2B1 /* 控制器 */ = {
 			isa = PBXGroup;
 			children = (
+				AAFFDDD41D7FAA0E005669BA /* 推送设置 */,
 				1868B9101D791FAD00D19386 /* 背景选择 */,
 				1868B8F51D76DDD400D19386 /* BackPicSetController.h */,
 				1868B8F61D76DDD400D19386 /* BackPicSetController.m */,
@@ -701,6 +655,8 @@
 		18C697761D7462B9004DA2B1 /* 第三方 */ = {
 			isa = PBXGroup;
 			children = (
+				AAFFDDF01D800EFC005669BA /* SRActionSheet */,
+				AA029E9D1D7D75B500EFF91C /* HWPoTools */,
 				18C697771D7462B9004DA2B1 /* FrameWork */,
 				18C6977E1D7462B9004DA2B1 /* Gategory */,
 				18C697811D7462B9004DA2B1 /* JCAlertView */,
@@ -794,6 +750,89 @@
 			path = "手势解锁库文件";
 			sourceTree = "<group>";
 		};
+		AA029E9D1D7D75B500EFF91C /* HWPoTools */ = {
+			isa = PBXGroup;
+			children = (
+				AA029E9E1D7D75B500EFF91C /* HWPopTool.h */,
+				AA029E9F1D7D75B500EFF91C /* HWPopTool.m */,
+			);
+			path = HWPoTools;
+			sourceTree = "<group>";
+		};
+		AAFFDDD41D7FAA0E005669BA /* 推送设置 */ = {
+			isa = PBXGroup;
+			children = (
+				AAFFDDD51D7FAA39005669BA /* PushSettingController.h */,
+				AAFFDDD61D7FAA39005669BA /* PushSettingController.m */,
+			);
+			path = "推送设置";
+			sourceTree = "<group>";
+		};
+		AAFFDDD81D7FB695005669BA /* ShareSDK  */ = {
+			isa = PBXGroup;
+			children = (
+				AAFFDDD91D7FB695005669BA /* ShareSDK.framework */,
+				AAFFDDDA1D7FB695005669BA /* Support */,
+			);
+			path = "ShareSDK ";
+			sourceTree = "<group>";
+		};
+		AAFFDDDA1D7FB695005669BA /* Support */ = {
+			isa = PBXGroup;
+			children = (
+				AAFFDDDB1D7FB695005669BA /* Optional */,
+				AAFFDDDF1D7FB695005669BA /* PlatformSDK */,
+				AAFFDDE31D7FB695005669BA /* Required */,
+			);
+			path = Support;
+			sourceTree = "<group>";
+		};
+		AAFFDDDB1D7FB695005669BA /* Optional */ = {
+			isa = PBXGroup;
+			children = (
+				AAFFDDDC1D7FB695005669BA /* ShareSDKExtension.framework */,
+				AAFFDDDD1D7FB695005669BA /* ShareSDKUI.bundle */,
+				AAFFDDDE1D7FB695005669BA /* ShareSDKUI.framework */,
+			);
+			path = Optional;
+			sourceTree = "<group>";
+		};
+		AAFFDDDF1D7FB695005669BA /* PlatformSDK */ = {
+			isa = PBXGroup;
+			children = (
+				AAFFDDE01D7FB695005669BA /* QQSDK */,
+			);
+			path = PlatformSDK;
+			sourceTree = "<group>";
+		};
+		AAFFDDE01D7FB695005669BA /* QQSDK */ = {
+			isa = PBXGroup;
+			children = (
+				AAFFDDE11D7FB695005669BA /* TencentOpenAPI.framework */,
+				AAFFDDE21D7FB695005669BA /* TencentOpenApi_IOS_Bundle.bundle */,
+			);
+			path = QQSDK;
+			sourceTree = "<group>";
+		};
+		AAFFDDE31D7FB695005669BA /* Required */ = {
+			isa = PBXGroup;
+			children = (
+				AAFFDDE41D7FB695005669BA /* MOBFoundation.framework */,
+				AAFFDDE51D7FB695005669BA /* ShareSDK.bundle */,
+				AAFFDDE61D7FB695005669BA /* ShareSDKConnector.framework */,
+			);
+			path = Required;
+			sourceTree = "<group>";
+		};
+		AAFFDDF01D800EFC005669BA /* SRActionSheet */ = {
+			isa = PBXGroup;
+			children = (
+				AAFFDDF11D800EFC005669BA /* SRActionSheet.h */,
+				AAFFDDF21D800EFC005669BA /* SRActionSheet.m */,
+			);
+			path = SRActionSheet;
+			sourceTree = "<group>";
+		};
 		D16B17951D771B2D005CE35B /* Classes */ = {
 			isa = PBXGroup;
 			children = (
@@ -877,7 +916,7 @@
 		D16B17AC1D771B2D005CE35B /* Library */ = {
 			isa = PBXGroup;
 			children = (
-				1868B8F81D7811DC00D19386 /* ShareSDK  */,
+				AAFFDDD81D7FB695005669BA /* ShareSDK  */,
 				D16B17AD1D771B2D005CE35B /* CoverFlow */,
 				D16B17B41D771B2D005CE35B /* fmdb */,
 				D16B17C01D771B2D005CE35B /* FTPopOverMenu */,
@@ -1415,25 +1454,25 @@
 				1868B91A1D79289500D19386 /* 2.jpg in Resources */,
 				D16B18AD1D771B2E005CE35B /* Default-568h@3x-1.png in Resources */,
 				D16B18AE1D771B2E005CE35B /* instructions.rtf in Resources */,
+				AAFFDDEE1D7FB695005669BA /* ShareSDK.bundle in Resources */,
 				D16B18B21D771B2E005CE35B /* whiteBack@2x.png in Resources */,
 				D17CF0FF1D6567E7007C95DD /* LaunchScreen.storyboard in Resources */,
 				1868B91B1D79289500D19386 /* 3.jpg in Resources */,
 				18C6979A1D7462B9004DA2B1 /* 键盘@3x.png in Resources */,
+				AAFFDDE91D7FB695005669BA /* ShareSDKUI.bundle in Resources */,
 				1868B8EB1D76C4A200D19386 /* 后退@2x.png in Resources */,
 				1868B9191D79289500D19386 /* 1.jpg in Resources */,
 				D16B18B01D771B2E005CE35B /* Scanning frame@2x.png in Resources */,
 				D17CF0FC1D6567E7007C95DD /* Assets.xcassets in Resources */,
 				D17CF0FA1D6567E7007C95DD /* Main.storyboard in Resources */,
+				AAFFDDEC1D7FB695005669BA /* TencentOpenApi_IOS_Bundle.bundle in Resources */,
 				18C697A71D7462B9004DA2B1 /* JCAlertView.bundle in Resources */,
-				1868B90C1D7811DC00D19386 /* TencentOpenApi_IOS_Bundle.bundle in Resources */,
 				1868B8ED1D76C4B300D19386 /* 后退@3x.png in Resources */,
 				D16B18B11D771B2E005CE35B /* Scanning line@2x.png in Resources */,
 				1868B8F11D76CD4A00D19386 /* 智能开锁@3x.png in Resources */,
 				18C697991D7462B9004DA2B1 /* 键盘@2x.png in Resources */,
 				1868B8EF1D76CD3C00D19386 /* 智能开锁@2x.png in Resources */,
-				1868B90E1D7811DC00D19386 /* ShareSDK.bundle in Resources */,
 				18C6979F1D7462B9004DA2B1 /* arrow_down@2x.png in Resources */,
-				1868B9091D7811DC00D19386 /* ShareSDKUI.bundle in Resources */,
 				D16B18AC1D771B2E005CE35B /* backWhite@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1527,6 +1566,7 @@
 				D16B187C1D771B2E005CE35B /* UIView+XD.m in Sources */,
 				D16B18961D771B2E005CE35B /* NVActivityIndicatorAnimationBallScaleRipple.swift in Sources */,
 				18C697A41D7462B9004DA2B1 /* PCCircleView.m in Sources */,
+				AAFFDDD71D7FAA39005669BA /* PushSettingController.m in Sources */,
 				D16B18A31D771B2E005CE35B /* NVActivityIndicatorAnimationOrbit.swift in Sources */,
 				D16B18C71D771B2E005CE35B /* NSObject+Util.m in Sources */,
 				D16B189A1D771B2E005CE35B /* NVActivityIndicatorAnimationBallZigZag.swift in Sources */,
@@ -1611,6 +1651,7 @@
 				D16B189E1D771B2E005CE35B /* NVActivityIndicatorAnimationLineScale.swift in Sources */,
 				D16B18C21D771B2E005CE35B /* UIImageView+WebCache.m in Sources */,
 				D16B188D1D771B2E005CE35B /* NVActivityIndicatorAnimationBallGridBeat.swift in Sources */,
+				AAFFDDF31D800EFC005669BA /* SRActionSheet.m in Sources */,
 				D16B18A11D771B2E005CE35B /* NVActivityIndicatorAnimationLineScalePulseOutRapid.swift in Sources */,
 				D16B18B71D771B2E005CE35B /* SDWebImageCompat.m in Sources */,
 				18C697A21D7462B9004DA2B1 /* ViewOfCustomerTableViewCell.m in Sources */,
@@ -1645,6 +1686,7 @@
 				D16B18D91D771B2E005CE35B /* HRTempHumid.m in Sources */,
 				D16B18A71D771B2E005CE35B /* NVActivityIndicatorAnimationTriangleSkewSpin.swift in Sources */,
 				D16B18811D771B2E005CE35B /* YRCoverFlowLayout.m in Sources */,
+				AA029EA01D7D75B500EFF91C /* HWPopTool.m in Sources */,
 				D16B18921D771B2E005CE35B /* NVActivityIndicatorAnimationBallRotate.swift in Sources */,
 				D16B18911D771B2E005CE35B /* NVActivityIndicatorAnimationBallPulseSync.swift in Sources */,
 				D1D23DEF1D7570A100FCB5C9 /* AddDeivcecell.m in Sources */,
@@ -1793,7 +1835,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 1665122F3D59E8EE8CCA6258 /* Pods.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = YES;
+				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "Brand Assets";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -1991,6 +2033,34 @@
 					/Support/PlatformSDK/QQSDK,
 					"$(PROJECT_DIR)/herolife/Classes/Other/Library/ShareSDK",
 					/Support/Required,
+					"$(PROJECT_DIR)/herolife/Classes/Other/Library/ShareSDK",
+					"$(PROJECT_DIR)/herolife/Classes/Other/Library/ShareSDK",
+					/Support/Optional,
+					"$(PROJECT_DIR)/herolife/Classes/Other/Library/ShareSDK",
+					/Support/PlatformSDK/QQSDK,
+					"$(PROJECT_DIR)/herolife/Classes/Other/Library/ShareSDK",
+					/Support/Required,
+					"$(PROJECT_DIR)/herolife/Classes/Other/Library/ShareSDK",
+					"$(PROJECT_DIR)/herolife/Classes/Other/Library/ShareSDK",
+					/Support/Optional,
+					"$(PROJECT_DIR)/herolife/Classes/Other/Library/ShareSDK",
+					/Support/PlatformSDK/QQSDK,
+					"$(PROJECT_DIR)/herolife/Classes/Other/Library/ShareSDK",
+					/Support/Required,
+					"$(PROJECT_DIR)/herolife/Classes/Other/Library/ShareSDK",
+					"$(PROJECT_DIR)/herolife/Classes/Other/Library/ShareSDK",
+					/Support/Optional,
+					"$(PROJECT_DIR)/herolife/Classes/Other/Library/ShareSDK",
+					/Support/PlatformSDK/QQSDK,
+					"$(PROJECT_DIR)/herolife/Classes/Other/Library/ShareSDK",
+					/Support/Required,
+					"$(PROJECT_DIR)/herolife/Classes/Other/Library/ShareSDK",
+					"$(PROJECT_DIR)/herolife/Classes/Other/Library/ShareSDK",
+					/Support/Optional,
+					"$(PROJECT_DIR)/herolife/Classes/Other/Library/ShareSDK",
+					/Support/PlatformSDK/QQSDK,
+					"$(PROJECT_DIR)/herolife/Classes/Other/Library/ShareSDK",
+					/Support/Required,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/herolife/PrefixHeader.pch";
@@ -2003,6 +2073,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.huarui.herolife;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				USER_HEADER_SEARCH_PATHS = ./ShareSDK/ShareSDK.framework/Headers/ShareSDK.h;
+				USE_HEADERMAP = YES;
 			};
 			name = Debug;
 		};
@@ -2010,7 +2081,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B1A28F2C2DAB37DA40A8D5EB /* Pods.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = YES;
+				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "Brand Assets";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -2208,6 +2279,34 @@
 					/Support/PlatformSDK/QQSDK,
 					"$(PROJECT_DIR)/herolife/Classes/Other/Library/ShareSDK",
 					/Support/Required,
+					"$(PROJECT_DIR)/herolife/Classes/Other/Library/ShareSDK",
+					"$(PROJECT_DIR)/herolife/Classes/Other/Library/ShareSDK",
+					/Support/Optional,
+					"$(PROJECT_DIR)/herolife/Classes/Other/Library/ShareSDK",
+					/Support/PlatformSDK/QQSDK,
+					"$(PROJECT_DIR)/herolife/Classes/Other/Library/ShareSDK",
+					/Support/Required,
+					"$(PROJECT_DIR)/herolife/Classes/Other/Library/ShareSDK",
+					"$(PROJECT_DIR)/herolife/Classes/Other/Library/ShareSDK",
+					/Support/Optional,
+					"$(PROJECT_DIR)/herolife/Classes/Other/Library/ShareSDK",
+					/Support/PlatformSDK/QQSDK,
+					"$(PROJECT_DIR)/herolife/Classes/Other/Library/ShareSDK",
+					/Support/Required,
+					"$(PROJECT_DIR)/herolife/Classes/Other/Library/ShareSDK",
+					"$(PROJECT_DIR)/herolife/Classes/Other/Library/ShareSDK",
+					/Support/Optional,
+					"$(PROJECT_DIR)/herolife/Classes/Other/Library/ShareSDK",
+					/Support/PlatformSDK/QQSDK,
+					"$(PROJECT_DIR)/herolife/Classes/Other/Library/ShareSDK",
+					/Support/Required,
+					"$(PROJECT_DIR)/herolife/Classes/Other/Library/ShareSDK",
+					"$(PROJECT_DIR)/herolife/Classes/Other/Library/ShareSDK",
+					/Support/Optional,
+					"$(PROJECT_DIR)/herolife/Classes/Other/Library/ShareSDK",
+					/Support/PlatformSDK/QQSDK,
+					"$(PROJECT_DIR)/herolife/Classes/Other/Library/ShareSDK",
+					/Support/Required,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/herolife/PrefixHeader.pch";
@@ -2220,6 +2319,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.huarui.herolife;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				USER_HEADER_SEARCH_PATHS = ./ShareSDK/ShareSDK.framework/Headers/ShareSDK.h;
+				USE_HEADERMAP = YES;
 			};
 			name = Release;
 		};

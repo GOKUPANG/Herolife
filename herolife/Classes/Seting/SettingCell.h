@@ -10,7 +10,7 @@
 
 @interface SettingCell : UITableViewCell
 
-/** <#name#> */
+/** name */
 @property(nonatomic, weak)  UIImageView *leftImage;
 /** <#name#> */
 @property(nonatomic, weak) UILabel *leftLabel;

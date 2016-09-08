@@ -323,6 +323,24 @@ static NSString *cellID = @"cellID";
             
             break;
             
+            
+            case 1:
+        {
+            if (indexPath.row == 0) {
+                
+//        Class Psc  =   NSClassFromString(@"PushSettingController") ;
+//                
+//                
+//                UIViewController *psc  = [[Psc alloc]init];
+//                
+//                [self.navigationController pushViewController:psc animated:YES];
+                
+            }
+        }
+            
+            break;
+            
+            
         default:
             break;
     }

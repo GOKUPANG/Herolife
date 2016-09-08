@@ -142,33 +142,30 @@ extern NSInteger showNum;
     
     //背景图片
     UIImageView *backgroundImage = [[UIImageView alloc] initWithFrame:[UIScreen mainScreen].bounds];
-    backgroundImage.image = [UIImage imageNamed:@"Snip20160825_3"];
-    self.backImgView = backgroundImage;
-    
+    backgroundImage.image        = [UIImage imageNamed:@"Snip20160825_3"];
+    self.backImgView             = backgroundImage;
+
     [self.view addSubview:self.backImgView];
-    
-    
-    UIView *view = [[UIView alloc] initWithFrame:[UIScreen mainScreen].bounds];
-    view.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.2];
+
+
+    UIView *view                 = [[UIView alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    view.backgroundColor         = [[UIColor blackColor] colorWithAlphaComponent:0.2];
     [self.view addSubview:view];
 
-    
+
     //导航条
-    HRNavigationBar *navView = [[HRNavigationBar alloc] init];
-    navView.titleLabel.text = @"背景图设置";
-    //  [navView.leftButton addTarget:self action:@selector(popToLastVC) forControlEvents:UIControlEventTouchUpInside];
-    
-    navView.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.1];
+    HRNavigationBar *navView     = [[HRNavigationBar alloc] init];
+    navView.titleLabel.text      = @"背景图设置";
+
+    navView.backgroundColor      = [[UIColor whiteColor] colorWithAlphaComponent:0.1];
     [self.view addSubview:navView];
-    
+
     [navView.leftButton setImage:[UIImage imageNamed:@"返回号"] forState:UIControlStateNormal];
     [navView.leftButton addTarget:self action:@selector(backButtonClick:) forControlEvents:UIControlEventTouchUpInside];
-    
-    
-    self.navView = navView;
 
 
-    
+                   self.navView  = navView;
+
      [self makeUI];
     
    
@@ -200,7 +197,7 @@ extern NSInteger showNum;
     [self.view addSubview:_Cancel];
     [self.view addSubview:_lineView];
     
-    
+
     _ChooseBP.backgroundColor=[[UIColor whiteColor]colorWithAlphaComponent:0.2];
     _TakePic.backgroundColor=[[UIColor whiteColor]colorWithAlphaComponent:0.2];
      _FromPP.backgroundColor=[[UIColor whiteColor]colorWithAlphaComponent:0.2];
@@ -361,18 +358,19 @@ extern NSInteger showNum;
     NSError *err;
     [manager removeItemAtPath:path error:&err];
     
-    [UIImagePNGRepresentation(photo) writeToFile:path atomically:YES];
+    [UIImageJPEGRepresentation(photo, 1.0) writeToFile:path atomically:YES];
+    
+    
+  //  [UIImagePNGRepresentation(photo) writeToFile:path atomically:YES];
     
      self.backImgView.image = photo;
     
-    showNum = -1;
+   showNum = -1;
     
     [[NSUserDefaults standardUserDefaults ] setInteger:showNum forKey:@"PicNum"];
     
-    
-    
-    
     [self dismissViewControllerAnimated:YES completion:nil];
+    
     
 }
 
@@ -381,7 +379,14 @@ extern NSInteger showNum;
 {
     NSLog(@"取消");
     
-    
+    /*
+     
+     跳到系统设置的WiFi列表界面
+    NSURL *url = [NSURL URLWithString:@"prefs:root=WIFI"];
+    if ([[UIApplication sharedApplication] canOpenURL:url]) {
+        [[UIApplication sharedApplication] openURL:url];
+    }
+    */
     [self.navigationController popViewControllerAnimated:YES];
     
 }

@@ -7,6 +7,7 @@
 //
 
 #import "APPPSWController.h"
+#import "HWPopTool.h"
 
 @interface APPPSWController ()<UITableViewDelegate,UITableViewDataSource>
 
@@ -19,6 +20,13 @@
 @property(nonatomic,strong)UIImageView *backImgView;
 
 
+/** 弹出框*/
+
+@property(nonatomic,strong)UIView * popView;
+
+/** 弹出框按钮*/
+
+@property(nonatomic,strong)UIButton *popBtn;
 
 
 @end
@@ -96,10 +104,6 @@
     
 }
 
-
-
-
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
@@ -132,9 +136,32 @@
     
     [self maketableViewUI];
     
+    /** 弹出框的UI设置*/
+  
+    [self initPopView];
 }
 
+#pragma mark -popBtn点击事件
+-(void)closeAndBack
+{
+    
+    CGFloat viewWidth =  self.view.frame.size.width;
+    NSLog(@"%f",viewWidth);
+    
+}
 
+#pragma mark -  弹出框的设置
+-(void)initPopView
+{
+    _popView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 200, 300)];
+    _popView.backgroundColor = [UIColor blueColor];
+    
+    _popBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    _popBtn.frame = CGRectMake(0, 250, 200, 50);
+    _popBtn.backgroundColor = [UIColor greenColor];
+    [_popBtn addTarget:self action:@selector(closeAndBack) forControlEvents:UIControlEventTouchUpInside];
+    [_popView addSubview:_popBtn];
+}
 
 #pragma mark - tableView UI 设置 
 
@@ -150,17 +177,13 @@
     _tableView.backgroundColor = [UIColor clearColor];
     self.automaticallyAdjustsScrollViewInsets = NO;
     
-    
     UIView *footView = [UIView new];
     
     _tableView.tableFooterView = footView   ;
     
-
     
+
     [self.view addSubview:_tableView];
-    
-
-    
 }
 
 #pragma mark - tableView代理方法
@@ -192,9 +215,6 @@
                 
                 cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 
-
-
-                
             }
             
             else{
@@ -215,22 +235,9 @@
                 
             }
             
-           
-            
-            
-            
-            
-            
-          //  _tableView.separatorInset=UIEdgeInsetsMake(0, 50, 0, 0);
-
             cell.backgroundColor = [UIColor clearColor];
             
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
-            
-            
-            
-            
-            
         }
     
     
@@ -246,8 +253,13 @@
     [tableView beginUpdates];
     
     
-    NSLog(@"选中cell");
+    [HWPopTool sharedInstance].shadeBackgroundType = ShadeBackgroundTypeGradient;
     
+    [HWPopTool sharedInstance].closeButtonType = ButtonPositionTypeRight;
+    
+    [[HWPopTool sharedInstance] showWithPresentView:_popView animated:YES];
+    
+    NSLog(@"选中cell");
 }
 
 
@@ -256,14 +268,6 @@
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

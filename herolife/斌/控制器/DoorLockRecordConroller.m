@@ -9,6 +9,7 @@
 #import "DoorLockRecordConroller.h"
 #import "UIView+SDAutoLayout.h"
 #import "DoorRecordCell.h"
+#import "PushSettingController.h"
 
 @interface DoorLockRecordConroller ()<UITableViewDelegate,UITableViewDataSource>
 
@@ -123,6 +124,11 @@
     
     [self.view addSubview:self.backImgView];
     
+    
+    UIView *view                 = [[UIView alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    view.backgroundColor         = [[UIColor blackColor] colorWithAlphaComponent:0.2];
+    [self.view addSubview:view];
+    
     //导航条
     HRNavigationBar *navView = [[HRNavigationBar alloc] init];
     navView.titleLabel.text = @"门锁记录";
@@ -144,6 +150,18 @@
 }
 
 
+#pragma mark -点击第一行跳转到推送设置界面
+
+-(void)ViewClick
+{
+    
+    PushSettingController * PSC = [PushSettingController new];
+    [self.navigationController pushViewController:PSC animated:YES];
+    
+    
+}
+
+
 #pragma mark - UI事件  -haibo
 - (void)backButtonClick:(UIButton *)btn
 {
@@ -158,13 +176,25 @@
     
     [self.view addSubview:self.pushView];
     
+    
+    
+    
+    
     self.pushView.sd_layout
     .topSpaceToView(self.view,64)
     .leftEqualToView(self.view)
     .rightEqualToView(self.view)
     .heightIs(60.0/667.0 * self.view.size.height);
     
-   // self.pushView.backgroundColor = [UIColor redColor];
+    //self.pushView.backgroundColor = [UIColor redColor];
+    
+    /********************** 给这个View加一个手势***************************/
+
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(ViewClick)];
+    
+    [_pushView addGestureRecognizer:tap];
+    
+    
     
     //推送view下面的白线
     
@@ -180,9 +210,22 @@
     
     lineView.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.6];
     
-    UISwitch * sw = [[UISwitch alloc]initWithFrame:CGRectMake(self.view.frame.size.width-(20.0/375.0 *self.view.bounds.size.width)-51, 64+(14.0/667.0 *self.view.bounds.size.height), 0, 0)];
+   // UISwitch * sw = [[UISwitch alloc]initWithFrame:CGRectMake(self.view.frame.size.width-(20.0/375.0 *self.view.bounds.size.width)-51, 64+(14.0/667.0 *self.view.bounds.size.height), 0, 0)];
     
-    [self.view addSubview:sw];
+   // [self.view addSubview:sw];
+    
+    /******************进入符号**********************/
+    
+    UIImageView *infoImg = [[UIImageView alloc]init];
+    [self.view addSubview:infoImg];
+    infoImg.sd_layout
+    .rightSpaceToView(self.view,15)
+    .bottomSpaceToView(lineView,10)
+    .heightIs(18)
+    .widthIs(9);
+    infoImg.image = [UIImage imageNamed:@"进入"];
+    
+    
     
     //推送label
     
@@ -190,8 +233,10 @@
     
     [self.view addSubview:_pushLabel];
     
+    
+    
     _pushLabel.sd_layout
-    .bottomSpaceToView(lineView,15.0/667.0 *self.view.bounds.size.height)
+    .bottomSpaceToView(lineView,5.0)
     .leftEqualToView(lineView)
     .widthIs(70)
     .heightIs(30);

@@ -27,6 +27,8 @@
 
 #import "HRSqlite.h"
 
+#import "UIView+SDAutoLayout.h"
+
 #define HRUIScreenW [UIScreen mainScreen].bounds.size.width
 #define HRUIScreenH [UIScreen mainScreen].bounds.size.height
 #define HRCommonScreenH (HRUIScreenH / 667 /2)

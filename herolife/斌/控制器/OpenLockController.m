@@ -49,6 +49,9 @@
 
 @property(nonatomic,strong)UIImageView *backImgView;
 
+@property(nonatomic, weak) AppDelegate *appDelegate;
+
+
 
 
 @end
@@ -162,8 +165,22 @@
     [self makeView];
     
     
+    /***************** 与服务器建立socket连接*******************/
+    
+    [self postTokenWithTCPSocket];
+    
 }
 
+
+#pragma mark - 建立socket连接 并组帧 发送请求数据
+- (void)postTokenWithTCPSocket
+{
+    
+    AppDelegate *appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
+    [appDelegate connectToHost];
+    self.appDelegate = appDelegate;
+    
+}
 #pragma mark - 导航条左边返回方法
 -(void)popToLastVC
 {

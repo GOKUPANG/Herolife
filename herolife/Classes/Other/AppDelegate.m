@@ -123,6 +123,8 @@ static NSInteger disconnectCount = 0;
 		else
 		{
 			DDLogInfo(@"已连接!");
+            
+            
 		}
 	}
 	else

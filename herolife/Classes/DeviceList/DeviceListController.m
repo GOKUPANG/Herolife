@@ -419,20 +419,11 @@ static NSString *cellID = @"cellID";
         {
             OpenLockController * OLC = [OpenLockController new];
             
-            
-            
-            
-            
             [self.navigationController pushViewController:OLC animated:YES];
-            /** 跳转之后去除tabbar*/
-            
-            
-            
+    
         }
             
             break;
-            
-            
             
         case 1:
         {

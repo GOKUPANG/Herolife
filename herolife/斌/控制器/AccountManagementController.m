@@ -11,8 +11,9 @@
 #import "JCAlertView.h"
 #import "DoorLockRecordConroller.h"
 #import "LoginController.h"
+#import "SRActionSheet.h"
 
-@interface AccountManagementController ()<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate>
+@interface AccountManagementController ()<UITextFieldDelegate,SRActionSheetDelegate>
 
 //导航栏
 @property(nonatomic,strong)UIView * alphaView;
@@ -308,10 +309,6 @@
         
         [kUserDefault synchronize];
         
-     //   LoginController * loginVC = [LoginController new];
-        
-    //    [self presentViewController:loginVC animated:YES completion:nil];
-        
         
         
 
@@ -460,8 +457,6 @@
     p.y+=150;
     
     [self.view setCenter:p];
-   // _alphaView.hidden = NO;
-  //  self.navigationController.navigationBar.hidden = NO;
     
     self.navView.hidden= NO;
     
@@ -517,11 +512,31 @@
 -(void)test
 {
     
-    [JCAlertView showMultipleButtonsWithTitle:@"更换头像" Message:@"" Click:^(NSInteger index) {
+   /* [JCAlertView showMultipleButtonsWithTitle:@"更换头像" Message:@"" Click:^(NSInteger index) {
         NSLog(@"click%zi", index);
     } Buttons:@{@(JCAlertViewButtonTypeDefault):@"拍照"},@{@(JCAlertViewButtonTypeCancel):@"从手机相册获取"},@{@(JCAlertViewButtonTypeWarn):@"取消"}, nil];
+    */
     
     
+     [SRActionSheet sr_showActionSheetViewWithTitle:@""
+                                            cancelButtonTitle:@"取消"
+                                       destructiveButtonTitle:@""
+                                            otherButtonTitles:@[@"拍照", @"从手机相册选择"]
+                                                     delegate:self];
+    
+    
+    
+
+    
+    
+}
+
+#pragma mark -更换头像点击方法
+
+-(void)actionSheet:(SRActionSheet *)actionSheet didSelectSheet:(NSInteger)index
+{
+    NSLog(@"%zd", index);
+
 }
 -(void)makeMyUI
 {
@@ -919,100 +934,16 @@
     NSForegroundColorAttributeName:[UIColor whiteColor]}];
     
     self.title = @"授权管理";
-#if 0
-       [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsCompact];
-   // [self.navigationController.navigationBar setShadowImage:[UIImage new ]];
-    
-        self.navigationController.navigationBar.shadowImage = [UIImage new];
-       self.navigationController.navigationBar.translucent = YES;
-    
-    for(UIView *aView in self.navigationController.navigationBar.subviews) {
-        for(UIView *bView in aView.subviews) {
-            if([bView isKindOfClass:[UIImageView class]] &&
-               bView.bounds.size.width == self.navigationController.navigationBar.frame.size.width &&
-               bView.bounds.size.height < 2) {
-                bView.hidden = YES;
-            }
-        }
-    }
-    
-    
-    self.navigationController.navigationBar.barStyle = UIBarStyleBlackOpaque;
-    
-    
-    CGRect frame = self.navigationController.navigationBar.frame;
-   _alphaView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, frame.size.height)];
-    _alphaView.backgroundColor = [UIColor whiteColor   ];
-    _alphaView.userInteractionEnabled = NO;
-    [self.navigationController.navigationBar insertSubview: _alphaView atIndex:0];
-    _alphaView.alpha = 0.2;
-    
-#endif
-}
-#pragma mark - tableView UI 设置
--(void)makeTableViewUI
-{
-    _tableView = [[ UITableView alloc]initWithFrame:CGRectMake(0, 84, self.view.size.width, 300) style:UITableViewStylePlain];
-    _tableView.delegate = self;
-    _tableView.dataSource = self;
-    
-    _tableView.backgroundColor = [UIColor yellowColor];
-    
-    _tableView.tableHeaderView = [UIView new];
-    
-    _tableView.rowHeight = 70 ;
-    
-    
-    
-    
-    [self.view addSubview:_tableView];
-    
-    
+
 }
 
 
--(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 5;
-    
-}
-
--(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cellID"];
-    if (cell == nil) {
-        
-         cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cellID"];
-    }
-    cell.backgroundColor = [UIColor whiteColor];
-    cell.alpha = 0.2;
-    
-    
-   cell.textLabel.text = @"222";
-    
-    return cell;
-    
-    
-}
-
-//-(UIStatusBarStyle)preferredStatusBarStyle
-//{
-//    return  UIStatusBarStyleLightContent;
-//}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

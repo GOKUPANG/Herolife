@@ -348,18 +348,18 @@
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cellID"];
-    
+    UITableViewCell *cell    = [tableView dequeueReusableCellWithIdentifier:@"cellID"];
+
     if (cell == nil) {
-        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cellID"];
-        cell.textLabel.text = @"输入密码";
-        cell.textLabel.textColor = [UIColor whiteColor];
-        
-        
+    cell                     = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cellID"];
+    cell.textLabel.text      = @"输入密码";
+    cell.textLabel.textColor = [UIColor whiteColor];
+
+
     }
-    
-    cell.backgroundColor = [UIColor clearColor];
-    
+
+    cell.backgroundColor     = [UIColor clearColor];
+
     return cell;
     
 }
