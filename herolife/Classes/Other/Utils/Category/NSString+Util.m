@@ -388,6 +388,59 @@
 	
 	return urlString;
 }
+
+#pragma mark -  定时60s查询设备状态
++ (NSString *)stringWithSocketQuaryDeviceOnLineWithDst:(NSMutableDictionary *)dst
+{
+	
+	NSString *token = [[NSUserDefaults standardUserDefaults] objectForKey:PushToken];
+	NSString *user = [[NSUserDefaults standardUserDefaults] objectForKey:kDefaultsUserName];
+	
+	/// 获取用户UUID
+	NSString *ramStr = [kUserDefault objectForKey:kUserDefaultUUID];
+	
+	NSMutableDictionary *msgFromDict = [NSMutableDictionary dictionary];
+	
+	msgFromDict[@"user"] = user;
+	msgFromDict[@"dev"] = ramStr;
+	
+	
+	NSMutableDictionary *hrpushDict = [NSMutableDictionary dictionary];
+	hrpushDict[@"version"] = @"0.0.1";
+	hrpushDict[@"status"] = @"200";
+	hrpushDict[@"time"] = [self loadCurrentDate];
+	
+	//从偏好设置里 取token
+	hrpushDict[@"token"] = token;
+	hrpushDict[@"type"] = @"state";
+	hrpushDict[@"desc"] = @"none";
+	hrpushDict[@"src"] = msgFromDict;
+	hrpushDict[@"dst"] = dst;
+	
+	NSMutableDictionary *msgDict = [NSMutableDictionary dictionary];
+	msgDict[@"state"] = @"8";
+	msgDict[@"online"] = @"none";
+	msgDict[@"level"] = @"90%";
+	
+	NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+	dict[@"hrpush"] = hrpushDict;
+	dict[@"msg"] = msgDict;
+	
+	NSData *jsonDataDict = [NSJSONSerialization dataWithJSONObject:dict options:kNilOptions error:nil];
+	
+	NSString *dictStr = [[NSString alloc] initWithData:jsonDataDict encoding:NSUTF8StringEncoding];
+	
+	NSString *hrpush = @"hrpush\r\n";
+	
+	NSString *hrlength = [NSString stringWithFormat:@"length\r\n%lu\r\n", (unsigned long)dictStr.length];
+	
+	NSString *footerStr = @"\r\n\0";
+	NSString *urlString = [NSString stringWithFormat:@"%@%@%@%@", hrpush, hrlength, dictStr, footerStr];
+	
+	return urlString;
+
+	
+}
 #pragma mark - UDP
 /// UDP  请求帧
 + (NSString *)stringWithUDPMsgDict:(NSMutableDictionary *)msgDict

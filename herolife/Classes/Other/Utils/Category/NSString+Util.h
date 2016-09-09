@@ -34,6 +34,9 @@
 ///获取当前wifi的名称
 + (NSString *)stringWithGetWifiName;
 
+/// 定时60s查询设备状态
++ (NSString *)stringWithSocketQuaryDeviceOnLineWithDst:(NSMutableDictionary *)dst;
+
 /// 获取当前时间
 + (NSString *)loadCurrentDate;
 /// 获取用户UUID

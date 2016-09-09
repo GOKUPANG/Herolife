@@ -53,16 +53,21 @@
 
 @property(nonatomic,strong)UIImageView *backImgView;
 /** appDelegte */
-@property(nonatomic, weak) AppDelegate *appDelegte;
+@property(nonatomic, weak) AppDelegate *appDelegate;
 
 /** 模型数组 */
 @property(nonatomic, strong) NSMutableArray *homeArray;
+/**  */
+@property(nonatomic, strong) NSTimer *timer;
+/** <#name#> */
+@property(nonatomic, strong) DeviceListModel *currentStateModel;
 
 
 @end
 
 @implementation DeviceListController
 
+NSInteger const timerDuration = 3.0;
 - (NSMutableArray *)homeArray
 {
 	if (!_homeArray) {
@@ -116,8 +121,19 @@ static NSString *cellID = @"cellID";
 	[self postTokenWithTCPSocket];
 	//获取设备信息
 	[self getHttpRequset];
+	//通知
+	[self addObserverNotification];
 }
-
+#pragma mark - 通知
+- (void)addObserverNotification
+{
+	[kNotification addObserver:self selector:@selector(receiveDeviceState:) name:kNotificationDeviceState object:nil];
+}
+- (void)receiveDeviceState:(NSNotification *)note
+{
+	NSDictionary *dict = note.userInfo;
+	
+}
 #pragma mark - 内部方法
 //初始化
 - (void)setupViews
@@ -178,6 +194,8 @@ static NSString *cellID = @"cellID";
 	
 	UILabel *listLabel = [[UILabel alloc] init];
 	listLabel.text = @"  ";
+	listLabel.textAlignment = NSTextAlignmentLeft;
+	listLabel.lineBreakMode = NSLineBreakByClipping;
 	listLabel.textColor = [UIColor whiteColor];
 	if (HRUIScreenH < 667) {
 		listLabel.font = [UIFont systemFontOfSize:12];
@@ -186,8 +204,6 @@ static NSString *cellID = @"cellID";
 		listLabel.font = [UIFont systemFontOfSize:17];
 		
 	}
-	listLabel.hr_centerX = listButton.hr_centerX;
-	listLabel.hr_centerY = listButton.hr_centerY;
 	[listButton addSubview:listLabel];
 	self.listLabel = listLabel;
 	
@@ -332,7 +348,14 @@ static NSString *cellID = @"cellID";
 						   
 						   //显示选择的title
 						   DeviceListModel *home = self.homeArray[selectedIndex];
+						   //显示电量
+						   
+						   //定时发送选中的门锁 获取设备状态
+						   self.currentStateModel = self.homeArray[selectedIndex];
 						   self.listLabel.text = home.title;
+						   [self addTimer];
+						   
+						   [self.tableView reloadData];
 						   [self.collectionView setContentOffset:CGPointMake(selectedIndex * HRCommonScreenW *345 *2, 0) animated:YES];
 						   NSLog(@"done block. do something. selectedIndex : %ld", (long)selectedIndex);
 						   
@@ -367,10 +390,31 @@ static NSString *cellID = @"cellID";
 	switch (indexPath.row) {
   case 0:
 		{
-			cell.leftImage.image = [UIImage imageNamed:@"开锁首页"];
+			if (self.currentStateModel.state.length < 0.5) {
+				cell.leftImage.image = [UIImage imageNamed:@"开锁首页"];
+			}else
+			{
+				NSInteger states = [self.currentStateModel.state integerValue];
+				switch (states) {
+					case 5:
+					{
+						
+						cell.leftImage.image = [UIImage imageNamed:@"禁止开锁"];
+					}
+						break;
+						
+					default:
+					{
+						
+						cell.leftImage.image = [UIImage imageNamed:@"开锁首页"];
+					}
+						break;
+				}
+				
+			}
 			cell.leftLabel.text = @"手机开锁";
 			cell.rightLabel.text = @"最后一次操作的时间";
-			cell.minLabel.text = @"剩余电量95%";
+			cell.minLabel.text = [NSString stringWithFormat:@"剩余电量%@", self.currentStateModel.level];
 		}
 			break;
   case 1:
@@ -507,6 +551,12 @@ static NSString *cellID = @"cellID";
 	DeviceListModel *home = self.homeArray[index];
 	self.listLabel.text = home.title;
 	
+	
+	//定时发送选中的门锁 获取设备状态
+	self.currentStateModel = self.homeArray[index];
+	[self.tableView reloadData];
+	[self addTimer];
+	
 	[self.collectionView setContentOffset:CGPointMake(index * HRCommonScreenW *345 *2, 0) animated:YES];
 }
 
@@ -515,10 +565,10 @@ static NSString *cellID = @"cellID";
 - (void)postTokenWithTCPSocket
 {
 	
-	AppDelegate *appDelegte = (AppDelegate *)[UIApplication sharedApplication].delegate;
+	AppDelegate *appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
 	
-	[appDelegte connectToHost];
-	self.appDelegte = appDelegte;
+	[appDelegate connectToHost];
+	self.appDelegate = appDelegate;
 	
 	NSString *passWold = [[NSUserDefaults standardUserDefaults] objectForKey:kDefaultsPassWord];
 	NSString *userName = [[NSUserDefaults standardUserDefaults] objectForKey:kDefaultsUserName];
@@ -530,7 +580,7 @@ static NSString *cellID = @"cellID";
 	//登入认证  组登入认证
 	NSString *str = [NSString stringWithPostTCPJsonVersion:@"0.0.1" status:@"200" token:@"token" msgType:@"login" msgExplain:@"login" fromUserName:userName destUserName:@"huaruicloud" destDevName:@"huaruiPushServer" msgBodyStringDict:bodyDict];
 	DDLogWarn(@"登入认证登入认证--%@", str);
-	[self.appDelegte sendMessageWithString:str];
+	[self.appDelegate sendMessageWithString:str];
 	
 }
 #pragma mark - 获取设备信息  发送HTTP请求
@@ -554,7 +604,6 @@ static NSString *cellID = @"cellID";
 		//如果responseObject不是数组类型就不是我们想要的数据，应该过滤掉
 		if (![responseObject isKindOfClass:[NSArray class]]) {
 			[weakSelf.homeArray removeAllObjects];
-			[self.tableView reloadData];
 			DDLogDebug(@"responseObject不是NSArray");
 			return;
 		}
@@ -569,18 +618,63 @@ static NSString *cellID = @"cellID";
 		
 		for (NSDictionary *dict in responseArr) {
 			DeviceListModel *home = [DeviceListModel mj_objectWithKeyValues:dict];
-			[weakSelf.photoModelArray addObject:
-			[PhotoModel modelWithImageNamed:@"图层-3"
-								description:@""]];
-			[weakSelf.homeArray addObject:home];
+			if ([home.types isEqualToString:@"hrsc"]) {
+    
+			if ([home.state isEqualToString:@"0"]) {
+				
+				[weakSelf.photoModelArray addObject:
+				 [PhotoModel modelWithImageNamed:@"离线锁"
+									 description:@""]];
+				
+			}else
+			{
+				[weakSelf.photoModelArray addObject:
+				 [PhotoModel modelWithImageNamed:@"原锁"
+									 description:@""]];
+			}
+				
+				[weakSelf.homeArray addObject:home];
+				
+			}
 		}
 		
-		DeviceListModel *home = self.homeArray.firstObject;
-		self.listLabel.text = home.title;
+		weakSelf.currentStateModel = weakSelf.homeArray.firstObject;
+		weakSelf.listLabel.text = weakSelf.currentStateModel.title;
+		[self.tableView reloadData];
 		
-		
+		//定时60s查询设备状态
+		[self addTimer];
 	}];
 	
 }
-
+- (void)dealloc
+{
+	[kNotification removeObserver:self];
+	[self.timer invalidate];
+}
+#pragma mark - 定时器相关
+- (void)addTimer
+{
+	[self.timer invalidate];
+	self.timer = [NSTimer scheduledTimerWithTimeInterval:timerDuration target:self selector:@selector(updateTimer) userInfo:nil repeats:YES];
+}
+- (void)updateTimer
+{
+	NSString *user = [[NSUserDefaults standardUserDefaults] objectForKey:kDefaultsUserName];
+	DeviceListModel *testModel = self.currentStateModel;
+	[self sendSocketQuaryDeviceOnLineWithUser:user dev:testModel.uuid];
+	
+}
+#pragma mark - 定时60s查询设备状态
+- (void)sendSocketQuaryDeviceOnLineWithUser:(NSString *)user dev:(NSString *)dev
+{
+	[self.appDelegate connectToHost];
+	NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+	dict[@"user"] = user;
+	dict[@"dev"] = dev;
+	NSString *str = [NSString stringWithSocketQuaryDeviceOnLineWithDst:dict];
+	DDLogWarn(@"sendSocketQuaryDeviceOnLine-%@", str);
+	[self.appDelegate sendMessageWithString:str];
+	
+}
 @end

@@ -6,28 +6,27 @@
     },
     {
       "idiom" : "iphone",
-      "filename" : "开锁@2x.png",
+      "filename" : "离线锁@2x.png",
       "scale" : "2x"
     },
     {
       "idiom" : "iphone",
-      "filename" : "开锁@3x.png",
+      "filename" : "离线锁@3x.png",
       "scale" : "3x"
     },
     {
       "idiom" : "ipad",
+      "filename" : "离线锁.png",
       "scale" : "1x"
     },
     {
       "idiom" : "ipad",
+      "filename" : "离线锁@2x-1.png",
       "scale" : "2x"
     }
   ],
   "info" : {
     "version" : 1,
     "author" : "xcode"
-  },
-  "properties" : {
-    "template-rendering-intent" : "original"
   }
 }

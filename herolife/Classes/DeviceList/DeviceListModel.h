@@ -10,7 +10,7 @@
 
 @interface DeviceListModel : NSObject
 /** type */
-@property(nonatomic, copy) NSString *type;
+@property(nonatomic, copy) NSString *types;
 /** uid */
 @property(nonatomic, copy) NSString *uid;
 /** <#name#> */

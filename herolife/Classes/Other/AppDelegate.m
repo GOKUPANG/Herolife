@@ -373,15 +373,13 @@ static NSUInteger lengthInteger = 0;
 	 
 	 //如果是心跳包就不往下传值
 	 if ([strData containsString:@"hrhb\r\n\0"]) {
-		 
+//		 DDLogWarn(@"didReadData strData没截取  收到的数据%@", strData);
 		 return;
 	 }
 	 
 	 DDLogWarn(@"didReadData strData没截取  收到的数据%@", strData);
 	 //下次 就可能没有length的情况
-	 
 	 //截取  length字符串
-	 
 	 if ([strData containsString:@"length\r\n"]) {
 		 
 		 lengthInteger = [strData rangeOfString:@"length\r\n" options:NSCaseInsensitiveSearch].location + [strData rangeOfString:@"length\r\n" options:NSCaseInsensitiveSearch].length;
@@ -591,7 +589,7 @@ static NSUInteger lengthInteger = 0;
 	//文本交互
 	if ([jsonDict[@"hrpush"][@"type"] isEqualToString:@"message"]) {
 		
-		DDLogInfo(@"接收到文本交互 数据%@", jsonDict);
+//		DDLogInfo(@"接收到文本交互 数据%@", jsonDict);
 		[[NSNotificationCenter defaultCenter] postNotificationName:kNotificationMessage object:nil userInfo:jsonDict];
 	}
 	
@@ -622,6 +620,13 @@ static NSUInteger lengthInteger = 0;
 		[self addControlSceneDict:jsonDict];
 		DDLogInfo(@"接收到控制情景 数据%@", jsonDict);
 		[[NSNotificationCenter defaultCenter] postNotificationName:kNotificationControlScene object:nil userInfo:jsonDict];
+		
+	}
+	
+	//设备硬件状态
+	if ([jsonDict[@"hrpush"][@"type"] isEqualToString:@"state"]) {
+		DDLogInfo(@"接收设备硬件状态  数据%@", jsonDict);
+		[[NSNotificationCenter defaultCenter] postNotificationName:kNotificationDeviceState object:nil userInfo:jsonDict];
 		
 	}
 	

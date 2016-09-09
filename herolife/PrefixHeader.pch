@@ -187,7 +187,8 @@
 #define kNotificationDeleteScene @"kNotificationDeleteScene"
 /// 控制情景 通知
 #define kNotificationControlScene @"kNotificationControlScene"
-
+/// 设备硬件状态 通知
+#define kNotificationDeviceState @"kNotificationDeviceState"
 /// ---------------------------添加小睿
 /// 小睿删除 通知
 #define kNotificationDeleteXiaoRui @"kNotificationDeleteXiaoRui"
