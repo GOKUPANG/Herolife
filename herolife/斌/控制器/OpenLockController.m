@@ -8,6 +8,9 @@
 
 #import "OpenLockController.h"
 #import "UIView+SDAutoLayout.h"
+#import "NSString+DoorLock.h"
+#import "DeviceListModel.h"
+
 
 /** 高度比例*/
 #define Percent_H 75.0/667.0
@@ -131,6 +134,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    
+    
+    
     //背景图片
     UIImageView *backgroundImage = [[UIImageView alloc] initWithFrame:[UIScreen mainScreen].bounds];
     backgroundImage.image = [UIImage imageNamed:@"Snip20160825_3"];
@@ -168,6 +174,256 @@
     /***************** 与服务器建立socket连接*******************/
     
     [self postTokenWithTCPSocket];
+    
+    /********************   添加通知 ****************************/
+    [self addNotificationCenterObserver];
+    
+}
+
+#pragma mark - 添加通知
+
+-(void)addNotificationCenterObserver
+{
+    
+    
+    
+    //监听开关锁的控制帧
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receviedWithDoorOpenOrNot:) name:@"kDoorOpenOrNot" object:nil];
+    //监听门锁是否在线
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receviedWithDoorOnlineOrNot:) name:@"kDoorOnlineOrNot" object:nil];
+    
+    //监听门锁wifi盒子不在线
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receviedWithBoxNotOnline) name:kNotificationNotOnline object:nil];
+    
+}
+
+
+#pragma mark -WiFi盒子不在线
+
+-(void)receviedWithBoxNotOnline
+{
+    [SVProgressTool hr_showErrorWithStatus:@"目标设备不在线"];
+    [self.navigationController popViewControllerAnimated:YES];
+    
+    
+}
+
+#pragma mark - 门锁是否在线通知实现方法
+-(void)receviedWithDoorOnlineOrNot:(NSNotification *)notification
+{
+    NSDictionary *dict = notification.userInfo;
+    
+    int stateFloat  =  [dict[@"msg"][@"state"] intValue];
+    NSLog(@"收到的dict是%@",dict);
+    
+    switch (stateFloat) {
+        case 0:
+        {
+            [SVProgressTool hr_showErrorWithStatus:@"离线!"];
+            
+            
+        }
+            break;
+            
+        case 1:{
+            
+            //门锁状态正常   继续发送帧请求开锁
+            
+            
+            NSString * dynamicKey = dict[@"msg"][@"key"];
+            
+            NSLog(@"门锁状态正常  继续发送帧请求开锁");
+            
+            NSString *token = [kUserDefault objectForKey:PushToken];
+            
+            NSString *srcUserName  =  [kUserDefault objectForKey:kDefaultsUserName];
+            
+            NSString *UUID = [kUserDefault objectForKey:kUserDefaultUUID];
+            
+            DeviceListModel *model = [self.homeArray objectAtIndex:1];
+            
+            // NSString *
+            
+            NSString * uid = model.uid;
+            
+         //   NSString *msguuid = model.uuid;
+            
+            NSString * did  =  model.did;
+            
+            
+            
+            
+            //把获得的dynamicKey放到auth这个字段中去
+             NSString * RequestStr = [NSString stringWithHROpenLockVersion:@"0.01" status:@"200" token:token type:@"control1" desc:@"none" srcUserName:srcUserName srcDevName:UUID dstUserName:srcUserName dstDevName:@"qwertyuiop" msgTypes:@"hrsc" uid:uid did:did uuid:@"qwertyuiop" state:@"none" online:@"none" control:@"2" number:@"none" key:@"none" auth:dynamicKey];
+            
+          
+            
+            [self.appDelegate sendMessageWithString:RequestStr];
+            
+            
+        }
+            break;
+            
+        case 2:{
+            [SVProgressTool hr_showErrorWithStatus:@"忙碌!"];
+            
+            
+        }
+            
+            break;
+            
+        case 3:{
+            
+            [SVProgressTool hr_showErrorWithStatus:@"禁止!"];
+            
+            
+        }
+            break;
+            
+        case 4:{
+            
+            [SVProgressTool hr_showErrorWithStatus:@"欠费!"];
+            
+            
+        }
+            
+            break;
+            
+        case 5:
+        {
+            [SVProgressTool hr_showErrorWithStatus:@"关闭远程!"];
+            
+            
+        }
+            break;
+            
+        case 6:
+        {
+            [SVProgressTool hr_showErrorWithStatus:@"未配对门锁!"];
+            
+            
+        }
+            break;
+            
+        default:
+            break;
+    }
+    
+    
+}
+
+#pragma mark - 开锁是否成功通知实现方法
+-(void)receviedWithDoorOpenOrNot:(NSNotification *)notification
+{
+    
+    NSDictionary *dict = notification.userInfo;
+    
+    int controlNum = [dict[@"msg"][@"control"] intValue];
+    
+    /*  3:操作成功 4:密码错误 5:密钥错误 6:非法用户 7:授权失效 8:操作失败  **/
+    
+    switch (controlNum) {
+        case 3:
+        {
+            [SVProgressTool hr_showSuccessWithStatus:@"开锁成功"];
+            [self.navigationController popViewControllerAnimated:YES];
+            
+            
+            
+        }
+            break;
+            
+        case 4:
+        {
+            [SVProgressTool hr_showErrorWithStatus:@"密码错误!"];
+            
+        }
+            break;
+        case 5:
+        {
+            [SVProgressTool hr_showErrorWithStatus:@"秘钥错误!"];
+            
+        }
+            break;
+            
+        case 6:
+        {
+            [SVProgressTool hr_showErrorWithStatus:@"非法用户"];
+            
+        }
+            break;
+            
+        case 7:
+        {
+            [SVProgressTool hr_showErrorWithStatus:@"授权失效!"];
+            
+        }
+            break;
+            
+        case 8:
+        {
+            [SVProgressTool hr_showErrorWithStatus:@"操作失败!"];
+            
+        }
+            break;
+            
+            
+            
+        default:
+            break;
+    }
+    
+    
+}
+
+#pragma mark - 确定按钮 开锁 事件
+-(void)UnlockDoor
+{
+    
+    NSLog(@"获得的密码是%@",_MimaTF.text);
+    
+    NSString *token = [[NSUserDefaults standardUserDefaults] objectForKey:@"PushToken"];
+    
+    NSString *srcUserName  =  [kUserDefault objectForKey:kDefaultsUserName];
+    
+    NSString *UUID = [kUserDefault objectForKey:kUserDefaultUUID];
+    
+    DeviceListModel *model = [self.homeArray objectAtIndex:1];
+    
+   // NSString *
+    
+    NSString * uid = model.uid;
+    
+    NSString *msguuid = model.uuid;
+    
+    NSString * did  =  model.did;
+    
+    //NSString *msgtitle = model.title;
+    
+    NSLog(@"token是%@",token);
+    
+    
+
+
+    
+
+    NSString * RequestStr = [NSString stringWithHROpenLockVersion:@"0.01" status:@"200" token:token type:@"control1" desc:@"none" srcUserName:srcUserName srcDevName:UUID dstUserName:srcUserName dstDevName:@"qwertyuiop" msgTypes:@"hrsc" uid:uid did:did uuid:@"qwertyuiop" state:@"none" online:@"none" control:@"0" number:@"none" key:@"none" auth:@"none"];
+    
+    NSLog(@"请求的字符串是%@",RequestStr);
+    
+    
+    
+    
+    [self.appDelegate sendMessageWithString:RequestStr];
+    
+    
+    
+    NSLog(@"正在开锁");
+    
+    /** 密码正确 改变门锁图标为开锁状态*/
+    
+    _DoorLockBtn.selected = YES;
+    
     
 }
 
@@ -378,22 +634,7 @@
     
 }
 
-#pragma mark - 确定按钮 开锁 事件 
--(void)UnlockDoor
-{
-    
-    NSLog(@"获得的密码是%@",_MimaTF.text);
-    
-    
-    
-    NSLog(@"正在开锁");
-    
-    /** 密码正确 改变门锁图标为开锁状态*/
-    
-    _DoorLockBtn.selected = YES;
-    
-    
-}
+
 
 #pragma mark -创建九宫格
 /** 九宫格*/

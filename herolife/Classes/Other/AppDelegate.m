@@ -452,6 +452,9 @@ static NSUInteger lengthInteger = 0;
 	{
 		DDLogInfo(@"接收到设备不在线 数据%@", jsonDict);
 		[[NSNotificationCenter defaultCenter] postNotificationName:kNotificationNotOnline object:nil];
+        
+        return;
+        
 		
 	}
 	
@@ -461,6 +464,48 @@ static NSUInteger lengthInteger = 0;
 		[[NSNotificationCenter defaultCenter] postNotificationName:kNotificationLogin object:nil userInfo:jsonDict];
 		DDLogInfo(@"接收到登陆认证 数据%@", jsonDict);
 	}
+    
+#pragma mark -  斌添加的代码
+    
+    
+    //过滤服务器回复的pushok
+    
+    if ([jsonDict [@"hrpush"][@"desc"] isEqualToString:@"push ok"]) {
+        NSLog(@"接收到服务器的返回response 要过滤掉");
+        
+    }
+    /****************************开锁接收数据的判断*****************************/
+    
+    else if ([jsonDict[@"msg"][@"types"] isEqualToString:@"hrsc"] && [jsonDict[@"msg"][@"control"] isEqualToString:@"1"]) {
+        
+        
+        
+        
+        NSLog(@"接收到门锁状态的数据,正在请求动态密码");
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"kDoorOnlineOrNot" object:nil userInfo:jsonDict];
+        
+        
+        
+    }
+    
+    
+    else  if ([jsonDict[@"msg"][@"types"] isEqualToString:@"hrsc"] &&[jsonDict[@"msg"][@"control"] intValue] >2) {
+        
+        
+        
+        
+        NSLog(@"接收到门锁开锁是否成功的数据");
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"kDoorOpenOrNot" object:nil userInfo:jsonDict];
+        
+        
+    }
+    
+    /************************** 斌添加的代码完毕 *************************************/
+    
+    
+    
 	//创建红外空调
 	if ([jsonDict[@"hrpush"][@"type"] isEqualToString:@"create"] && [jsonDict[@"msg"][@"types"] isEqualToString:@"irac"]) {
 		

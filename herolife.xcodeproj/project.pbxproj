@@ -23,7 +23,6 @@
 		18C6979B1D7462B9004DA2B1 /* AccountManagementController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18C697671D7462B9004DA2B1 /* AccountManagementController.m */; };
 		18C6979C1D7462B9004DA2B1 /* APPPSWController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18C697691D7462B9004DA2B1 /* APPPSWController.m */; };
 		18C6979D1D7462B9004DA2B1 /* DoorLockRecordConroller.m in Sources */ = {isa = PBXBuildFile; fileRef = 18C6976B1D7462B9004DA2B1 /* DoorLockRecordConroller.m */; };
-		18C6979E1D7462B9004DA2B1 /* OpenLockController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18C6976D1D7462B9004DA2B1 /* OpenLockController.m */; };
 		18C6979F1D7462B9004DA2B1 /* arrow_down@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 18C6976F1D7462B9004DA2B1 /* arrow_down@2x.png */; };
 		18C697A01D7462B9004DA2B1 /* CustomerInfoSectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 18C697711D7462B9004DA2B1 /* CustomerInfoSectionView.m */; };
 		18C697A11D7462B9004DA2B1 /* ShouQuanManagerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18C697731D7462B9004DA2B1 /* ShouQuanManagerController.m */; };
@@ -44,15 +43,17 @@
 		AA029EA01D7D75B500EFF91C /* HWPopTool.m in Sources */ = {isa = PBXBuildFile; fileRef = AA029E9F1D7D75B500EFF91C /* HWPopTool.m */; };
 		AAFFDDD71D7FAA39005669BA /* PushSettingController.m in Sources */ = {isa = PBXBuildFile; fileRef = AAFFDDD61D7FAA39005669BA /* PushSettingController.m */; };
 		AAFFDDF31D800EFC005669BA /* SRActionSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = AAFFDDF21D800EFC005669BA /* SRActionSheet.m */; };
-		D10E5EF31D82423400FD8FAF /* ShareSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D10E5EE51D82423400FD8FAF /* ShareSDK.framework */; };
-		D10E5EF41D82423400FD8FAF /* ShareSDKExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D10E5EE81D82423400FD8FAF /* ShareSDKExtension.framework */; };
-		D10E5EF51D82423400FD8FAF /* ShareSDKUI.bundle in Resources */ = {isa = PBXBuildFile; fileRef = D10E5EE91D82423400FD8FAF /* ShareSDKUI.bundle */; };
-		D10E5EF61D82423400FD8FAF /* ShareSDKUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D10E5EEA1D82423400FD8FAF /* ShareSDKUI.framework */; };
-		D10E5EF71D82423400FD8FAF /* TencentOpenAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D10E5EED1D82423400FD8FAF /* TencentOpenAPI.framework */; };
-		D10E5EF81D82423400FD8FAF /* TencentOpenApi_IOS_Bundle.bundle in Resources */ = {isa = PBXBuildFile; fileRef = D10E5EEE1D82423400FD8FAF /* TencentOpenApi_IOS_Bundle.bundle */; };
-		D10E5EF91D82423400FD8FAF /* MOBFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D10E5EF01D82423400FD8FAF /* MOBFoundation.framework */; };
-		D10E5EFA1D82423400FD8FAF /* ShareSDK.bundle in Resources */ = {isa = PBXBuildFile; fileRef = D10E5EF11D82423400FD8FAF /* ShareSDK.bundle */; };
-		D10E5EFB1D82423400FD8FAF /* ShareSDKConnector.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D10E5EF21D82423400FD8FAF /* ShareSDKConnector.framework */; };
+		AAFFDE371D82CA87005669BA /* ShareSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AAFFDE291D82CA87005669BA /* ShareSDK.framework */; };
+		AAFFDE381D82CA87005669BA /* ShareSDKExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AAFFDE2C1D82CA87005669BA /* ShareSDKExtension.framework */; };
+		AAFFDE391D82CA87005669BA /* ShareSDKUI.bundle in Resources */ = {isa = PBXBuildFile; fileRef = AAFFDE2D1D82CA87005669BA /* ShareSDKUI.bundle */; };
+		AAFFDE3A1D82CA87005669BA /* ShareSDKUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AAFFDE2E1D82CA87005669BA /* ShareSDKUI.framework */; };
+		AAFFDE3B1D82CA87005669BA /* TencentOpenAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AAFFDE311D82CA87005669BA /* TencentOpenAPI.framework */; };
+		AAFFDE3C1D82CA87005669BA /* TencentOpenApi_IOS_Bundle.bundle in Resources */ = {isa = PBXBuildFile; fileRef = AAFFDE321D82CA87005669BA /* TencentOpenApi_IOS_Bundle.bundle */; };
+		AAFFDE3D1D82CA87005669BA /* MOBFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AAFFDE341D82CA87005669BA /* MOBFoundation.framework */; };
+		AAFFDE3E1D82CA87005669BA /* ShareSDK.bundle in Resources */ = {isa = PBXBuildFile; fileRef = AAFFDE351D82CA87005669BA /* ShareSDK.bundle */; };
+		AAFFDE3F1D82CA87005669BA /* ShareSDKConnector.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AAFFDE361D82CA87005669BA /* ShareSDKConnector.framework */; };
+		AAFFDE431D82CBA0005669BA /* NSString+DoorLock.m in Sources */ = {isa = PBXBuildFile; fileRef = AAFFDE421D82CBA0005669BA /* NSString+DoorLock.m */; };
+		AAFFDE461D82CBE8005669BA /* OpenLockController.m in Sources */ = {isa = PBXBuildFile; fileRef = AAFFDE451D82CBE8005669BA /* OpenLockController.m */; };
 		D17CF0F11D6567E7007C95DD /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D17CF0F01D6567E7007C95DD /* main.m */; };
 		D17CF0FA1D6567E7007C95DD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D17CF0F81D6567E7007C95DD /* Main.storyboard */; };
 		D17CF0FC1D6567E7007C95DD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D17CF0FB1D6567E7007C95DD /* Assets.xcassets */; };
@@ -263,8 +264,6 @@
 		18C697691D7462B9004DA2B1 /* APPPSWController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APPPSWController.m; sourceTree = "<group>"; };
 		18C6976A1D7462B9004DA2B1 /* DoorLockRecordConroller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DoorLockRecordConroller.h; sourceTree = "<group>"; };
 		18C6976B1D7462B9004DA2B1 /* DoorLockRecordConroller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DoorLockRecordConroller.m; sourceTree = "<group>"; };
-		18C6976C1D7462B9004DA2B1 /* OpenLockController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenLockController.h; sourceTree = "<group>"; };
-		18C6976D1D7462B9004DA2B1 /* OpenLockController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OpenLockController.m; sourceTree = "<group>"; };
 		18C6976F1D7462B9004DA2B1 /* arrow_down@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "arrow_down@2x.png"; sourceTree = "<group>"; };
 		18C697701D7462B9004DA2B1 /* CustomerInfoSectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomerInfoSectionView.h; sourceTree = "<group>"; };
 		18C697711D7462B9004DA2B1 /* CustomerInfoSectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomerInfoSectionView.m; sourceTree = "<group>"; };
@@ -303,16 +302,20 @@
 		AAFFDDD61D7FAA39005669BA /* PushSettingController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PushSettingController.m; sourceTree = "<group>"; };
 		AAFFDDF11D800EFC005669BA /* SRActionSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SRActionSheet.h; sourceTree = "<group>"; };
 		AAFFDDF21D800EFC005669BA /* SRActionSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SRActionSheet.m; sourceTree = "<group>"; };
+		AAFFDE291D82CA87005669BA /* ShareSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ShareSDK.framework; sourceTree = "<group>"; };
+		AAFFDE2C1D82CA87005669BA /* ShareSDKExtension.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ShareSDKExtension.framework; sourceTree = "<group>"; };
+		AAFFDE2D1D82CA87005669BA /* ShareSDKUI.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = ShareSDKUI.bundle; sourceTree = "<group>"; };
+		AAFFDE2E1D82CA87005669BA /* ShareSDKUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ShareSDKUI.framework; sourceTree = "<group>"; };
+		AAFFDE311D82CA87005669BA /* TencentOpenAPI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = TencentOpenAPI.framework; sourceTree = "<group>"; };
+		AAFFDE321D82CA87005669BA /* TencentOpenApi_IOS_Bundle.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = TencentOpenApi_IOS_Bundle.bundle; sourceTree = "<group>"; };
+		AAFFDE341D82CA87005669BA /* MOBFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = MOBFoundation.framework; sourceTree = "<group>"; };
+		AAFFDE351D82CA87005669BA /* ShareSDK.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = ShareSDK.bundle; sourceTree = "<group>"; };
+		AAFFDE361D82CA87005669BA /* ShareSDKConnector.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ShareSDKConnector.framework; sourceTree = "<group>"; };
+		AAFFDE411D82CBA0005669BA /* NSString+DoorLock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+DoorLock.h"; sourceTree = "<group>"; };
+		AAFFDE421D82CBA0005669BA /* NSString+DoorLock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+DoorLock.m"; sourceTree = "<group>"; };
+		AAFFDE441D82CBE8005669BA /* OpenLockController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenLockController.h; sourceTree = "<group>"; };
+		AAFFDE451D82CBE8005669BA /* OpenLockController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OpenLockController.m; sourceTree = "<group>"; };
 		B1A28F2C2DAB37DA40A8D5EB /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
-		D10E5EE51D82423400FD8FAF /* ShareSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ShareSDK.framework; sourceTree = "<group>"; };
-		D10E5EE81D82423400FD8FAF /* ShareSDKExtension.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ShareSDKExtension.framework; sourceTree = "<group>"; };
-		D10E5EE91D82423400FD8FAF /* ShareSDKUI.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = ShareSDKUI.bundle; sourceTree = "<group>"; };
-		D10E5EEA1D82423400FD8FAF /* ShareSDKUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ShareSDKUI.framework; sourceTree = "<group>"; };
-		D10E5EED1D82423400FD8FAF /* TencentOpenAPI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = TencentOpenAPI.framework; sourceTree = "<group>"; };
-		D10E5EEE1D82423400FD8FAF /* TencentOpenApi_IOS_Bundle.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = TencentOpenApi_IOS_Bundle.bundle; sourceTree = "<group>"; };
-		D10E5EF01D82423400FD8FAF /* MOBFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = MOBFoundation.framework; sourceTree = "<group>"; };
-		D10E5EF11D82423400FD8FAF /* ShareSDK.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = ShareSDK.bundle; sourceTree = "<group>"; };
-		D10E5EF21D82423400FD8FAF /* ShareSDKConnector.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ShareSDKConnector.framework; sourceTree = "<group>"; };
 		D17CF0EC1D6567E7007C95DD /* herolife.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = herolife.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D17CF0F01D6567E7007C95DD /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		D17CF0F91D6567E7007C95DD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -609,13 +612,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				D1940DD71D6AF76400A262EC /* libsqlite3.tbd in Frameworks */,
-				D10E5EF91D82423400FD8FAF /* MOBFoundation.framework in Frameworks */,
-				D10E5EF61D82423400FD8FAF /* ShareSDKUI.framework in Frameworks */,
-				D10E5EF41D82423400FD8FAF /* ShareSDKExtension.framework in Frameworks */,
+				AAFFDE3D1D82CA87005669BA /* MOBFoundation.framework in Frameworks */,
+				AAFFDE3A1D82CA87005669BA /* ShareSDKUI.framework in Frameworks */,
+				AAFFDE381D82CA87005669BA /* ShareSDKExtension.framework in Frameworks */,
 				D1940DD51D6AF74A00A262EC /* JavaScriptCore.framework in Frameworks */,
-				D10E5EF31D82423400FD8FAF /* ShareSDK.framework in Frameworks */,
-				D10E5EF71D82423400FD8FAF /* TencentOpenAPI.framework in Frameworks */,
-				D10E5EFB1D82423400FD8FAF /* ShareSDKConnector.framework in Frameworks */,
+				AAFFDE371D82CA87005669BA /* ShareSDK.framework in Frameworks */,
+				AAFFDE3B1D82CA87005669BA /* TencentOpenAPI.framework in Frameworks */,
+				AAFFDE3F1D82CA87005669BA /* ShareSDKConnector.framework in Frameworks */,
 				D1940DD31D6AF73C00A262EC /* libstdc++.tbd in Frameworks */,
 				D1940DD11D6AF73300A262EC /* libz.tbd in Frameworks */,
 				D1940DCF1D6AF72400A262EC /* libicucore.tbd in Frameworks */,
@@ -670,6 +673,7 @@
 				18C6975F1D7462B9004DA2B1 /* cell */,
 				18C697621D7462B9004DA2B1 /* 图片 */,
 				18C697651D7462B9004DA2B1 /* 控制器 */,
+				AAFFDE401D82CBA0005669BA /* 分类 */,
 				18C697761D7462B9004DA2B1 /* 第三方 */,
 			);
 			path = "斌";
@@ -711,10 +715,10 @@
 				18C697671D7462B9004DA2B1 /* AccountManagementController.m */,
 				18C697681D7462B9004DA2B1 /* APPPSWController.h */,
 				18C697691D7462B9004DA2B1 /* APPPSWController.m */,
+				AAFFDE441D82CBE8005669BA /* OpenLockController.h */,
+				AAFFDE451D82CBE8005669BA /* OpenLockController.m */,
 				18C6976A1D7462B9004DA2B1 /* DoorLockRecordConroller.h */,
 				18C6976B1D7462B9004DA2B1 /* DoorLockRecordConroller.m */,
-				18C6976C1D7462B9004DA2B1 /* OpenLockController.h */,
-				18C6976D1D7462B9004DA2B1 /* OpenLockController.m */,
 				18C6976E1D7462B9004DA2B1 /* TableView下拉菜单 */,
 			);
 			path = "控制器";
@@ -859,60 +863,69 @@
 			path = SRActionSheet;
 			sourceTree = "<group>";
 		};
-		D10E5EE41D82423400FD8FAF /* ShareSDK  */ = {
+		AAFFDE281D82CA86005669BA /* ShareSDK  */ = {
 			isa = PBXGroup;
 			children = (
-				D10E5EE51D82423400FD8FAF /* ShareSDK.framework */,
-				D10E5EE61D82423400FD8FAF /* Support */,
+				AAFFDE291D82CA87005669BA /* ShareSDK.framework */,
+				AAFFDE2A1D82CA87005669BA /* Support */,
 			);
 			path = "ShareSDK ";
 			sourceTree = "<group>";
 		};
-		D10E5EE61D82423400FD8FAF /* Support */ = {
+		AAFFDE2A1D82CA87005669BA /* Support */ = {
 			isa = PBXGroup;
 			children = (
-				D10E5EE71D82423400FD8FAF /* Optional */,
-				D10E5EEB1D82423400FD8FAF /* PlatformSDK */,
-				D10E5EEF1D82423400FD8FAF /* Required */,
+				AAFFDE2B1D82CA87005669BA /* Optional */,
+				AAFFDE2F1D82CA87005669BA /* PlatformSDK */,
+				AAFFDE331D82CA87005669BA /* Required */,
 			);
 			path = Support;
 			sourceTree = "<group>";
 		};
-		D10E5EE71D82423400FD8FAF /* Optional */ = {
+		AAFFDE2B1D82CA87005669BA /* Optional */ = {
 			isa = PBXGroup;
 			children = (
-				D10E5EE81D82423400FD8FAF /* ShareSDKExtension.framework */,
-				D10E5EE91D82423400FD8FAF /* ShareSDKUI.bundle */,
-				D10E5EEA1D82423400FD8FAF /* ShareSDKUI.framework */,
+				AAFFDE2C1D82CA87005669BA /* ShareSDKExtension.framework */,
+				AAFFDE2D1D82CA87005669BA /* ShareSDKUI.bundle */,
+				AAFFDE2E1D82CA87005669BA /* ShareSDKUI.framework */,
 			);
 			path = Optional;
 			sourceTree = "<group>";
 		};
-		D10E5EEB1D82423400FD8FAF /* PlatformSDK */ = {
+		AAFFDE2F1D82CA87005669BA /* PlatformSDK */ = {
 			isa = PBXGroup;
 			children = (
-				D10E5EEC1D82423400FD8FAF /* QQSDK */,
+				AAFFDE301D82CA87005669BA /* QQSDK */,
 			);
 			path = PlatformSDK;
 			sourceTree = "<group>";
 		};
-		D10E5EEC1D82423400FD8FAF /* QQSDK */ = {
+		AAFFDE301D82CA87005669BA /* QQSDK */ = {
 			isa = PBXGroup;
 			children = (
-				D10E5EED1D82423400FD8FAF /* TencentOpenAPI.framework */,
-				D10E5EEE1D82423400FD8FAF /* TencentOpenApi_IOS_Bundle.bundle */,
+				AAFFDE311D82CA87005669BA /* TencentOpenAPI.framework */,
+				AAFFDE321D82CA87005669BA /* TencentOpenApi_IOS_Bundle.bundle */,
 			);
 			path = QQSDK;
 			sourceTree = "<group>";
 		};
-		D10E5EEF1D82423400FD8FAF /* Required */ = {
+		AAFFDE331D82CA87005669BA /* Required */ = {
 			isa = PBXGroup;
 			children = (
-				D10E5EF01D82423400FD8FAF /* MOBFoundation.framework */,
-				D10E5EF11D82423400FD8FAF /* ShareSDK.bundle */,
-				D10E5EF21D82423400FD8FAF /* ShareSDKConnector.framework */,
+				AAFFDE341D82CA87005669BA /* MOBFoundation.framework */,
+				AAFFDE351D82CA87005669BA /* ShareSDK.bundle */,
+				AAFFDE361D82CA87005669BA /* ShareSDKConnector.framework */,
 			);
 			path = Required;
+			sourceTree = "<group>";
+		};
+		AAFFDE401D82CBA0005669BA /* 分类 */ = {
+			isa = PBXGroup;
+			children = (
+				AAFFDE411D82CBA0005669BA /* NSString+DoorLock.h */,
+				AAFFDE421D82CBA0005669BA /* NSString+DoorLock.m */,
+			);
+			path = "分类";
 			sourceTree = "<group>";
 		};
 		D17CF0E31D6567E7007C95DD = {
@@ -1063,7 +1076,7 @@
 		D1A7DC001D8117DD00D051B0 /* Library */ = {
 			isa = PBXGroup;
 			children = (
-				D10E5EE41D82423400FD8FAF /* ShareSDK  */,
+				AAFFDE281D82CA86005669BA /* ShareSDK  */,
 				D1A7DC011D8117DD00D051B0 /* CoverFlow */,
 				D1A7DC371D8117DD00D051B0 /* fmdb */,
 				D1A7DC431D8117DD00D051B0 /* FTPopOverMenu */,
@@ -1646,13 +1659,13 @@
 				1868B91C1D79289500D19386 /* 4.jpg in Resources */,
 				1868B91A1D79289500D19386 /* 2.jpg in Resources */,
 				D17CF0FF1D6567E7007C95DD /* LaunchScreen.storyboard in Resources */,
-				D10E5EF51D82423400FD8FAF /* ShareSDKUI.bundle in Resources */,
+				AAFFDE391D82CA87005669BA /* ShareSDKUI.bundle in Resources */,
 				1868B91B1D79289500D19386 /* 3.jpg in Resources */,
 				18C6979A1D7462B9004DA2B1 /* 键盘@3x.png in Resources */,
 				D1A7DD6A1D8117DD00D051B0 /* instructions.rtf in Resources */,
 				1868B8EB1D76C4A200D19386 /* 后退@2x.png in Resources */,
 				1868B9191D79289500D19386 /* 1.jpg in Resources */,
-				D10E5EFA1D82423400FD8FAF /* ShareSDK.bundle in Resources */,
+				AAFFDE3E1D82CA87005669BA /* ShareSDK.bundle in Resources */,
 				D1A7DD6D1D8117DD00D051B0 /* Scanning line@2x.png in Resources */,
 				D1A7DDD51D813C6400D051B0 /* Info.plist in Resources */,
 				D17CF0FC1D6567E7007C95DD /* Assets.xcassets in Resources */,
@@ -1661,7 +1674,7 @@
 				D1A7DD6E1D8117DD00D051B0 /* whiteBack@2x.png in Resources */,
 				D17CF0FA1D6567E7007C95DD /* Main.storyboard in Resources */,
 				18C697A71D7462B9004DA2B1 /* JCAlertView.bundle in Resources */,
-				D10E5EF81D82423400FD8FAF /* TencentOpenApi_IOS_Bundle.bundle in Resources */,
+				AAFFDE3C1D82CA87005669BA /* TencentOpenApi_IOS_Bundle.bundle in Resources */,
 				1868B8ED1D76C4B300D19386 /* 后退@3x.png in Resources */,
 				1868B8F11D76CD4A00D19386 /* 智能开锁@3x.png in Resources */,
 				18C697991D7462B9004DA2B1 /* 键盘@2x.png in Resources */,
@@ -1756,6 +1769,7 @@
 				D1A7DDA41D8117DD00D051B0 /* IrgmData.m in Sources */,
 				D1A7DD401D8117DD00D051B0 /* FMDatabasePool.m in Sources */,
 				D1A7DD8F1D8117DD00D051B0 /* UIBarButtonItem+XMGExtension.m in Sources */,
+				AAFFDE461D82CBE8005669BA /* OpenLockController.m in Sources */,
 				D1A7DDAB1D8117DD00D051B0 /* HRServicesManager.m in Sources */,
 				D1A7DD4D1D8117DD00D051B0 /* NVActivityIndicatorAnimationBallPulseSync.swift in Sources */,
 				18C697A01D7462B9004DA2B1 /* CustomerInfoSectionView.m in Sources */,
@@ -1800,6 +1814,7 @@
 				18C697A61D7462B9004DA2B1 /* CALayer+Anim.m in Sources */,
 				D1A7DD641D8117DD00D051B0 /* NVActivityIndicatorAnimationDelegate.swift in Sources */,
 				D1A7DD6B1D8117DD00D051B0 /* QRCodeController.m in Sources */,
+				AAFFDE431D82CBA0005669BA /* NSString+DoorLock.m in Sources */,
 				D1A7DD971D8117DD00D051B0 /* HRTabBarButton.m in Sources */,
 				D1A7DD721D8117DD00D051B0 /* NSData+ImageContentType.m in Sources */,
 				D1A7DD651D8117DD00D051B0 /* NVActivityIndicatorShape.swift in Sources */,
@@ -1828,7 +1843,6 @@
 				D1A7DD781D8117DD00D051B0 /* SDWebImageManager.m in Sources */,
 				D1A7DD5F1D8117DD00D051B0 /* NVActivityIndicatorAnimationOrbit.swift in Sources */,
 				D1A7DDB71D8117DD00D051B0 /* AddLockController.m in Sources */,
-				18C6979E1D7462B9004DA2B1 /* OpenLockController.m in Sources */,
 				D1A7DD5C1D8117DD00D051B0 /* NVActivityIndicatorAnimationLineScalePulseOut.swift in Sources */,
 				18C697A81D7462B9004DA2B1 /* JCAlertView.m in Sources */,
 				1868B9131D79200200D19386 /* ChooseBackPicCtl.m in Sources */,
@@ -2295,6 +2309,13 @@
 					/Support/PlatformSDK/QQSDK,
 					"$(PROJECT_DIR)/herolife/Classes/Other/Library/ShareSDK",
 					/Support/Required,
+					"$(PROJECT_DIR)/herolife/Classes/Other/Library/ShareSDK",
+					"$(PROJECT_DIR)/herolife/Classes/Other/Library/ShareSDK",
+					/Support/Optional,
+					"$(PROJECT_DIR)/herolife/Classes/Other/Library/ShareSDK",
+					/Support/PlatformSDK/QQSDK,
+					"$(PROJECT_DIR)/herolife/Classes/Other/Library/ShareSDK",
+					/Support/Required,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/herolife/PrefixHeader.pch";
@@ -2470,6 +2491,13 @@
 					"$(PROJECT_DIR)/herolife/Classes/ShareSDK",
 					/Support/PlatformSDK/QQSDK,
 					"$(PROJECT_DIR)/herolife/Classes/ShareSDK",
+					/Support/Required,
+					"$(PROJECT_DIR)/herolife/Classes/Other/Library/ShareSDK",
+					"$(PROJECT_DIR)/herolife/Classes/Other/Library/ShareSDK",
+					/Support/Optional,
+					"$(PROJECT_DIR)/herolife/Classes/Other/Library/ShareSDK",
+					/Support/PlatformSDK/QQSDK,
+					"$(PROJECT_DIR)/herolife/Classes/Other/Library/ShareSDK",
 					/Support/Required,
 					"$(PROJECT_DIR)/herolife/Classes/Other/Library/ShareSDK",
 					"$(PROJECT_DIR)/herolife/Classes/Other/Library/ShareSDK",

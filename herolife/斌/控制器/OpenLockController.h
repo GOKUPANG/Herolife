@@ -9,5 +9,8 @@
 #import <UIKit/UIKit.h>
 
 @interface OpenLockController : UIViewController
+/** 主页面传过来的东西 */
+@property(nonatomic,strong)NSMutableArray * homeArray;
+
 
 @end
