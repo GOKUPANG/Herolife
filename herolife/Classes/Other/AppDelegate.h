@@ -7,6 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+@class HRPushMode;
+@class DeviceListTcpModel;
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
@@ -24,6 +26,19 @@
 @property(nonatomic, strong) NSArray *rssilistArray;
 /** 第4步 连接用户自己的wifi 成功后保存的数据 */
 @property(nonatomic, strong) NSDictionary *msgDictionary;
+/** 保存设备状态的数据 */
+@property(nonatomic, weak) NSDictionary *stateDictionary;
+/** <#name#> */
+@property(nonatomic, strong) HRPushMode *pushMode;
+/** <#name#> */
+@property(nonatomic, strong) DeviceListTcpModel *deviceListModel;
+
+/** 授权表模型数组 */
+@property(nonatomic, strong) NSArray *autherArray;
+/** 授权设备信息 模型数组 */
+@property(nonatomic, strong) NSArray *autherDeviceArray;
+
+
 /**
  *  外界发数据的接口
  *

@@ -10,10 +10,14 @@
 #define QQSDKAppId @"1105629306"
 #define QQSDKAppKey @"Ig2gYUcepC3rE9NH"
 
+//#define QQSDKAppId @"1105687414"
+//#define QQSDKAppKey @"PsuNc7Du8MrvTW9H"
+
 #import "AppDelegate.h"
 #import "LoginController.h"
 #import "HRTabBarViewController.h"
 #import "HRNavigationViewController.h"
+
 #import <ShareSDK/ShareSDK.h>
 #import <ShareSDKConnector/ShareSDKConnector.h>
 //腾讯开放平台（对应QQ和QQ空间）SDK头文件
@@ -30,6 +34,9 @@
 #import "Push.h"
 #import "EnterPSWController.h"
 #import "GoToSetUpController.h"
+#import "DeviceListTcpModel.h"
+#import "HRPushMode.h"
+
 
 
 @interface AppDelegate ()<AsyncSocketDelegate>
@@ -125,6 +132,7 @@ static BOOL isOverTime = NO;
 - (void)application:(UIApplication *)application handleEventsForBackgroundURLSession:(NSString *)identifier completionHandler:(void (^)())completionHandler
 {
 	
+	DDLogWarn(@"-------------handleEventsForBackgroundURLSession--%@------------------", identifier);
 }
 - (void)applicationDidEnterBackground:(UIApplication *)application {
 	[UIApplication sharedApplication].applicationIconBadgeNumber = 0;
@@ -446,6 +454,7 @@ static NSUInteger lengthInteger = 0;
 	if ([jsonDict[@"hrpush"][@"type"] isEqualToString:@"error"])
 	{
 		DDLogInfo(@"接收到错误 数据%@", jsonDict);
+		return;
 	}
 	//如果有设备不在线信息
 	if ([jsonDict[@"hrpush"][@"desc"] containsString:@"push failed, target not online"])
@@ -671,6 +680,13 @@ static NSUInteger lengthInteger = 0;
 	//设备硬件状态
 	if ([jsonDict[@"hrpush"][@"type"] isEqualToString:@"state"]) {
 		DDLogInfo(@"接收设备硬件状态  数据%@", jsonDict);
+		HRPushMode *mode = [HRPushMode mj_objectWithKeyValues:jsonDict[@"hrpush"]];
+		self.pushMode = mode;
+		
+		DeviceListTcpModel *tcpMode = [DeviceListTcpModel mj_objectWithKeyValues:jsonDict[@"msg"]];
+		self.deviceListModel = tcpMode;
+		self.stateDictionary = jsonDict;
+		
 		[[NSNotificationCenter defaultCenter] postNotificationName:kNotificationDeviceState object:nil userInfo:jsonDict];
 		
 	}

@@ -363,10 +363,13 @@
 //第三方登陆事件
 - (void)qqButtonClick:(UIButton *)button
 {
+	[ShareSDK cancelAuthorize:SSDKPlatformTypeQQ];
+	DDLogWarn(@"---------------qqButtonClick------------------");
 	//例如QQ的登录
 	[ShareSDK getUserInfo:SSDKPlatformTypeQQ
 		   onStateChanged:^(SSDKResponseState state, SSDKUser *user, NSError *error)
 	 {
+		 DDLogWarn(@"---------------SSDKPlatformTypeQQ------------------");
 		 if (state == SSDKResponseStateSuccess)
 		 {
 			 //1.首先获取到微信的openID，然后通过openID去后台数据库查询该微信的openID有没有绑定好的手机号.
@@ -374,7 +377,8 @@
 			 //  3.如果有，那么后台就返回一个手机号，然后通过手机登录App.
 			 NSDictionary *ssdk = user.credential.rawData;
 			 //保存openid,nickname
-			 NSLog(@"openid=%@",[ssdk valueForKeyPath:@"openid"]);
+			 
+			 DDLogWarn(@"openid=%@",[ssdk valueForKeyPath:@"openid"]);
 			 NSString *openid = [ssdk valueForKeyPath:@"openid"];
 			 [kNSUserDefaults setObject:openid forKey:kNSUserDefaultsOpenid];
 			 NSString *nickname = user.nickname;
@@ -387,11 +391,9 @@
 			 
 			 [self loginSSDKWithOpenID: openid];
 			 
-		 }
-		 
-		 else
+		 } else
 		 {
-			 NSLog(@"error-000-----%@",error);
+			 DDLogWarn(@"error-000-----%@",error);
 		 }
 		 
 	 }];
@@ -440,6 +442,7 @@
 	parameters[@"mail"] = [NSString stringWithFormat:@"%@@gzhuarui.cn", openId];
 	parameters[@"pass"] = muString;
 	parameters[@"pass2"] = muString;
+	DDLogWarn(@"-----测试-----parameters-000-----%@",parameters);
 //	parameters[@"name"] = @"4EB2618888E358E8B777B0C03CC54BDE";
 //	parameters[@"mail"] = @"4EB2618888E358E8B777B0C03CC54BDE@gzhuarui.cn";
 //	parameters[@"pass"] =@"AHZ1VERZS2p9DRFkAX8jXyleAgE7BXdJW3V3YQE2DBw=";
@@ -449,8 +452,25 @@
 	[HRHTTPTool hr_postHttpWithURL:HRHTTP_UserRegister_URL parameters:parameters responseDict:^(id array, NSError *error) {
 		if (array) {
 			[SVProgressTool hr_dismiss];
-			HRTabBarViewController *tabBarVC = [[HRTabBarViewController alloc] init];
-			[self.navigationController pushViewController:tabBarVC animated:YES];
+			
+			//注册成功之后登陆
+			[HRServicesManager loginWithUsername:openId
+										password:muString
+										  result:^(NSError *error) {
+											  
+											  
+											  if (error) {
+												  [ErrorCodeManager showError:error];
+												  
+											  } else {
+												  [SVProgressTool hr_dismiss];
+												  HRTabBarViewController *tabBarVC = [[HRTabBarViewController alloc] init];
+												  [self.navigationController pushViewController:tabBarVC animated:YES];
+												  
+											  }
+										  }];
+			
+			
 			return ;
 		}
 		if (error) {
@@ -493,6 +513,7 @@
 			  [ErrorCodeManager showError:error];
 			  
 		  } else {
+			  
 			  [SVProgressTool hr_dismiss];
 			  HRTabBarViewController *tabBarVC = [[HRTabBarViewController alloc] init];
 			  [self.navigationController pushViewController:tabBarVC animated:YES];

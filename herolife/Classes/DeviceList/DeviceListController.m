@@ -24,6 +24,12 @@
 
 
 
+#import "DeviceListTcpModel.h"
+#import "HRPushMode.h"
+#import "DeviceAutherModel.h"
+
+
+
 #define HRNavigationBarFrame self.navigationController.navigationBar.bounds
 @interface DeviceListController ()<UICollectionViewDelegate,UICollectionViewDataSource,UITableViewDelegate,UITableViewDataSource>
 /** 顶部条 */
@@ -63,10 +69,16 @@
 @property(nonatomic, strong) DeviceListModel *currentStateModel;
 
 
+/** 授权表模型数组 */
+@property(nonatomic, strong) NSMutableArray *autherArray;
+/** 授权设备信息 模型数组 */
+@property(nonatomic, strong) NSMutableArray *autherDeviceArray;
+
+
 @end
 
 @implementation DeviceListController
-
+//定时60s查询设备状态
 NSInteger const timerDuration = 3.0;
 - (NSMutableArray *)homeArray
 {
@@ -74,6 +86,20 @@ NSInteger const timerDuration = 3.0;
 		_homeArray = [NSMutableArray array];
 	}
 	return _homeArray;
+}
+- (NSMutableArray *)autherArray
+{
+	if (!_autherArray) {
+		_autherArray = [NSMutableArray array];
+	}
+	return _autherArray;
+}
+- (NSMutableArray *)autherDeviceArray
+{
+	if (!_autherDeviceArray) {
+		_autherDeviceArray = [NSMutableArray array];
+	}
+	return _autherDeviceArray;
 }
 -(void)viewWillAppear:(BOOL)animated
 {
@@ -123,15 +149,76 @@ static NSString *cellID = @"cellID";
 	[self getHttpRequset];
 	//通知
 	[self addObserverNotification];
+	
+	//获得设备授权表
+	[self addAutherList];
 }
 #pragma mark - 通知
 - (void)addObserverNotification
 {
+	
+	//监听设备是否在线
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receviedWithNotOnline) name:kNotificationNotOnline object:nil];
+	
 	[kNotification addObserver:self selector:@selector(receiveDeviceState:) name:kNotificationDeviceState object:nil];
+}
+static BOOL isShowOverMenu = NO;
+- (void)receviedWithNotOnline
+{
+	isShowOverMenu = YES;
+	[SVProgressTool hr_showErrorWithStatus:@"目标设备不在线!"];
 }
 - (void)receiveDeviceState:(NSNotification *)note
 {
-	NSDictionary *dict = note.userInfo;
+	AppDelegate *app = (AppDelegate *)[UIApplication sharedApplication].delegate;
+	
+	HRPushMode *mode = app.pushMode;
+	DeviceListTcpModel *tcpModel = app.deviceListModel;
+	if (mode.type.length > 0) {
+		
+		
+		NSString *uuid = mode.src[@"dev"];
+		[self.photoModelArray removeAllObjects];
+		
+		NSMutableArray *homeMu = [NSMutableArray array];
+		for (DeviceListModel *model  in self.homeArray) {
+			if ([model.uuid isEqualToString:uuid]) {
+				
+				model.state = tcpModel.state;
+				model.online = tcpModel.online;
+				model.level = tcpModel.level;
+				
+			}
+			
+			// 重新给锁添加 数组图片
+			
+			if ([model.types isEqualToString:@"hrsc"]) {
+    
+				if ([model.state isEqualToString:@"0"]) {
+					
+					[self.photoModelArray addObject:
+					 [PhotoModel modelWithImageNamed:@"离线锁"
+										 description:@""]];
+					
+				}else
+				{
+					[self.photoModelArray addObject:
+					 [PhotoModel modelWithImageNamed:@"原锁"
+										 description:@""]];
+				}
+
+			
+			[homeMu addObject:model];
+		}
+		self.homeArray = homeMu;
+		}
+		
+		self.currentStateModel.state = tcpModel.state;
+		self.currentStateModel.online = tcpModel.online;
+		self.currentStateModel.level = tcpModel.level;;
+		[self.tableView reloadData];
+		[self.collectionView reloadData];
+	}
 	
 }
 #pragma mark - 内部方法
@@ -647,6 +734,102 @@ static NSString *cellID = @"cellID";
 	}];
 	
 }
+#pragma mark - 获得设备授权表 HTTP
+- (void)addAutherList
+{
+	NSString *username = [kUserDefault objectForKey:kDefaultsUserName];
+	NSString *url = [NSString stringWithFormat:@"%@%@", HRAPI_LockAutherList_URL,username];
+	url = [url stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
+	
+	HRWeakSelf
+	[HRHTTPTool hr_getHttpWithURL:url parameters:nil responseDict:^(id responseObject, NSError *error) {
+		DDLogWarn(@"array:%@---error:%@", responseObject,error);
+		
+		if (error) {
+			[ErrorCodeManager showError:error];
+			return ;
+		}
+		DDLogWarn(@"listArray%@", responseObject);
+		
+		//如果responseObject不是数组类型就不是我们想要的数据，应该过滤掉
+		if (![responseObject isKindOfClass:[NSArray class]]) {
+			[weakSelf.autherArray removeAllObjects];
+			DDLogDebug(@"responseObject不是NSArray");
+			return;
+		}
+		//去除服务器发过来的数据里没有值的情况
+		if (((NSArray*)responseObject).count < 1 ) {
+			DDLogDebug(@"responseObject count == 0");
+			return;
+		}
+		
+		[weakSelf.autherArray removeAllObjects];
+		NSArray *responseArr = (NSArray*)responseObject;
+		
+		for (NSDictionary *dict in responseArr) {
+			DeviceAutherModel *auther = [DeviceAutherModel mj_objectWithKeyValues:dict];
+			[weakSelf.autherArray addObject:auther];
+			
+			
+		}
+		
+		AppDelegate *app = (AppDelegate *)[UIApplication sharedApplication].delegate;
+		app.autherArray = weakSelf.autherArray;
+		[weakSelf addDeviceAutherInformation];
+	}];
+}
+
+#pragma mark - 获得授权设备信息 HTTP
+- (void)addDeviceAutherInformation
+{
+	NSString *uuidAllString = @"";
+	for (int i = 0; i < self.autherArray.count ; i++) {
+		DeviceAutherModel *auther = [DeviceAutherModel mj_objectWithKeyValues:self.autherArray[i]];
+		uuidAllString = [NSString stringWithFormat:@"%@%@|", uuidAllString, auther.uuid];
+	}
+	uuidAllString = [uuidAllString substringToIndex:uuidAllString.length - 1];
+	
+	NSString *url = [NSString stringWithFormat:@"%@(%@)", HRAPI_LockAutherInformation_URL,uuidAllString];
+	url = [url stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
+	
+	HRWeakSelf
+	[HRHTTPTool hr_getHttpWithURL:url parameters:nil responseDict:^(id responseObject, NSError *error) {
+		DDLogWarn(@"获得授权设备信息 HTTP-array:%@---error:%@", responseObject,error);
+		
+		if (error) {
+			[ErrorCodeManager showError:error];
+			return ;
+		}
+		
+		//如果responseObject不是数组类型就不是我们想要的数据，应该过滤掉
+		if (![responseObject isKindOfClass:[NSArray class]]) {
+			[weakSelf.autherDeviceArray removeAllObjects];
+			DDLogDebug(@"responseObject不是NSArray");
+			return;
+		}
+		//去除服务器发过来的数据里没有值的情况
+		if (((NSArray*)responseObject).count < 1 ) {
+			DDLogDebug(@"responseObject count == 0");
+			return;
+		}
+		
+		[weakSelf.autherDeviceArray removeAllObjects];
+		NSArray *responseArr = (NSArray*)responseObject;
+		
+		for (NSDictionary *dict in responseArr) {
+			DeviceListModel *auther = [DeviceListModel mj_objectWithKeyValues:dict];
+			[weakSelf.autherDeviceArray addObject:auther];
+			
+			
+		}
+		
+		AppDelegate *app = (AppDelegate *)[UIApplication sharedApplication].delegate;
+		app.autherDeviceArray = weakSelf.autherDeviceArray;
+		[kNotification postNotificationName:kNotificationReceiveDeviceAutherInformation object:nil];
+	}];
+}
+
+
 - (void)dealloc
 {
 	[kNotification removeObserver:self];
@@ -677,4 +860,5 @@ static NSString *cellID = @"cellID";
 	[self.appDelegate sendMessageWithString:str];
 	
 }
+
 @end

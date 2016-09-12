@@ -43,17 +43,9 @@
 		AA029EA01D7D75B500EFF91C /* HWPopTool.m in Sources */ = {isa = PBXBuildFile; fileRef = AA029E9F1D7D75B500EFF91C /* HWPopTool.m */; };
 		AAFFDDD71D7FAA39005669BA /* PushSettingController.m in Sources */ = {isa = PBXBuildFile; fileRef = AAFFDDD61D7FAA39005669BA /* PushSettingController.m */; };
 		AAFFDDF31D800EFC005669BA /* SRActionSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = AAFFDDF21D800EFC005669BA /* SRActionSheet.m */; };
-		AAFFDE371D82CA87005669BA /* ShareSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AAFFDE291D82CA87005669BA /* ShareSDK.framework */; };
-		AAFFDE381D82CA87005669BA /* ShareSDKExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AAFFDE2C1D82CA87005669BA /* ShareSDKExtension.framework */; };
-		AAFFDE391D82CA87005669BA /* ShareSDKUI.bundle in Resources */ = {isa = PBXBuildFile; fileRef = AAFFDE2D1D82CA87005669BA /* ShareSDKUI.bundle */; };
-		AAFFDE3A1D82CA87005669BA /* ShareSDKUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AAFFDE2E1D82CA87005669BA /* ShareSDKUI.framework */; };
-		AAFFDE3B1D82CA87005669BA /* TencentOpenAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AAFFDE311D82CA87005669BA /* TencentOpenAPI.framework */; };
-		AAFFDE3C1D82CA87005669BA /* TencentOpenApi_IOS_Bundle.bundle in Resources */ = {isa = PBXBuildFile; fileRef = AAFFDE321D82CA87005669BA /* TencentOpenApi_IOS_Bundle.bundle */; };
-		AAFFDE3D1D82CA87005669BA /* MOBFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AAFFDE341D82CA87005669BA /* MOBFoundation.framework */; };
-		AAFFDE3E1D82CA87005669BA /* ShareSDK.bundle in Resources */ = {isa = PBXBuildFile; fileRef = AAFFDE351D82CA87005669BA /* ShareSDK.bundle */; };
-		AAFFDE3F1D82CA87005669BA /* ShareSDKConnector.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AAFFDE361D82CA87005669BA /* ShareSDKConnector.framework */; };
 		AAFFDE431D82CBA0005669BA /* NSString+DoorLock.m in Sources */ = {isa = PBXBuildFile; fileRef = AAFFDE421D82CBA0005669BA /* NSString+DoorLock.m */; };
 		AAFFDE461D82CBE8005669BA /* OpenLockController.m in Sources */ = {isa = PBXBuildFile; fileRef = AAFFDE451D82CBE8005669BA /* OpenLockController.m */; };
+		D1007CE01D8694280079D3DD /* DeviceAutherModel.m in Sources */ = {isa = PBXBuildFile; fileRef = D1007CDF1D8694280079D3DD /* DeviceAutherModel.m */; };
 		D17CF0F11D6567E7007C95DD /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D17CF0F01D6567E7007C95DD /* main.m */; };
 		D17CF0FA1D6567E7007C95DD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D17CF0F81D6567E7007C95DD /* Main.storyboard */; };
 		D17CF0FC1D6567E7007C95DD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D17CF0FB1D6567E7007C95DD /* Assets.xcassets */; };
@@ -65,13 +57,11 @@
 		D1940DD31D6AF73C00A262EC /* libstdc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D1940DD21D6AF73C00A262EC /* libstdc++.tbd */; };
 		D1940DD51D6AF74A00A262EC /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D1940DD41D6AF74A00A262EC /* JavaScriptCore.framework */; };
 		D1940DD71D6AF76400A262EC /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D1940DD61D6AF76400A262EC /* libsqlite3.tbd */; };
-		D1A7DD1F1D8117DD00D051B0 /* DeviceListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D1A7DBED1D8117DD00D051B0 /* DeviceListCell.m */; };
 		D1A7DD211D8117DD00D051B0 /* ForgetController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1A7DBF21D8117DD00D051B0 /* ForgetController.m */; };
 		D1A7DD221D8117DD00D051B0 /* InputText.m in Sources */ = {isa = PBXBuildFile; fileRef = D1A7DBF51D8117DD00D051B0 /* InputText.m */; };
 		D1A7DD231D8117DD00D051B0 /* LoginController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1A7DBF71D8117DD00D051B0 /* LoginController.m */; };
 		D1A7DD241D8117DD00D051B0 /* UIView+XD.m in Sources */ = {isa = PBXBuildFile; fileRef = D1A7DBF91D8117DD00D051B0 /* UIView+XD.m */; };
 		D1A7DD251D8117DD00D051B0 /* NextController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1A7DBFC1D8117DD00D051B0 /* NextController.m */; };
-		D1A7DD261D8117DD00D051B0 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D1A7DBFF1D8117DD00D051B0 /* AppDelegate.m */; };
 		D1A7DD271D8117DD00D051B0 /* CustomCollectionViewCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D1A7DC031D8117DD00D051B0 /* CustomCollectionViewCollectionViewCell.m */; };
 		D1A7DD281D8117DD00D051B0 /* MJRefreshAutoFooter.m in Sources */ = {isa = PBXBuildFile; fileRef = D1A7DC071D8117DD00D051B0 /* MJRefreshAutoFooter.m */; };
 		D1A7DD291D8117DD00D051B0 /* MJRefreshBackFooter.m in Sources */ = {isa = PBXBuildFile; fileRef = D1A7DC091D8117DD00D051B0 /* MJRefreshBackFooter.m */; };
@@ -204,7 +194,6 @@
 		D1A7DDB21D8117DD00D051B0 /* TipsLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = D1A7DD031D8117DD00D051B0 /* TipsLabel.m */; };
 		D1A7DDB31D8117DD00D051B0 /* ManualController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1A7DD061D8117DD00D051B0 /* ManualController.m */; };
 		D1A7DDB41D8117DD00D051B0 /* RegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1A7DD091D8117DD00D051B0 /* RegisterViewController.m */; };
-		D1A7DDB71D8117DD00D051B0 /* AddLockController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1A7DD111D8117DD00D051B0 /* AddLockController.m */; };
 		D1A7DDB81D8117DD00D051B0 /* WaitController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1A7DD131D8117DD00D051B0 /* WaitController.m */; };
 		D1A7DDB91D8117DD00D051B0 /* HRPushMode.m in Sources */ = {isa = PBXBuildFile; fileRef = D1A7DD161D8117DD00D051B0 /* HRPushMode.m */; };
 		D1A7DDBA1D8117DD00D051B0 /* UDPModel.m in Sources */ = {isa = PBXBuildFile; fileRef = D1A7DD181D8117DD00D051B0 /* UDPModel.m */; };
@@ -216,9 +205,13 @@
 		D1A7DDCA1D811BB900D051B0 /* HRConst.m in Sources */ = {isa = PBXBuildFile; fileRef = D1A7DDC91D811BB900D051B0 /* HRConst.m */; };
 		D1A7DDCF1D811ED100D051B0 /* SettingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D1A7DDCC1D811ED100D051B0 /* SettingCell.m */; };
 		D1A7DDD01D811ED100D051B0 /* SettingController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1A7DDCE1D811ED100D051B0 /* SettingController.m */; };
-		D1A7DDD31D811F4A00D051B0 /* DeviceListController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1A7DDD21D811F4A00D051B0 /* DeviceListController.m */; };
 		D1A7DDD51D813C6400D051B0 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D1A7DDD41D813C6400D051B0 /* Info.plist */; };
-		D1A7DDF01D81592E00D051B0 /* DeviceListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = D1A7DDEF1D81592E00D051B0 /* DeviceListModel.m */; };
+		D1AA2E631D83F48600D1AEC9 /* DeviceListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D1AA2E5C1D83F48600D1AEC9 /* DeviceListCell.m */; };
+		D1AA2E641D83F48600D1AEC9 /* DeviceListController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1AA2E5E1D83F48600D1AEC9 /* DeviceListController.m */; };
+		D1AA2E651D83F48600D1AEC9 /* DeviceListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = D1AA2E601D83F48600D1AEC9 /* DeviceListModel.m */; };
+		D1AA2E661D83F48600D1AEC9 /* DeviceListTcpModel.m in Sources */ = {isa = PBXBuildFile; fileRef = D1AA2E621D83F48600D1AEC9 /* DeviceListTcpModel.m */; };
+		D1AA2E691D83F4C600D1AEC9 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D1AA2E681D83F4C600D1AEC9 /* AppDelegate.m */; };
+		D1AA2E6C1D83F50500D1AEC9 /* AddLockController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1AA2E6B1D83F50500D1AEC9 /* AddLockController.m */; };
 		D1D23DEF1D7570A100FCB5C9 /* AddDeivcecell.m in Sources */ = {isa = PBXBuildFile; fileRef = D1D23DEC1D7570A100FCB5C9 /* AddDeivcecell.m */; };
 		DAE2A790C81C0FDB9C617E84 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DC40F28764523F49428DB0CE /* libPods.a */; };
 /* End PBXBuildFile section */
@@ -302,20 +295,13 @@
 		AAFFDDD61D7FAA39005669BA /* PushSettingController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PushSettingController.m; sourceTree = "<group>"; };
 		AAFFDDF11D800EFC005669BA /* SRActionSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SRActionSheet.h; sourceTree = "<group>"; };
 		AAFFDDF21D800EFC005669BA /* SRActionSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SRActionSheet.m; sourceTree = "<group>"; };
-		AAFFDE291D82CA87005669BA /* ShareSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ShareSDK.framework; sourceTree = "<group>"; };
-		AAFFDE2C1D82CA87005669BA /* ShareSDKExtension.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ShareSDKExtension.framework; sourceTree = "<group>"; };
-		AAFFDE2D1D82CA87005669BA /* ShareSDKUI.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = ShareSDKUI.bundle; sourceTree = "<group>"; };
-		AAFFDE2E1D82CA87005669BA /* ShareSDKUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ShareSDKUI.framework; sourceTree = "<group>"; };
-		AAFFDE311D82CA87005669BA /* TencentOpenAPI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = TencentOpenAPI.framework; sourceTree = "<group>"; };
-		AAFFDE321D82CA87005669BA /* TencentOpenApi_IOS_Bundle.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = TencentOpenApi_IOS_Bundle.bundle; sourceTree = "<group>"; };
-		AAFFDE341D82CA87005669BA /* MOBFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = MOBFoundation.framework; sourceTree = "<group>"; };
-		AAFFDE351D82CA87005669BA /* ShareSDK.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = ShareSDK.bundle; sourceTree = "<group>"; };
-		AAFFDE361D82CA87005669BA /* ShareSDKConnector.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ShareSDKConnector.framework; sourceTree = "<group>"; };
 		AAFFDE411D82CBA0005669BA /* NSString+DoorLock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+DoorLock.h"; sourceTree = "<group>"; };
 		AAFFDE421D82CBA0005669BA /* NSString+DoorLock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+DoorLock.m"; sourceTree = "<group>"; };
 		AAFFDE441D82CBE8005669BA /* OpenLockController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenLockController.h; sourceTree = "<group>"; };
 		AAFFDE451D82CBE8005669BA /* OpenLockController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OpenLockController.m; sourceTree = "<group>"; };
 		B1A28F2C2DAB37DA40A8D5EB /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		D1007CDE1D8694280079D3DD /* DeviceAutherModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeviceAutherModel.h; sourceTree = "<group>"; };
+		D1007CDF1D8694280079D3DD /* DeviceAutherModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeviceAutherModel.m; sourceTree = "<group>"; };
 		D17CF0EC1D6567E7007C95DD /* herolife.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = herolife.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D17CF0F01D6567E7007C95DD /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		D17CF0F91D6567E7007C95DD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -332,8 +318,6 @@
 		D1940DD21D6AF73C00A262EC /* libstdc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libstdc++.tbd"; path = "usr/lib/libstdc++.tbd"; sourceTree = SDKROOT; };
 		D1940DD41D6AF74A00A262EC /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		D1940DD61D6AF76400A262EC /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
-		D1A7DBEC1D8117DD00D051B0 /* DeviceListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeviceListCell.h; sourceTree = "<group>"; };
-		D1A7DBED1D8117DD00D051B0 /* DeviceListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeviceListCell.m; sourceTree = "<group>"; };
 		D1A7DBF11D8117DD00D051B0 /* ForgetController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ForgetController.h; sourceTree = "<group>"; };
 		D1A7DBF21D8117DD00D051B0 /* ForgetController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ForgetController.m; sourceTree = "<group>"; };
 		D1A7DBF41D8117DD00D051B0 /* InputText.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InputText.h; sourceTree = "<group>"; };
@@ -344,8 +328,6 @@
 		D1A7DBF91D8117DD00D051B0 /* UIView+XD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+XD.m"; sourceTree = "<group>"; };
 		D1A7DBFB1D8117DD00D051B0 /* NextController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NextController.h; sourceTree = "<group>"; };
 		D1A7DBFC1D8117DD00D051B0 /* NextController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NextController.m; sourceTree = "<group>"; };
-		D1A7DBFE1D8117DD00D051B0 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		D1A7DBFF1D8117DD00D051B0 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		D1A7DC021D8117DD00D051B0 /* CustomCollectionViewCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomCollectionViewCollectionViewCell.h; sourceTree = "<group>"; };
 		D1A7DC031D8117DD00D051B0 /* CustomCollectionViewCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomCollectionViewCollectionViewCell.m; sourceTree = "<group>"; };
 		D1A7DC061D8117DD00D051B0 /* MJRefreshAutoFooter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJRefreshAutoFooter.h; sourceTree = "<group>"; };
@@ -571,8 +553,6 @@
 		D1A7DD061D8117DD00D051B0 /* ManualController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ManualController.m; sourceTree = "<group>"; };
 		D1A7DD081D8117DD00D051B0 /* RegisterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegisterViewController.h; sourceTree = "<group>"; };
 		D1A7DD091D8117DD00D051B0 /* RegisterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegisterViewController.m; sourceTree = "<group>"; };
-		D1A7DD101D8117DD00D051B0 /* AddLockController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddLockController.h; sourceTree = "<group>"; };
-		D1A7DD111D8117DD00D051B0 /* AddLockController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddLockController.m; sourceTree = "<group>"; };
 		D1A7DD121D8117DD00D051B0 /* WaitController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WaitController.h; sourceTree = "<group>"; };
 		D1A7DD131D8117DD00D051B0 /* WaitController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WaitController.m; sourceTree = "<group>"; };
 		D1A7DD151D8117DD00D051B0 /* HRPushMode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HRPushMode.h; sourceTree = "<group>"; };
@@ -596,11 +576,19 @@
 		D1A7DDCC1D811ED100D051B0 /* SettingCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingCell.m; sourceTree = "<group>"; };
 		D1A7DDCD1D811ED100D051B0 /* SettingController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingController.h; sourceTree = "<group>"; };
 		D1A7DDCE1D811ED100D051B0 /* SettingController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingController.m; sourceTree = "<group>"; };
-		D1A7DDD11D811F4A00D051B0 /* DeviceListController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeviceListController.h; sourceTree = "<group>"; };
-		D1A7DDD21D811F4A00D051B0 /* DeviceListController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeviceListController.m; sourceTree = "<group>"; };
 		D1A7DDD41D813C6400D051B0 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		D1A7DDEE1D81592E00D051B0 /* DeviceListModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeviceListModel.h; sourceTree = "<group>"; };
-		D1A7DDEF1D81592E00D051B0 /* DeviceListModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeviceListModel.m; sourceTree = "<group>"; };
+		D1AA2E5B1D83F48600D1AEC9 /* DeviceListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeviceListCell.h; sourceTree = "<group>"; };
+		D1AA2E5C1D83F48600D1AEC9 /* DeviceListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeviceListCell.m; sourceTree = "<group>"; };
+		D1AA2E5D1D83F48600D1AEC9 /* DeviceListController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeviceListController.h; sourceTree = "<group>"; };
+		D1AA2E5E1D83F48600D1AEC9 /* DeviceListController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeviceListController.m; sourceTree = "<group>"; };
+		D1AA2E5F1D83F48600D1AEC9 /* DeviceListModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeviceListModel.h; sourceTree = "<group>"; };
+		D1AA2E601D83F48600D1AEC9 /* DeviceListModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeviceListModel.m; sourceTree = "<group>"; };
+		D1AA2E611D83F48600D1AEC9 /* DeviceListTcpModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeviceListTcpModel.h; sourceTree = "<group>"; };
+		D1AA2E621D83F48600D1AEC9 /* DeviceListTcpModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeviceListTcpModel.m; sourceTree = "<group>"; };
+		D1AA2E671D83F4C600D1AEC9 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		D1AA2E681D83F4C600D1AEC9 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		D1AA2E6A1D83F50500D1AEC9 /* AddLockController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AddLockController.h; path = herolife/Classes/Wait/AddLockController.h; sourceTree = SOURCE_ROOT; };
+		D1AA2E6B1D83F50500D1AEC9 /* AddLockController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AddLockController.m; path = herolife/Classes/Wait/AddLockController.m; sourceTree = SOURCE_ROOT; };
 		D1D23DEB1D7570A100FCB5C9 /* AddDeivcecell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AddDeivcecell.h; path = ../AddDeivcecell.h; sourceTree = "<group>"; };
 		D1D23DEC1D7570A100FCB5C9 /* AddDeivcecell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AddDeivcecell.m; path = ../AddDeivcecell.m; sourceTree = "<group>"; };
 		DC40F28764523F49428DB0CE /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -612,13 +600,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D1940DD71D6AF76400A262EC /* libsqlite3.tbd in Frameworks */,
-				AAFFDE3D1D82CA87005669BA /* MOBFoundation.framework in Frameworks */,
-				AAFFDE3A1D82CA87005669BA /* ShareSDKUI.framework in Frameworks */,
-				AAFFDE381D82CA87005669BA /* ShareSDKExtension.framework in Frameworks */,
 				D1940DD51D6AF74A00A262EC /* JavaScriptCore.framework in Frameworks */,
-				AAFFDE371D82CA87005669BA /* ShareSDK.framework in Frameworks */,
-				AAFFDE3B1D82CA87005669BA /* TencentOpenAPI.framework in Frameworks */,
-				AAFFDE3F1D82CA87005669BA /* ShareSDKConnector.framework in Frameworks */,
 				D1940DD31D6AF73C00A262EC /* libstdc++.tbd in Frameworks */,
 				D1940DD11D6AF73300A262EC /* libz.tbd in Frameworks */,
 				D1940DCF1D6AF72400A262EC /* libicucore.tbd in Frameworks */,
@@ -863,62 +845,6 @@
 			path = SRActionSheet;
 			sourceTree = "<group>";
 		};
-		AAFFDE281D82CA86005669BA /* ShareSDK  */ = {
-			isa = PBXGroup;
-			children = (
-				AAFFDE291D82CA87005669BA /* ShareSDK.framework */,
-				AAFFDE2A1D82CA87005669BA /* Support */,
-			);
-			path = "ShareSDK ";
-			sourceTree = "<group>";
-		};
-		AAFFDE2A1D82CA87005669BA /* Support */ = {
-			isa = PBXGroup;
-			children = (
-				AAFFDE2B1D82CA87005669BA /* Optional */,
-				AAFFDE2F1D82CA87005669BA /* PlatformSDK */,
-				AAFFDE331D82CA87005669BA /* Required */,
-			);
-			path = Support;
-			sourceTree = "<group>";
-		};
-		AAFFDE2B1D82CA87005669BA /* Optional */ = {
-			isa = PBXGroup;
-			children = (
-				AAFFDE2C1D82CA87005669BA /* ShareSDKExtension.framework */,
-				AAFFDE2D1D82CA87005669BA /* ShareSDKUI.bundle */,
-				AAFFDE2E1D82CA87005669BA /* ShareSDKUI.framework */,
-			);
-			path = Optional;
-			sourceTree = "<group>";
-		};
-		AAFFDE2F1D82CA87005669BA /* PlatformSDK */ = {
-			isa = PBXGroup;
-			children = (
-				AAFFDE301D82CA87005669BA /* QQSDK */,
-			);
-			path = PlatformSDK;
-			sourceTree = "<group>";
-		};
-		AAFFDE301D82CA87005669BA /* QQSDK */ = {
-			isa = PBXGroup;
-			children = (
-				AAFFDE311D82CA87005669BA /* TencentOpenAPI.framework */,
-				AAFFDE321D82CA87005669BA /* TencentOpenApi_IOS_Bundle.bundle */,
-			);
-			path = QQSDK;
-			sourceTree = "<group>";
-		};
-		AAFFDE331D82CA87005669BA /* Required */ = {
-			isa = PBXGroup;
-			children = (
-				AAFFDE341D82CA87005669BA /* MOBFoundation.framework */,
-				AAFFDE351D82CA87005669BA /* ShareSDK.bundle */,
-				AAFFDE361D82CA87005669BA /* ShareSDKConnector.framework */,
-			);
-			path = Required;
-			sourceTree = "<group>";
-		};
 		AAFFDE401D82CBA0005669BA /* 分类 */ = {
 			isa = PBXGroup;
 			children = (
@@ -1012,6 +938,8 @@
 		D1A7DBEA1D8117DD00D051B0 /* AddLock */ = {
 			isa = PBXGroup;
 			children = (
+				D1AA2E6A1D83F50500D1AEC9 /* AddLockController.h */,
+				D1AA2E6B1D83F50500D1AEC9 /* AddLockController.m */,
 			);
 			path = AddLock;
 			sourceTree = "<group>";
@@ -1019,12 +947,16 @@
 		D1A7DBEB1D8117DD00D051B0 /* DeviceList */ = {
 			isa = PBXGroup;
 			children = (
-				D1A7DBEC1D8117DD00D051B0 /* DeviceListCell.h */,
-				D1A7DBED1D8117DD00D051B0 /* DeviceListCell.m */,
-				D1A7DDD11D811F4A00D051B0 /* DeviceListController.h */,
-				D1A7DDD21D811F4A00D051B0 /* DeviceListController.m */,
-				D1A7DDEE1D81592E00D051B0 /* DeviceListModel.h */,
-				D1A7DDEF1D81592E00D051B0 /* DeviceListModel.m */,
+				D1AA2E5B1D83F48600D1AEC9 /* DeviceListCell.h */,
+				D1AA2E5C1D83F48600D1AEC9 /* DeviceListCell.m */,
+				D1AA2E5D1D83F48600D1AEC9 /* DeviceListController.h */,
+				D1AA2E5E1D83F48600D1AEC9 /* DeviceListController.m */,
+				D1AA2E5F1D83F48600D1AEC9 /* DeviceListModel.h */,
+				D1AA2E601D83F48600D1AEC9 /* DeviceListModel.m */,
+				D1AA2E611D83F48600D1AEC9 /* DeviceListTcpModel.h */,
+				D1AA2E621D83F48600D1AEC9 /* DeviceListTcpModel.m */,
+				D1007CDE1D8694280079D3DD /* DeviceAutherModel.h */,
+				D1007CDF1D8694280079D3DD /* DeviceAutherModel.m */,
 			);
 			path = DeviceList;
 			sourceTree = "<group>";
@@ -1063,10 +995,10 @@
 		D1A7DBFD1D8117DD00D051B0 /* Other */ = {
 			isa = PBXGroup;
 			children = (
+				D1AA2E671D83F4C600D1AEC9 /* AppDelegate.h */,
+				D1AA2E681D83F4C600D1AEC9 /* AppDelegate.m */,
 				D1A7DDC81D811BB900D051B0 /* HRConst.h */,
 				D1A7DDC91D811BB900D051B0 /* HRConst.m */,
-				D1A7DBFE1D8117DD00D051B0 /* AppDelegate.h */,
-				D1A7DBFF1D8117DD00D051B0 /* AppDelegate.m */,
 				D1A7DC001D8117DD00D051B0 /* Library */,
 				D1A7DCAC1D8117DD00D051B0 /* Utils */,
 			);
@@ -1076,7 +1008,6 @@
 		D1A7DC001D8117DD00D051B0 /* Library */ = {
 			isa = PBXGroup;
 			children = (
-				AAFFDE281D82CA86005669BA /* ShareSDK  */,
 				D1A7DC011D8117DD00D051B0 /* CoverFlow */,
 				D1A7DC371D8117DD00D051B0 /* fmdb */,
 				D1A7DC431D8117DD00D051B0 /* FTPopOverMenu */,
@@ -1501,8 +1432,6 @@
 		D1A7DD0F1D8117DD00D051B0 /* Wait */ = {
 			isa = PBXGroup;
 			children = (
-				D1A7DD101D8117DD00D051B0 /* AddLockController.h */,
-				D1A7DD111D8117DD00D051B0 /* AddLockController.m */,
 				D1A7DD121D8117DD00D051B0 /* WaitController.h */,
 				D1A7DD131D8117DD00D051B0 /* WaitController.m */,
 			);
@@ -1659,13 +1588,11 @@
 				1868B91C1D79289500D19386 /* 4.jpg in Resources */,
 				1868B91A1D79289500D19386 /* 2.jpg in Resources */,
 				D17CF0FF1D6567E7007C95DD /* LaunchScreen.storyboard in Resources */,
-				AAFFDE391D82CA87005669BA /* ShareSDKUI.bundle in Resources */,
 				1868B91B1D79289500D19386 /* 3.jpg in Resources */,
 				18C6979A1D7462B9004DA2B1 /* 键盘@3x.png in Resources */,
 				D1A7DD6A1D8117DD00D051B0 /* instructions.rtf in Resources */,
 				1868B8EB1D76C4A200D19386 /* 后退@2x.png in Resources */,
 				1868B9191D79289500D19386 /* 1.jpg in Resources */,
-				AAFFDE3E1D82CA87005669BA /* ShareSDK.bundle in Resources */,
 				D1A7DD6D1D8117DD00D051B0 /* Scanning line@2x.png in Resources */,
 				D1A7DDD51D813C6400D051B0 /* Info.plist in Resources */,
 				D17CF0FC1D6567E7007C95DD /* Assets.xcassets in Resources */,
@@ -1674,7 +1601,6 @@
 				D1A7DD6E1D8117DD00D051B0 /* whiteBack@2x.png in Resources */,
 				D17CF0FA1D6567E7007C95DD /* Main.storyboard in Resources */,
 				18C697A71D7462B9004DA2B1 /* JCAlertView.bundle in Resources */,
-				AAFFDE3C1D82CA87005669BA /* TencentOpenApi_IOS_Bundle.bundle in Resources */,
 				1868B8ED1D76C4B300D19386 /* 后退@3x.png in Resources */,
 				1868B8F11D76CD4A00D19386 /* 智能开锁@3x.png in Resources */,
 				18C697991D7462B9004DA2B1 /* 键盘@2x.png in Resources */,
@@ -1754,7 +1680,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				D1A7DD331D8117DD00D051B0 /* MJRefreshGifHeader.m in Sources */,
-				D1A7DD261D8117DD00D051B0 /* AppDelegate.m in Sources */,
 				D1A7DD7F1D8117DD00D051B0 /* UIImageView+WebCache.m in Sources */,
 				D1A7DD5D1D8117DD00D051B0 /* NVActivityIndicatorAnimationLineScalePulseOutRapid.swift in Sources */,
 				D1A7DDA11D8117DD00D051B0 /* HRUser.m in Sources */,
@@ -1780,14 +1705,15 @@
 				D1A7DDC21D81181600D051B0 /* EnterPSWController.m in Sources */,
 				18C6979D1D7462B9004DA2B1 /* DoorLockRecordConroller.m in Sources */,
 				D1A7DDB41D8117DD00D051B0 /* RegisterViewController.m in Sources */,
+				D1AA2E651D83F48600D1AEC9 /* DeviceListModel.m in Sources */,
 				D1A7DD941D8117DD00D051B0 /* HRNavigationBar.m in Sources */,
 				18C697AB1D7462B9004DA2B1 /* UIView+SDAutoLayout.m in Sources */,
 				D1A7DD541D8117DD00D051B0 /* NVActivityIndicatorAnimationBallSpinFadeLoader.swift in Sources */,
+				D1AA2E6C1D83F50500D1AEC9 /* AddLockController.m in Sources */,
 				18C697A41D7462B9004DA2B1 /* PCCircleView.m in Sources */,
 				D1A7DD311D8117DD00D051B0 /* MJRefreshBackNormalFooter.m in Sources */,
 				D1A7DD771D8117DD00D051B0 /* SDWebImageDownloaderOperation.m in Sources */,
 				D1A7DDAF1D8117DD00D051B0 /* SVProgressTool.m in Sources */,
-				D1A7DD1F1D8117DD00D051B0 /* DeviceListCell.m in Sources */,
 				D1A7DD9C1D8117DD00D051B0 /* HRMessageData.m in Sources */,
 				D1A7DDCA1D811BB900D051B0 /* HRConst.m in Sources */,
 				D1A7DDAE1D8117DD00D051B0 /* QRTools.m in Sources */,
@@ -1817,11 +1743,13 @@
 				AAFFDE431D82CBA0005669BA /* NSString+DoorLock.m in Sources */,
 				D1A7DD971D8117DD00D051B0 /* HRTabBarButton.m in Sources */,
 				D1A7DD721D8117DD00D051B0 /* NSData+ImageContentType.m in Sources */,
+				D1AA2E641D83F48600D1AEC9 /* DeviceListController.m in Sources */,
 				D1A7DD651D8117DD00D051B0 /* NVActivityIndicatorShape.swift in Sources */,
 				D1A7DDB01D8117DD00D051B0 /* HRButton.m in Sources */,
 				D1A7DDA71D8117DD00D051B0 /* CreateXRHttpTools.m in Sources */,
 				D1A7DD981D8117DD00D051B0 /* HRTabBarViewController.m in Sources */,
 				D1A7DDA31D8117DD00D051B0 /* IracData.m in Sources */,
+				D1AA2E691D83F4C600D1AEC9 /* AppDelegate.m in Sources */,
 				D1A7DD471D8117DD00D051B0 /* NVActivityIndicatorAnimationBallClipRotateMultiple.swift in Sources */,
 				D1A7DD601D8117DD00D051B0 /* NVActivityIndicatorAnimationPacman.swift in Sources */,
 				D1A7DD7B1D8117DD00D051B0 /* UIImage+GIF.m in Sources */,
@@ -1842,7 +1770,6 @@
 				D1A7DD761D8117DD00D051B0 /* SDWebImageDownloader.m in Sources */,
 				D1A7DD781D8117DD00D051B0 /* SDWebImageManager.m in Sources */,
 				D1A7DD5F1D8117DD00D051B0 /* NVActivityIndicatorAnimationOrbit.swift in Sources */,
-				D1A7DDB71D8117DD00D051B0 /* AddLockController.m in Sources */,
 				D1A7DD5C1D8117DD00D051B0 /* NVActivityIndicatorAnimationLineScalePulseOut.swift in Sources */,
 				18C697A81D7462B9004DA2B1 /* JCAlertView.m in Sources */,
 				1868B9131D79200200D19386 /* ChooseBackPicCtl.m in Sources */,
@@ -1854,7 +1781,6 @@
 				D1A7DD501D8117DD00D051B0 /* NVActivityIndicatorAnimationBallScale.swift in Sources */,
 				D1A7DDA61D8117DD00D051B0 /* Push.m in Sources */,
 				D1A7DD441D8117DD00D051B0 /* NVActivityIndicatorAnimationAudioEqualizer.swift in Sources */,
-				D1A7DDF01D81592E00D051B0 /* DeviceListModel.m in Sources */,
 				D1A7DD461D8117DD00D051B0 /* NVActivityIndicatorAnimationBallClipRotate.swift in Sources */,
 				D1A7DD7D1D8117DD00D051B0 /* UIImage+WebP.m in Sources */,
 				D1A7DD7E1D8117DD00D051B0 /* UIImageView+HighlightedWebCache.m in Sources */,
@@ -1889,6 +1815,7 @@
 				D1A7DD341D8117DD00D051B0 /* MJRefreshNormalHeader.m in Sources */,
 				D1A7DD4C1D8117DD00D051B0 /* NVActivityIndicatorAnimationBallPulseRise.swift in Sources */,
 				D1A7DD8A1D8117DD00D051B0 /* AFHTTPSessionManager+Util.m in Sources */,
+				D1007CE01D8694280079D3DD /* DeviceAutherModel.m in Sources */,
 				D1A7DD451D8117DD00D051B0 /* NVActivityIndicatorAnimationBallBeat.swift in Sources */,
 				D1A7DDB31D8117DD00D051B0 /* ManualController.m in Sources */,
 				D1A7DD391D8117DD00D051B0 /* UIScrollView+MJExtension.m in Sources */,
@@ -1900,7 +1827,6 @@
 				D1A7DD291D8117DD00D051B0 /* MJRefreshBackFooter.m in Sources */,
 				18C697A91D7462B9004DA2B1 /* MyButton.m in Sources */,
 				D1A7DD381D8117DD00D051B0 /* NSBundle+MJRefresh.m in Sources */,
-				D1A7DDD31D811F4A00D051B0 /* DeviceListController.m in Sources */,
 				D1A7DD4B1D8117DD00D051B0 /* NVActivityIndicatorAnimationBallPulse.swift in Sources */,
 				D1A7DD661D8117DD00D051B0 /* NVActivityIndicatorView.swift in Sources */,
 				D1A7DD741D8117DD00D051B0 /* SDWebImageCompat.m in Sources */,
@@ -1915,6 +1841,7 @@
 				D1A7DD431D8117DD00D051B0 /* FTPopOverMenu.m in Sources */,
 				D1A7DD931D8117DD00D051B0 /* UIView+HRExtension.m in Sources */,
 				D1A7DD591D8117DD00D051B0 /* NVActivityIndicatorAnimationCubeTransition.swift in Sources */,
+				D1AA2E631D83F48600D1AEC9 /* DeviceListCell.m in Sources */,
 				D1A7DDBA1D8117DD00D051B0 /* UDPModel.m in Sources */,
 				D1A7DD351D8117DD00D051B0 /* MJRefreshStateHeader.m in Sources */,
 				D1D23DEF1D7570A100FCB5C9 /* AddDeivcecell.m in Sources */,
@@ -1926,6 +1853,7 @@
 				D1A7DD581D8117DD00D051B0 /* NVActivityIndicatorAnimationBlank.swift in Sources */,
 				D1A7DD911D8117DD00D051B0 /* UIImage+Util.m in Sources */,
 				D1A7DDBC1D8117DD00D051B0 /* WiFiListController.m in Sources */,
+				D1AA2E661D83F48600D1AEC9 /* DeviceListTcpModel.m in Sources */,
 				D1A7DD961D8117DD00D051B0 /* HRTabBar.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2316,6 +2244,13 @@
 					/Support/PlatformSDK/QQSDK,
 					"$(PROJECT_DIR)/herolife/Classes/Other/Library/ShareSDK",
 					/Support/Required,
+					"$(PROJECT_DIR)/herolife/Classes/Other/Library/ShareSDK",
+					"$(PROJECT_DIR)/herolife/Classes/Other/Library/ShareSDK",
+					/Support/Optional,
+					"$(PROJECT_DIR)/herolife/Classes/Other/Library/ShareSDK",
+					/Support/PlatformSDK/QQSDK,
+					"$(PROJECT_DIR)/herolife/Classes/Other/Library/ShareSDK",
+					/Support/Required,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/herolife/PrefixHeader.pch";
@@ -2491,6 +2426,13 @@
 					"$(PROJECT_DIR)/herolife/Classes/ShareSDK",
 					/Support/PlatformSDK/QQSDK,
 					"$(PROJECT_DIR)/herolife/Classes/ShareSDK",
+					/Support/Required,
+					"$(PROJECT_DIR)/herolife/Classes/Other/Library/ShareSDK",
+					"$(PROJECT_DIR)/herolife/Classes/Other/Library/ShareSDK",
+					/Support/Optional,
+					"$(PROJECT_DIR)/herolife/Classes/Other/Library/ShareSDK",
+					/Support/PlatformSDK/QQSDK,
+					"$(PROJECT_DIR)/herolife/Classes/Other/Library/ShareSDK",
 					/Support/Required,
 					"$(PROJECT_DIR)/herolife/Classes/Other/Library/ShareSDK",
 					"$(PROJECT_DIR)/herolife/Classes/Other/Library/ShareSDK",

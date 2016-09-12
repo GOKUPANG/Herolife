@@ -11,8 +11,9 @@
 #import "AccountManagementController.h"
 #import "GestureViewController.h"
 #import "BackPicSetController.h"
+#import "LoginController.h"
 
-@interface SettingController ()<UITableViewDelegate, UITableViewDataSource>
+@interface SettingController ()<UITableViewDelegate, UITableViewDataSource, UIAlertViewDelegate>
 /** 顶部条 */
 @property(nonatomic, weak) HRNavigationBar *navView;
 /** 头像 */
@@ -325,19 +326,15 @@ static NSString *cellID = @"cellID";
             
             
             case 1:
-        {
-            if (indexPath.row == 0) {
-                
-//        Class Psc  =   NSClassFromString(@"PushSettingController") ;
-//                
-//                
-//                UIViewController *psc  = [[Psc alloc]init];
-//                
-//                [self.navigationController pushViewController:psc animated:YES];
-                
-            }
+		{
+			if (indexPath.row == 2) {
+				
+				
+				UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"确定要退出当前登陆？" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"退出", nil];
+				[alert show];
+			}
         }
-            
+			
             break;
             
             
@@ -361,5 +358,30 @@ static NSString *cellID = @"cellID";
 	[bottomView addSubview:topView];
 	return bottomView;
 }
-
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+	if (buttonIndex != alertView.cancelButtonIndex) {
+		//隐藏slideMenu
+		[self logout];
+	}
+}
+-(void)logout {
+	
+	//弹出登陆界面
+	
+	LoginController *login = [[LoginController alloc] init];
+	[self.navigationController pushViewController:login animated:YES];
+	
+	//发送注销请求
+	[HRServicesManager logout:nil];
+	[self IsTabBarHidden:YES];
+}
+#pragma mark - 隐藏底部条
+- (void)IsTabBarHidden:(BOOL)hidden
+{
+	for (UIView *view  in self.tabBarController.view.subviews) {
+		if ([NSStringFromClass([view class]) isEqualToString:@"HRTabBar"]) {
+			view.hidden = hidden;
+		}
+	}
+}
 @end

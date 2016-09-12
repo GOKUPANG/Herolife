@@ -316,7 +316,6 @@ static NSTimeInterval const dimissTimer = 2;
 	}
 	
 	[SVProgressTool hr_showWithStatus:@"正在注册..."];
-	AFHTTPSessionManager *manager = [AFHTTPSessionManager hrPostManager];
 	
 	
 	NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
