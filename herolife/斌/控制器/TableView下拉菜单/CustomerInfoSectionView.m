@@ -11,18 +11,28 @@
 
 
 @implementation CustomerInfoSectionView
-@synthesize nameLabel,managerNameLabel,departmentLabel,addressLabel;
 
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code
+        
+       // [self initUI];
+        
     }
     return self;
 }
 
-- (void)initWithNameLabel:(NSString*)name ManagerNameLabel:(NSString*)managerName DepartmentLabel:(NSString*)department AddressLabel:(NSString*)address section:(NSInteger)sectionNumber delegate:(id <CustomerInfoSectionViewDelegate>)delegate
+
+
+-(void)initUI
+{
+    
+}
+
+
+- (void)initWithImgName:(NSString*)ImgName userNameLabel:(NSString*)userName timeLabel:(NSString*)time   section:(NSInteger)sectionNumber delegate:(id <CustomerInfoSectionViewDelegate>)delegate
 {
     
     
@@ -33,7 +43,7 @@
     
     self.backgroundColor = [UIColor clearColor];
     
-    
+   /*
     nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(10.f, 15.f, 50.f, 20.f)];
     nameLabel.backgroundColor = [UIColor clearColor];
    // nameLabel.textColor = UIColorFromRGB(0x333333);
@@ -75,8 +85,88 @@
     addressLabel.font = [UIFont systemFontOfSize:16.f];
     addressLabel.text = address;
     [self addSubview:addressLabel];
+    */
+
     
-    _arrow = [[UIImageView alloc]initWithFrame:CGRectMake([UIScreen mainScreen].bounds.size.width - 51, CGRectGetMinY(nameLabel.frame), 18, 9)];
+    /** 
+     
+   
+    @property(nonatomic,strong)UIImageView * iconImg;
+    
+    
+    @property(nonatomic,strong)UILabel * userNameLabel;
+   
+    @property(nonatomic,strong)UILabel * timeLabel;
+     
+     
+     
+     */
+    
+    
+    
+    
+    /************************** 头像相关设置 ********************************/
+    _iconImg = [[UIImageView alloc]init];
+    [self addSubview:_iconImg];
+    
+    
+    
+    _iconImg.sd_layout
+    .leftSpaceToView(self,14)
+    .topSpaceToView(self,15)
+    .widthIs(23)
+    .heightIs(23);
+    
+    _iconImg.image = [UIImage imageNamed:ImgName];
+    
+    
+    /************************** 用户名相关设置 ********************************/
+
+    
+    
+    _userNameLabel = [[UILabel alloc]init];
+    
+    [self addSubview:_userNameLabel];
+    
+    _userNameLabel.sd_layout
+    .leftSpaceToView(_iconImg,10)
+    .bottomSpaceToView(self,8)
+    .widthIs(150)
+    .heightIs(30);
+    
+    _userNameLabel.text = userName;
+    
+    _userNameLabel.font = [UIFont systemFontOfSize:17.f];
+
+    _userNameLabel.textColor = [UIColor whiteColor];
+    
+    
+    /************************** 授权时间相关设置 ********************************/
+
+    
+    _timeLabel = [[UILabel alloc]init];
+    
+    [self addSubview:_timeLabel];
+    
+    _timeLabel.sd_layout
+    .bottomEqualToView(_userNameLabel)
+    .topEqualToView(_userNameLabel)
+    .rightSpaceToView(self,50)
+    .widthIs(100);
+    
+    _timeLabel.textAlignment = NSTextAlignmentRight;
+    
+    _timeLabel.textColor = [UIColor whiteColor];
+    
+    _timeLabel.text = time;
+    
+    
+    
+    
+    
+    
+    
+    _arrow = [[UIImageView alloc]initWithFrame:CGRectMake([UIScreen mainScreen].bounds.size.width - 51, 20, 18, 9)];
     _arrow.backgroundColor = [UIColor clearColor];
     _arrow.image = [UIImage imageNamed:@"下拉符号"];
     // self.arrow.transform = CGAffineTransformMakeRotation(M_PI * -0.5);
@@ -91,7 +181,7 @@
     
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
     btn.backgroundColor = [UIColor clearColor];
-    btn.frame = CGRectMake(0, 0, 320, 50);
+    btn.frame = CGRectMake(0, 0, HRUIScreenW, 50);
     [btn addTarget:self action:@selector(toggleOpen:) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:btn];
     

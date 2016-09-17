@@ -54,7 +54,7 @@
 	}];
 	
 	[self.leftLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-		make.left.equalTo(self.leftImage.mas_right).offset(HRCommonScreenW * 52);
+		make.left.equalTo(self).offset(HRCommonScreenW * 178);
 		make.centerY.equalTo(self.leftImage);
 	}];
 	
@@ -62,6 +62,7 @@
 		make.right.equalTo(self).offset(- HRCommonScreenW * 28);
 		make.top.equalTo(self.leftImage);
 	}];
+	
 	[self.minLabel mas_makeConstraints:^(MASConstraintMaker *make) {
 		make.top.equalTo(self.rightLabel.mas_bottom).offset(HRCommonScreenH *10);
 		make.right.equalTo(self.rightLabel);

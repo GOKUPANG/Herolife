@@ -33,8 +33,6 @@
                                     key:(NSString *)key
                                    auth:(NSString *)auth
 {
-    //获取用户UUID
-    //  NSString * uuidStr = [kUserDefault objectForKey:kUserDefaultUUID];
     
     NSMutableDictionary *srcDict = [NSMutableDictionary dictionary];
     

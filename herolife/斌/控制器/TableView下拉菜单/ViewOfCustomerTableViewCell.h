@@ -10,10 +10,11 @@
 
 @interface ViewOfCustomerTableViewCell : UITableViewCell
 
-@property(nonatomic,strong)UILabel *nameLabel;
-@property(nonatomic,strong)UILabel *managerNameLabel;
-@property(nonatomic,strong)UILabel *departmentLabel;
-@property(nonatomic,strong)UILabel *addressLabel;
+
+@property(nonatomic,strong)UILabel * nameLabel ;
+
+@property(nonatomic,strong)UIImageView * warnImgView;
+
 
 
 @end

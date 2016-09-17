@@ -10,6 +10,9 @@
 #import "UIView+SDAutoLayout.h"
 #import "DoorRecordCell.h"
 #import "PushSettingController.h"
+#import "DeviceListModel.h"
+#import "DoorLockModel.h"
+#import "HRRefreshHeader.h"
 
 @interface DoorLockRecordConroller ()<UITableViewDelegate,UITableViewDataSource>
 
@@ -31,12 +34,26 @@
 /** 背景图片*/
 
 @property(nonatomic,strong)UIImageView *backImgView;
+/** 保存记录查询数据 */
+@property(nonatomic, strong) NSMutableArray *queryArray;
 
 
 
 @end
 
 @implementation DoorLockRecordConroller
+/**
+ *  刷新次数
+ */
+static int indexCount = 0;
+- (NSMutableArray *)queryArray
+{
+	if (!_queryArray) {
+		_queryArray = [NSMutableArray array];
+	}
+	return _queryArray;
+}
+
 
 
 - (void)viewWillAppear:(BOOL)animated
@@ -116,7 +133,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+	
+	[self.queryArray removeAllObjects];
+	indexCount = 0;
     UIImageView *backgroundImage = [[UIImageView alloc] initWithFrame:[UIScreen mainScreen].bounds];
     backgroundImage.image = [UIImage imageNamed:@"Snip20160825_3"];
     
@@ -144,11 +163,63 @@
     [self setNavbar];
     [self setPushUI];
     [self makeTableViewUI];
-    
-
+	
     // Do any additional setup after loading the view.
+	
+	//集成刷新
+	[self setupRefresh];
+}
+#pragma mark - 内部方法
+// 集成刷新控件
+- (void)setupRefresh
+{
+	// header - 下拉刷新
+	self.tableView.mj_header = [HRRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(getHttpRequset)];
+	// 进入刷新状态
+	[self.tableView.mj_header beginRefreshing];
 }
 
+#pragma mark - 获取设备信息  发送HTTP请求
+- (void)getHttpRequset
+{
+	/// 从偏好设置里加载数据
+	NSString *uuid = self.listModel.uuid;
+	NSString *url = [NSString stringWithFormat:@"http://www.gzhuarui.cn/?q=huaruiapi/herolife-dev-hrsc-ml&uuid=%@&sy=(unlock|batlow|ltnolock|errlimt)&page=%d", uuid, indexCount];
+	url = [url stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
+	
+	HRWeakSelf
+	[HRHTTPTool hr_getHttpWithURL:url parameters:nil responseDict:^(id responseObject, NSError *error) {
+		[self.tableView.mj_header endRefreshing];
+		if (error) {
+			[ErrorCodeManager showError:error];
+			return ;
+		}
+		
+		DDLogWarn(@"记录查询HTTP请求%@", responseObject);
+		//如果responseObject不是数组类型就不是我们想要的数据，应该过滤掉
+		if (![responseObject isKindOfClass:[NSArray class]]) {
+//			[weakSelf.queryArray removeAllObjects];
+			DDLogDebug(@"responseObject不是NSArray");
+			return;
+		}
+		//去除服务器发过来的数据里没有值的情况
+		if (((NSArray*)responseObject).count < 1 ) {
+			DDLogDebug(@"responseObject count == 0");
+			return;
+		}
+		
+//		[weakSelf.queryArray removeAllObjects];
+		NSArray *responseArr = (NSArray*)responseObject;
+		
+		for (NSDictionary *dict in responseArr) {
+			DoorLockModel *lockModel = [DoorLockModel mj_objectWithKeyValues:dict];
+			[weakSelf.queryArray addObject:lockModel];
+		}
+		
+		[self.tableView reloadData];
+	}];
+	indexCount++;
+}
 
 #pragma mark -点击第一行跳转到推送设置界面
 
@@ -291,10 +362,10 @@
     _tableView.rowHeight = 50 ;
     
     //隐藏滚动条
-    _tableView.showsVerticalScrollIndicator =NO;
+//    _tableView.showsVerticalScrollIndicator =NO;
     //超过边界不允许滚动
-    _tableView.bounces = NO;
-    
+//    _tableView.bounces = NO;
+	
     [self.view addSubview:_tableView];
     
     
@@ -314,7 +385,7 @@
 
 #pragma mark - tableView 代理方法
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 5;
+    return self.queryArray.count;
     
 }
 
@@ -327,29 +398,9 @@
         cell = [[DoorRecordCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cellID"];
     }
     cell.backgroundColor = [UIColor clearColor];
-    //cell.alpha = 0.2;
-    
-    
-    if (indexPath.row == 1) {
-        cell.recordLabel.text =@"指纹开锁";
-        cell.userNameLabel.text = @"jack";
-        cell.timeLabel.text = @"2016.12.12";
-        
-        
-    }
-    
-    else{
-    cell.timeLabel.text = @"2016.08.16";
-    cell.recordLabel.text = @"低电量提醒";
-    cell.userNameLabel.text = @"Eleanor" ;
-        
-    }
-    
-    
-   // cell.textLabel.text = @"222";
     
     cell.selectionStyle=UITableViewCellSelectionStyleNone;
-
+	cell.lockModel = self.queryArray[indexPath.row];
     
     return cell;
     

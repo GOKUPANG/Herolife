@@ -8,6 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
+@class DeviceListModel;
+
 @interface DoorLockRecordConroller : UIViewController
+
+/** <#name#> */
+@property(nonatomic, strong) DeviceListModel *listModel;
 
 @end

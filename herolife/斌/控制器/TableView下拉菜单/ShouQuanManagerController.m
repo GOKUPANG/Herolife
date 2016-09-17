@@ -9,6 +9,11 @@
 #import "ShouQuanManagerController.h"
 #import "ViewOfCustomerTableViewCell.h"
 #import "CustomerInfoSectionView.h"
+#import "FTPopOverMenu.h"
+#import "YXCustomAlertView.h"
+#import "SRActionSheet.h"
+
+
 
 #define MENU_HEADER_VIEW_KEY    @"headerview"
 #define MENU_OPENED_KEY         @"open"
@@ -19,15 +24,56 @@
 
 static NSString *ViewOfCustomerTableViewCellIdentifier = @"ViewOfCustomerTableViewCellIdentifier";
 
-@interface ShouQuanManagerController ()<UITableViewDataSource,UITableViewDelegate,CustomerInfoSectionViewDelegate>
+@interface ShouQuanManagerController ()<UITableViewDataSource,UITableViewDelegate,CustomerInfoSectionViewDelegate,SRActionSheetDelegate>
 
 @property(nonatomic,strong)UITableView *listTableView;
+
+
+
+#pragma mark -原来的数据源  决定有多少个section 要修改
+/** 待修改  */
 @property(nonatomic,strong)NSMutableArray *dataArray;
+
+
 @property (assign, nonatomic) NSInteger openedSection;
+
+
 @property(nonatomic,strong)NSArray *cellArray;
 
 /** 顶部条 */
-@property(nonatomic, weak) HRNavigationBar *navView;
+@property(nonatomic, weak) HRNavigationBar * navView;
+
+/** 背景图片*/
+
+@property(nonatomic,strong)UIImageView * backImgView;
+
+/**  增加密码名字输入框*/
+
+@property(nonatomic,strong)UITextField *       AddPswNameField;
+
+/**  家人分享用户名输入框*/
+@property(nonatomic,strong)UITextField *       AddPswNumberField;
+
+
+/** 家人分享弹窗*/
+@property(nonatomic,strong)YXCustomAlertView * FamilyAlertView;
+
+
+/** 临时分享弹窗*/
+@property(nonatomic,strong)YXCustomAlertView * TemporaryAlertView;
+
+
+/** 临时授权手机号码输入框*/
+
+@property(nonatomic,strong)UITextField * PhoneTfield;
+
+
+
+/** 临时授权时间输入框*/
+
+@property(nonatomic,strong)UITextField * TimeTfield;
+
+
 
 
 @end
@@ -46,6 +92,34 @@ static NSString *ViewOfCustomerTableViewCellIdentifier = @"ViewOfCustomerTableVi
             view.hidden = YES;
         }
     }
+    
+    
+    
+    NSInteger  PicNum =   [[NSUserDefaults standardUserDefaults] integerForKey:@"PicNum"];
+    
+    if (!PicNum) {
+        
+        
+        
+        self.backImgView.image = [UIImage imageNamed:@"Snip20160825_3"];
+    }
+    
+    
+    else if (PicNum == -1)
+    {
+        NSString *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES).lastObject;
+        path = [path stringByAppendingPathComponent:@"image.png"];
+        
+        self.backImgView.image =[UIImage imageWithContentsOfFile:path];
+    }
+    
+    else{
+        
+        NSString * imgName = [NSString stringWithFormat:@"%ld.jpg",PicNum];
+        
+        self.backImgView.image =[UIImage imageNamed:imgName];
+    }
+
 }
 
 
@@ -100,7 +174,9 @@ static NSString *ViewOfCustomerTableViewCellIdentifier = @"ViewOfCustomerTableVi
         [_dataArray addObject:dic];
         
     }
-    _cellArray = @[@"1",@"2",@"3"];//下拉显示的cell的数量
+    
+    #pragma mark -这里决定下拉的cell的数目
+    _cellArray = @[@"1",@"2"];//下拉显示的cell的数量
     
     
     #pragma mark -View背景颜色
@@ -109,7 +185,14 @@ static NSString *ViewOfCustomerTableViewCellIdentifier = @"ViewOfCustomerTableVi
     //背景图片
     UIImageView *backgroundImage = [[UIImageView alloc] initWithFrame:[UIScreen mainScreen].bounds];
     backgroundImage.image = [UIImage imageNamed:@"Snip20160825_3"];
-    [self.view addSubview:backgroundImage];
+    self.backImgView             = backgroundImage;
+    
+    [self.view addSubview:self.backImgView];
+    
+    UIView *view                 = [[UIView alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    view.backgroundColor         = [[UIColor blackColor] colorWithAlphaComponent:0.2];
+    [self.view addSubview:view];
+
     
     
     //导航条
@@ -124,6 +207,17 @@ static NSString *ViewOfCustomerTableViewCellIdentifier = @"ViewOfCustomerTableVi
     [navView.leftButton addTarget:self action:@selector(backButtonClick:) forControlEvents:UIControlEventTouchUpInside];
     
     [self.view addSubview:navView];
+    
+    
+    navView.rightLabel.text = @"添加";
+    
+    navView.rightLabel.userInteractionEnabled = YES;
+    
+    
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(AddShouQuan:)];
+    
+    [navView.rightLabel addGestureRecognizer:tap];
+
     self.navView = navView;
 
     
@@ -139,8 +233,401 @@ static NSString *ViewOfCustomerTableViewCellIdentifier = @"ViewOfCustomerTableVi
     _listTableView.allowsSelection = YES;
     _listTableView.backgroundColor = [UIColor clearColor];
     [self.view addSubview:_listTableView];
+	
+	//通知
+	[self addObserverNotification];
+	
 }
 
+
+
+#pragma mark - 家人分享弹窗UI设置
+-(void)makeFamilyAlerView
+{
+    /** FixAlertView;
+     AddAlertView;
+     FixField;
+     AddPswNameField;
+     AddPswNumberField;
+     */
+    CGFloat dilX = 25;
+    CGFloat dilH = 230;
+    YXCustomAlertView *alertV = [[YXCustomAlertView alloc] initAlertViewWithFrame:CGRectMake(dilX, 0, HRUIScreenW - 40, dilH) andSuperView:self.navigationController.view];
+    
+    
+    alertV.delegate = self;
+    alertV.titleStr = @"家人分享";
+    
+    
+    CGFloat loginX = 200 *HRCommonScreenH;
+    
+    UILabel * numberLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 55, loginX, 32)];
+    
+    [alertV addSubview:numberLabel];
+    numberLabel.text = @"用户名";
+    numberLabel.textColor = [UIColor whiteColor];
+    
+    numberLabel.textAlignment = NSTextAlignmentCenter;
+    
+    
+    
+    
+    
+    UITextField *loginPwdField = [[UITextField alloc] initWithFrame:CGRectMake(loginX, 55, alertV.frame.size.width -  loginX*1.2, 32)];
+    loginPwdField.layer.borderColor = [[UIColor colorWithWhite:0.9 alpha:1] CGColor];
+    UIView *leftView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 8, 32)];
+    
+    
+    loginPwdField.leftViewMode = UITextFieldViewModeAlways;
+    loginPwdField.leftView = leftView;
+    
+    
+    loginPwdField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
+    loginPwdField.layer.borderWidth = 1;
+    loginPwdField.layer.cornerRadius = 4;
+    
+    loginPwdField.placeholder = @"想要授权的用户";
+    
+    loginPwdField.textColor = [UIColor whiteColor];
+    
+    
+    
+    
+
+    
+    
+/*************************************远程开锁开关**************************************/
+    
+    UISwitch * OpenLockSWitch = [[UISwitch alloc]initWithFrame:CGRectMake(alertV.frame.size.width -  70, 100, 0, 0)];
+    
+    
+    
+    
+    
+    UILabel * PswLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 100, loginX, 32)];
+    
+    [alertV addSubview:PswLabel];
+    PswLabel.text = @"远程开锁";
+    PswLabel.textColor = [UIColor whiteColor];
+    
+    PswLabel.textAlignment = NSTextAlignmentCenter;
+    
+    
+    
+    UILabel * recordLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 150, loginX, 32)];
+    
+    [alertV addSubview:recordLabel];
+    recordLabel.text = @"记录查询";
+    recordLabel.textColor = [UIColor whiteColor];
+    
+    recordLabel.textAlignment = NSTextAlignmentCenter;
+    
+    
+    
+/*************************************记录查询开关**************************************/
+
+    UISwitch * recordSWitch = [[UISwitch alloc]initWithFrame:CGRectMake(alertV.frame.size.width -  70, 150, 0, 0)];
+    
+    
+    alertV.alpha=0;
+    
+    self.AddPswNumberField = loginPwdField;
+    
+
+    
+    
+    
+    
+    
+    self.FamilyAlertView = alertV;
+    
+    [alertV addSubview:self.AddPswNumberField];
+    
+    [alertV addSubview: OpenLockSWitch];
+    [alertV addSubview:recordSWitch];
+    
+
+    
+    
+//    [alertV addSubview:self.AddPswNameField];
+    
+    
+    [UIView animateWithDuration:0.5 animations:^{
+        
+        self.FamilyAlertView.center = CGPointMake(HRUIScreenW/2, HRUIScreenH/2-100);
+        
+        self.FamilyAlertView.alpha=1;
+        
+    } completion:^(BOOL finished) {
+        
+        
+        //  [customAlertView dissMiss];
+        
+        
+    }];
+    
+}
+
+
+#pragma mark - 临时分享弹窗
+
+-(void)makeTemporaryAlertView
+{
+    CGFloat dilX = 25;
+    CGFloat dilH = 200;
+    YXCustomAlertView *alertV = [[YXCustomAlertView alloc] initAlertViewWithFrame:CGRectMake(dilX, 0, HRUIScreenW - 40, dilH) andSuperView:self.navigationController.view];
+    
+    
+    alertV.delegate = self;
+    alertV.titleStr = @"临时授权";
+    
+    
+    CGFloat loginX = 200 *HRCommonScreenH;
+    
+    UILabel * numberLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 55, loginX, 32)];
+    
+    [alertV addSubview:numberLabel];
+    numberLabel.text = @"手机号码";
+    numberLabel.textColor = [UIColor whiteColor];
+    
+    numberLabel.textAlignment = NSTextAlignmentCenter;
+    
+    
+    
+    
+    
+    UITextField *loginPwdField = [[UITextField alloc] initWithFrame:CGRectMake(loginX, 55, alertV.frame.size.width -  loginX*1.2, 32)];
+    loginPwdField.layer.borderColor = [[UIColor colorWithWhite:0.9 alpha:1] CGColor];
+    UIView *leftView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 8, 32)];
+    
+    
+    loginPwdField.leftViewMode = UITextFieldViewModeAlways;
+    loginPwdField.leftView = leftView;
+    
+    
+    loginPwdField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
+    loginPwdField.layer.borderWidth = 1;
+    loginPwdField.layer.cornerRadius = 4;
+    
+    loginPwdField.placeholder = @"授权对象的手机号码";
+    
+    loginPwdField.textColor = [UIColor whiteColor];
+    
+    
+    
+    
+    UITextField * PSWNameField = [[UITextField alloc]initWithFrame:CGRectMake(loginX, 100, alertV.frame.size.width -  loginX*1.2, 32)];
+    
+    PSWNameField.layer.borderColor = [[UIColor colorWithWhite:0.9 alpha:1] CGColor];
+    
+    
+    
+    PSWNameField.leftViewMode = UITextFieldViewModeAlways;
+    
+    UIView *leftView1 = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 8, 32)];
+    
+    PSWNameField.leftView = leftView1;
+    
+    
+    PSWNameField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
+    PSWNameField.layer.borderWidth = 1;
+    PSWNameField.layer.cornerRadius = 4;
+    
+    PSWNameField.placeholder = @"授权时长";
+    
+    PSWNameField.textColor = [UIColor whiteColor];
+    
+    
+    
+    
+    
+    
+    UILabel * PswLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 100, loginX, 32)];
+    
+    [alertV addSubview:PswLabel];
+    PswLabel.text = @"时间";
+    PswLabel.textColor = [UIColor whiteColor];
+    
+    PswLabel.textAlignment = NSTextAlignmentCenter;
+    
+    
+    alertV.alpha=0;
+    
+    self.PhoneTfield = loginPwdField;
+    
+    self.TimeTfield = PSWNameField;
+    
+    
+    self.TemporaryAlertView = alertV;
+    
+    [alertV addSubview:self.PhoneTfield];
+    
+    [alertV addSubview:self.TimeTfield];
+    
+    
+    
+    [UIView animateWithDuration:0.5 animations:^{
+        
+        self.TemporaryAlertView.center = CGPointMake(HRUIScreenW/2, HRUIScreenH/2-100);
+        
+        self.TemporaryAlertView.alpha=1;
+        
+    } completion:^(BOOL finished) {
+        
+        
+        //  [customAlertView dissMiss];
+        
+        
+    }];
+
+}
+
+
+#pragma mark - YXCustomAlertViewDelegate 家人分享与临时授权的弹窗选中 
+
+- (void) customAlertView:(YXCustomAlertView *) customAlertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{  if (buttonIndex==0) {
+    
+    
+    
+    
+    
+    
+    [UIView animateWithDuration:0.3 animations:^{
+        
+        
+        CGRect AlertViewFrame = customAlertView.frame;
+        
+        AlertViewFrame.origin.x = -50;
+        
+        customAlertView.alpha = 0;
+        
+        
+        
+        customAlertView.frame = AlertViewFrame;
+        
+        
+        
+        
+        
+    } completion:^(BOOL finished) {
+        
+        
+        [customAlertView dissMiss];
+        
+        
+    }];
+    
+    
+    
+    
+    }
+    
+    
+    if (buttonIndex == 1) {
+        
+        
+        
+        
+        
+        
+        
+        [UIView animateWithDuration:0.5 animations:^{
+            
+            
+            CGRect AlertViewFrame = customAlertView.frame;
+            
+            AlertViewFrame.origin.x = HRUIScreenW;
+            
+            
+            customAlertView.frame = AlertViewFrame;
+            
+            customAlertView.alpha = 0;
+            
+            
+            
+            
+            
+            
+        } completion:^(BOOL finished) {
+            
+            
+            [customAlertView dissMiss];
+            
+        }];
+    }
+    
+    
+    
+   
+
+
+
+
+}
+#pragma mark -增加授权
+
+-(void)AddShouQuan: (UITapGestureRecognizer*)tap
+
+{
+
+    [FTPopOverMenu showForSender:self.navView.rightLabel withMenu:@[@"家人分享",@"临时授权"]
+                       doneBlock:^(NSInteger selectedIndex) {
+                           
+                       /** 在这里增加弹窗*/
+                           
+                           //选中第一个家人分享
+                           if (selectedIndex ==0) {
+                               [self makeFamilyAlerView];
+
+                           }
+                           
+                           
+                           //选中第二个临时授权
+                           
+                           else{
+                               
+                               [self makeTemporaryAlertView ];
+                               
+                           }
+                           
+                
+                           
+                       } dismissBlock:^{
+                           
+                       }];
+
+}
+
+
+
+
+#pragma mark - haibo
+- (NSArray *)autherArray
+{
+	if (!_autherArray) {
+		_autherArray = [NSArray array];
+	}
+	return _autherArray;
+}
+- (NSArray *)autherDeviceArray
+{
+	if (!_autherDeviceArray) {
+		_autherDeviceArray = [NSArray array];
+	}
+	return _autherDeviceArray;
+}
+#pragma mark - haibo 通知相关
+- (void)addObserverNotification
+{
+	[kNotification addObserver:self selector:@selector(receiveAutherInformation) name:kNotificationReceiveDeviceAutherInformation object:nil];
+}
+- (void)receiveAutherInformation
+{
+	AppDelegate *app = (AppDelegate *)[UIApplication sharedApplication];
+	self.autherArray = app.autherArray;
+	self.autherDeviceArray = app.autherDeviceArray;
+}
 #pragma mark - UI事件  -haibo
 - (void)backButtonClick:(UIButton *)btn
 {
@@ -166,6 +653,9 @@ static NSString *ViewOfCustomerTableViewCellIdentifier = @"ViewOfCustomerTableVi
     return 50.f;
 }
 
+
+
+#pragma mark - 每组的头部视图的设置
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
     NSMutableDictionary *dic = [_dataArray objectAtIndex:section];
@@ -173,7 +663,14 @@ static NSString *ViewOfCustomerTableViewCellIdentifier = @"ViewOfCustomerTableVi
     if (!view)
     {
         view = [[CustomerInfoSectionView alloc]init];
-        [view initWithNameLabel:@"陈" ManagerNameLabel:@"周" DepartmentLabel:@"111" AddressLabel:@"222" section:section delegate:self];
+
+        
+        //在这里写入头部视图的信息
+        
+        
+        [view initWithImgName:@"邮箱" userNameLabel:@"test01" timeLabel:@"永久" section:section delegate:self];
+        
+        
         [dic setObject:view forKey:MENU_HEADER_VIEW_KEY];
         if (section % 2 == 0)
         {
@@ -192,23 +689,57 @@ static NSString *ViewOfCustomerTableViewCellIdentifier = @"ViewOfCustomerTableVi
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     ViewOfCustomerTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:ViewOfCustomerTableViewCellIdentifier forIndexPath:indexPath];
-    cell.nameLabel.text = @"周锋";
-    cell.managerNameLabel.text = @"胡楠";
-    cell.departmentLabel.text = @"CUC";
-    cell.addressLabel.text = @"南京鼓楼";
-  //  cell.backgroundColor = [UIColor whiteColor];
-  //  cell.backgroundColor = [UIColor yellowColor];
+    
+    if (indexPath.row ==0) {
+        cell.nameLabel.text = @"远程开锁";
+        cell.warnImgView.image = [UIImage imageNamed:@"未选择"] ;
+
+    }
+    
+    else{
+        cell.nameLabel.text = @"操作查询";
+        cell.warnImgView.image = [UIImage imageNamed:@"授权选择"] ;
+
+    }
+  
+    
     
     cell.backgroundColor = [UIColor clearColor];
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+
     
     
     return cell;
 }
+#pragma mark - 选中cell 出现底部弹出框;
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    /** 这里应该要把cell所在的组数传下去才能相应的修改 */
+    
+    [SRActionSheet sr_showActionSheetViewWithTitle:@""
+                              cancelButtonTitle:@"取消"
+                         destructiveButtonTitle:@""
+                              otherButtonTitles:@[@"取消该授权", @"修改授权信息"]
+                                       delegate:self];
+}
+
+
+#pragma mark -底部弹出sheet选中方法
+
+-(void)actionSheet:(SRActionSheet *)actionSheet didSelectSheet:(NSInteger)index
+{
+    
+    /** 0 是取消该授权
+        1 是修改授权信息
+       -1 是取消*/
+    NSLog(@"%ld", index);
     
 }
+
+
+
+
 
 #pragma mark Section header delegate
 
@@ -284,14 +815,6 @@ static NSString *ViewOfCustomerTableViewCellIdentifier = @"ViewOfCustomerTableVi
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

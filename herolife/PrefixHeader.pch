@@ -132,12 +132,13 @@
 
 /// -----------------创建通知----------------------------------
 #define kUserDefault [NSUserDefaults standardUserDefaults]
-/// 手机UUID
+/// 手机UUID  - 保存设备deviceToken
 #define kUserDefaultUUID @"kUserDefaultUUID"
 /// 用户昵称
 #define kUserDefaultTextVCUserName @"kUserDefaultTextVCUserName"
 /// 保存添加小睿时用户输入的UUID
 #define kUserDefaultUserInputUUID @"kUserDefaultUserInputUUID"
+
 
 
 /// 创建空调 通知
@@ -238,8 +239,10 @@
 #define HRTimeInterval 10.0
 
 #define SERVER_IP1		"192.168.0.8"
-#define SERVER_IP		"120.24.183.44"
-#define SERVER_DOMAIN	"www.gzhuarui.cn"
+//#define SERVER_IP		"120.24.183.44"
+#define SERVER_IP		"183.63.118.58"
+//#define SERVER_DOMAIN	"www.gzhuarui.cn"
+#define SERVER_DOMAIN	"http://183.63.118.58:9885/hrctest"
 #define SERVER_PORT		9888
 
 #define SERVER_APIP		"192.168.5.1"

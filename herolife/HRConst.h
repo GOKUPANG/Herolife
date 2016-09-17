@@ -27,8 +27,11 @@ UIKIT_EXTERN CGFloat const HRNavH;
 
 /// 获取锁信息数据的GET请求URL
 #define HRAPI_LockInFo_URL @"http://www.gzhuarui.cn/?q=huaruiapi/herolife-dev"
-/// 获得设备授权表
-#define HRAPI_LockAutherList_URL @"http://www.gzhuarui.cn/?q=huaruiapi/herolife-dev-hrsc-al&user/person="
+/// 我授权给别人的数据
+#define HRAPI_LockAutherUserList_URL @"http://www.gzhuarui.cn/?q=huaruiapi/herolife-dev-hrsc-al&user="
+/// 别人授权给我的数据
+#define HRAPI_LockAutherPersonList_URL @"http://www.gzhuarui.cn/?q=huaruiapi/herolife-dev-hrsc-al&person="
+
 /// 获得授权设备信息 HTTP
 #define HRAPI_LockAutherInformation_URL @"http://www.gzhuarui.cn/?q=huaruiapi/herolife-dev&uuid="
 

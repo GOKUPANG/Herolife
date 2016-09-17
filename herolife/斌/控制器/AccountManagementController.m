@@ -188,11 +188,8 @@
  
     
     [self makeMyUI];
-    
-    
-    
+	
 }
-
 #pragma mark - UI事件  -haibo
 - (void)backButtonClick:(UIButton *)btn
 {
@@ -914,18 +911,12 @@
     [_comfirmFixView addGestureRecognizer:confirmTap];
     
     _comfirmFixView.userInteractionEnabled = NO;
-    
-
-    
-    
-    
+	
 }
 
 #pragma mark -设置导航栏UI
 -(void)setUI
 {
-    
-
    //导航栏字体设置
     [self.navigationController.navigationBar setTitleTextAttributes:
      

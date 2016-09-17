@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
+@class DoorLockModel;
 @interface DoorRecordCell : UITableViewCell
 
 /** 三个label*/
@@ -20,7 +20,8 @@
 
 /** 操作记录 */
 @property(nonatomic,strong)UILabel * recordLabel;
-
+/** <#name#> */
+@property(nonatomic, strong) DoorLockModel *lockModel;
 
 
 

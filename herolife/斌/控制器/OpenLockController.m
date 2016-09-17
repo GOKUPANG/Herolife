@@ -240,21 +240,23 @@
             
             NSString *UUID = [kUserDefault objectForKey:kUserDefaultUUID];
             
-            DeviceListModel *model = [self.homeArray objectAtIndex:1];
+            DeviceListModel *model = self.listModel;
             
-            // NSString *
+            
             
             NSString * uid = model.uid;
             
-         //   NSString *msguuid = model.uuid;
             
             NSString * did  =  model.did;
+            
+            NSString *DoorUUID = model.uuid;
+            
             
             
             
             
             //把获得的dynamicKey放到auth这个字段中去
-             NSString * RequestStr = [NSString stringWithHROpenLockVersion:@"0.01" status:@"200" token:token type:@"control1" desc:@"none" srcUserName:srcUserName srcDevName:UUID dstUserName:srcUserName dstDevName:@"qwertyuiop" msgTypes:@"hrsc" uid:uid did:did uuid:@"qwertyuiop" state:@"none" online:@"none" control:@"2" number:@"none" key:@"none" auth:dynamicKey];
+             NSString * RequestStr = [NSString stringWithHROpenLockVersion:@"0.01" status:@"200" token:token type:@"control1" desc:@"none" srcUserName:srcUserName srcDevName:UUID dstUserName:srcUserName dstDevName:DoorUUID msgTypes:@"hrsc" uid:uid did:did uuid:DoorUUID state:@"none" online:@"none" control:@"2" number:@"none" key:@"none" auth:dynamicKey];
             
           
             
@@ -388,26 +390,31 @@
     
     NSString *UUID = [kUserDefault objectForKey:kUserDefaultUUID];
     
-    DeviceListModel *model = [self.homeArray objectAtIndex:1];
+    DeviceListModel *model = self.listModel;
+    
     
    // NSString *
     
     NSString * uid = model.uid;
     
-    NSString *msguuid = model.uuid;
+   // NSString *msguuid = model.uuid;
     
     NSString * did  =  model.did;
+    
+    NSString *DoorUUID  = model.uuid;
     
     //NSString *msgtitle = model.title;
     
     NSLog(@"token是%@",token);
     
     
+    
+    
 
 
     
 
-    NSString * RequestStr = [NSString stringWithHROpenLockVersion:@"0.01" status:@"200" token:token type:@"control1" desc:@"none" srcUserName:srcUserName srcDevName:UUID dstUserName:srcUserName dstDevName:@"qwertyuiop" msgTypes:@"hrsc" uid:uid did:did uuid:@"qwertyuiop" state:@"none" online:@"none" control:@"0" number:@"none" key:@"none" auth:@"none"];
+    NSString * RequestStr = [NSString stringWithHROpenLockVersion:@"0.01" status:@"200" token:token type:@"control1" desc:@"none" srcUserName:srcUserName srcDevName:UUID dstUserName:srcUserName dstDevName:DoorUUID msgTypes:@"hrsc" uid:uid did:did uuid:DoorUUID state:@"none" online:@"none" control:@"0" number:@"none" key:@"none" auth:@"none"];
     
     NSLog(@"请求的字符串是%@",RequestStr);
     

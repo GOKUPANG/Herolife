@@ -386,7 +386,7 @@
 			 
 			 //头像
 			 NSDictionary *rawDict = user.rawData;
-			 NSString *urlStr = [rawDict valueForKeyPath:@"figureurl_1"];
+			 NSString *urlStr = [rawDict valueForKeyPath:@"figureurl_2"];
 			 [kNSUserDefaults setObject:urlStr forKey:kNSUserDefaultsNickname];
 			 
 			 [self loginSSDKWithOpenID: openid];

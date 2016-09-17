@@ -8,9 +8,28 @@
 
 #import "DoorRecordCell.h"
 #import "UIView+SDAutoLayout.h"
+#import "DoorLockModel.h"
 
 @implementation DoorRecordCell
-//重写父类方法
+
+- (void)setLockModel:(DoorLockModel *)lockModel
+{
+	_lockModel = lockModel;
+	NSString *title = lockModel.title;
+	NSRange range = [title rangeOfString:@"|"];
+	
+	NSString *time = [title substringToIndex:range.location];
+	
+	range = [title rangeOfString:@"|" options:NSBackwardsSearch];
+	NSString *message = [title substringFromIndex:range.location + 1];
+	
+	self.timeLabel.text = time;
+	self.recordLabel.text = message;
+	self.userNameLabel.text = lockModel.person.firstObject ;
+	
+	DDLogWarn(@"timeLabel%@recordLabel%@userNameLabel%@", self.timeLabel.text, self.recordLabel.text, self.userNameLabel.text);
+	
+}
 
 //重写父类方法
 -(instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
@@ -52,7 +71,7 @@
     //时间
  _timeLabel.sd_layout
     .leftSpaceToView(self.contentView,15.0/375.0 *self.contentView.frame.size.width)
-    .widthIs(110.0/375.0 * self.contentView.frame.size.width)
+    .widthIs(110.0/375.0 * self.contentView.frame.size.width + 60)
     .bottomSpaceToView(self.contentView,10.0)
     .heightIs(20.0);
     

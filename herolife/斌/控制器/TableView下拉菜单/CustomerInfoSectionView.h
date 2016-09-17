@@ -10,11 +10,19 @@
 @protocol CustomerInfoSectionViewDelegate;
 
 @interface CustomerInfoSectionView : UIView
+/** 头像*/
+@property(nonatomic,strong)UIImageView * iconImg;
 
-@property(nonatomic,strong)UILabel *nameLabel;
-@property(nonatomic,strong)UILabel *managerNameLabel;
-@property(nonatomic,strong)UILabel *departmentLabel;
-@property(nonatomic,strong)UILabel *addressLabel;
+/** 头像图片名字*/
+@property(nonatomic,copy)     NSString * ImgName;
+
+
+/** 用户名*/
+@property(nonatomic,strong)UILabel * userNameLabel;
+/** 时间 */
+@property(nonatomic,strong)UILabel * timeLabel;
+
+
 
 @property (assign, nonatomic) BOOL isOpen;
 @property (nonatomic, assign) id <CustomerInfoSectionViewDelegate> delegate;
@@ -22,7 +30,8 @@
 @property (strong, nonatomic) UIImageView *arrow;
 -(void)toggleOpen:(id)sender;
 -(void)toggleOpenWithUserAction:(BOOL)userAction;
-- (void)initWithNameLabel:(NSString*)name ManagerNameLabel:(NSString*)managerName DepartmentLabel:(NSString*)department AddressLabel:(NSString*)address section:(NSInteger)sectionNumber delegate:(id <CustomerInfoSectionViewDelegate>)delegate;
+- (void)initWithImgName:(NSString*)ImgName userNameLabel:(NSString*)userName timeLabel:(NSString*)time   section:(NSInteger)sectionNumber delegate:(id <CustomerInfoSectionViewDelegate>)delegate;
+
 @end
 
 @protocol CustomerInfoSectionViewDelegate <NSObject>

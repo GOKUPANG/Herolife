@@ -7,10 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "DeviceListModel.h"
 
 @interface OpenLockController : UIViewController
-/** 主页面传过来的东西 */
-@property(nonatomic,strong)NSMutableArray * homeArray;
+//** 上个界面传过来的模型 */
+@property(nonatomic, strong) DeviceListModel * listModel;
 
 
 @end

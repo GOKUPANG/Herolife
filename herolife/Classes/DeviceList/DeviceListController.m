@@ -22,8 +22,6 @@
 #import "ShouQuanManagerController.h"
 #import "DeviceListModel.h"
 
-
-
 #import "DeviceListTcpModel.h"
 #import "HRPushMode.h"
 #import "DeviceAutherModel.h"
@@ -56,7 +54,6 @@
 @property(nonatomic, weak) YRCoverFlowLayout *layout;
 
 /** 背景图片*/
-
 @property(nonatomic,strong)UIImageView *backImgView;
 /** appDelegte */
 @property(nonatomic, weak) AppDelegate *appDelegate;
@@ -68,18 +65,21 @@
 /** <#name#> */
 @property(nonatomic, strong) DeviceListModel *currentStateModel;
 
-
-/** 授权表模型数组 */
+/** 我授权给别人的授权表模型数组 */
 @property(nonatomic, strong) NSMutableArray *autherArray;
-/** 授权设备信息 模型数组 */
+/** 我授权给别人的设备模型数组 */
 @property(nonatomic, strong) NSMutableArray *autherDeviceArray;
+/** 别人授权给我的授权表模型数组 */
+@property(nonatomic, strong) NSMutableArray *autherPersonArray;
+/** 别人授权给我的设备模型数组 */
+@property(nonatomic, strong) NSMutableArray *personDeviceArray;
 
 
 @end
 
 @implementation DeviceListController
 //定时60s查询设备状态
-NSInteger const timerDuration = 3.0;
+NSInteger const timerDuration = 60.0;
 - (NSMutableArray *)homeArray
 {
 	if (!_homeArray) {
@@ -101,6 +101,20 @@ NSInteger const timerDuration = 3.0;
 	}
 	return _autherDeviceArray;
 }
+- (NSMutableArray *)autherPersonArray
+{
+	if (!_autherPersonArray) {
+		_autherPersonArray = [NSMutableArray array];
+	}
+	return _autherPersonArray;
+}
+- (NSMutableArray *)personDeviceArray
+{
+	if (!_personDeviceArray) {
+		_personDeviceArray = [NSMutableArray array];
+	}
+	return _personDeviceArray;
+}
 -(void)viewWillAppear:(BOOL)animated
 {
     NSInteger  PicNum =  [[NSUserDefaults standardUserDefaults] integerForKey:@"PicNum"];
@@ -117,14 +131,13 @@ NSInteger const timerDuration = 3.0;
         path = [path stringByAppendingPathComponent:@"image.png"];
         
         self.backImgView.image =[UIImage imageWithContentsOfFile:path];
-    }
-    
-    else{
+    }else{
         
         NSString * imgName = [NSString stringWithFormat:@"%ld.jpg",PicNum];
         
         self.backImgView.image =[UIImage imageNamed:imgName];
     }
+	
 }
 
 - (NSMutableArray *)photoModelArray
@@ -136,9 +149,12 @@ NSInteger const timerDuration = 3.0;
 }
 static NSString *cellID = @"cellID";
 - (void)viewDidLoad {
+	
     [super viewDidLoad];
+	
 	//初始化
 	[self setupViews];
+	
 	//注册
 	[self.tableView registerClass:[DeviceListCell class] forCellReuseIdentifier:cellID];
 	[self.collectionView registerClass:[CustomCollectionViewCollectionViewCell class] forCellWithReuseIdentifier:kCustomCellIdentifier];
@@ -149,14 +165,12 @@ static NSString *cellID = @"cellID";
 	[self getHttpRequset];
 	//通知
 	[self addObserverNotification];
-	
 	//获得设备授权表
 	[self addAutherList];
 }
 #pragma mark - 通知
 - (void)addObserverNotification
 {
-	
 	//监听设备是否在线
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receviedWithNotOnline) name:kNotificationNotOnline object:nil];
 	
@@ -191,7 +205,6 @@ static BOOL isShowOverMenu = NO;
 			}
 			
 			// 重新给锁添加 数组图片
-			
 			if ([model.types isEqualToString:@"hrsc"]) {
     
 				if ([model.state isEqualToString:@"0"]) {
@@ -213,9 +226,9 @@ static BOOL isShowOverMenu = NO;
 		self.homeArray = homeMu;
 		}
 		
-		self.currentStateModel.state = tcpModel.state;
-		self.currentStateModel.online = tcpModel.online;
-		self.currentStateModel.level = tcpModel.level;;
+//		self.currentStateModel.state = tcpModel.state;
+//		self.currentStateModel.online = tcpModel.online;
+//		self.currentStateModel.level = tcpModel.level;;
 		[self.tableView reloadData];
 		[self.collectionView reloadData];
 	}
@@ -231,7 +244,7 @@ static BOOL isShowOverMenu = NO;
 	UIImageView *backgroundImage = [[UIImageView alloc] initWithFrame:[UIScreen mainScreen].bounds];
 	backgroundImage.image = [UIImage imageNamed:@"Snip20160825_3"];
     
-    self.backImgView=backgroundImage;
+    self.backImgView = backgroundImage;
     
 	[self.view addSubview:backgroundImage];
 	
@@ -282,7 +295,7 @@ static BOOL isShowOverMenu = NO;
 	UILabel *listLabel = [[UILabel alloc] init];
 	listLabel.text = @"  ";
 	listLabel.textAlignment = NSTextAlignmentLeft;
-	listLabel.lineBreakMode = NSLineBreakByClipping;
+	listLabel.lineBreakMode = NSLineBreakByTruncatingTail;
 	listLabel.textColor = [UIColor whiteColor];
 	if (HRUIScreenH < 667) {
 		listLabel.font = [UIFont systemFontOfSize:12];
@@ -373,21 +386,24 @@ static BOOL isShowOverMenu = NO;
 		make.height.mas_equalTo(HRCommonScreenH * 50);
 	}];
 	
-	//列表按钮里的文本
-	[self.listLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-		make.center.equalTo(self.listButton);
-	}];
 	
 	//列表按钮里左边的图片
 	[self.listImageView mas_makeConstraints:^(MASConstraintMaker *make) {
 		make.left.equalTo(self.listButton).offset(HRCommonScreenW * 10);
 		make.centerY.equalTo(self.listButton);
 	}];
+	
+	//列表按钮里的文本
+	[self.listLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+		make.center.equalTo(self.listButton);
+		make.left.equalTo(self.listImageView.mas_right).offset(HRCommonScreenW * 8);
+		make.width.mas_equalTo(HRCommonScreenW * 146);
+	}];
 	//列表按钮里的右边图片
 	[self.rightImageView mas_makeConstraints:^(MASConstraintMaker *make) {
 		make.right.equalTo(self.listButton).offset(- HRCommonScreenW *10);
 		make.centerY.equalTo(self.listButton);
-//		make.left.equalTo(self.listLabel.mas_right).offset(HRCommonScreenW * 10);
+		make.left.equalTo(self.listLabel.mas_right).offset(HRCommonScreenW * 20);
 	}];
 	
 	[self.alphaView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -542,7 +558,26 @@ static BOOL isShowOverMenu = NO;
             
         {
             OpenLockController * OLC = [OpenLockController new];
+			
+			// 直接
+			for (DeviceAutherModel *auther in self.autherPersonArray) {
+    
+				if ([auther.uuid isEqualToString: self.currentStateModel.uuid]) {
+					NSArray *arr = auther.permit;
+					if ([arr[0] isEqualToString:@"1"]) {
+						
+						OLC.listModel = self.currentStateModel;
+						[self.navigationController pushViewController:OLC animated:YES];
+						
+					}else
+					{
+						[SVProgressTool hr_showErrorWithStatus:@"该锁当前用户无权限控制门锁!"];
+					}
+					return ;
+				}
+			}
             
+            OLC.listModel = self.currentStateModel;
             [self.navigationController pushViewController:OLC animated:YES];
     
         }
@@ -553,9 +588,29 @@ static BOOL isShowOverMenu = NO;
         {
             
             DoorLockRecordConroller *  DLC = [DoorLockRecordConroller new];
-            [self.navigationController pushViewController:DLC animated:YES];
-            
-            
+			
+			// 直接
+			for (DeviceAutherModel *auther in self.autherPersonArray) {
+    
+				if ([auther.uuid isEqualToString: self.currentStateModel.uuid]) {
+					NSArray *arr = auther.permit;
+					if ([arr[1] isEqualToString:@"1"]) {
+						
+						DLC.listModel = self.currentStateModel;
+						[self.navigationController pushViewController:DLC animated:YES];
+						
+					}else
+					{
+						[SVProgressTool hr_showErrorWithStatus:@"该锁当前用户无权限记录查询!"];
+					}
+					return ;
+				}
+			}
+			
+			
+			DLC.listModel = self.currentStateModel;
+			[self.navigationController pushViewController:DLC animated:YES];
+			
         }
             break;
             
@@ -564,6 +619,29 @@ static BOOL isShowOverMenu = NO;
         {
             
             APPPSWController * PSWC = [APPPSWController new];
+			
+			// 直接
+			for (DeviceAutherModel *auther in self.autherPersonArray) {
+    
+				if ([auther.uuid isEqualToString: self.currentStateModel.uuid]) {
+					NSArray *arr = auther.permit;
+					if ([arr[2] isEqualToString:@"1"]) {
+						
+						PSWC.listModel = self.currentStateModel;
+						[self.navigationController pushViewController:PSWC animated:YES];
+						
+					}else
+					{
+						[SVProgressTool hr_showErrorWithStatus:@"该锁当前用户无权限密码管理!"];
+					}
+					return ;
+				}
+			}
+			
+			
+             PSWC.listModel = self.currentStateModel;
+            
+            
             
             [self.navigationController pushViewController:PSWC animated:YES];
             
@@ -573,10 +651,31 @@ static BOOL isShowOverMenu = NO;
             
         case 3:
         {
-            ShouQuanManagerController *SQC = [ShouQuanManagerController new];
-            
-            [self.navigationController pushViewController:SQC animated:YES];
-            
+			ShouQuanManagerController *SQC = [ShouQuanManagerController new];
+			// 直接
+			for (DeviceAutherModel *auther in self.autherPersonArray) {
+    
+				if ([auther.uuid isEqualToString: self.currentStateModel.uuid]) {
+					NSArray *arr = auther.permit;
+					if ([arr[3] isEqualToString:@"1"]) {
+						SQC.autherDeviceArray = self.autherDeviceArray;
+						SQC.autherArray = self.autherArray;
+						[self.navigationController pushViewController:SQC animated:YES];
+						
+					}else
+					{
+						[SVProgressTool hr_showErrorWithStatus:@"该锁当前用户无权限授权管理!"];
+					}
+					return ;
+				}
+			}
+			
+			
+			SQC.autherDeviceArray = self.autherDeviceArray;
+			SQC.autherArray = self.autherArray;
+			
+			[self.navigationController pushViewController:SQC animated:YES];
+			
         }
             
             break;
@@ -687,7 +786,7 @@ static BOOL isShowOverMenu = NO;
 			return ;
 		}
 		
-		DDLogWarn(@"listArray%@", responseObject);
+		DDLogWarn(@"获取设备信息HTTP请求%@", responseObject);
 		//如果responseObject不是数组类型就不是我们想要的数据，应该过滤掉
 		if (![responseObject isKindOfClass:[NSArray class]]) {
 			[weakSelf.homeArray removeAllObjects];
@@ -737,19 +836,19 @@ static BOOL isShowOverMenu = NO;
 #pragma mark - 获得设备授权表 HTTP
 - (void)addAutherList
 {
+	//我授权给别人的数据, 请求下来的数据要传到授权列表界面
 	NSString *username = [kUserDefault objectForKey:kDefaultsUserName];
-	NSString *url = [NSString stringWithFormat:@"%@%@", HRAPI_LockAutherList_URL,username];
+	NSString *url = [NSString stringWithFormat:@"%@%@", HRAPI_LockAutherUserList_URL,username];
 	url = [url stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
 	
 	HRWeakSelf
 	[HRHTTPTool hr_getHttpWithURL:url parameters:nil responseDict:^(id responseObject, NSError *error) {
-		DDLogWarn(@"array:%@---error:%@", responseObject,error);
 		
 		if (error) {
 			[ErrorCodeManager showError:error];
 			return ;
 		}
-		DDLogWarn(@"listArray%@", responseObject);
+		DDLogWarn(@"获得设备授权表 HTTP%@", responseObject);
 		
 		//如果responseObject不是数组类型就不是我们想要的数据，应该过滤掉
 		if (![responseObject isKindOfClass:[NSArray class]]) {
@@ -764,6 +863,8 @@ static BOOL isShowOverMenu = NO;
 		}
 		
 		[weakSelf.autherArray removeAllObjects];
+		[weakSelf.autherDeviceArray removeAllObjects];
+		
 		NSArray *responseArr = (NSArray*)responseObject;
 		
 		for (NSDictionary *dict in responseArr) {
@@ -771,20 +872,67 @@ static BOOL isShowOverMenu = NO;
 			[weakSelf.autherArray addObject:auther];
 			
 			
+			for (DeviceListModel *listModel in weakSelf.homeArray) {
+				if ([listModel.uuid isEqualToString:auther.uuid]) {
+					[weakSelf.autherDeviceArray addObject:listModel];
+				}
+			}
+			
 		}
 		
 		AppDelegate *app = (AppDelegate *)[UIApplication sharedApplication].delegate;
 		app.autherArray = weakSelf.autherArray;
-		[weakSelf addDeviceAutherInformation];
+		
+		app.autherDeviceArray = weakSelf.autherDeviceArray;
+		[kNotification postNotificationName:kNotificationReceiveDeviceAutherInformation object:nil];
 	}];
+	
+	//别人授权给我的数据, 请求下来的数据要在本界面显示
+	username = [kUserDefault objectForKey:kDefaultsUserName];
+	url = [NSString stringWithFormat:@"%@%@", HRAPI_LockAutherPersonList_URL,username];
+	url = [url stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
+	
+	[HRHTTPTool hr_getHttpWithURL:url parameters:nil responseDict:^(id responseObject, NSError *error) {
+		
+		if (error) {
+			[ErrorCodeManager showError:error];
+			return ;
+		}
+		DDLogWarn(@"别人授权给我的授权表数据%@", responseObject);
+		
+		//如果responseObject不是数组类型就不是我们想要的数据，应该过滤掉
+		if (![responseObject isKindOfClass:[NSArray class]]) {
+			[weakSelf.autherPersonArray removeAllObjects];
+			DDLogDebug(@"responseObject不是NSArray");
+			return;
+		}
+		//去除服务器发过来的数据里没有值的情况
+		if (((NSArray*)responseObject).count < 1 ) {
+			DDLogDebug(@"responseObject count == 0");
+			return;
+		}
+		
+		[weakSelf.autherPersonArray removeAllObjects];
+		NSArray *responseArr = (NSArray*)responseObject;
+		
+		for (NSDictionary *dict in responseArr) {
+			DeviceAutherModel *auther = [DeviceAutherModel mj_objectWithKeyValues:dict];
+			[weakSelf.autherPersonArray addObject:auther];
+			
+			
+		}
+		
+			[weakSelf addDeviceAutherInformation];
+	}];
+	
 }
 
 #pragma mark - 获得授权设备信息 HTTP
 - (void)addDeviceAutherInformation
 {
 	NSString *uuidAllString = @"";
-	for (int i = 0; i < self.autherArray.count ; i++) {
-		DeviceAutherModel *auther = [DeviceAutherModel mj_objectWithKeyValues:self.autherArray[i]];
+	for (int i = 0; i < self.autherPersonArray.count ; i++) {
+		DeviceAutherModel *auther = [DeviceAutherModel mj_objectWithKeyValues:self.autherPersonArray[i]];
 		uuidAllString = [NSString stringWithFormat:@"%@%@|", uuidAllString, auther.uuid];
 	}
 	uuidAllString = [uuidAllString substringToIndex:uuidAllString.length - 1];
@@ -803,7 +951,7 @@ static BOOL isShowOverMenu = NO;
 		
 		//如果responseObject不是数组类型就不是我们想要的数据，应该过滤掉
 		if (![responseObject isKindOfClass:[NSArray class]]) {
-			[weakSelf.autherDeviceArray removeAllObjects];
+			[weakSelf.personDeviceArray removeAllObjects];
 			DDLogDebug(@"responseObject不是NSArray");
 			return;
 		}
@@ -813,19 +961,43 @@ static BOOL isShowOverMenu = NO;
 			return;
 		}
 		
-		[weakSelf.autherDeviceArray removeAllObjects];
+		[weakSelf.personDeviceArray removeAllObjects];
 		NSArray *responseArr = (NSArray*)responseObject;
 		
 		for (NSDictionary *dict in responseArr) {
 			DeviceListModel *auther = [DeviceListModel mj_objectWithKeyValues:dict];
-			[weakSelf.autherDeviceArray addObject:auther];
+			[weakSelf.personDeviceArray addObject:auther];
 			
-			
+			[weakSelf.homeArray addObject:auther];
 		}
 		
-		AppDelegate *app = (AppDelegate *)[UIApplication sharedApplication].delegate;
-		app.autherDeviceArray = weakSelf.autherDeviceArray;
-		[kNotification postNotificationName:kNotificationReceiveDeviceAutherInformation object:nil];
+		
+		[self.photoModelArray removeAllObjects];
+		
+		for (DeviceListModel *model  in weakSelf.homeArray) {
+			
+			// 重新给锁添加 数组图片
+			if ([model.types isEqualToString:@"hrsc"]) {
+    
+				if ([model.state isEqualToString:@"0"]) {
+					
+					[self.photoModelArray addObject:
+					 [PhotoModel modelWithImageNamed:@"离线锁"
+										 description:@""]];
+					
+				}else
+				{
+					[self.photoModelArray addObject:
+					 [PhotoModel modelWithImageNamed:@"原锁"
+										 description:@""]];
+				}
+				
+		}
+		}
+		[weakSelf.tableView reloadData];
+		[weakSelf.collectionView reloadData];
+		
+		
 	}];
 }
 

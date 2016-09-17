@@ -17,6 +17,16 @@
     int line_tag;
     UIView *highlightView;
 }
+
+
+/** 扫描二维码 按钮 */
+@property(nonatomic, weak) UIButton *leftButton;
+/** 扫描二维码 label */
+@property(nonatomic, weak) UILabel *qrLabel;
+/** 手动添加 按钮 */
+@property(nonatomic, weak) UIButton *rightButton;
+/** 手动添加Label */
+@property(nonatomic, weak) UILabel *rightLabel;
 @end
 
 @implementation QRCodeController
@@ -31,10 +41,15 @@
     [self instanceDevice];
 	
 }
+- (void)viewWillAppear:(BOOL)animated
+{
+	[super viewWillAppear:animated];
+	self.leftButton.selected = YES;
+	self.rightButton.selected = NO;
+}
 - (void)viewDidAppear:(BOOL)animated
 {
 	[super viewDidAppear:animated];
-	
 }
 - (void)setupViews
 {
@@ -252,16 +267,18 @@
     label.text = @"将设备进入激活模式并扫描屏幕二维码";
     [self.view addSubview:label];
 	
+	/// 自己添加的按钮
 	//二维码按钮
 	CGFloat tabbarMinY = HRUIScreenH - 49;
 	UIButton *leftButton= [UIButton buttonWithType:UIButtonTypeCustom];
-	[leftButton setBackgroundImage:[UIImage imageNamed:@"发光圆"] forState:UIControlStateNormal];
-	[leftButton setImage:[UIImage imageNamed:@"二维码"] forState:UIControlStateNormal];
+	[leftButton setBackgroundImage:[UIImage imageNamed:@"新增二维码"] forState:UIControlStateNormal];
+	[leftButton setBackgroundImage:[UIImage imageNamed:@"新增发光二维"] forState:UIControlStateSelected];
 	leftButton.frame = CGRectMake(0, tabbarMinY - HRCommonScreenH *(104 +72), HRCommonScreenW * 72, HRCommonScreenW * 72);
 	leftButton.hr_centerX = self.view.hr_centerX - HRCommonScreenW *134;
 	[leftButton addTarget:self action:@selector(qrcodeButtonClick:) forControlEvents:UIControlEventTouchUpInside];
 	[self.view addSubview:leftButton];
 	
+	self.leftButton = leftButton;
 	CGSize leftSize = [@"扫描二维码" sizeWithAttributes:dict];
 	
 	
@@ -274,18 +291,19 @@
 	qrLabel.text = @"扫描二维码";
 	
 	[self.view addSubview:qrLabel];
+	self.qrLabel = qrLabel;
 	
 	//手动添加按钮
 	UIButton *rightButton= [UIButton buttonWithType:UIButtonTypeCustom];
-	[rightButton setBackgroundImage:[UIImage imageNamed:@"发光圆"] forState:UIControlStateNormal];
-	[rightButton setImage:[UIImage imageNamed:@"手指"] forState:UIControlStateNormal];
+	[rightButton setBackgroundImage:[UIImage imageNamed:@"新增手动"] forState:UIControlStateNormal];
+	[rightButton setBackgroundImage:[UIImage imageNamed:@"新增发光手"] forState:UIControlStateSelected];
 	rightButton.frame = CGRectMake(0, tabbarMinY - HRCommonScreenH *(104 +72), HRCommonScreenW * 72, HRCommonScreenW * 72);
 	rightButton.hr_centerX = self.view.hr_centerX + HRCommonScreenW *134;
 	[rightButton addTarget:self action:@selector(manualButtonClick:) forControlEvents:UIControlEventTouchUpInside];
 	[self.view addSubview:rightButton];
+	self.rightButton = rightButton;
 	
 	CGSize rightSize = [@"手动添加" sizeWithAttributes:dict];
-	
 	UILabel *rightLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(leftButton.frame) + HRCommonScreenH*10, rightSize.width, rightSize.height)];
 	rightLabel.hr_centerX = rightButton.hr_centerX;
 	rightLabel.backgroundColor = [UIColor clearColor];
@@ -295,14 +313,16 @@
 	rightLabel.text = @"手动添加";
 	
 	[self.view addSubview:rightLabel];
+	self.rightLabel = rightLabel;
 }
 #pragma mark - UI事件
 - (void)qrcodeButtonClick:(UIButton *)btn
 {
-	
 }
 - (void)manualButtonClick:(UIButton *)btn
 {
+	self.leftButton.selected = NO;
+	self.rightButton.selected = YES;
 	ManualController *manulVC = [[ManualController alloc] init];
 	
 	[self.navigationController pushViewController:manulVC animated:YES];

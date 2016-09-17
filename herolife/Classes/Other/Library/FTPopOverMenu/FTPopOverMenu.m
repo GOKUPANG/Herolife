@@ -21,7 +21,7 @@
 #define FTDefaultMenuArrowHeight    10.0
 #define FTDefaultMenuArrowWidth     7.0
 #define FTDefaultMenuCornerRadius   4.0
-#define FTDefaultMargin             59.0
+#define FTDefaultMargin             4.0
 #define FTDefaultAnimationDuration  0.2
 
 #define FTPopOverMenuTableViewCellIndentifier @"FTPopOverMenuTableViewCellIndentifier"
@@ -82,6 +82,8 @@ typedef NS_ENUM(NSUInteger, FTPopOverMenuArrowDirection) {
 		listLabel.text = menuName;
 		listLabel.textColor = [UIColor whiteColor];
 		listLabel.font = [UIFont systemFontOfSize:17];
+		listLabel.textAlignment = NSTextAlignmentLeft;
+		listLabel.lineBreakMode = NSLineBreakByTruncatingTail;
 		[bottomLabel addSubview:listLabel];
 		self.listLabel = listLabel;
 		
@@ -100,18 +102,18 @@ typedef NS_ENUM(NSUInteger, FTPopOverMenuArrowDirection) {
 		make.height.mas_equalTo(HRCommonScreenH * 50);
 	}];
 	
-	
 	//列表按钮里左边的图片
 	[self.listImageView mas_makeConstraints:^(MASConstraintMaker *make) {
-		make.left.equalTo(self.bottomLabel).offset(HRCommonScreenW * 6);
+		make.left.equalTo(self.bottomLabel).offset(HRCommonScreenW * 10);
+		make.width.mas_equalTo(HRCommonScreenW * 45);
 		make.centerY.equalTo(self.bottomLabel);
 	}];
 	//列表按钮里的文本
 	[self.listLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-		make.center.equalTo(self.bottomLabel);
+		make.centerY.equalTo(self.bottomLabel);
+		make.left.equalTo(self.listImageView.mas_right).offset(HRCommonScreenW * 8);
+		make.right.equalTo(self.mas_right).offset(- HRCommonScreenW *20);
 	}];
-	
-	
 }
 
 

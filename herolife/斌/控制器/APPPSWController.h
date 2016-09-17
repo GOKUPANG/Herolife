@@ -7,7 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "DeviceListModel.h"
 
 @interface APPPSWController : UIViewController
+
+
+/** 上个界面传过来的模型 */
+@property(nonatomic, strong) DeviceListModel * listModel;
+
 
 @end

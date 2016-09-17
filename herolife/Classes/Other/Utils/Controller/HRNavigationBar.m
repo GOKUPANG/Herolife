@@ -33,7 +33,7 @@
 		
 		//右边label
 		UILabel *rightLabel = [[UILabel alloc] init];
-		rightLabel.font = [UIFont systemFontOfSize: 14];
+		rightLabel.font = [UIFont systemFontOfSize: 17];
 		rightLabel.textAlignment = NSTextAlignmentCenter;
 		rightLabel.textColor = [UIColor whiteColor];
 		[self addSubview:rightLabel];

@@ -50,6 +50,12 @@
 	[self IsTabBarHidden:YES];
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+	[super viewWillAppear:animated];
+	self.qrButton.selected = NO;
+	self.manualButton.selected = YES;
+}
 #pragma mark - 内部方法
 //初始化
 - (void)setupViews
@@ -79,8 +85,8 @@
 	dict[NSFontAttributeName] = [UIFont systemFontOfSize:14];
 	//二维码按钮
 	UIButton *qrButton = [UIButton buttonWithType:UIButtonTypeCustom];
-	[qrButton setBackgroundImage:[UIImage imageNamed:@"发光圆"] forState:UIControlStateNormal];
-	[qrButton setImage:[UIImage imageNamed:@"二维码"] forState:UIControlStateNormal];
+	[qrButton setBackgroundImage:[UIImage imageNamed:@"新增二维码"] forState:UIControlStateNormal];
+	[qrButton setBackgroundImage:[UIImage imageNamed:@"新增发光二维"] forState:UIControlStateSelected];
 	[qrButton addTarget:self action:@selector(qrcodeButtonClick:) forControlEvents:UIControlEventTouchUpInside];
 	[self.view addSubview:qrButton];
 	self.qrButton = qrButton;
@@ -98,8 +104,8 @@
 	
 	//手动添加按钮
 	UIButton *manualButton = [UIButton buttonWithType:UIButtonTypeCustom];
-	[manualButton setBackgroundImage:[UIImage imageNamed:@"发光圆"] forState:UIControlStateNormal];
-	[manualButton setImage:[UIImage imageNamed:@"手指"] forState:UIControlStateNormal];
+	[manualButton setBackgroundImage:[UIImage imageNamed:@"新增手动"] forState:UIControlStateNormal];
+	[manualButton setBackgroundImage:[UIImage imageNamed:@"新增发光手"] forState:UIControlStateSelected];
 	[manualButton addTarget:self action:@selector(manualButtonClick:) forControlEvents:UIControlEventTouchUpInside];
 	[self.view addSubview:manualButton];
 	self.manualButton = manualButton;
@@ -187,11 +193,15 @@
 #pragma mark - UI事件
 - (void)qrcodeButtonClick:(UIButton *)btn
 {
+	self.qrButton.selected = YES;
+	self.manualButton.selected = NO;
 	[self.navigationController popViewControllerAnimated:YES];
 }
 - (void)manualButtonClick:(UIButton *)btn
 {
 	
+	self.qrButton.selected = NO;
+	self.manualButton.selected = YES;
 }
 
 - (void)viewWillDisappear:(BOOL)animated

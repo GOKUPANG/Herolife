@@ -36,6 +36,7 @@
 #import "GoToSetUpController.h"
 #import "DeviceListTcpModel.h"
 #import "HRPushMode.h"
+#import "EBForeNotification.h"
 
 
 
@@ -86,12 +87,6 @@ static NSInteger disconnectCount = 0;
 	//监听登入认证通知
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receviedLoginData:) name:kNotificationLogin object:nil];
 	
-	//获取手机UUID保存下来
-	if (![kUserDefault objectForKey:kUserDefaultUUID]) {
-		NSString *UUID = [NSString stringWithUUID];
-		[kUserDefault setObject:UUID forKey:kUserDefaultUUID];
-		[kUserDefault synchronize];
-	}
 	
 	//处理iOS8本地推送不能收到
 	float sysVersion=[[UIDevice currentDevice]systemVersion].floatValue;
@@ -103,10 +98,133 @@ static NSInteger disconnectCount = 0;
 	
 	[application setMinimumBackgroundFetchInterval:1.0];
 	
+	[kUserDefault setObject:@"" forKey:kUserDefaultUUID];
+	[kUserDefault synchronize];
+	
 	//添加通知
 	[kNotification addObserver:self selector:@selector(receiveWiFiList) name:kNotificationReceiveWiFiList object:nil];
 	
+	//远程推送相关
+	
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(dddd:) name:EBBannerViewDidClick object:nil];
+	if([[[UIDevice currentDevice]systemVersion]floatValue] >=8.0)
+		
+	{
+		
+		[[UIApplication sharedApplication]registerUserNotificationSettings:[UIUserNotificationSettings
+																			
+																			settingsForTypes:(UIUserNotificationTypeSound|UIUserNotificationTypeAlert|UIUserNotificationTypeBadge)
+																			
+																			categories:nil]];
+		
+		[[UIApplication sharedApplication]registerForRemoteNotifications];
+		
+	}else{
+		
+		//这里还是原来的代码
+		
+		//注册启用push
+		
+		[[UIApplication sharedApplication]registerForRemoteNotificationTypes:
+		 
+		 (UIRemoteNotificationTypeAlert|UIRemoteNotificationTypeSound|UIRemoteNotificationTypeBadge)];
+		
+	}
+
+	
+	
 	return YES;
+}
+- (void)applicationDidFinishLaunching:(UIApplication *)application
+{
+	if([[[UIDevice currentDevice]systemVersion]floatValue] >=8.0)
+		
+	{
+		
+		[[UIApplication sharedApplication]registerUserNotificationSettings:[UIUserNotificationSettings
+																			
+																			settingsForTypes:(UIUserNotificationTypeSound|UIUserNotificationTypeAlert|UIUserNotificationTypeBadge)
+																			
+																			categories:nil]];
+		
+		[[UIApplication sharedApplication]registerForRemoteNotifications];
+		
+	}else{
+		
+		//这里还是原来的代码
+		
+		//注册启用push
+		
+		[[UIApplication sharedApplication]registerForRemoteNotificationTypes:
+		 
+		 (UIRemoteNotificationTypeAlert|UIRemoteNotificationTypeSound|UIRemoteNotificationTypeBadge)];
+		
+	}
+
+}
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
+{
+	NSString *token = [NSString stringWithFormat:@"%@", deviceToken];
+	
+	[kUserDefault setObject:token forKey:kUserDefaultUUID];
+	[kUserDefault synchronize];
+	NSLog(@"token:%@", token);
+	
+	NSString *appName = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleDisplayName"];
+	NSString *appVersion = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"];
+	NSUInteger rntypes;
+	
+	if ([[UIApplication sharedApplication] respondsToSelector:@selector(currentUserNotificationSettings)]) {
+		
+		rntypes = [[[UIApplication sharedApplication] currentUserNotificationSettings] types];
+		
+		
+	} else {
+		
+		rntypes = [[UIApplication sharedApplication] enabledRemoteNotificationTypes];
+		
+	}
+	
+	NSString *pushBadge = (rntypes & UIRemoteNotificationTypeBadge) ? @"enabled" : @"disabled";
+	NSString *pushAlert = (rntypes & UIRemoteNotificationTypeAlert) ? @"enabled" : @"disabled";
+	NSString *pushSound = (rntypes & UIRemoteNotificationTypeSound) ? @"enabled" : @"disabled";
+	UIDevice *dev = [UIDevice currentDevice];
+	NSString *deviceName = dev.name;
+	NSString *deviceModel = dev.model;
+	NSString *deviceSystemVersion = dev.systemVersion;
+	NSString *deToken = [[[[deviceToken description] stringByReplacingOccurrencesOfString:@"<" withString:@"" ] stringByReplacingOccurrencesOfString:@">" withString:@""] stringByReplacingOccurrencesOfString:@"" withString:@""];
+	NSString *host = @"192.168.0.51";
+	NSString *urlString = [NSString stringWithFormat:@"/apns.php?task=%@&appname=%@&appversion=%@&devicetoken=%@&devicename=%@&devicemodel=%@&deviceversion=%@&pushbadge=%@&pushalert=%@&pushsound=%@",@"register",appName, appVersion, deToken, deviceName, deviceModel, deviceSystemVersion, pushBadge, pushAlert, pushSound];
+	
+	NSURL *url = [[NSURL alloc] initWithScheme:@"http" host:host path:[urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+	NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
+	[NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse * _Nullable response, NSData * _Nullable data, NSError * _Nullable connectionError) {
+		NSLog(@"return Data:%@", data);
+	}];
+	
+	
+}
+- (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error
+{
+	DDLogWarn(@"error inregisteration%@", error);
+}
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
+{
+	[EBForeNotification handleRemoteNotification:userInfo soundID:1312 isIos10:NO];
+	DDLogWarn(@"didReceiveRemoteNotification%@", [userInfo description]);
+	NSDictionary *apsInfo = [userInfo objectForKey:@"aps"];
+	NSString *alert = [apsInfo objectForKey:@"alert"];
+	DDLogWarn(@"didReceiveRemoteNotification- alert-%@",alert);
+	NSString *sound = [apsInfo objectForKey:@"sound"];
+	DDLogWarn(@"didReceiveRemoteNotification- sound-%@",sound);
+	NSString *badge = [apsInfo objectForKey:@"badge"];
+	DDLogWarn(@"didReceiveRemoteNotification- badge-%@",badge);
+	application.applicationIconBadgeNumber = [[apsInfo objectForKey:@"badge"] integerValue];
+	
+	
+}
+-(void)dddd:(NSNotification*)noti{
+	NSLog(@"ddd,%@",noti);
 }
 static BOOL isOverTime = NO;
 - (void)receiveWiFiList
@@ -385,7 +503,6 @@ static NSUInteger lengthInteger = 0;
 		 return;
 	 }
 	 
-	 DDLogWarn(@"didReadData strData没截取  收到的数据%@", strData);
 	 //下次 就可能没有length的情况
 	 //截取  length字符串
 	 if ([strData containsString:@"length\r\n"]) {
@@ -394,7 +511,6 @@ static NSUInteger lengthInteger = 0;
 		 
 		 if (lengthInteger < 9 && lengthInteger > strData.length)
 		 {return;}
-		 //		 DDLogError(@"length%lu strData--%@", strData.length, strData);
 		 
 		 NSString *lengthStr = [strData substringFromIndex:lengthInteger];
 		 
