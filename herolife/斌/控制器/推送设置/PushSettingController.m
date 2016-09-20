@@ -10,8 +10,12 @@
 
 
 #import "PushSettingController.h"
+#import "YXCustomAlertView.h"
+#import "NSString+PushSet.h"
+#import "CALayer+Anim.h"
 
-@interface PushSettingController ()
+
+@interface PushSettingController ()<YXCustomAlertViewDelegate>
 
 /** 顶部条 */
 @property(nonatomic, weak) HRNavigationBar *navView;
@@ -20,10 +24,78 @@
 
 @property(nonatomic,strong)UIImageView *backImgView;
 
+
+/** OP数组 */
+
+@property(nonatomic,strong) NSMutableArray * OPArray;
+
+
+/**  对方联系号码 输入框*/
+
+@property(nonatomic,strong) UITextField * FriendPhoneTF;
+
+/**  挟持提醒人 输入框*/
+
+@property(nonatomic,strong) UITextField * FriendNameTF;
+
+
+/**  自己的名字 输入框*/
+@property(nonatomic,strong) UITextField * MyNameTF;
+
+
+/**  门锁地点 输入框*/
+@property(nonatomic,strong) UITextField * DoorAddressTF;
+
+
+/**  防撬提醒人手机号码 输入框*/
+@property(nonatomic,strong) UITextField * FanQiaoPhoneTF;
+
+
+/**  防撬提醒人 输入框*/
+@property(nonatomic,strong) UITextField * FanQiaoNameTF;
+
+/** 防撬提醒弹出框*/
+@property(nonatomic,strong)YXCustomAlertView * FanQiaoAlertView;
+
+/** 劫持提醒弹出框*/
+
+@property(nonatomic,strong)YXCustomAlertView * KidnapAlertView;
+
+
+
+
+@property(nonatomic,copy)NSString *  FriendPhone;
+
+@property(nonatomic,copy)NSString *  FriendName;
+
+@property(nonatomic,copy)NSString *  MyName;
+
+@property(nonatomic,copy)NSString *  DoorAddress;
+
+@property(nonatomic,copy)NSString *  FanQiaoPhone;
+
+@property(nonatomic,copy)NSString *  FanQiaoName;
+
+
+@property(nonatomic, weak) AppDelegate *appDelegate;
+
+/** 模型数组 */
+@property(nonatomic, strong) NSMutableArray *homeArray;
+
+
 @end
 
 @implementation PushSettingController
 
+
+
+- (NSMutableArray *)homeArray
+{
+    if (!_homeArray) {
+        _homeArray = [NSMutableArray array];
+    }
+    return _homeArray;
+}
 
 - (void)viewWillAppear:(BOOL)animated
 {
@@ -62,6 +134,8 @@
         self.backImgView.image =[UIImage imageNamed:imgName];
     }
     
+    
+    
 }
 
 
@@ -98,6 +172,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    
     UIImageView *backgroundImage = [[UIImageView alloc] initWithFrame:[UIScreen mainScreen].bounds];
     backgroundImage.image = [UIImage imageNamed:@"Snip20160825_3"];
     self.backImgView = backgroundImage;
@@ -121,14 +197,138 @@
     [navView.leftButton addTarget:self action:@selector(backButtonClick:) forControlEvents:UIControlEventTouchUpInside];
     
     [self.view addSubview:navView];
+    
     self.navView = navView;
+    
+    
+    /***************** 获取门锁op数组 *******************/
+
+    
+    [self getHttpDoorOP];
+    
+    
+    
+    /***************** 与服务器建立socket连接 *******************/
+    
+    [self postTokenWithTCPSocket];
+    
+    /***************** 设置原来的op  *******************/
+
+    [self setString ];
     
 
     
-    [self makeBaseUI];
+   
+}
+
+#pragma mark - 获取门锁op数组
+-(void)getHttpDoorOP
+{
+    
+    NSLog(@"来到这里");
+    
+    NSLog(@"设备的uuid%@",self.listModel.uuid);
+    
+    
+    /// 从偏好设置里加载数据
+    NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
+    NSString *user = [userDefault objectForKey:kDefaultsUserName];
+    
+    NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
+    parameters[@"user"] = user;
+    HRWeakSelf
+    [HRHTTPTool hr_getHttpWithURL:HRAPI_LockInFo_URL parameters:parameters responseDict:^(id responseObject, NSError *error) {
+        
+        if (error) {
+            [ErrorCodeManager showError:error];
+            return ;
+        }
+        
+        DDLogWarn(@"获取设备信息HTTP请求%@", responseObject);
+        //如果responseObject不是数组类型就不是我们想要的数据，应该过滤掉
+        if (![responseObject isKindOfClass:[NSArray class]]) {
+            [weakSelf.homeArray removeAllObjects];
+            DDLogDebug(@"responseObject不是NSArray");
+            return;
+            
+            
+        }
+        //去除服务器发过来的数据里没有值的情况
+        if (((NSArray*)responseObject).count < 1 ) {
+            DDLogDebug(@"responseObject count == 0");
+            return;
+        }
+        
+        [weakSelf.homeArray removeAllObjects];
+        NSArray *responseArr = (NSArray*)responseObject;
+        
+        for (NSDictionary *dict in responseArr) {
+            DeviceListModel *home = [DeviceListModel mj_objectWithKeyValues:dict];
+            if ([home.types isEqualToString:@"hrsc"]) {
+                
+                if ([home.uuid isEqualToString:self.listModel.uuid]) {
+                    
+                    
+                    self.listModel=home;
+                    
+                    NSLog(@"Home的op数组是%@",home.op);
+                    
+                    NSLog(@"我的op数组是%@",self.listModel.op);
+                    
+                    
+                    
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        
+                        [self makeBaseUI];
+
+                        
+                    });
+
+                   
+                    
+                    
+                }
+                
+                
+                [weakSelf.homeArray addObject:home];
+                
+               
+                
+            }
+        }
+        
+        
+    }];
+    
+    /***************** 建立UI界面 *******************/
     
    
 }
+
+
+#pragma mark - 
+-(void)setString
+{
+    self.FriendPhone = [self.listModel.op objectAtIndex:4];
+    self.FriendName  = [self.listModel.op objectAtIndex:5];
+    self.MyName      = [self.listModel.op objectAtIndex:6];
+    self.DoorAddress = [self.listModel.op objectAtIndex:7];
+    self.FanQiaoPhone= [self.listModel.op objectAtIndex:8];
+    self.FanQiaoName = [self.listModel.op objectAtIndex:9];
+}
+
+
+#pragma mark - 建立socket连接 并组帧 发送请求数据
+- (void)postTokenWithTCPSocket
+{
+    
+    AppDelegate *appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
+    [appDelegate connectToHost];
+    self.appDelegate = appDelegate;
+    
+}
+
+
 
 
 #pragma mark - 界面设置
@@ -155,12 +355,12 @@
     headImgView.sd_layout
     .bottomSpaceToView(lineView1,5)
     .leftSpaceToView(self.view,15)
-    .widthIs(70 *HRMyScreenH)
-    .heightIs(70 *HRMyScreenH);
+    .widthIs(60 *HRMyScreenH)
+    .heightIs(60 *HRMyScreenH);
     
-    headImgView.layer.cornerRadius = 35 *HRMyScreenH;
+    headImgView.layer.cornerRadius = 30 *HRMyScreenH;
     headImgView.layer.masksToBounds = YES;
-    headImgView.image = [UIImage imageNamed:@"1.jpg"];
+    headImgView.image = [UIImage imageNamed:@"4.jpg"];
     
     /****************************** 头像名字Label ******************************/
     
@@ -170,11 +370,7 @@
     [self.view addSubview:headLabel];
 
     headLabel.font = [UIFont fontWithName:@"HelveticaNeue-Thin" size:18];
-  //  NSArray *fontArray = [UIFont familyNames];
-    
-   // NSArray *famliyArray = [UIFont fontNamesForFamilyName:@"PingFang SC"];
-    
-  //  NSLog(@"%@",Array);
+  
     
     
     headLabel.textColor = [UIColor whiteColor];
@@ -318,10 +514,17 @@
     /****************************** 推送开关 ******************************/
 
     
-#pragma mark -基本推送
+#pragma mark -基本推送开关
+    
+    
+   
     
     UISwitch * SW1 = [[UISwitch alloc]init];
     [self.view addSubview:SW1];
+    
+    
+    
+    
     
     SW1.sd_layout
     .rightSpaceToView(self.view,15)
@@ -343,6 +546,8 @@
     UISwitch * SW3 = [[UISwitch alloc]init];
     [self.view addSubview:SW3];
     
+    
+    
     SW3.sd_layout
     .rightSpaceToView(self.view,15)
     .bottomSpaceToView(lineView5,5)
@@ -360,11 +565,12 @@
     .widthIs(0);
     
     
-    #pragma mark - 短信推送
+    #pragma mark - 短信推送开关
     
     
     UISwitch * MSW1 = [[UISwitch alloc]init];
     [self.view addSubview:MSW1];
+    
     
     MSW1.sd_layout
     .rightSpaceToView(self.view,15)
@@ -377,12 +583,114 @@
     UISwitch * MSW2 = [[UISwitch alloc]init];
     [self.view addSubview:MSW2];
     
+    
+    
+    
     MSW2.sd_layout
     .rightSpaceToView(self.view,15)
     .bottomSpaceToView(lineView9,5)
     .heightIs(0)
     .widthIs(0);
     
+    
+    /** 劫持提醒开关触发的方法*/
+    
+    [MSW1 addTarget:self action:@selector(KidNapOnOFF:) forControlEvents:UIControlEventValueChanged];
+    
+    
+    /** 防撬提醒开关触发的方法*/
+    
+    [MSW2 addTarget:self action:@selector(TamperOnOFF:) forControlEvents:UIControlEventValueChanged];
+    
+    
+    /** 给6个开关控件加上tag值*/
+    SW1.tag  = 1 ;
+    SW2.tag  = 2 ;
+    SW3.tag  = 3 ;
+    SW4.tag  = 4 ;
+    MSW1.tag = 5 ;
+    MSW2.tag = 6 ;
+  
+
+
+    
+    
+    #pragma mark -推送开关状态的设置
+    
+    
+    
+    
+     self.OPArray = [NSMutableArray arrayWithArray:self.listModel.op];
+    NSLog(@"为什么没来到这里呢oparray内容是%@",self.OPArray);
+
+
+    /**
+     oparray内容是(
+     0,
+     0,
+     1,
+     1,
+     对方联系号码    18888888888,
+     挟持提醒人   NETC,
+     自己的名字   NETC,
+     门锁地点    GUANGZHOU,
+     手机号码 18888888888,
+     防撬提醒人 NETC
+     )
+     */
+    
+    int SW1Status = [self.OPArray.firstObject intValue];
+    int SW2Status = [[self.OPArray objectAtIndex:1]intValue];
+    int SW3Status = [[self.OPArray objectAtIndex:2]intValue];
+    int SW4Status = [[self.OPArray objectAtIndex:3]intValue];
+    
+
+    
+    
+    NSString *FriendPhone =[self.OPArray objectAtIndex:4];
+  //  NSString *FriendName =[self.OPArray objectAtIndex:5];
+  //  NSString *MyName =[self.OPArray objectAtIndex:6];
+  //  NSString *DoorAddress =[self.OPArray objectAtIndex:7];
+    NSString *FanQiaoPhone =[self.OPArray objectAtIndex:8];
+  //  NSString *FanQiaoName =[self.OPArray objectAtIndex:9];
+    
+    
+    
+    [SW1 setOn:SW1Status];
+    [SW2 setOn:SW2Status];
+    [SW3 setOn:SW3Status];
+    [SW4 setOn:SW4Status];
+    
+    if ([FriendPhone isEqualToString:@"none"] ) {
+        
+        [MSW1 setOn:0];
+        
+    }
+    
+    else{
+        [MSW1 setOn:1];
+        
+    }
+    
+    
+    if ([FanQiaoPhone isEqualToString:@"none"]) {
+        [MSW2 setOn:0];
+        
+    }
+  
+    else{
+        [MSW2 setOn:1];
+        
+    }
+    
+    BOOL isOpen =  SW3.on;
+    
+    NSLog(@"%d",isOpen);
+    
+    
+    NSLog(@"%@",isOpen?@"YES":@"NO");
+    
+
     
     /******************************  短信推送Label ******************************/
     
@@ -414,8 +722,8 @@
     MessLabel1.font = [UIFont fontWithName:@"PingFangSC-Regular" size:17 * HRMyScreenH];
     
     MessLabel1.sd_layout
-    .bottomSpaceToView(lineView8,10*HRMyScreenH)
-    .leftSpaceToView(self.view,42.5 *HRMyScreenW+5)
+    .bottomSpaceToView(lineView8,10 * HRMyScreenH)
+    .leftSpaceToView(self.view,42.5 * HRMyScreenW+5)
     .heightIs(20)
     .rightEqualToView(self.view);
     
@@ -455,7 +763,7 @@
     PushLabel2.font = [UIFont fontWithName:@"PingFangSC-Regular" size:17 * HRMyScreenH];
 
     PushLabel3 .textColor = [UIColor whiteColor];
-    PushLabel3.text = @"长时间未开关提醒推送";
+    PushLabel3.text = @"长时间未开锁提醒推送";
     PushLabel3.font = [UIFont fontWithName:@"PingFangSC-Regular" size:17 * HRMyScreenH];
 
     PushLabel4 .textColor = [UIColor whiteColor];
@@ -492,6 +800,7 @@
     .heightIs(20)
     .rightEqualToView(self.view);
 
+    #pragma mark -保存按钮的创建
     /****************************** 保存按钮的创建 *********************************/
 
     UIButton * SaveBtn = [[UIButton alloc]init];
@@ -507,6 +816,7 @@
     SaveBtn.layer.cornerRadius = 20.0 * HRMyScreenH;
     SaveBtn.layer.masksToBounds = YES;
     
+   /** 
     UIBlurEffect *blurEffect  = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
     
     //可以看见的毛玻璃
@@ -523,22 +833,425 @@
     
     [SaveBtn addSubview:VisualEffectView];
     
-  //z  SaveBtn.backgroundColor  =  [[UIColor whiteColor]colorWithAlphaComponent:0.3];
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(testtttt)];
+    [VisualEffectView addGestureRecognizer:tap];
+
+    */
+  
     
     [SaveBtn setTitle:@"保存" forState:UIControlStateNormal];
+    
+   // [SaveBtn setba]
+    
+    [SaveBtn setBackgroundImage:[self imageWithColor:[UIColor colorWithHex:0xc6f0ff alpha:0.7]] forState:UIControlStateHighlighted];
+    
+     [SaveBtn setBackgroundImage:[self imageWithColor:[UIColor colorWithWhite:1.0 alpha:0.3]] forState:UIControlStateNormal];
     
     [SaveBtn addTarget:self action:@selector(SaveBtnClick) forControlEvents:UIControlEventTouchUpInside];
     
     
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(testtttt)];
-    [VisualEffectView addGestureRecognizer:tap];
+   
     
     
 }
+
+//  颜色转换为背景图片
+- (UIImage *)imageWithColor:(UIColor *)color {
+    CGRect rect = CGRectMake(0.0f, 0.0f, 1.0f, 1.0f);
+    UIGraphicsBeginImageContext(rect.size);
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    
+    CGContextSetFillColorWithColor(context, [color CGColor]);
+    CGContextFillRect(context, rect);
+    
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    return image;
+}
+
+
+
+#pragma mark -劫持提醒开关方法
+
+-(void)KidNapOnOFF:(UISwitch *)Switch
+{
+    NSLog(@"劫持提醒");
+    
+    
+    if (Switch.on) {
+        [self makeKidnapAlertView];
+    }
+    
+    
+    else
+    {
+        self.FriendPhone = @"none";
+        self.FriendName= @"none";
+        self.MyName = @"none";
+        self.DoorAddress = @"none" ;
+        
+        
+        
+    }
+}
+
+
+#pragma mark -防撬提醒开关方法
+
+-(void)TamperOnOFF:(UISwitch *)Switch
+{
+    NSLog(@"防撬提醒");
+    
+    
+    
+    BOOL isOpen = Switch.on;
+    
+    if (isOpen) {
+        
+        [self makeFanQiaoAlerView];
+      
+        
+    }
+    
+    else{
+        
+        
+        self.FanQiaoPhone = @"none";
+        self.FanQiaoName= @"none";
+        
+        
+    }
+    
+    
+    
+    
+    
+}
+
+
+#pragma mark -劫持提醒弹出框
+-(void)makeKidnapAlertView
+{
+    CGFloat dilX = 25;
+    CGFloat dilH = 290;
+    YXCustomAlertView *alertV = [[YXCustomAlertView alloc] initAlertViewWithFrame:CGRectMake(dilX, 0, HRUIScreenW - 40, dilH) andSuperView:self.navigationController.view];
+    
+    
+    alertV.delegate = self;
+    alertV.titleStr = @"劫持提醒";
+    
+    
+    CGFloat loginX = 200 *HRCommonScreenH;
+    
+    UILabel * numberLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 55, loginX, 32)];
+    
+    [alertV addSubview:numberLabel];
+    numberLabel.text = @"手机号码";
+    numberLabel.textColor = [UIColor whiteColor];
+    
+    numberLabel.textAlignment = NSTextAlignmentCenter;
+    
+    
+    
+    
+    
+    UITextField *loginPwdField = [[UITextField alloc] initWithFrame:CGRectMake(loginX, 55, alertV.frame.size.width -  loginX*1.2, 32)];
+    loginPwdField.layer.borderColor = [[UIColor colorWithWhite:0.9 alpha:1] CGColor];
+    UIView *leftView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 8, 32)];
+    
+    
+    loginPwdField.leftViewMode = UITextFieldViewModeAlways;
+    loginPwdField.leftView = leftView;
+    
+    
+    loginPwdField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
+    loginPwdField.layer.borderWidth = 1;
+    loginPwdField.layer.cornerRadius = 4;
+    
+    loginPwdField.placeholder = @"对方常用手机";
+    
+    loginPwdField.textColor = [UIColor whiteColor];
+    
+    
+    
+    
+    UITextField * PSWNameField = [[UITextField alloc]initWithFrame:CGRectMake(loginX, 100, alertV.frame.size.width -  loginX*1.2, 32)];
+    
+    PSWNameField.layer.borderColor = [[UIColor colorWithWhite:0.9 alpha:1] CGColor];
+    
+    
+    
+    PSWNameField.leftViewMode = UITextFieldViewModeAlways;
+    
+    UIView *leftView1 = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 8, 32)];
+    
+    PSWNameField.leftView = leftView1;
+    
+    
+    PSWNameField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
+    PSWNameField.layer.borderWidth = 1;
+    PSWNameField.layer.cornerRadius = 4;
+    
+    PSWNameField.placeholder = @"对方称呼";
+    
+    PSWNameField.textColor = [UIColor whiteColor];
+    
+    
+    
+    
+    
+    
+    UILabel * PswLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 100, loginX, 32)];
+    
+    [alertV addSubview:PswLabel];
+    PswLabel.text = @"对方称呼";
+    PswLabel.textColor = [UIColor whiteColor];
+    
+    PswLabel.textAlignment = NSTextAlignmentCenter;
+    
+    
+    
+    UITextField * MyNameField = [[UITextField alloc]initWithFrame:CGRectMake(loginX, 150, alertV.frame.size.width -  loginX*1.2, 32)];
+    
+    MyNameField.layer.borderColor = [[UIColor colorWithWhite:0.9 alpha:1] CGColor];
+    
+    
+    
+    MyNameField.leftViewMode = UITextFieldViewModeAlways;
+    
+    UIView *leftView2 = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 8, 32)];
+    
+    MyNameField.leftView = leftView2;
+    
+    
+    MyNameField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
+    MyNameField.layer.borderWidth = 1;
+    MyNameField.layer.cornerRadius = 4;
+    
+    MyNameField.placeholder = @"您的称呼";
+    
+    MyNameField.textColor = [UIColor whiteColor];
+    
+    
+    
+    
+    
+    
+    UILabel * MyNameLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 150, loginX, 32)];
+    
+    [alertV addSubview:MyNameLabel];
+    MyNameLabel.text = @"您的称呼";
+    MyNameLabel.textColor = [UIColor whiteColor];
+    
+    MyNameLabel.textAlignment = NSTextAlignmentCenter;
+    
+    
+    
+    
+    UITextField * DoorAdressField = [[UITextField alloc]initWithFrame:CGRectMake(loginX, 200, alertV.frame.size.width -  loginX*1.2, 32)];
+    
+    DoorAdressField.layer.borderColor = [[UIColor colorWithWhite:0.9 alpha:1] CGColor];
+    
+    
+    
+    DoorAdressField.leftViewMode = UITextFieldViewModeAlways;
+    
+    UIView *leftView3 = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 8, 32)];
+    
+    DoorAdressField.leftView = leftView3;
+    
+    
+    DoorAdressField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
+    DoorAdressField.layer.borderWidth = 1;
+    DoorAdressField.layer.cornerRadius = 4;
+    
+    DoorAdressField.placeholder = @"门锁所在地";
+    
+    DoorAdressField.textColor = [UIColor whiteColor];
+    
+    
+    
+    
+    
+    
+    UILabel * DoorAdressLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 200, loginX, 32)];
+    
+    [alertV addSubview:DoorAdressLabel];
+    DoorAdressLabel.text = @"门锁地点";
+    DoorAdressLabel.textColor = [UIColor whiteColor];
+    
+    DoorAdressLabel.textAlignment = NSTextAlignmentCenter;
+
+    
+    
+    
+    
+    alertV.alpha=0;
+    
+    self.FriendPhoneTF = loginPwdField;
+    
+    self.FriendNameTF = PSWNameField;
+    
+    self.MyNameTF = MyNameField;
+    
+    self.DoorAddressTF = DoorAdressField;
+    
+    
+    
+    [alertV addSubview:self.FriendPhoneTF];
+    [alertV addSubview:self.FriendNameTF];
+    [alertV addSubview:self.MyNameTF];
+    [alertV addSubview:self.DoorAddressTF];
+    
+    self.KidnapAlertView = alertV;
+    
+    
+    
+    [UIView animateWithDuration:0.5 animations:^{
+        
+        self.KidnapAlertView.center = CGPointMake(HRUIScreenW/2, HRUIScreenH/2-120);
+        
+        self.KidnapAlertView.alpha=1;
+        
+    } completion:^(BOOL finished) {
+        
+        
+        //  [customAlertView dissMiss];
+        
+        
+    }];
+    
+}
+
+    
+
+
+#pragma mark -防撬提醒弹出框
+
+-(void)makeFanQiaoAlerView
+{
+    /** FixAlertView;
+     AddAlertView;
+     FixField;
+     AddPswNameField;
+     AddPswNumberField;
+     */
+    CGFloat dilX = 25;
+    CGFloat dilH = 200;
+    YXCustomAlertView *alertV = [[YXCustomAlertView alloc] initAlertViewWithFrame:CGRectMake(dilX, 0, HRUIScreenW - 40, dilH) andSuperView:self.navigationController.view];
+    
+    
+    alertV.delegate = self;
+    alertV.titleStr = @"防撬提醒";
+    
+    
+    CGFloat loginX = 200 *HRCommonScreenH;
+    
+    UILabel * numberLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 55, loginX, 32)];
+    
+    [alertV addSubview:numberLabel];
+    numberLabel.text = @"手机号码";
+    numberLabel.textColor = [UIColor whiteColor];
+    
+    numberLabel.textAlignment = NSTextAlignmentCenter;
+    
+    
+    
+    
+    
+    UITextField *loginPwdField = [[UITextField alloc] initWithFrame:CGRectMake(loginX, 55, alertV.frame.size.width -  loginX*1.2, 32)];
+    loginPwdField.layer.borderColor = [[UIColor colorWithWhite:0.9 alpha:1] CGColor];
+    UIView *leftView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 8, 32)];
+    
+    
+    loginPwdField.leftViewMode = UITextFieldViewModeAlways;
+    loginPwdField.leftView = leftView;
+    
+    
+    loginPwdField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
+    loginPwdField.layer.borderWidth = 1;
+    loginPwdField.layer.cornerRadius = 4;
+    
+    loginPwdField.placeholder = @"提醒人的手机";
+    
+    loginPwdField.textColor = [UIColor whiteColor];
+    
+    
+    
+    
+    UITextField * PSWNameField = [[UITextField alloc]initWithFrame:CGRectMake(loginX, 100, alertV.frame.size.width -  loginX*1.2, 32)];
+    
+    PSWNameField.layer.borderColor = [[UIColor colorWithWhite:0.9 alpha:1] CGColor];
+    
+    
+    
+    PSWNameField.leftViewMode = UITextFieldViewModeAlways;
+    
+    UIView *leftView1 = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 8, 32)];
+    
+    PSWNameField.leftView = leftView1;
+    
+    
+    PSWNameField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
+    PSWNameField.layer.borderWidth = 1;
+    PSWNameField.layer.cornerRadius = 4;
+    
+    PSWNameField.placeholder = @"防撬提醒人姓名";
+    
+    PSWNameField.textColor = [UIColor whiteColor];
+    
+    
+    UILabel * PswLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 100, loginX, 32)];
+    
+    [alertV addSubview:PswLabel];
+    PswLabel.text = @"防撬提醒人";
+    PswLabel.textColor = [UIColor whiteColor];
+    
+    PswLabel.textAlignment = NSTextAlignmentCenter;
+    
+    
+    alertV.alpha=0;
+    
+    self.FanQiaoPhoneTF = loginPwdField;
+    
+    self.FanQiaoNameTF = PSWNameField;
+    
+    
+    self.FanQiaoAlertView = alertV;
+    
+    [alertV addSubview:self.FanQiaoPhoneTF];
+    
+    [alertV addSubview:self.FanQiaoNameTF];
+    
+    
+    [UIView animateWithDuration:0.5 animations:^{
+        
+        self.FanQiaoAlertView.center = CGPointMake(HRUIScreenW/2, HRUIScreenH/2-100);
+        
+        self.FanQiaoAlertView.alpha=1;
+        
+    } completion:^(BOOL finished) {
+        
+        
+        //  [customAlertView dissMiss];
+        
+        
+    }];
+    
+}
+
 #pragma mark - 毛玻璃点击
 -(void)testtttt
 {
-    NSLog(@"测试");
+    /**
+         UISwitch * msw1 = [self.view viewWithTag:5];
+     UISwitch * msw2 = [self.view viewWithTag:6];
+     
+     */
+    
+    
+    
     
 }
 
@@ -546,6 +1259,197 @@
 -(void)SaveBtnClick
 {
     NSLog(@"点击了保存");
+    /** 先搞定最重要的op数组  */
+    
+    
+    UISwitch * sw1 = [self.view viewWithTag:1];
+    UISwitch * sw2 = [self.view viewWithTag:2];
+    UISwitch * sw3 = [self.view viewWithTag:3];
+    UISwitch * sw4 = [self.view viewWithTag:4];
+    UISwitch * msw1 = [self.view viewWithTag:5];
+    UISwitch * msw2 = [self.view viewWithTag:6];
+    
+    int s1 = sw1.on;
+    int s2 = sw2.on;
+    int s3 = sw3.on;
+    int s4 = sw4.on;
+    NSString * str1 = [NSString stringWithFormat:@"%d",s1];
+    NSString * str2 = [NSString stringWithFormat:@"%d",s2];
+    NSString * str3 = [NSString stringWithFormat:@"%d",s3];
+    NSString * str4 = [NSString stringWithFormat:@"%d",s4];
+    
+    if (!msw1.on) {
+        
+        self.FriendPhone = @"none";
+        self.FriendName = @"none";
+        self.MyName = @"none";
+        self.DoorAddress = @"none";
+        
+
+           }
+   
+    if (!msw2.on) {
+        self.FanQiaoPhone = @"none";
+        self.FanQiaoName= @"none";
+        
+    }
+    
+    
+    NSArray * opArray = [NSArray arrayWithObjects:str1,str2,str3,str4,self.FriendPhone,self.FriendName,self.MyName,self.DoorAddress,self.FanQiaoPhone,self.FanQiaoName, nil];
+    
+    
+    NSString * token = [[NSUserDefaults standardUserDefaults] objectForKey:@"PushToken"];
+    
+    NSString * srcUserName  =  [kUserDefault objectForKey:kDefaultsUserName];
+    
+    NSString * UUID = [kUserDefault objectForKey:kUserDefaultUUID];
+    
+    DeviceListModel *model = self.listModel;
+    
+    
+    NSString * uid = model.uid;
+    
+    
+    NSString * did  =  model.did;
+    
+    NSString * DoorUUID  = model.uuid;
+    
+    NSString * title = model.title;
+    
+    NSString * msgVersion = model.version;
+    
+    NSString * brand = model.brand;
+    
+    NSString * level = model.level;
+    
+    NSString * state = model.state;
+    
+    
+    NSString * online = model.online;
+    
+    
+    NSString * RequestStr = [NSString stringwithHRPushSetVersion:@"0.01"
+                                                          status:@"200"
+                                                           token:token
+                                                            type:@"update"                       desc:@"none"
+                                                     srcUserName:srcUserName
+                                                      srcDevName:UUID
+                                                     dstUserName:srcUserName dstDevName:DoorUUID
+                                                        msgTypes:@"hrsc"
+                                                           title:title
+                                                             uid:uid
+                                                             did:did
+                                                            uuid:DoorUUID
+                                                      msgVersion:msgVersion
+                                                           brand:brand
+                                                           level:level
+                                                           state:state
+                                                          online:online
+                                                              op:opArray  ];
+    
+    NSLog(@"请求的字符串是%@",RequestStr);
+    
+    
+    
+    [self.appDelegate sendMessageWithString:RequestStr];
+    
+    [self.navigationController popViewControllerAnimated:YES];
+    
+
+    
+}
+
+#pragma mark - YXCustomAlertViewDelegate 劫持提醒与防撬提醒的弹窗选中
+
+- (void) customAlertView:(YXCustomAlertView *) customAlertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex==0) {
+    
+    
+    [UIView animateWithDuration:0.5 animations:^{
+        
+        
+        CGRect AlertViewFrame = customAlertView.frame;
+        
+        AlertViewFrame.origin.x = HRUIScreenW;
+        
+        customAlertView.alpha = 0;
+        
+        customAlertView.frame = AlertViewFrame;
+        
+        
+    } completion:^(BOOL finished) {
+        
+        
+        [customAlertView dissMiss];
+        
+        
+    }];
+
+}
+    
+    
+    if (buttonIndex == 1) {
+        
+        if (customAlertView == self.KidnapAlertView) {
+            
+            if (self.FriendPhoneTF.text.length == 0||self.FriendNameTF.text.length==0||self.MyNameTF.text.length==0||self.DoorAddressTF.text.length==0) {
+                
+                
+                [customAlertView.layer shake];
+                
+                return;
+                
+            }
+            
+            else
+            {
+             self.FriendPhone = self.FriendPhoneTF.text ;
+              self.FriendName = self.FriendNameTF.text;
+                  self.MyName = self.MyNameTF.text  ;
+             self.DoorAddress = self.DoorAddressTF.text ;
+            }
+        }
+        
+        
+        else{
+            
+            if (self.FanQiaoPhoneTF.text.length == 0||self.FanQiaoNameTF.text.length==0) {
+                
+                
+                [customAlertView.layer shake];
+                
+                return;
+                
+            }
+            
+            else{
+        self.FanQiaoPhone =  self.FanQiaoPhoneTF.text ;
+        self.FanQiaoName  =  self.FanQiaoNameTF.text  ;
+            }
+        }
+        
+        [UIView animateWithDuration:0.5 animations:^{
+            
+            
+            CGRect AlertViewFrame = customAlertView.frame;
+            
+            AlertViewFrame.origin.x = HRUIScreenW;
+            
+            
+            customAlertView.frame = AlertViewFrame;
+            
+            customAlertView.alpha = 0;
+            
+            
+        
+        } completion:^(BOOL finished) {
+            
+            
+            [customAlertView dissMiss];
+            
+        }];
+    }
     
 }
 

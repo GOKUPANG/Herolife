@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "D17CF0EB1D6567E7007C95DD"
-               BuildableName = "herolife.app"
+               BuildableName = "HEROLIFE.app"
                BlueprintName = "herolife"
                ReferencedContainer = "container:herolife.xcodeproj">
             </BuildableReference>
@@ -53,7 +53,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "D17CF0EB1D6567E7007C95DD"
-            BuildableName = "herolife.app"
+            BuildableName = "HEROLIFE.app"
             BlueprintName = "herolife"
             ReferencedContainer = "container:herolife.xcodeproj">
          </BuildableReference>
@@ -76,7 +76,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "D17CF0EB1D6567E7007C95DD"
-            BuildableName = "herolife.app"
+            BuildableName = "HEROLIFE.app"
             BlueprintName = "herolife"
             ReferencedContainer = "container:herolife.xcodeproj">
          </BuildableReference>
@@ -102,7 +102,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "D17CF0EB1D6567E7007C95DD"
-            BuildableName = "herolife.app"
+            BuildableName = "HEROLIFE.app"
             BlueprintName = "herolife"
             ReferencedContainer = "container:herolife.xcodeproj">
          </BuildableReference>

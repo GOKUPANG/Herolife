@@ -169,6 +169,12 @@
 	GoToSetUpController *enterVC = [[GoToSetUpController alloc] init];
 	[self.navigationController pushViewController:enterVC animated:YES];
 }
+- (void)viewWillAppear:(BOOL)animated
+{
+	[super viewWillAppear:animated];
+	
+	[self IsTabBarHidden:YES];
+}
 - (void)viewWillDisappear:(BOOL)animated
 {
 	[self IsTabBarHidden:YES];

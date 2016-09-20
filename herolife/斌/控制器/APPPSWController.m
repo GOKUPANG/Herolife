@@ -7,10 +7,15 @@
 //
 
 
-/** 获取门锁密码编号请求网址*/
-#define HRAPI_GetDoorPsw_URL @"http://www.gzhuarui.cn/?q=huaruiapi/herolife-dev-hrsc-ul&uuid=%@"
 
-#define HRAPI_DeleteDoorPsw_URL @"http://www.gzhuarui.cn/?q=huaruiapi/node/%@"
+/** 获取门锁密码编号请求网址*/
+//#define HRAPI_GetDoorPsw_URL @"http://www.gzhuarui.cn/?q=huaruiapi/herolife-dev-hrsc-ul&uuid=%@"
+
+#define HRAPI_GetDoorPsw_URL @"http://183.63.118.58:9885/hrctest/?q=huaruiapi/herolife-dev-hrsc-ul&uuid=%@"
+
+//#define HRAPI_DeleteDoorPsw_URL @"http://www.gzhuarui.cn/?q=huaruiapi/node/%@"
+#define HRAPI_DeleteDoorPsw_URL @"http://183.63.118.58:9885/?q=huaruiapi/node/%@"
+
 
 #import "APPPSWController.h"
 #import "HWPopTool.h"

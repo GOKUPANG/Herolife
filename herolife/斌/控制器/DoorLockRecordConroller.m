@@ -184,7 +184,8 @@ static int indexCount = 0;
 {
 	/// 从偏好设置里加载数据
 	NSString *uuid = self.listModel.uuid;
-	NSString *url = [NSString stringWithFormat:@"http://www.gzhuarui.cn/?q=huaruiapi/herolife-dev-hrsc-ml&uuid=%@&sy=(unlock|batlow|ltnolock|errlimt)&page=%d", uuid, indexCount];
+	//NSString *url = [NSString stringWithFormat:@"http://www.gzhuarui.cn/?q=huaruiapi/herolife-dev-hrsc-ml&uuid=%@&sy=(unlock|batlow|ltnolock|errlimt)&page=%d", uuid, indexCount];
+    NSString *url = [NSString stringWithFormat:@"%@%@&sy=(unlock|batlow|ltnolock|errlimt)&page=%d",HRAPI_RecordeLock_URL,uuid,indexCount];
 	url = [url stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
 	
 	HRWeakSelf
@@ -227,6 +228,8 @@ static int indexCount = 0;
 {
     
     PushSettingController * PSC = [PushSettingController new];
+    PSC.listModel = self.listModel;
+    
     [self.navigationController pushViewController:PSC animated:YES];
     
     

@@ -8,6 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
+#import "DeviceListModel.h"
+
+
 @interface PushSettingController : UIViewController
+
+
+/** name */
+@property(nonatomic, strong) DeviceListModel *listModel;
+
 
 @end

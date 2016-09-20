@@ -120,6 +120,7 @@
     [self addSubview:_coverView];
 }
 
+#pragma mark - 这里修改了title的样式
 - (void)setupActionSheetView {
     
     _actionSheetView = [[UIView alloc] init];
@@ -134,10 +135,14 @@
     CGFloat width = self.frame.size.width;
     if (_title && _title.length > 0) {
         UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, width, kRowButtonHeight)];
-        titleLabel.backgroundColor = [UIColor whiteColor];
-        titleLabel.textColor = kTitleFontColor;
+       // titleLabel.backgroundColor = [UIColor whiteColor];
+		 titleLabel.backgroundColor = [[UIColor whiteColor]colorWithAlphaComponent:0.3];
+		
+		         titleLabel.font = [UIFont systemFontOfSize:20];
+//        titleLabel.textColor = kTitleFontColor;
         titleLabel.textAlignment = NSTextAlignmentCenter;
-        titleLabel.font = [UIFont systemFontOfSize:kTitleFontSize];
+		        titleLabel.textColor = [UIColor whiteColor];
+      //  titleLabel.font = [UIFont systemFontOfSize:kTitleFontSize];
         titleLabel.numberOfLines = 0;
         titleLabel.text = _title;
         [_actionSheetView addSubview:titleLabel];

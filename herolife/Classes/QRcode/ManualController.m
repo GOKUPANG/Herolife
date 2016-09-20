@@ -55,6 +55,9 @@
 	[super viewWillAppear:animated];
 	self.qrButton.selected = NO;
 	self.manualButton.selected = YES;
+	
+	//隐藏底部条
+	[self IsTabBarHidden:YES];
 }
 #pragma mark - 内部方法
 //初始化

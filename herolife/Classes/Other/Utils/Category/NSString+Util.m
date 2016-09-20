@@ -441,6 +441,255 @@
 
 	
 }
+
+
+#pragma mark - 添加授权给家人 的锁
++ (NSString *)stringWithSocketAddFamilyLockWithDst:(NSMutableDictionary *)dst lockUUID:(NSString *)lockUUID admin:(NSString *)admin person:(NSArray *)person permit:(NSArray *)permit
+{
+	
+	NSString *token = [[NSUserDefaults standardUserDefaults] objectForKey:PushToken];
+	NSString *user = [[NSUserDefaults standardUserDefaults] objectForKey:kDefaultsUserName];
+	
+	/// 获取用户UUID
+	NSString *ramStr = [kUserDefault objectForKey:kUserDefaultUUID];
+	
+	NSMutableDictionary *msgFromDict = [NSMutableDictionary dictionary];
+	
+	msgFromDict[@"user"] = user;
+	msgFromDict[@"dev"] = ramStr;
+	
+	NSMutableDictionary *hrpushDict = [NSMutableDictionary dictionary];
+	hrpushDict[@"version"] = @"0.0.1";
+	hrpushDict[@"status"] = @"200";
+	hrpushDict[@"time"] = [self loadCurrentDate];
+	
+	//从偏好设置里 取token
+	hrpushDict[@"token"] = token;
+	hrpushDict[@"type"] = @"create";
+	hrpushDict[@"desc"] = @"none";
+	hrpushDict[@"src"] = msgFromDict;
+	hrpushDict[@"dst"] = dst;
+	
+	NSMutableDictionary *msgDict = [NSMutableDictionary dictionary];
+	/// 获取用户uid
+	NSString *uid = [kUserDefault objectForKey:kDefaultsUid];
+	msgDict[@"uid"] = uid;
+	msgDict[@"types"] = @"common";
+	msgDict[@"sy"] = @"hrsc-al";
+	msgDict[@"state"] = @"19";
+	msgDict[@"uuid"] = lockUUID;
+	msgDict[@"admin"] = admin;
+	msgDict[@"person"] = person;
+	msgDict[@"permit"] = permit;
+	msgDict[@"time"] = @"none";
+	
+	NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+	dict[@"hrpush"] = hrpushDict;
+	dict[@"msg"] = msgDict;
+	
+	NSData *jsonDataDict = [NSJSONSerialization dataWithJSONObject:dict options:kNilOptions error:nil];
+	
+	NSString *dictStr = [[NSString alloc] initWithData:jsonDataDict encoding:NSUTF8StringEncoding];
+	
+	NSString *hrpush = @"hrpush\r\n";
+	
+	NSString *hrlength = [NSString stringWithFormat:@"length\r\n%lu\r\n", (unsigned long)dictStr.length];
+	
+	NSString *footerStr = @"\r\n\0";
+	NSString *urlString = [NSString stringWithFormat:@"%@%@%@%@", hrpush, hrlength, dictStr, footerStr];
+	
+	return urlString;
+	
+}
+
+#pragma mark - 修改授权家人授权 的锁
++ (NSString *)stringWithSocketModifyFamilyLockWithlockUUID:(NSString *)lockUUID did:(NSString *)did person:(NSArray *)person permit:(NSArray *)permit
+{
+	
+	NSString *token = [[NSUserDefaults standardUserDefaults] objectForKey:PushToken];
+	NSString *user = [[NSUserDefaults standardUserDefaults] objectForKey:kDefaultsUserName];
+	
+	/// 获取用户UUID
+	NSString *ramStr = [kUserDefault objectForKey:kUserDefaultUUID];
+	
+	NSMutableDictionary *msgFromDict = [NSMutableDictionary dictionary];
+	
+	msgFromDict[@"user"] = user;
+	msgFromDict[@"dev"] = ramStr;
+	
+	NSMutableDictionary *hrpushDict = [NSMutableDictionary dictionary];
+	hrpushDict[@"version"] = @"0.0.1";
+	hrpushDict[@"status"] = @"200";
+	hrpushDict[@"time"] = [self loadCurrentDate];
+	
+	//从偏好设置里 取token
+	hrpushDict[@"token"] = token;
+	hrpushDict[@"type"] = @"update";
+	hrpushDict[@"desc"] = @"none";
+	hrpushDict[@"src"] = msgFromDict;
+	
+	//目标地址
+	NSMutableDictionary *dst = [NSMutableDictionary dictionary];
+	dst[@"user"] = user;
+	dst[@"dev"] = lockUUID;
+	hrpushDict[@"dst"] = dst;
+	
+	NSMutableDictionary *msgDict = [NSMutableDictionary dictionary];
+	/// 获取用户uid
+	NSString *uid = [kUserDefault objectForKey:kDefaultsUid];
+	msgDict[@"uid"] = uid;
+	msgDict[@"did"] = did;
+	msgDict[@"uuid"] = lockUUID;
+	msgDict[@"types"] = @"common";
+	msgDict[@"sy"] = @"hrsc-al";
+	msgDict[@"person"] = person;
+	msgDict[@"permit"] = permit;
+	msgDict[@"time"] = @"none";
+	
+	NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+	dict[@"hrpush"] = hrpushDict;
+	dict[@"msg"] = msgDict;
+	
+	NSData *jsonDataDict = [NSJSONSerialization dataWithJSONObject:dict options:kNilOptions error:nil];
+	
+	NSString *dictStr = [[NSString alloc] initWithData:jsonDataDict encoding:NSUTF8StringEncoding];
+	
+	NSString *hrpush = @"hrpush\r\n";
+	
+	NSString *hrlength = [NSString stringWithFormat:@"length\r\n%lu\r\n", (unsigned long)dictStr.length];
+	
+	NSString *footerStr = @"\r\n\0";
+	NSString *urlString = [NSString stringWithFormat:@"%@%@%@%@", hrpush, hrlength, dictStr, footerStr];
+	
+	return urlString;
+	
+}
+
+#pragma mark - 临时授权 的锁
++ (NSString *)stringWithSocketAddTemporaryAutherLockWithlockUUID:(NSString *)lockUUID  person:(NSArray *)person permit:(NSArray *)permit autherTime:(NSString *)autherTime
+{
+	
+	NSString *token = [[NSUserDefaults standardUserDefaults] objectForKey:PushToken];
+	NSString *user = [[NSUserDefaults standardUserDefaults] objectForKey:kDefaultsUserName];
+	
+	/// 获取用户UUID
+	NSString *ramStr = [kUserDefault objectForKey:kUserDefaultUUID];
+	
+	//起始地址
+	NSMutableDictionary *msgFromDict = [NSMutableDictionary dictionary];
+	msgFromDict[@"user"] = user;
+	msgFromDict[@"dev"] = ramStr;
+	
+	NSMutableDictionary *hrpushDict = [NSMutableDictionary dictionary];
+	hrpushDict[@"version"] = @"0.0.1";
+	hrpushDict[@"status"] = @"200";
+	hrpushDict[@"time"] = [self loadCurrentDate];
+	
+	//从偏好设置里 取token
+	hrpushDict[@"token"] = token;
+	hrpushDict[@"type"] = @"set";
+	hrpushDict[@"desc"] = @"none";
+	hrpushDict[@"src"] = msgFromDict;
+	
+	//目标地址
+	NSMutableDictionary *dst = [NSMutableDictionary dictionary];
+	dst[@"user"] = user;
+	dst[@"dev"] = lockUUID;
+	
+	hrpushDict[@"dst"] = dst;
+	
+	NSMutableDictionary *msgDict = [NSMutableDictionary dictionary];
+	/// 获取用户uid
+	NSString *uid = [kUserDefault objectForKey:kDefaultsUid];
+	msgDict[@"uid"] = uid;
+	msgDict[@"types"] = @"common";
+	msgDict[@"sy"] = @"hrsc-al";
+	msgDict[@"uuid"] = lockUUID;
+	msgDict[@"state"] = @"20";
+	msgDict[@"person"] = person;
+	msgDict[@"permit"] = permit;
+	msgDict[@"time"] = autherTime;
+	NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+	dict[@"hrpush"] = hrpushDict;
+	dict[@"msg"] = msgDict;
+	
+	NSData *jsonDataDict = [NSJSONSerialization dataWithJSONObject:dict options:kNilOptions error:nil];
+	
+	NSString *dictStr = [[NSString alloc] initWithData:jsonDataDict encoding:NSUTF8StringEncoding];
+	
+	NSString *hrpush = @"hrpush\r\n";
+	
+	NSString *hrlength = [NSString stringWithFormat:@"length\r\n%lu\r\n", (unsigned long)dictStr.length];
+	
+	NSString *footerStr = @"\r\n\0";
+	NSString *urlString = [NSString stringWithFormat:@"%@%@%@%@", hrpush, hrlength, dictStr, footerStr];
+	
+	return urlString;
+	
+}
+
+#pragma mark - 删除授权给家人 的锁
++ (NSString *)stringWithSocketDelegateFamilyLockWithDstUuid:(NSString *)dstUuid lockUUID:(NSString *)lockUUID did:(NSString *)did
+{
+	
+	NSString *token = [[NSUserDefaults standardUserDefaults] objectForKey:PushToken];
+	NSString *user = [[NSUserDefaults standardUserDefaults] objectForKey:kDefaultsUserName];
+	
+	/// 获取用户UUID
+	NSString *ramStr = [kUserDefault objectForKey:kUserDefaultUUID];
+	
+	//起始地址
+	NSMutableDictionary *msgFromDict = [NSMutableDictionary dictionary];
+	msgFromDict[@"user"] = user;
+	msgFromDict[@"dev"] = ramStr;
+	
+	NSMutableDictionary *hrpushDict = [NSMutableDictionary dictionary];
+	hrpushDict[@"version"] = @"0.0.1";
+	hrpushDict[@"status"] = @"200";
+	hrpushDict[@"time"] = [self loadCurrentDate];
+	
+	//从偏好设置里 取token
+	hrpushDict[@"token"] = token;
+	hrpushDict[@"type"] = @"delete";
+	hrpushDict[@"desc"] = @"none";
+	hrpushDict[@"src"] = msgFromDict;
+	
+	//目标地址
+	NSMutableDictionary *dst = [NSMutableDictionary dictionary];
+	dst[@"user"] = user;
+	dst[@"dev"] = dstUuid;
+	
+	hrpushDict[@"dst"] = dst;
+	
+	NSMutableDictionary *msgDict = [NSMutableDictionary dictionary];
+	/// 获取用户uid
+	NSString *uid = [kUserDefault objectForKey:kDefaultsUid];
+	msgDict[@"uid"] = uid;
+	msgDict[@"did"] = did;
+	msgDict[@"uuid"] = lockUUID;
+	msgDict[@"types"] = @"common";
+	msgDict[@"sy"] = @"hrsc-al";
+	
+	NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+	dict[@"hrpush"] = hrpushDict;
+	dict[@"msg"] = msgDict;
+	
+	NSData *jsonDataDict = [NSJSONSerialization dataWithJSONObject:dict options:kNilOptions error:nil];
+	
+	NSString *dictStr = [[NSString alloc] initWithData:jsonDataDict encoding:NSUTF8StringEncoding];
+	
+	NSString *hrpush = @"hrpush\r\n";
+	
+	NSString *hrlength = [NSString stringWithFormat:@"length\r\n%lu\r\n", (unsigned long)dictStr.length];
+	
+	NSString *footerStr = @"\r\n\0";
+	NSString *urlString = [NSString stringWithFormat:@"%@%@%@%@", hrpush, hrlength, dictStr, footerStr];
+	
+	return urlString;
+	
+}
+
+
 #pragma mark - UDP
 /// UDP  请求帧
 + (NSString *)stringWithUDPMsgDict:(NSMutableDictionary *)msgDict
@@ -487,6 +736,7 @@
 	return urlString;
 
 }
+
 #pragma mark - 获取当前wifi的名称
 + (NSString *)stringWithGetWifiName
 {

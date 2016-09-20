@@ -7,11 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
-
+@class DeviceAutherModel;
+@class DeviceListModel;
 @interface ShouQuanManagerController : UIViewController
 
 /** 授权表模型数组 */
-@property(nonatomic, strong) NSArray *autherArray;
-/** 授权设备信息 模型数组 */
-@property(nonatomic, strong) NSArray *autherDeviceArray;
+@property(nonatomic, strong) NSMutableArray<DeviceAutherModel *> *deviceAutherArray;
+/** 传过来的上一个界面点击那一刻 的数据模型 */
+@property(nonatomic, strong) DeviceListModel *listModel;
 @end

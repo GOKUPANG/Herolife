@@ -6,6 +6,10 @@
 //  Copyright © 2016年 huarui. All rights reserved.
 //
 
+#define KScreenW [UIScreen mainScreen].bounds.size.width
+#define KScreenH [UIScreen mainScreen].bounds.size.height
+
+
 #import "DeviceListController.h"
 // Components
 #import "YRCoverFlowLayout.h"
@@ -25,11 +29,19 @@
 #import "DeviceListTcpModel.h"
 #import "HRPushMode.h"
 #import "DeviceAutherModel.h"
+#import "SRActionSheet.h"
 
 
 
 #define HRNavigationBarFrame self.navigationController.navigationBar.bounds
-@interface DeviceListController ()<UICollectionViewDelegate,UICollectionViewDataSource,UITableViewDelegate,UITableViewDataSource>
+@interface DeviceListController ()<UICollectionViewDelegate,UICollectionViewDataSource,UITableViewDelegate,UITableViewDataSource,UIGestureRecognizerDelegate>
+
+{
+    UIView *bg;
+    UIView *bgView;
+    UITextView *txt;
+    UIButton *close;
+}
 /** 顶部条 */
 @property(nonatomic, weak) HRNavigationBar *navView;
 /** <#name#> */
@@ -165,9 +177,142 @@ static NSString *cellID = @"cellID";
 	[self getHttpRequset];
 	//通知
 	[self addObserverNotification];
-	//获得设备授权表
-	[self addAutherList];
+    
+    [self addLongGesture];
 }
+
+
+#pragma mark -  给collectionView添加长按手势
+
+
+-(void)addLongGesture
+{
+    UILongPressGestureRecognizer * longPressGr = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressToDo:)];
+    longPressGr.minimumPressDuration = 0.7;
+    longPressGr.delegate = self;
+    longPressGr.delaysTouchesBegan = YES;
+    [self.collectionView addGestureRecognizer:longPressGr];
+}
+
+#pragma mark - 长按collectionView触发的方法
+-(void)longPressToDo:(UILongPressGestureRecognizer *)gestureRecognizer
+
+{
+    if (gestureRecognizer.state != UIGestureRecognizerStateEnded) {
+        return;
+    }
+    CGPoint p = [gestureRecognizer locationInView:self.collectionView];
+    
+    NSIndexPath *indexPath = [self.collectionView indexPathForItemAtPoint:p];
+    if (indexPath == nil){
+        NSLog(@"couldn't find index path");
+    } else {
+        // get the cell at indexPath (the one you long pressed)
+        // UICollectionViewCell* cell =
+        // [self.collectionView cellForItemAtIndexPath:indexPath];
+        // do stuff with the cell
+        
+        
+        [SRActionSheet sr_showActionSheetViewWithTitle:@"用户名" cancelButtonTitle:@"取消" destructiveButtonTitle:@"" otherButtonTitles:@[@"删除设备", @"修改设备信息"] selectSheetBlock:^(SRActionSheet *actionSheetView, NSInteger index) {
+            
+            
+            
+            if (index == 0) {
+                
+                
+                NSLog(@"取消授权");
+                
+                [self beginANimation];
+                
+                
+            }
+            
+            else if (index == 1){
+                
+                
+                
+                NSLog(@"修改授权信息");
+                
+            }
+            
+        }];
+        
+        // NSLog(@"现在长按的cell是%ld",indexPath.row);
+        
+    }
+}
+
+
+-(void)beginANimation{
+    bg = [[UIView alloc] initWithFrame:self.view.frame];
+    bg.backgroundColor = [UIColor colorWithRed:0/255.0 green:0/255.0 blue:0/255.0 alpha:0.5];
+    
+    // bgView.backgroundColor = [UIColor greenColor];
+    
+    
+    bgView = [[UIView alloc] initWithFrame:CGRectMake(KScreenW/2,100, 0, KScreenH-200)];
+    bgView.backgroundColor = [UIColor colorWithRed:0/255.0 green:118/255.0 blue:254/255.0 alpha:1.0];
+    
+    
+    
+    [bg addSubview:bgView];
+    
+    close = [[UIButton alloc] initWithFrame:CGRectMake(KScreenW-30-30, 110, 20, 20)];
+    [close setTitle:@"X" forState:UIControlStateNormal];
+    [close addTarget:self action:@selector(closeView) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:bg];
+    
+    txt = [[UITextView alloc] initWithFrame:CGRectMake((KScreenW-60)/2, (bgView.frame.size.height-30)/2, 0, 30)];
+    txt.layer.cornerRadius = 10;
+    txt.layer.masksToBounds =YES;
+    [bgView addSubview:txt];
+    
+    [UIView animateWithDuration:0.5 animations:^{
+        
+        bgView.frame = CGRectMake(30,100, KScreenW-60, KScreenH-200);
+        
+    } completion:^(BOOL finished) {
+        [bg addSubview:close];
+        [UIView animateWithDuration:0.4 animations:^{
+            txt.frame = CGRectMake(30, (bgView.frame.size.height-30)/2, KScreenW-120, 30);
+            //NSLog(NSStringFromCGRect(txt.frame));
+        }];
+        
+    }];
+    
+    
+    
+    
+}
+
+
+
+-(void)closeView{
+    
+    [UIView animateWithDuration:0.5 animations:^{
+        txt.frame = CGRectMake((KScreenW-60)/2, (bgView.frame.size.height-30)/2, 0, 30);
+        close.transform = CGAffineTransformMakeRotation(M_PI);
+        close.transform = CGAffineTransformMakeScale(0.1, 0.1);
+    } completion:^(BOOL finished) {
+        [close removeFromSuperview];
+        [UIView animateWithDuration:0.5 animations:^{
+            //bgView.frame = CGRectMake(KScreenW/2,150, 0, KScreenH-300);
+            bgView.frame = CGRectMake(KScreenW/2,KScreenH/2, 0, 0);
+            
+        } completion:^(BOOL finished) {
+            [bg removeFromSuperview];
+        }];
+    }];
+    
+    
+    
+    
+    
+    
+    
+}
+
+
 #pragma mark - 通知
 - (void)addObserverNotification
 {
@@ -652,14 +797,13 @@ static BOOL isShowOverMenu = NO;
         case 3:
         {
 			ShouQuanManagerController *SQC = [ShouQuanManagerController new];
-			// 直接
+			// 别人授权给我的数据和当前点击的数据里的UUID进行比较,看是否有有权限跳转
 			for (DeviceAutherModel *auther in self.autherPersonArray) {
     
 				if ([auther.uuid isEqualToString: self.currentStateModel.uuid]) {
 					NSArray *arr = auther.permit;
 					if ([arr[3] isEqualToString:@"1"]) {
-						SQC.autherDeviceArray = self.autherDeviceArray;
-						SQC.autherArray = self.autherArray;
+						SQC.listModel = self.currentStateModel;
 						[self.navigationController pushViewController:SQC animated:YES];
 						
 					}else
@@ -670,11 +814,10 @@ static BOOL isShowOverMenu = NO;
 				}
 			}
 			
-			
-			SQC.autherDeviceArray = self.autherDeviceArray;
-			SQC.autherArray = self.autherArray;
+			SQC.listModel = self.currentStateModel;
 			
 			[self.navigationController pushViewController:SQC animated:YES];
+			
 			
         }
             
@@ -763,10 +906,15 @@ static BOOL isShowOverMenu = NO;
 	bodyDict[@"user"] = userName;
 	bodyDict[@"pass"] = passWold;
 	
-	//登入认证  组登入认证
-	NSString *str = [NSString stringWithPostTCPJsonVersion:@"0.0.1" status:@"200" token:@"token" msgType:@"login" msgExplain:@"login" fromUserName:userName destUserName:@"huaruicloud" destDevName:@"huaruiPushServer" msgBodyStringDict:bodyDict];
-	DDLogWarn(@"登入认证登入认证--%@", str);
-	[self.appDelegate sendMessageWithString:str];
+	// 设备令牌可能还没有,需要延时 一下
+	dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+		
+		//登入认证  组登入认证
+		NSString *str = [NSString stringWithPostTCPJsonVersion:@"0.0.1" status:@"200" token:@"ios" msgType:@"login" msgExplain:@"login" fromUserName:userName destUserName:@"huaruicloud" destDevName:@"huaruiPushServer" msgBodyStringDict:bodyDict];
+		DDLogWarn(@"登入认证登入认证--%@", str);
+		[self.appDelegate sendMessageWithString:str];
+		
+	});
 	
 }
 #pragma mark - 获取设备信息  发送HTTP请求
@@ -828,6 +976,10 @@ static BOOL isShowOverMenu = NO;
 		weakSelf.listLabel.text = weakSelf.currentStateModel.title;
 		[self.tableView reloadData];
 		
+		
+		//获得设备授权表
+		[self addAutherList];
+		
 		//定时60s查询设备状态
 		[self addTimer];
 	}];
@@ -848,7 +1000,7 @@ static BOOL isShowOverMenu = NO;
 			[ErrorCodeManager showError:error];
 			return ;
 		}
-		DDLogWarn(@"获得设备授权表 HTTP%@", responseObject);
+		DDLogWarn(@"获得我授权给别人的授权表 HTTP%@", responseObject);
 		
 		//如果responseObject不是数组类型就不是我们想要的数据，应该过滤掉
 		if (![responseObject isKindOfClass:[NSArray class]]) {
@@ -881,10 +1033,10 @@ static BOOL isShowOverMenu = NO;
 		}
 		
 		AppDelegate *app = (AppDelegate *)[UIApplication sharedApplication].delegate;
-		app.autherArray = weakSelf.autherArray;
+		[app addHTTPAutherArray:weakSelf.autherArray];
 		
-		app.autherDeviceArray = weakSelf.autherDeviceArray;
-		[kNotification postNotificationName:kNotificationReceiveDeviceAutherInformation object:nil];
+		DDLogWarn(@"获得我授权给别人的授权表app%@count-%lu", app.autherArray, (unsigned long)app.autherArray.count);
+		
 	}];
 	
 	//别人授权给我的数据, 请求下来的数据要在本界面显示
@@ -933,13 +1085,18 @@ static BOOL isShowOverMenu = NO;
 	NSString *uuidAllString = @"";
 	for (int i = 0; i < self.autherPersonArray.count ; i++) {
 		DeviceAutherModel *auther = [DeviceAutherModel mj_objectWithKeyValues:self.autherPersonArray[i]];
+		
 		uuidAllString = [NSString stringWithFormat:@"%@%@|", uuidAllString, auther.uuid];
 	}
 	uuidAllString = [uuidAllString substringToIndex:uuidAllString.length - 1];
 	
 	NSString *url = [NSString stringWithFormat:@"%@(%@)", HRAPI_LockAutherInformation_URL,uuidAllString];
+	
+	DDLogWarn(@"获得授权设备信息 url1%@", url);
 	url = [url stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
 	
+	
+	DDLogWarn(@"获得授权设备信息 url2%@", url);
 	HRWeakSelf
 	[HRHTTPTool hr_getHttpWithURL:url parameters:nil responseDict:^(id responseObject, NSError *error) {
 		DDLogWarn(@"获得授权设备信息 HTTP-array:%@---error:%@", responseObject,error);

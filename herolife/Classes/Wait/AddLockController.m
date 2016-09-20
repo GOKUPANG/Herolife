@@ -172,8 +172,7 @@
 	parameters[@"type"] = @"hrsc";
 	parameters[@"title"] = self.nameField.text;
 	
-	NSString *http = @"http://www.gzhuarui.cn/?q=huaruiapi/node";
-	NSString *httplast = [NSString stringWithFormat:@"%@/%@", http, self.did];
+	NSString *httplast = [NSString stringWithFormat:@"%@%@", HRAPI_ModifyLock_URL, self.did];
 	[HRHTTPTool hr_PutHttpWithURL:httplast parameters:parameters responseDict:^(id dictionary, NSError *error) {
 		
 		NSDictionary *dict = (NSDictionary *)dictionary;

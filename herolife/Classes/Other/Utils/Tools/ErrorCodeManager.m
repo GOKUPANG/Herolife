@@ -20,7 +20,7 @@ static NSTimeInterval const dimissTimer = 2;
 	NSString  *str = [dict valueForKeyPath:@"body"];
 	NSString * code = [dict valueForKeyPath:@"statusCode"];
 	
-	if (str) {
+	if (str.length > 1) {
 		
 		str = [str replaceUnicode:str];
 		str = [str substringFromIndex:2];

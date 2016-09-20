@@ -37,6 +37,15 @@
 /// 定时60s查询设备状态
 + (NSString *)stringWithSocketQuaryDeviceOnLineWithDst:(NSMutableDictionary *)dst;
 
+/// 添加授权给家人 的锁
++ (NSString *)stringWithSocketAddFamilyLockWithDst:(NSMutableDictionary *)dst lockUUID:(NSString *)lockUUID admin:(NSString *)admin person:(NSArray *)person permit:(NSArray *)permit;
+#pragma mark - 删除授权给家人 的锁
++ (NSString *)stringWithSocketDelegateFamilyLockWithDstUuid:(NSString *)dstUuid lockUUID:(NSString *)lockUUID did:(NSString *)did;
+#pragma mark - 修改授权家人授权 的锁
++ (NSString *)stringWithSocketModifyFamilyLockWithlockUUID:(NSString *)lockUUID did:(NSString *)did person:(NSArray *)person permit:(NSArray *)permit;
+
+#pragma mark - 临时授权 的锁
++ (NSString *)stringWithSocketAddTemporaryAutherLockWithlockUUID:(NSString *)lockUUID person:(NSArray *)person permit:(NSArray *)permit autherTime:(NSString *)autherTime;
 /// 获取当前时间
 + (NSString *)loadCurrentDate;
 /// 获取用户UUID

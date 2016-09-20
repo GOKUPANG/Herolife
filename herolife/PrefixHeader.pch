@@ -65,6 +65,8 @@
 #import "HRHTTPTool.h"
 #import "AsyncUdpSocket.h"
 #import "HRUDPSocketTool.h"
+#import "CALayer+Anim.h"
+
 
 #define UIScreenH [UIScreen mainScreen].bounds.size.height
 #define UIScreenW [UIScreen mainScreen].bounds.size.width
@@ -235,19 +237,6 @@
 /// 扫描到二维码之后 跳转到创建设备的ManualCreateXiaoRui, 通知
 #define kNotificationQRCodeManualCreateXiaoRui @"kNotificationQRCodeManualCreateXiaoRui"
 
-/// 超时时间
-#define HRTimeInterval 10.0
-
-#define SERVER_IP1		"192.168.0.8"
-//#define SERVER_IP		"120.24.183.44"
-#define SERVER_IP		"183.63.118.58"
-//#define SERVER_DOMAIN	"www.gzhuarui.cn"
-#define SERVER_DOMAIN	"http://183.63.118.58:9885/hrctest"
-#define SERVER_PORT		9888
-
-#define SERVER_APIP		"192.168.5.1"
-#define SERVER_APPORT		1200
-
 
 /****************************** 小睿项目key end**********************************/
 
@@ -262,9 +251,7 @@
 /** 保存第三方QQ登陆Figureurl_1 的Key */
 #define kNSUserDefaultsFigureurl_1 @"kNSUserDefaultsFigureurl_1"
 
-/******************************* HTTP URL key ************************/
-///用户注册POST请求URL
-#define HRHTTP_UserRegister_URL @"http://www.gzhuarui.cn/?q=huaruiapi/user"
+
 
 /********************************************** 通知 key *******************/
 /// 发送通知
@@ -282,6 +269,8 @@
 
 // 接收到"授权信息"HTTP请求完毕时的数据 通知
 #define kNotificationReceiveDeviceAutherInformation @"kNotificationReceiveDeviceAutherInformation"
+// 接收到临时授权数据数据 通知
+#define kNotificationReceiveTempAutherInformation @"kNotificationReceiveTempAutherInformation"
 
 
 

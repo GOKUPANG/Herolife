@@ -37,6 +37,7 @@
 #import "DeviceListTcpModel.h"
 #import "HRPushMode.h"
 #import "EBForeNotification.h"
+#import "DeviceAutherModel.h"
 
 
 
@@ -98,14 +99,12 @@ static NSInteger disconnectCount = 0;
 	
 	[application setMinimumBackgroundFetchInterval:1.0];
 	
-	[kUserDefault setObject:@"" forKey:kUserDefaultUUID];
-	[kUserDefault synchronize];
 	
 	//添加通知
 	[kNotification addObserver:self selector:@selector(receiveWiFiList) name:kNotificationReceiveWiFiList object:nil];
 	
 	//远程推送相关
-	
+	//监听点击事件
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(dddd:) name:EBBannerViewDidClick object:nil];
 	if([[[UIDevice currentDevice]systemVersion]floatValue] >=8.0)
 		
@@ -120,8 +119,6 @@ static NSInteger disconnectCount = 0;
 		[[UIApplication sharedApplication]registerForRemoteNotifications];
 		
 	}else{
-		
-		//这里还是原来的代码
 		
 		//注册启用push
 		
@@ -164,44 +161,11 @@ static NSInteger disconnectCount = 0;
 }
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
 {
-	NSString *token = [NSString stringWithFormat:@"%@", deviceToken];
+	NSString *deToken = [[[[deviceToken description] stringByReplacingOccurrencesOfString:@"<" withString:@"" ] stringByReplacingOccurrencesOfString:@">" withString:@""] stringByReplacingOccurrencesOfString:@" " withString:@""];
 	
-	[kUserDefault setObject:token forKey:kUserDefaultUUID];
+	[kUserDefault setObject:deToken forKey:kUserDefaultUUID];
 	[kUserDefault synchronize];
-	NSLog(@"token:%@", token);
-	
-	NSString *appName = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleDisplayName"];
-	NSString *appVersion = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"];
-	NSUInteger rntypes;
-	
-	if ([[UIApplication sharedApplication] respondsToSelector:@selector(currentUserNotificationSettings)]) {
-		
-		rntypes = [[[UIApplication sharedApplication] currentUserNotificationSettings] types];
-		
-		
-	} else {
-		
-		rntypes = [[UIApplication sharedApplication] enabledRemoteNotificationTypes];
-		
-	}
-	
-	NSString *pushBadge = (rntypes & UIRemoteNotificationTypeBadge) ? @"enabled" : @"disabled";
-	NSString *pushAlert = (rntypes & UIRemoteNotificationTypeAlert) ? @"enabled" : @"disabled";
-	NSString *pushSound = (rntypes & UIRemoteNotificationTypeSound) ? @"enabled" : @"disabled";
-	UIDevice *dev = [UIDevice currentDevice];
-	NSString *deviceName = dev.name;
-	NSString *deviceModel = dev.model;
-	NSString *deviceSystemVersion = dev.systemVersion;
-	NSString *deToken = [[[[deviceToken description] stringByReplacingOccurrencesOfString:@"<" withString:@"" ] stringByReplacingOccurrencesOfString:@">" withString:@""] stringByReplacingOccurrencesOfString:@"" withString:@""];
-	NSString *host = @"192.168.0.51";
-	NSString *urlString = [NSString stringWithFormat:@"/apns.php?task=%@&appname=%@&appversion=%@&devicetoken=%@&devicename=%@&devicemodel=%@&deviceversion=%@&pushbadge=%@&pushalert=%@&pushsound=%@",@"register",appName, appVersion, deToken, deviceName, deviceModel, deviceSystemVersion, pushBadge, pushAlert, pushSound];
-	
-	NSURL *url = [[NSURL alloc] initWithScheme:@"http" host:host path:[urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
-	NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
-	[NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse * _Nullable response, NSData * _Nullable data, NSError * _Nullable connectionError) {
-		NSLog(@"return Data:%@", data);
-	}];
-	
+	NSLog(@"token:%@", deToken);
 	
 }
 - (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error
@@ -210,17 +174,9 @@ static NSInteger disconnectCount = 0;
 }
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
 {
-	[EBForeNotification handleRemoteNotification:userInfo soundID:1312 isIos10:NO];
-	DDLogWarn(@"didReceiveRemoteNotification%@", [userInfo description]);
-	NSDictionary *apsInfo = [userInfo objectForKey:@"aps"];
-	NSString *alert = [apsInfo objectForKey:@"alert"];
-	DDLogWarn(@"didReceiveRemoteNotification- alert-%@",alert);
-	NSString *sound = [apsInfo objectForKey:@"sound"];
-	DDLogWarn(@"didReceiveRemoteNotification- sound-%@",sound);
-	NSString *badge = [apsInfo objectForKey:@"badge"];
-	DDLogWarn(@"didReceiveRemoteNotification- badge-%@",badge);
-	application.applicationIconBadgeNumber = [[apsInfo objectForKey:@"badge"] integerValue];
 	
+	DDLogWarn(@"didReceiveRemoteNotification%@", userInfo);
+	[EBForeNotification handleRemoteNotification:userInfo soundID:1312 isIos10:NO];
 	
 }
 -(void)dddd:(NSNotification*)noti{
@@ -486,6 +442,114 @@ static BOOL isOverTime = NO;
 	}
 	return _tipsLabel;
 }
+
+- (void)dealloc
+{
+	[[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+- (void)onSocket:(AsyncSocket *)sock didSecure:(BOOL)flag
+{
+	DDLogInfo(@"onSocket:%p didSecure:YES", sock);
+}
+
+- (void)onSocket:(AsyncSocket *)sock willDisconnectWithError:(NSError *)err
+{
+	DDLogError(@"将要断开连接onSocket:%p willDisconnectWithError:%@,code %ld", sock, err.description, (long)err.code);
+}
+
+- (void)onSocketDidDisconnect:(AsyncSocket *)sock
+{
+	//	if (disconnectCount <= 3) {
+	
+	//断开连接了
+	DDLogInfo(@"断开连接了onSocketDidDisconnect:%p", sock);
+	//    NSString *msg = @"Sorry this connect is failure";
+	_socket = nil;
+	_socket.delegate = nil;
+	
+	dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+		[self connectToHost];
+		disconnectCount++;
+		NSString *passWold = [[NSUserDefaults standardUserDefaults] objectForKey:kDefaultsPassWord];
+		NSString *userName = [[NSUserDefaults standardUserDefaults] objectForKey:kDefaultsUserName];
+		DDLogWarn(@"%@", userName);
+		NSMutableDictionary *bodyDict = [NSMutableDictionary dictionary];
+		bodyDict[@"user"] = userName;
+		bodyDict[@"pass"] = passWold;
+		//登入认证  组帧
+		NSString *str = [NSString stringWithPostTCPJsonVersion:@"0.0.1" status:@"200" token:@"ios" msgType:@"login" msgExplain:@"login" fromUserName:userName destUserName:@"huaruicloud" destDevName:@"huaruiPushServer" msgBodyStringDict:bodyDict];
+		DDLogWarn(@"onSocket登入认证%@", str);
+		NSData *data = [str dataUsingEncoding:NSUTF8StringEncoding];
+		
+		[self.socket writeData:data withTimeout:-1 tag:0];
+		if (disconnectCount >= 10) {
+			
+			[self.tipsLabel showText:@"未连接到服务器!" duration:666666666];
+		}
+		
+	});
+	
+}
+
+#pragma mark - 通知 方法 获得token
+- (void)receviedLoginData:(NSNotification *)note
+{
+	NSDictionary *dict = note.userInfo;
+	Push *push = [Push mj_objectWithKeyValues:dict[@"hrpush"]];
+	[[NSUserDefaults standardUserDefaults] setObject:push.token forKey:PushToken];
+	[[NSUserDefaults standardUserDefaults] synchronize];
+	
+}
+
+- (NSTimeInterval)onSocket:(AsyncSocket *)sock shouldTimeoutReadWithTag:(long)tag elapsed:(NSTimeInterval)elapsed bytesDone:(NSUInteger)length
+{
+	return 10.0;
+}
+// 心跳连接
+-(void)longConnectToSocket{
+	
+	// 根据服务器要求发送固定格式的数据，假设为指令@"longConnect"，但是一般不会是这么简单的指令
+	NSString *longConnect = @"hrhb\r\n\0";
+	NSData  *dataStream  = [longConnect dataUsingEncoding:NSUTF8StringEncoding];
+	[_socket writeData:dataStream withTimeout:-1 tag:1];
+	
+}
+#pragma mark - 懒加载
+- (NSMutableArray *)iracArray
+{
+	if (!_iracArray) {
+		_iracArray = [NSMutableArray array];
+	}
+	return _iracArray;
+}
+- (NSMutableArray *)irgmArray
+{
+	if (!_irgmArray) {
+		_irgmArray = [NSMutableArray array];
+	}
+	return _irgmArray;
+}
+- (NSMutableArray *)doArray
+{
+	if (!_doArray) {
+		_doArray = [NSMutableArray array];
+	}
+	return _doArray;
+}
+- (NSMutableArray *)sceneArray
+{
+	if (!_sceneArray) {
+		_sceneArray = [NSMutableArray array];
+	}
+	return _sceneArray;
+}
+- (NSMutableArray *)autherArray
+{
+	if (!_autherArray) {
+		_autherArray = [NSMutableArray array];
+	}
+	return _autherArray;
+}
 static NSString *sockDataStr = @"";
 static NSUInteger lengthInteger = 0;
 - (void)onSocket:(AsyncSocket *)sock didReadData:(NSData *)data withTag:(long)tag {
@@ -497,9 +561,10 @@ static NSUInteger lengthInteger = 0;
 		
 	 NSString *strData = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
 	 
+	// DDLogWarn(@"didReadData strData没截取  收到的数据%@", strData);
 	 //如果是心跳包就不往下传值
 	 if ([strData containsString:@"hrhb\r\n\0"]) {
-//		 DDLogWarn(@"didReadData strData没截取  收到的数据%@", strData);
+		 //		 DDLogWarn(@"didReadData strData没截取  收到的数据%@", strData);
 		 return;
 	 }
 	 
@@ -569,18 +634,20 @@ static NSUInteger lengthInteger = 0;
 	//如果有错误信息
 	if ([jsonDict[@"hrpush"][@"type"] isEqualToString:@"error"])
 	{
+		
+		//如果有设备不在线信息
+		if ([jsonDict[@"hrpush"][@"desc"] containsString:@"push failed, target not online"])
+		{
+			DDLogInfo(@"接收到设备不在线 数据%@", jsonDict);
+			[[NSNotificationCenter defaultCenter] postNotificationName:kNotificationNotOnline object:nil];
+			
+			return;
+			
+			
+		}
+		
 		DDLogInfo(@"接收到错误 数据%@", jsonDict);
 		return;
-	}
-	//如果有设备不在线信息
-	if ([jsonDict[@"hrpush"][@"desc"] containsString:@"push failed, target not online"])
-	{
-		DDLogInfo(@"接收到设备不在线 数据%@", jsonDict);
-		[[NSNotificationCenter defaultCenter] postNotificationName:kNotificationNotOnline object:nil];
-        
-        return;
-        
-		
 	}
 	
 	//登陆认证 数据
@@ -589,48 +656,48 @@ static NSUInteger lengthInteger = 0;
 		[[NSNotificationCenter defaultCenter] postNotificationName:kNotificationLogin object:nil userInfo:jsonDict];
 		DDLogInfo(@"接收到登陆认证 数据%@", jsonDict);
 	}
-    
+	
 #pragma mark -  斌添加的代码
-    
-    
-    //过滤服务器回复的pushok
-    
-    if ([jsonDict [@"hrpush"][@"desc"] isEqualToString:@"push ok"]) {
-        NSLog(@"接收到服务器的返回response 要过滤掉");
-        
-    }
-    /****************************开锁接收数据的判断*****************************/
-    
-    else if ([jsonDict[@"msg"][@"types"] isEqualToString:@"hrsc"] && [jsonDict[@"msg"][@"control"] isEqualToString:@"1"]) {
-        
-        
-        
-        
-        NSLog(@"接收到门锁状态的数据,正在请求动态密码");
-        
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"kDoorOnlineOrNot" object:nil userInfo:jsonDict];
-        
-        
-        
-    }
-    
-    
-    else  if ([jsonDict[@"msg"][@"types"] isEqualToString:@"hrsc"] &&[jsonDict[@"msg"][@"control"] intValue] >2) {
-        
-        
-        
-        
-        NSLog(@"接收到门锁开锁是否成功的数据");
-        
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"kDoorOpenOrNot" object:nil userInfo:jsonDict];
-        
-        
-    }
-    
-    /************************** 斌添加的代码完毕 *************************************/
-    
-    
-    
+	
+	
+	//过滤服务器回复的pushok
+	
+	if ([jsonDict [@"hrpush"][@"desc"] isEqualToString:@"push ok"]) {
+		NSLog(@"接收到服务器的返回push ok- 要过滤掉");
+		
+	}
+	/****************************开锁接收数据的判断*****************************/
+	
+	else if ([jsonDict[@"msg"][@"types"] isEqualToString:@"hrsc"] && [jsonDict[@"msg"][@"control"] isEqualToString:@"1"]) {
+		
+		
+		
+		
+		NSLog(@"接收到门锁状态的数据,正在请求动态密码");
+		
+		[[NSNotificationCenter defaultCenter] postNotificationName:@"kDoorOnlineOrNot" object:nil userInfo:jsonDict];
+		
+		
+		
+	}
+	
+	
+	else  if ([jsonDict[@"msg"][@"types"] isEqualToString:@"hrsc"] &&[jsonDict[@"msg"][@"control"] intValue] >2) {
+		
+		
+		
+		
+		NSLog(@"接收到门锁开锁是否成功的数据");
+		
+		[[NSNotificationCenter defaultCenter] postNotificationName:@"kDoorOpenOrNot" object:nil userInfo:jsonDict];
+		
+		
+	}
+	
+	/************************** 斌添加的代码完毕 *************************************/
+	
+	
+	
 	//创建红外空调
 	if ([jsonDict[@"hrpush"][@"type"] isEqualToString:@"create"] && [jsonDict[@"msg"][@"types"] isEqualToString:@"irac"]) {
 		
@@ -759,7 +826,7 @@ static NSUInteger lengthInteger = 0;
 	//文本交互
 	if ([jsonDict[@"hrpush"][@"type"] isEqualToString:@"message"]) {
 		
-//		DDLogInfo(@"接收到文本交互 数据%@", jsonDict);
+		//		DDLogInfo(@"接收到文本交互 数据%@", jsonDict);
 		[[NSNotificationCenter defaultCenter] postNotificationName:kNotificationMessage object:nil userInfo:jsonDict];
 	}
 	
@@ -792,7 +859,7 @@ static NSUInteger lengthInteger = 0;
 		[[NSNotificationCenter defaultCenter] postNotificationName:kNotificationControlScene object:nil userInfo:jsonDict];
 		
 	}
-	
+#pragma mark - herolife 收到的相关数据
 	//设备硬件状态
 	if ([jsonDict[@"hrpush"][@"type"] isEqualToString:@"state"]) {
 		DDLogInfo(@"接收设备硬件状态  数据%@", jsonDict);
@@ -807,108 +874,89 @@ static NSUInteger lengthInteger = 0;
 		
 	}
 	
-}
-- (void)dealloc
-{
-	[[NSNotificationCenter defaultCenter] removeObserver:self];
-}
-- (void)onSocket:(AsyncSocket *)sock didSecure:(BOOL)flag
-{
-	DDLogInfo(@"onSocket:%p didSecure:YES", sock);
-}
-
-- (void)onSocket:(AsyncSocket *)sock willDisconnectWithError:(NSError *)err
-{
-	DDLogError(@"将要断开连接onSocket:%p willDisconnectWithError:%@,code %ld", sock, err.description, (long)err.code);
-}
-
-- (void)onSocketDidDisconnect:(AsyncSocket *)sock
-{
-	//	if (disconnectCount <= 3) {
-	
-	//断开连接了
-	DDLogInfo(@"断开连接了onSocketDidDisconnect:%p", sock);
-	//    NSString *msg = @"Sorry this connect is failure";
-	_socket = nil;
-	_socket.delegate = nil;
-	
-	dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-		[self connectToHost];
-		disconnectCount++;
-		NSString *passWold = [[NSUserDefaults standardUserDefaults] objectForKey:kDefaultsPassWord];
-		NSString *userName = [[NSUserDefaults standardUserDefaults] objectForKey:kDefaultsUserName];
-		DDLogWarn(@"%@", userName);
-		NSMutableDictionary *bodyDict = [NSMutableDictionary dictionary];
-		bodyDict[@"user"] = userName;
-		bodyDict[@"pass"] = passWold;
-		//登入认证  组帧
-		NSString *str = [NSString stringWithPostTCPJsonVersion:@"0.0.1" status:@"200" token:@"token" msgType:@"login" msgExplain:@"login" fromUserName:userName destUserName:@"huaruicloud" destDevName:@"huaruiPushServer" msgBodyStringDict:bodyDict];
-		DDLogWarn(@"onSocket登入认证%@", str);
-		NSData *data = [str dataUsingEncoding:NSUTF8StringEncoding];
+	//家人授权成功数据
+	if ([jsonDict[@"hrpush"][@"type"] isEqualToString:@"create"] && [jsonDict[@"msg"][@"types"] isEqualToString:@"common"]) {
+		DDLogInfo(@"家人授权成功数据%@", jsonDict);
 		
-		[self.socket writeData:data withTimeout:-1 tag:0];
-		if (disconnectCount >= 10) {
-			
-			[self.tipsLabel showText:@"未连接到服务器!" duration:666666666];
-		}
+		[self addCreateAutherDict:jsonDict];
+		[[NSNotificationCenter defaultCenter] postNotificationName:kNotificationReceiveDeviceAutherInformation object:nil userInfo:jsonDict];
+		return;
+	}
+	
+	// 删除家人授权数据
+	if ([jsonDict[@"hrpush"][@"type"] isEqualToString:@"delete"] && [jsonDict[@"msg"][@"types"] isEqualToString:@"common"]) {
 		
-	});
-	
-}
-
-#pragma mark - 通知 方法 获得token
-- (void)receviedLoginData:(NSNotification *)note
-{
-	NSDictionary *dict = note.userInfo;
-	Push *push = [Push mj_objectWithKeyValues:dict[@"hrpush"]];
-	[[NSUserDefaults standardUserDefaults] setObject:push.token forKey:PushToken];
-	[[NSUserDefaults standardUserDefaults] synchronize];
-	
-}
-
-- (NSTimeInterval)onSocket:(AsyncSocket *)sock shouldTimeoutReadWithTag:(long)tag elapsed:(NSTimeInterval)elapsed bytesDone:(NSUInteger)length
-{
-	return 10.0;
-}
-// 心跳连接
--(void)longConnectToSocket{
-	
-	// 根据服务器要求发送固定格式的数据，假设为指令@"longConnect"，但是一般不会是这么简单的指令
-	NSString *longConnect = @"hrhb\r\n\0";
-	NSData  *dataStream  = [longConnect dataUsingEncoding:NSUTF8StringEncoding];
-	[_socket writeData:dataStream withTimeout:-1 tag:1];
-	
-}
-#pragma mark - 懒加载
-- (NSMutableArray *)iracArray
-{
-	if (!_iracArray) {
-		_iracArray = [NSMutableArray array];
+		DDLogInfo(@"删除家人授权数据%@", jsonDict);
+		
+		[self addDelegateAutherDict:jsonDict];
+		[[NSNotificationCenter defaultCenter] postNotificationName:kNotificationReceiveDeviceAutherInformation object:nil userInfo:jsonDict];
+		return;
 	}
-	return _iracArray;
-}
-- (NSMutableArray *)irgmArray
-{
-	if (!_irgmArray) {
-		_irgmArray = [NSMutableArray array];
+	
+	
+	// 修改家人授权数据
+	if ([jsonDict[@"hrpush"][@"type"] isEqualToString:@"update"] && [jsonDict[@"msg"][@"types"] isEqualToString:@"common"]) {
+		
+		DDLogInfo(@"修改家人授权数据%@", jsonDict);
+		
+		[self addModifyAutherDict:jsonDict];
+		[[NSNotificationCenter defaultCenter] postNotificationName:kNotificationReceiveDeviceAutherInformation object:nil userInfo:jsonDict];
+		return;
 	}
-	return _irgmArray;
-}
-- (NSMutableArray *)doArray
-{
-	if (!_doArray) {
-		_doArray = [NSMutableArray array];
+	
+	// 临时授权数据
+	if ([jsonDict[@"hrpush"][@"type"] isEqualToString:@"set"] && [jsonDict[@"msg"][@"types"] isEqualToString:@"common"]) {
+		
+		DDLogInfo(@"临时授权数据%@", jsonDict);
+		
+		[self addModifyAutherDict:jsonDict];
+		[[NSNotificationCenter defaultCenter] postNotificationName:kNotificationReceiveTempAutherInformation object:nil userInfo:jsonDict];
+		return;
 	}
-	return _doArray;
-}
-- (NSMutableArray *)sceneArray
-{
-	if (!_sceneArray) {
-		_sceneArray = [NSMutableArray array];
-	}
-	return _sceneArray;
 }
 #pragma mark - 保存  数据 相关
+#pragma mark - 授权管理
+- (void)addModifyAutherDict:(NSDictionary *)dict
+{
+	DeviceAutherModel *auther = [DeviceAutherModel mj_objectWithKeyValues: dict[@"msg"]];
+	NSMutableArray *muArr = [NSMutableArray array];
+	for (DeviceAutherModel *mode in self.autherArray) {
+		if ([mode.uuid isEqualToString: auther.uuid] && [mode.did isEqualToString: auther.did] && [mode.uid isEqualToString: auther.uid])
+		{
+			mode.permit = auther.permit;
+		}
+		[muArr addObject:mode];
+	}
+	self.autherArray = muArr;
+}
+- (void)addDelegateAutherDict:(NSDictionary *)dict
+{
+	
+	DeviceAutherModel *auther = [DeviceAutherModel mj_objectWithKeyValues: dict[@"msg"]];
+	NSMutableArray *arr = [NSMutableArray arrayWithArray:self.autherArray];
+	
+	DDLogWarn(@"NSMutableArray%@count-%lu", arr, (unsigned long)arr.count);
+			  
+	for (DeviceAutherModel *mode in arr) {
+		
+		if ([mode.uuid isEqualToString: auther.uuid] && [mode.did isEqualToString: auther.did])
+		{
+			[self.autherArray removeObject:mode];
+			
+		}
+		
+	}
+	DDLogWarn(@"autherArray%@count-%lu", self.autherArray, (unsigned long)self.autherArray.count);
+}
+- (void)addCreateAutherDict:(NSDictionary *)dict
+{
+	
+	DeviceAutherModel *data = [DeviceAutherModel mj_objectWithKeyValues:dict[@"msg"]];
+	
+	[self.autherArray addObject:data];
+	DDLogWarn(@"NSMutableArray%@count-%lu", self.autherArray, (unsigned long)self.autherArray.count);
+}
+
 #pragma mark - 空调
 //创建空调 帧
 - (void)addCreateIracDict:(NSDictionary *)dict
@@ -1260,6 +1308,14 @@ static NSUInteger lengthInteger = 0;
 	
 }
 
+//授权表数组
+- (void)addHTTPAutherArray:(NSMutableArray *)array
+{
+	[self.autherArray removeAllObjects];
+	
+	self.autherArray = array;
+	
+}
 #pragma mark - 一些自定义的方法
 - (void)addShareSDK
 {

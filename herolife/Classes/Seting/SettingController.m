@@ -122,6 +122,20 @@ static NSString *cellID = @"cellID";
 	self.iconImage.layer.borderWidth = HRCommonScreenW * 20;
 	self.iconImage.layer.borderColor = [UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:0.2].CGColor;
 	self.iconImage.layer.masksToBounds = YES;
+    
+    /** 给头像加一个手势方法*/
+    
+    iconImage.userInteractionEnabled = YES;
+    
+    
+    UITapGestureRecognizer *tap  = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(iconClick)];
+    
+    [iconImage  addGestureRecognizer:tap];
+    
+    
+    
+    
+    
 	
 	[self.view addSubview:iconImage];
 	self.iconImage = iconImage;
@@ -129,17 +143,27 @@ static NSString *cellID = @"cellID";
 	//用户名
 	UILabel *userLabel = [[UILabel alloc] init];
 	userLabel.font = [UIFont systemFontOfSize:17];
-	userLabel.text = @"用户名: Eleanor";
+    
+    /** 斌 用户的用户名*/
+    NSString *userName =   [kUserDefault valueForKey:kDefaultsUserName];
+    
+    
+    userLabel.text = userName;
+    
 	userLabel.textAlignment = NSTextAlignmentCenter;
 	userLabel.textColor = [UIColor whiteColor];
 	[self.view addSubview:userLabel];
 	self.userLabel = userLabel;
 	
 	
-	//邮箱
+	/** 用户的邮箱*/
 	UILabel *emailLabel = [[UILabel alloc] init];
 	emailLabel.font = [UIFont systemFontOfSize:11];
-	emailLabel.text = @"邮 箱: Eleanor_If@163.com";
+    
+    NSString * mailName =   [kUserDefault valueForKey:kDefaultsUserMail];
+
+    
+	emailLabel.text = mailName;
 	emailLabel.textAlignment = NSTextAlignmentCenter;
 	emailLabel.textColor = [UIColor whiteColor];
 	[self.view addSubview:emailLabel];
@@ -162,6 +186,14 @@ static NSString *cellID = @"cellID";
 	[self.view addSubview:tableView];
 	
 	self.tableView = tableView;
+}
+
+#pragma mark - 头像点击
+-(void)iconClick
+{
+    AccountManagementController *AMC = [AccountManagementController new];
+    [self.navigationController pushViewController:AMC animated:YES];
+
 }
 
 - (void)viewDidLayoutSubviews
@@ -298,8 +330,6 @@ static NSString *cellID = @"cellID";
         case 0:{
             if (indexPath.row==0)
             {
-                AccountManagementController *AMC = [AccountManagementController new];
-                [self.navigationController pushViewController:AMC animated:YES];
                 
             }
             

@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 @class HRPushMode;
 @class DeviceListTcpModel;
+@class DeviceAutherModel;
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
@@ -33,8 +34,11 @@
 /** <#name#> */
 @property(nonatomic, strong) DeviceListTcpModel *deviceListModel;
 
+/** 保存添加家人授权 数据 */
+@property(nonatomic, strong) DeviceAutherModel *familyModel;
+
 /** 授权表模型数组 */
-@property(nonatomic, strong) NSArray *autherArray;
+@property(nonatomic, strong) NSMutableArray *autherArray;
 /** 授权设备信息 模型数组 */
 @property(nonatomic, strong) NSArray *autherDeviceArray;
 
@@ -73,6 +77,7 @@
 - (void)addHTTPIrgmArray:(NSMutableArray *)array;
 - (void)addHTTPDoArray:(NSMutableArray *)array;
 - (void)addHTTPSceneArray:(NSMutableArray *)array;
+- (void)addHTTPAutherArray:(NSMutableArray *)array;
 #pragma mark - 通用相关方法
 //创建通用 帧
 - (void)addCreateIrgmDict:(NSDictionary *)dict;

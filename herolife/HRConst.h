@@ -14,26 +14,77 @@ UIKIT_EXTERN CGFloat const HRNavH;
 /* huarui API */
 #define TOKEN_HEADER_NAME	@"X-CSRF-Token"
 
-#define HRAPI_HTTP_PREFIX	@"http://www.gzhuarui.cn/?q="
 #define HRAPI_LOGIN			@"huaruiapi/user/login"
 #define HRAPI_LOGOUT		@"huaruiapi/user/logout"
 #define HRAPI_CSRF			@"huaruiapi/user/token"
 
-#define HRAPI_LOGIN_URL		[NSString stringWithFormat:@"%@%@", HRAPI_HTTP_PREFIX, HRAPI_LOGIN]
-#define HRAPI_CSRF_URL		[NSString stringWithFormat:@"%@%@", HRAPI_HTTP_PREFIX, HRAPI_CSRF]
-#define HRAPI_LOGOUT_URL		[NSString stringWithFormat:@"%@%@", HRAPI_HTTP_PREFIX, HRAPI_LOGOUT]
-/// 获取温湿度数据的GET请求URL
-#define HRAPI_TempHumid_URL @"http://www.gzhuarui.cn/?q=huaruiapi/xiaorui-humiture"
+
+
+/// 超时时间
+#define HRTimeInterval 10.0
+
+#define SERVER_IP1		"192.168.0.8"
+//#define SERVER_IP		"120.24.183.44"
+#define SERVER_IP		"183.63.118.58"
+//#define SERVER_DOMAIN	@"http://www.gzhuarui.cn/?q="
+#define SERVER_DOMAIN	@"http://183.63.118.58:9885/hrctest/?q="
+#define SERVER_PORT		9888
+
+#define SERVER_APIP		"192.168.5.1"
+#define SERVER_APPORT		1200
+
+
+
+#define HRAPI_LOGIN_URL		[NSString stringWithFormat:@"%@%@", SERVER_DOMAIN, HRAPI_LOGIN]
+#define HRAPI_CSRF_URL		[NSString stringWithFormat:@"%@%@", SERVER_DOMAIN, HRAPI_CSRF]
+#define HRAPI_LOGOUT_URL		[NSString stringWithFormat:@"%@%@", SERVER_DOMAIN, HRAPI_LOGOUT]
+
+
+/// 门锁记录HTTP请求
+#define HRAPI_RecordeLock_URL		[NSString stringWithFormat:@"%@%@", SERVER_DOMAIN, @"huaruiapi/herolife-dev-hrsc-ml&uuid="]
+/// 校验用户名是否在服务器中存在
+#define HRAPI_Checkuser_URL		[NSString stringWithFormat:@"%@%@", SERVER_DOMAIN, @"huaruiapi/checkuser&user="]
+//#define HRAPI_Checkuser_URL		 @"http://www.gzhuarui.cn/?q=huaruiapi/checkuser&user="
+//#define HRAPI_Checkuser_URL		 @"http://183.63.118.58:9885/hrctest/?q=huaruiapi/checkuser&user="
 
 /// 获取锁信息数据的GET请求URL
-#define HRAPI_LockInFo_URL @"http://www.gzhuarui.cn/?q=huaruiapi/herolife-dev"
+
+//#define HRAPI_LockInFo_URL		[NSString stringWithFormat:@"%@%@", SERVER_DOMAIN, @"huaruiapi/herolife-dev"]
+
+#define HRAPI_LockInFo_URL @"http://183.63.118.58:9885/hrctest/?q=huaruiapi/herolife-dev"
 /// 我授权给别人的数据
-#define HRAPI_LockAutherUserList_URL @"http://www.gzhuarui.cn/?q=huaruiapi/herolife-dev-hrsc-al&user="
+//#define HRAPI_LockAutherUserList_URL @"http://www.gzhuarui.cn/?q=huaruiapi/herolife-dev-hrsc-al&user="
+#define HRAPI_LockAutherUserList_URL		[NSString stringWithFormat:@"%@%@", SERVER_DOMAIN, @"huaruiapi/herolife-dev-hrsc-al&user="]
 /// 别人授权给我的数据
-#define HRAPI_LockAutherPersonList_URL @"http://www.gzhuarui.cn/?q=huaruiapi/herolife-dev-hrsc-al&person="
+//#define HRAPI_LockAutherPersonList_URL @"http://www.gzhuarui.cn/?q=huaruiapi/herolife-dev-hrsc-al&person="
+#define HRAPI_LockAutherPersonList_URL		[NSString stringWithFormat:@"%@%@", SERVER_DOMAIN, @"huaruiapi/herolife-dev-hrsc-al&person="]
 
 /// 获得授权设备信息 HTTP
-#define HRAPI_LockAutherInformation_URL @"http://www.gzhuarui.cn/?q=huaruiapi/herolife-dev&uuid="
+//#define HRAPI_LockAutherInformation_URL @"http://www.gzhuarui.cn/?q=huaruiapi/herolife-dev&uuid="
+#define HRAPI_LockAutherInformation_URL		[NSString stringWithFormat:@"%@%@", SERVER_DOMAIN, @"huaruiapi/herolife-dev&uuid="]
+
+/// 忘记密码POST请求URL
+#define HRAPI_ForgetPasswd_URL		[NSString stringWithFormat:@"%@%@", SERVER_DOMAIN, @"huaruiapi/user/request_new_password"]
+
+/// 添加门锁POST请求URL
+#define HRAPI_QueryLock_URL		[NSString stringWithFormat:@"%@%@", SERVER_DOMAIN, @"huaruiapi/herolife-dev"]
+
+/// 添加门锁POST请求URL
+#define HRAPI_AddLock_URL		[NSString stringWithFormat:@"%@%@", SERVER_DOMAIN, @"huaruiapi/node"]
+
+/******************************* HTTP URL key ************************/
+///用户注册POST请求URL
+
+#define HRHTTP_UserRegister_URL		[NSString stringWithFormat:@"%@%@", SERVER_DOMAIN, @"huaruiapi/user"]
+
+/// 修改门锁名称PUT请求URL
+#define HRAPI_ModifyLock_URL		[NSString stringWithFormat:@"%@%@", SERVER_DOMAIN, @"huaruiapi/node/"]
+
+
+
+
+/// 获取温湿度数据的GET请求URL
+#define HRAPI_TempHumid_URL @"http://www.gzhuarui.cn/?q=huaruiapi/xiaorui-humiture"
 
 /// 创建小睿GET请求URL
 #define HRAPI_XiaoRuiNode_URL @"http://www.gzhuarui.cn/?q=huaruiapi/node"
@@ -56,14 +107,6 @@ UIKIT_EXTERN CGFloat const HRNavH;
 #define HRAPI_XiaoRuiIHRScene_URL @"http://www.gzhuarui.cn/?q=huaruiapi/xiaorui-scene"
 
 
-/// 忘记密码POST请求URL
-#define HRAPI_ForgetPasswd_URL @"http://www.gzhuarui.cn/?q=huaruiapi/user/request_new_password"
-/// 添加门锁POST请求URL
-#define HRAPI_QueryLock_URL @"http://www.gzhuarui.cn/?q=huaruiapi/herolife-dev"
-/// 添加门锁POST请求URL
-#define HRAPI_AddLock_URL @"http://www.gzhuarui.cn/?q=huaruiapi/node"
-/// 修改门锁名称PUT请求URL
-//#define HRAPI_ModifyLock_URL @"http://www.gzhuarui.cn/?q=huaruiapi/node/did"
 
 
 
