@@ -605,14 +605,6 @@
     
 }
 
-
-#pragma mark - UI事件  -haibo
-- (void)backButtonClick:(UIButton *)btn
-{
-    [self.navigationController popViewControllerAnimated:YES];
-}
-
-
 #pragma mark - 长按删除全部
 
 -(void)LongPress

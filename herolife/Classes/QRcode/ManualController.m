@@ -57,7 +57,7 @@
 	self.manualButton.selected = YES;
 	
 	//隐藏底部条
-	[self IsTabBarHidden:YES];
+	[self IsTabBarHidden:NO];
 }
 #pragma mark - 内部方法
 //初始化
@@ -76,9 +76,7 @@
 	
 	//导航条
 	HRNavigationBar *navView = [[HRNavigationBar alloc] init];
-	navView.titleLabel.text = @"智能门锁";
-	[navView.leftButton setImage:[UIImage imageNamed:@"返回号"] forState:UIControlStateNormal];
-	[navView.leftButton addTarget:self action:@selector(backButtonClick:) forControlEvents:UIControlEventTouchUpInside];
+	navView.titleLabel.text = @"手动添加设备";
 	navView.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.1];
 	[self.view addSubview:navView];
 	self.navView = navView;
@@ -101,7 +99,7 @@
 	qrLabel.textColor = [UIColor whiteColor];
 	qrLabel.textAlignment = NSTextAlignmentCenter;
 	qrLabel.font = [UIFont systemFontOfSize:14];
-	qrLabel.text = @"扫描二维码";
+	qrLabel.text = @"扫描添加";
 	[self.view addSubview:qrLabel];
 	self.qrLabel = qrLabel;
 	
@@ -198,7 +196,7 @@
 {
 	self.qrButton.selected = YES;
 	self.manualButton.selected = NO;
-	[self.navigationController popViewControllerAnimated:YES];
+	[self.navigationController popViewControllerAnimated:NO];
 }
 - (void)manualButtonClick:(UIButton *)btn
 {
@@ -255,16 +253,13 @@
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-	return 4;
+	return 1;
 	
 }
 
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	
-	
-	
 	
 	AddDeivcecell * cell = [tableView dequeueReusableCellWithIdentifier:@"cellID"];
 	
@@ -275,7 +270,7 @@
 	
 	cell.backgroundColor = [UIColor clearColor];
 	
-	cell.DeviceNameLabel.text = @"智能设备";
+	cell.DeviceNameLabel.text = @"智能门锁";
 	
 	// cell.textLabel.textColor = [UIColor whiteColor];
 	

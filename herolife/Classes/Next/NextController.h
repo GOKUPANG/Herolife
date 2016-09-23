@@ -9,5 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface NextController : UIViewController
-
+/** 二维码扫描的数据 */
+@property(nonatomic, copy) NSString *qrData;
 @end

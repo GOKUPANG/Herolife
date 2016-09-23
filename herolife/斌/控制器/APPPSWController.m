@@ -14,7 +14,15 @@
 #define HRAPI_GetDoorPsw_URL @"http://183.63.118.58:9885/hrctest/?q=huaruiapi/herolife-dev-hrsc-ul&uuid=%@"
 
 //#define HRAPI_DeleteDoorPsw_URL @"http://www.gzhuarui.cn/?q=huaruiapi/node/%@"
-#define HRAPI_DeleteDoorPsw_URL @"http://183.63.118.58:9885/?q=huaruiapi/node/%@"
+
+#define HRAPI_DeleteDoorPsw_URL @"http://183.63.118.58:9885/hrctest/?q=huaruiapi/node/%@"
+
+//#define HRAPI_AddDoorPsw_URL @"http://www.gzhuarui.cn/?q=huaruiapi/node"
+
+#define HRAPI_AddDoorPsw_URL @"http://183.63.118.58:9885/hrctest/?q=huaruiapi/node"
+
+
+#define HRAPI_UpdateDoorPsw_URL @"http://183.63.118.58:9885/hrctest/?q=huaruiapi/node/%@"
 
 
 #import "APPPSWController.h"
@@ -624,6 +632,8 @@
             NSLog(@"我是增加密码弹窗");
             
             
+            #pragma mark -增加密码
+            
             NSString * PswNumber  = self.AddPswNumberField.text;
             
             NSString * PswName    =  self.AddPswNameField.text;
@@ -657,9 +667,9 @@
                 
                 
                 
-                NSString * AddPswURL = @"http://www.gzhuarui.cn/?q=huaruiapi/node";
+                //NSString * AddPswURL = @"http://www.gzhuarui.cn/?q=huaruiapi/node";
                 
-                [  manager POST:AddPswURL parameters:ParametersDict success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+                [  manager POST:HRAPI_AddDoorPsw_URL parameters:ParametersDict success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
                     NSLog(@"上传成功");
                     
                     NSLog(@"返回的数据是%@",responseObject);
@@ -726,9 +736,11 @@
             
             AFHTTPSessionManager *manager =[AFHTTPSessionManager hrManager];
             
-            NSString *  Str =@"http://www.gzhuarui.cn/?q=huaruiapi/node/%@";
+                
+                #pragma mark - 等下回来这里
+           // NSString *  Str =@"http://www.gzhuarui.cn/?q=huaruiapi/node/%@";
             
-            NSString *urlStr = [NSString stringWithFormat:Str,did];
+            NSString *urlStr = [NSString stringWithFormat:HRAPI_UpdateDoorPsw_URL,did];
             
             
             NSMutableDictionary * paraDict = [NSMutableDictionary dictionary];

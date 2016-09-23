@@ -219,7 +219,7 @@
 	
 	//背景图片
 	UIImageView *backgroundImage = [[UIImageView alloc] initWithFrame:[UIScreen mainScreen].bounds];
-	backgroundImage.image = [UIImage imageNamed:@"icon_bg.jpg"];
+	backgroundImage.image = [UIImage imageNamed:@"4.jpg"];
 	[self.view addSubview:backgroundImage];
 	
 	
@@ -387,9 +387,11 @@
 			 //头像
 			 NSDictionary *rawDict = user.rawData;
 			 NSString *urlStr = [rawDict valueForKeyPath:@"figureurl_2"];
-			 [kNSUserDefaults setObject:urlStr forKey:kNSUserDefaultsNickname];
-			 
+			 [kNSUserDefaults setObject:urlStr forKey:kDefaultsIconURL];
+			 DDLogWarn(@"QQ头像%@",[ssdk valueForKeyPath:@"urlStr"]);
+			 [kNSUserDefaults synchronize];
 			 [self loginSSDKWithOpenID: openid];
+			 
 			 
 		 } else
 		 {
@@ -426,7 +428,8 @@
 										  
 										  [SVProgressTool hr_dismiss];
 										  HRTabBarViewController *tabBarVC = [[HRTabBarViewController alloc] init];
-										  [self.navigationController pushViewController:tabBarVC animated:YES];
+										  [self presentViewController:tabBarVC animated:NO completion:nil];
+//										  [self.navigationController pushViewController:tabBarVC animated:YES];
 										  
 									  }
 								  }];
@@ -465,8 +468,8 @@
 											  } else {
 												  [SVProgressTool hr_dismiss];
 												  HRTabBarViewController *tabBarVC = [[HRTabBarViewController alloc] init];
-												  [self.navigationController pushViewController:tabBarVC animated:YES];
-												  
+//												  [self.navigationController pushViewController:tabBarVC animated:YES];
+												  [self presentViewController:tabBarVC animated:NO completion:nil];
 											  }
 										  }];
 			
@@ -516,7 +519,8 @@
 			  
 			  [SVProgressTool hr_dismiss];
 			  HRTabBarViewController *tabBarVC = [[HRTabBarViewController alloc] init];
-			  [self.navigationController pushViewController:tabBarVC animated:YES];
+//			  [self.navigationController pushViewController:tabBarVC animated:YES];
+			  [self presentViewController:tabBarVC animated:YES completion:nil];
 			  
 		  }
 	  }];

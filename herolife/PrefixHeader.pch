@@ -141,6 +141,9 @@
 /// 保存添加小睿时用户输入的UUID
 #define kUserDefaultUserInputUUID @"kUserDefaultUserInputUUID"
 
+/// 保存二维码扫描的数据
+#define kUserDefaultQrData @"kUserDefaultQrData"
+
 
 
 /// 创建空调 通知

@@ -10,6 +10,7 @@
 #import <AVFoundation/AVFoundation.h>
 
 #import "ManualController.h"
+#import "NextController.h"
 
 @interface QRCodeController ()<AVCaptureMetadataOutputObjectsDelegate, UIAlertViewDelegate>
 {
@@ -27,6 +28,8 @@
 @property(nonatomic, weak) UIButton *rightButton;
 /** 手动添加Label */
 @property(nonatomic, weak) UILabel *rightLabel;
+/** <#name#> */
+@property(nonatomic, strong) NSTimer *timer;
 @end
 
 @implementation QRCodeController
@@ -55,7 +58,7 @@
 {
 	self.navigationController.navigationBar.hidden = YES;
 	HRNavigationBar *navView = [[HRNavigationBar alloc] initWithFrame:CGRectMake(0, 20, HRUIScreenW, HRNavH)];
-	navView.titleLabel.text = @"设备列表";
+	navView.titleLabel.text = @"二维码添加设备";
 	navView.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.1];
 	[self.view addSubview:navView];
 }
@@ -63,11 +66,8 @@
 {
 	[super viewDidLayoutSubviews];
 }
-/**
- *  @author Whde
- *
- *  配置相机属性
- */
+
+#pragma mark - 配置相机属性
 - (void)instanceDevice{
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:YES];
     line_tag = 1872637;
@@ -118,16 +118,8 @@
     [session startRunning];
 }
 
-/**
- *  @author Whde
- *
- *  监听扫码状态-修改扫描动画
- *
- *  @param keyPath
- *  @param object
- *  @param change
- *  @param context
- */
+
+#pragma mark -  监听扫码状态-修改扫描动画
 - (void)observeValueForKeyPath:(NSString *)keyPath
                       ofObject:(id)object
                         change:(NSDictionary *)change
@@ -142,47 +134,80 @@
     }
 }
 
-/**
- *  @author Whde
- *
- *  获取扫码结果
- *
- *  @param captureOutput
- *  @param metadataObjects
- *  @param connection
- */
+
+#pragma mark -  获取扫码结果
 -(void)captureOutput:(AVCaptureOutput *)captureOutput didOutputMetadataObjects:(NSArray *)metadataObjects fromConnection:(AVCaptureConnection *)connection{
     if (metadataObjects.count>0) {
-        [session stopRunning];
         AVMetadataMachineReadableCodeObject * metadataObject = [metadataObjects objectAtIndex :0];
         
-        //输出扫描字符串
+        //二维码扫描的数据
+		
+		[kUserDefault setObject:@"" forKey:kUserDefaultQrData];
+		[kUserDefault synchronize];
         NSString *data = metadataObject.stringValue;
-        if (_didReceiveBlock) {
-            _didReceiveBlock(data);
-            [self selfRemoveFromSuperview];
-        } else {
-            if (IS_VAILABLE_IOS8) {
-                UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"扫码" message:data preferredStyle:UIAlertControllerStyleAlert];
-                [alert addAction:[UIAlertAction actionWithTitle:@"好" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-                    [session startRunning];
-                }]];
-                [self presentViewController:alert animated:YES completion:nil];
-            } else {
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"扫码" message:data delegate:self cancelButtonTitle:@"好" otherButtonTitles:nil];
-                [alert show];
-            }
-        }
+		
+		//过滤
+		if ([data containsString:@"HRSC"]) {
+			
+			[session stopRunning];
+			[kUserDefault setObject:data forKey:kUserDefaultQrData];
+			[kUserDefault synchronize];
+			[self selfRemoveFromSuperview];
+			
+			NextController *next = [[NextController alloc] init];
+			next.qrData = data;
+			[self.navigationController pushViewController:next animated:YES];
+		}else
+		{
+			NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:3.0 target:self selector:@selector(showError) userInfo:nil repeats:NO];
+			self.timer = timer;
+			
+		}
+//        if (_didReceiveBlock) {
+//            _didReceiveBlock(data);
+//
+//        } else {
+//            if (IS_VAILABLE_IOS8) {
+//                UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"扫码" message:data preferredStyle:UIAlertControllerStyleAlert];
+//                [alert addAction:[UIAlertAction actionWithTitle:@"好" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+//                    [session startRunning];
+//                }]];
+//                [self presentViewController:alert animated:YES completion:nil];
+////            } else {
+//                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"扫码" message:data delegate:self cancelButtonTitle:@"好" otherButtonTitles:nil];
+//                [alert show];
+//
+//            }
+//        }
     }
 }
+- (void)showError
+{
+	[SVProgressTool hr_showErrorWithStatus:@"请对准本门锁进行扫描"];
+	
+}
+- (void)dealloc
+{
+	[self.timer invalidate];
+}
+- (void)goToHomeList
+{
+	for (UIView *view  in self.tabBarController.view.subviews) {
+		if ([NSStringFromClass([view class]) isEqualToString:@"HRTabBar"]) {
+			view.hidden = NO;
+			for (UIButton *btn in view.subviews) {
+    
+				if (btn.tag == 2) {
+					btn.selected = YES;
+				}
+			}
+		}
+	}
+	self.tabBarController.selectedIndex = 1;
+	[self.navigationController popToRootViewControllerAnimated:YES];
+}
 
-/**
- *  @author Whde
- *
- *  未识别(其他)的二维码提示点击"好",继续扫码
- *
- *  @param alertView
- */
+#pragma mark -  未识别(其他)的二维码提示点击"好",继续扫码
 - (void)alertViewCancel:(UIAlertView *)alertView {
     [session startRunning];
 }
@@ -196,11 +221,8 @@
     [super didReceiveMemoryWarning];
 }
 
-/**
- *  @author Whde
- *
- *  创建扫码页面
- */
+
+#pragma mark -   创建扫码页面
 - (void)setOverlayPickerView
 {
 	[self setupViews];
@@ -279,7 +301,7 @@
 	[self.view addSubview:leftButton];
 	
 	self.leftButton = leftButton;
-	CGSize leftSize = [@"扫描二维码" sizeWithAttributes:dict];
+	CGSize leftSize = [@"扫描添加" sizeWithAttributes:dict];
 	
 	
 	UILabel *qrLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(leftButton.frame) + HRCommonScreenH*10, leftSize.width, leftSize.height)];
@@ -288,7 +310,7 @@
 	qrLabel.textColor = [UIColor whiteColor];
 	qrLabel.textAlignment = NSTextAlignmentCenter;
 	qrLabel.font = [UIFont systemFontOfSize:14];
-	qrLabel.text = @"扫描二维码";
+	qrLabel.text = @"扫描添加";
 	
 	[self.view addSubview:qrLabel];
 	self.qrLabel = qrLabel;
@@ -325,15 +347,12 @@
 	self.rightButton.selected = YES;
 	ManualController *manulVC = [[ManualController alloc] init];
 	
-	[self.navigationController pushViewController:manulVC animated:YES];
+	[self.navigationController pushViewController:manulVC animated:NO];
 	
 	
 }
-/**
- *  @author Whde
- *
- *  添加扫码动画
- */
+
+#pragma mark -   添加扫码动画
 - (void)addAnimation{
     UIView *line = [self.view viewWithTag:line_tag];
     line.hidden = NO;
@@ -361,6 +380,7 @@
  *
  *  去除扫码动画
  */
+#pragma mark - 去除扫码动画
 - (void)removeAnimation{
     UIView *line = [self.view viewWithTag:line_tag];
     [line.layer removeAnimationForKey:@"LineAnimation"];
@@ -374,6 +394,7 @@
  *
  *  @return
  */
+#pragma mark - 扫码取消button方法
 - (void)dismissOverlayView:(id)sender{
     [self selfRemoveFromSuperview];
 }
@@ -383,6 +404,7 @@
  *
  *  从父视图中移出
  */
+#pragma mark - 从父视图中移出
 - (void)selfRemoveFromSuperview{
     [session removeObserver:self forKeyPath:@"running" context:nil];
     [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
@@ -392,6 +414,7 @@
         [self removeFromParentViewController];
     }];
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault animated:YES];
+	
 }
 
 /*!

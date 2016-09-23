@@ -63,10 +63,16 @@ static int const HRTimeDuration = 601;
 	UIImageView *backgroundImage = [[UIImageView alloc] initWithFrame:[UIScreen mainScreen].bounds];
 	backgroundImage.image = [UIImage imageNamed:@"Snip20160825_3"];
 	[self.view addSubview:backgroundImage];
+	
+	
+	UIView *view = [[UIView alloc] initWithFrame:[UIScreen mainScreen].bounds];
+	view.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.2];
+	[self.view addSubview:view];
+	
 	//导航条
 	HRNavigationBar *navView = [[HRNavigationBar alloc] init];
 	navView.titleLabel.text = @"设置局域网";
-	navView.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.1];
+	navView.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.15];
 	[navView.leftButton setImage:[UIImage imageNamed:@"返回号"] forState:UIControlStateNormal];
 	[navView.leftButton addTarget:self action:@selector(backButtonClick:) forControlEvents:UIControlEventTouchUpInside];
 	[self.view addSubview:navView];
@@ -80,42 +86,54 @@ static int const HRTimeDuration = 601;
     [self.view addSubview:halfAlphaView];
     
     halfAlphaView.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.1];
-    
+	
     UIView * circleView  = [[UIView alloc]init];
     [self.view addSubview: circleView];
-    
+	
     circleView.sd_layout
     .topSpaceToView(self.view,64.0 + 65.0 * HRCommonScreenH)
     .leftSpaceToView(self.view,30.0 * HRCommonScreenW)
     .rightSpaceToView(self.view,30.0 * HRCommonScreenW)
     .heightIs(HRUIScreenW - 60.0 * HRCommonScreenW);
     
-    circleView.layer.cornerRadius = (HRUIScreenW - 60.0 * HRCommonScreenW)/2;
+//    circleView.layer.cornerRadius = (HRUIScreenW - 60.0 * HRCommonScreenW)/2;
+	
+//    circleView.layer.masksToBounds = YES;
+	
     
-    circleView.layer.masksToBounds = YES;
     
-    
-    
-    circleView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.3];;
-    
+//    circleView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.3];;
+	
     
    
     
     _CircleImage  =  [[UIImageView alloc]init];
     
     [circleView addSubview:_CircleImage];
-    
+	
     _CircleImage.sd_layout
-    .topSpaceToView(circleView,164.0 *HRCommonScreenH)
-    .bottomSpaceToView(circleView,164.0*HRCommonScreenH)
-    .leftSpaceToView(circleView,67.0 * HRCommonScreenW)
-    .rightSpaceToView(circleView,67.0 * HRCommonScreenW);
+    .topSpaceToView(self.navView,55 *HRCommonScreenH)
+//    .bottomSpaceToView(circleView,164.0*HRCommonScreenH)
+    .leftSpaceToView(self.navView,230 * HRCommonScreenW)
+    .rightSpaceToView(self.navView,230 * HRCommonScreenW);
     
-    _CircleImage.image = [UIImage imageNamed:@"确认登录"];
-    
+//    _CircleImage.image = [UIImage imageNamed:@"手机背景"];
+	
    // _CircleImage.backgroundColor = [UIColor greenColor];
     
-    
+	UIImageView *phoneImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"手机背景"]];
+	phoneImage.frame = CGRectMake(230 *HRCommonScreenW, 64 + 55 *HRCommonScreenH, (375* 2 - 460)*HRCommonScreenW , 564 * HRCommonScreenH);
+	
+	[self.view addSubview:phoneImage];
+	UIImageView *lineImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"透明线"]];
+//	CGRect rectLine = lineImage.frame;
+//	rectLine.origin.y = CGRectGetMaxY(phoneImage.frame) + 25;
+//	lineImage.frame = rectLine;
+	lineImage.frame = CGRectMake(0, CGRectGetMaxY(phoneImage.frame) + 25 , self.view.hr_width , 400);
+//	[lineImage sizeToFit];
+	
+	[self.view addSubview:lineImage];
+	
     /** 去连接按钮*/
     
     UIButton * ConfirmBtn = [[UIButton alloc]init];

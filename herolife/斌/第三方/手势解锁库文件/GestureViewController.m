@@ -5,6 +5,7 @@
 #import "PCLockLabel.h"
 #import "PCCircleInfoView.h"
 #import "PCCircle.h"
+#import "LoginController.h"
 
 @interface GestureViewController ()<CircleViewDelegate>
 
@@ -32,13 +33,27 @@
 /** 顶部条 */
 @property(nonatomic, weak) HRNavigationBar *navView;
 
+
+/** 背景图片*/
+
+@property(nonatomic,strong)UIImageView *backImgView;
+
+
+
 @end
 
 @implementation GestureViewController
 
 
 
+
+
+
 #pragma mark - tabbar 设置
+
+
+
+
 
 
 
@@ -88,6 +103,35 @@
         }
     }
 
+    
+    NSInteger  PicNum =   [[NSUserDefaults standardUserDefaults] integerForKey:@"PicNum"];
+    
+    if (!PicNum) {
+        
+        
+        
+        self.backImgView.image = [UIImage imageNamed:@"Snip20160825_3"];
+    }
+    
+    
+    else if (PicNum == -1)
+    {
+        NSString *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES).lastObject;
+        path = [path stringByAppendingPathComponent:@"image.png"];
+        
+        self.backImgView.image =[UIImage imageWithContentsOfFile:path];
+    }
+    
+    else{
+        
+        NSString * imgName = [NSString stringWithFormat:@"%ld.jpg",PicNum];
+        
+        self.backImgView.image =[UIImage imageNamed:imgName];
+    }
+    
+
+    
+    
 }
 
 - (instancetype)init
@@ -119,7 +163,15 @@
     //背景图片
     UIImageView *backgroundImage = [[UIImageView alloc] initWithFrame:[UIScreen mainScreen].bounds];
     backgroundImage.image = [UIImage imageNamed:@"Snip20160825_3"];
+    
+    self.backImgView =  backgroundImage;
+    
     [self.view addSubview:backgroundImage];
+    
+    UIView *view = [[UIView alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    view.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.2];
+    [self.view addSubview:view];
+
     
     
     //导航条
@@ -150,6 +202,36 @@
 {
     [self.navigationController popViewControllerAnimated:YES];
 }
+
+#pragma mark - 增加的删除手势密码
+- (void)addDeleteButton
+{
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    [button addTarget:self action:@selector(didClickBtn:)forControlEvents:UIControlEventTouchUpInside];
+    
+    //	button.frame = CGRectMake(UIScreenW *0.5 - UIScreenW *0.5 *0.5, CGRectGetMaxY(self.lockView.frame), 150, 30);
+    NSString *titleString = @"删除手势密码";
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    dict[NSFontAttributeName] = [UIFont systemFontOfSize:17];
+    CGSize size = [titleString sizeWithAttributes:dict];
+    button.hr_x = UIScreenW *0.5 - size.width *0.5;
+    button.hr_y = CGRectGetMaxY(self.lockView.frame);
+    
+    button.hr_height = size.height;
+    button.hr_width = size.width;
+    
+    [button setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
+    button.titleLabel.font = [UIFont systemFontOfSize:17];
+    button.titleLabel.textAlignment = NSTextAlignmentCenter;
+    [button setTitle:titleString forState:UIControlStateNormal];
+    [button sizeToFit];
+    button.tag = buttonTagReset;
+    [button setContentHorizontalAlignment:UIControlContentHorizontalAlignmentRight];
+    [self.view addSubview:button];
+    self.resetBtn = button;
+}
+
+
 
 
 #pragma mark - 创建UIBarButtonItem
@@ -200,6 +282,11 @@
     msgLabel.center = CGPointMake(kScreenW/2, CGRectGetMinY(lockView.frame) - 30);
     self.msgLabel = msgLabel;
     [self.view addSubview:msgLabel];
+    
+    //创建删除按钮
+    [self addDeleteButton];
+    
+    
 }
 
 #pragma mark - 设置手势密码界面
@@ -227,12 +314,34 @@
     UIImageView  *imageView = [[UIImageView alloc] init];
     imageView.frame = CGRectMake(0, 0, 65, 65);
     imageView.center = CGPointMake(kScreenW/2, kScreenH/5);
-    [imageView setImage:[UIImage imageNamed:@"head"]];
+    [imageView setImage:[UIImage imageNamed:@"1.jpg"]];
     [self.view addSubview:imageView];
     
+    #pragma mark -斌添加的代码1
+    
+    /***************添加的代码 ************/
+    
+    
+    
+    UILabel *label = [[UILabel alloc] init];
+    label.frame = CGRectMake(0, 0, 200, 47);
+    label.center = CGPointMake(kScreenW/2, CGRectGetMaxY(imageView.frame) + 20);
+    label.textAlignment = NSTextAlignmentCenter;
+    label.textColor = [UIColor whiteColor];
+    
+    //从 偏好设置里取用户名
+    NSString *str = [[NSUserDefaults standardUserDefaults] objectForKey:kDefaultsUserName];
+    label.text = str;
+    [self.view addSubview:label];
+
+    
+    
+    
+    /**************添加的代码*************/
+
     // 管理手势密码
     UIButton *leftBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [self creatButton:leftBtn frame:CGRectMake(CircleViewEdgeMargin + 20, kScreenH - 60, kScreenW/2, 20) title:@"管理手势密码" alignment:UIControlContentHorizontalAlignmentLeft tag:buttonTagManager];
+    [self creatButton:leftBtn frame:CGRectMake(CircleViewEdgeMargin + 20, kScreenH - 60, kScreenW/2, 20) title:@"忘记手势密码" alignment:UIControlContentHorizontalAlignmentLeft tag:buttonTagManager];
     
     // 登录其他账户
     UIButton *rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -261,7 +370,13 @@
         {
             NSLog(@"点击了重设按钮");
             // 1.隐藏按钮
-            [self.resetBtn setHidden:YES];
+           // [self.resetBtn setHidden:YES];
+            
+        //    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
+            [SVProgressHUD showSuccessWithStatus:@"成功删除手势!" ];
+            
+            //[SVProgressHUD  showInfoWithStatus:@"成功删除手势"];
+            
             
             // 2.infoView取消选中
             [self infoViewDeselectedSubviews];
@@ -270,17 +385,41 @@
             [self.msgLabel showNormalMsg:gestureTextBeforeSet];
             
             // 4.清除之前存储的密码
+          //  [PCCircleViewConst saveGesture:nil Key:gestureOneSaveKey];
+            
+            #pragma mark -添加的代码2 
+            
+            /***************添加的代码2*****************/
             [PCCircleViewConst saveGesture:nil Key:gestureOneSaveKey];
+            [PCCircleViewConst saveGesture:nil Key:gestureFinalSaveKey];
+            
+            //从数据库删除
+            NSString *uid = [kUserDefault objectForKey:kDefaultsUid];
+            [HRSqlite hrSqliteDeleteUnlockWithUid:uid];
+            
+            
+            /***************添加的代码2*****************/
+
         }
             break;
         case buttonTagManager:
         {
             NSLog(@"点击了管理手势密码按钮");
             
+            //忘记密码就去登陆界面
+            
+            [self getLoginHttpRequest];
+            
+            
+            
         }
             break;
         case buttonTagForget:
             NSLog(@"点击了登录其他账户按钮");
+            
+            
+            [self pushToLogout];
+
             
             break;
         default:
@@ -288,8 +427,45 @@
     }
 }
 
+/** 忘记手势密码*/
+
+- (void)getLoginHttpRequest
+{
+    LoginController * loginVc = [LoginController new];
+    
+    
+    [self presentViewController:loginVc animated:YES completion:nil];
+
+    //[self.navigationController pushViewController:loginVC animated:NO];
+    
+    //发送注销请求
+    [HRServicesManager logout:nil];
+}
+
+
+/** 登陆其他账号*/
+- (void)pushToLogout
+{
+    
+    LoginController * loginVc = [LoginController new];
+
+   // loginVC.isLokeToLogin = YES;
+   // loginVC.isOtherToLogin = YES;
+    
+    [self presentViewController:loginVc animated:YES completion:nil];
+
+  //  [self.navigationController pushViewController:loginVc animated:NO];
+    
+    //发送注销请求
+    [HRServicesManager logout:nil];
+}
+
+
+
 #pragma mark - circleView - delegate
 #pragma mark - circleView - delegate - setting
+
+
 - (void)circleView:(PCCircleView *)view type:(CircleViewType)type connectCirclesLessThanNeedWithGesture:(NSString *)gesture
 {
     NSString *gestureOne = [PCCircleViewConst getGestureWithKey:gestureOneSaveKey];
@@ -323,6 +499,17 @@
         
         [self.msgLabel showWarnMsg:gestureTextSetSuccess];
         [PCCircleViewConst saveGesture:gesture Key:gestureFinalSaveKey];
+        //保存数据到数据库
+        NSString *uid = [kUserDefault objectForKey:kDefaultsUid];
+        
+        #pragma mark -修改代码3 重点 返回上一层的东西
+        [HRSqlite saveUnlockWithUid:uid lockPassword:gesture];
+        
+      //  HomeViewController *home = [[HomeViewController alloc] init];
+     //   home.isSetLockToHome = YES;
+     //   [self.navigationController pushViewController:home animated:NO];
+
+        
         [self.navigationController popToRootViewControllerAnimated:YES];
         
     } else {

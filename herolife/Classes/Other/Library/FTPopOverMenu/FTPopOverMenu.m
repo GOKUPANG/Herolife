@@ -11,7 +11,7 @@
 #define KSCREEN_WIDTH               [[UIScreen mainScreen] bounds].size.width
 #define KSCREEN_HEIGHT              [[UIScreen mainScreen] bounds].size.height
 #define FTBackgroundColor           [UIColor clearColor]
-#define FTDefaultTintColor          [[UIColor blackColor] colorWithAlphaComponent:0.8]
+#define FTDefaultTintColor          [[UIColor blackColor] colorWithAlphaComponent:0.5]
 #define FTDefaultTextColor          [UIColor whiteColor]
 #define FTDefaultMenuFont           [UIFont systemFontOfSize:34]
 #define FTDefaultMenuWidth_MIN      50.0
@@ -60,13 +60,14 @@ typedef NS_ENUM(NSUInteger, FTPopOverMenuArrowDirection) {
 
 -(instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier menuName:(NSString *)menuName iconImageName:(NSString *)iconImageName textColor:(UIColor *)textColor
 {
+
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         self.backgroundColor = [UIColor clearColor];
 		
 		//下拉列表按钮
 		UILabel *bottomLabel = [[UILabel alloc] init];
-		bottomLabel.backgroundColor = [UIColor clearColor];
+		bottomLabel.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.15];
 		
 		[self addSubview:bottomLabel];
 		self.bottomLabel = bottomLabel;
@@ -95,23 +96,28 @@ typedef NS_ENUM(NSUInteger, FTPopOverMenuArrowDirection) {
 {
 	[super layoutSubviews];
 	
+	
 	[self.bottomLabel mas_makeConstraints:^(MASConstraintMaker *make) {
 		make.top.equalTo(self).offset(HRCommonScreenH *25);
 		make.centerX.equalTo(self);
-		make.width.mas_equalTo(HRCommonScreenW * 271);
-		make.height.mas_equalTo(HRCommonScreenH * 50);
+		make.width.mas_equalTo(HRCommonScreenW * 350);
+		make.height.mas_equalTo(30);
 	}];
+	
+	self.bottomLabel.layer.cornerRadius = 15;
+	self.bottomLabel.layer.masksToBounds = YES;
 	
 	//列表按钮里左边的图片
 	[self.listImageView mas_makeConstraints:^(MASConstraintMaker *make) {
-		make.left.equalTo(self.bottomLabel).offset(HRCommonScreenW * 10);
-		make.width.mas_equalTo(HRCommonScreenW * 45);
+		make.left.equalTo(self.bottomLabel).offset(10);
+		make.width.mas_equalTo(20);
+		make.height.mas_equalTo(20);
 		make.centerY.equalTo(self.bottomLabel);
 	}];
 	//列表按钮里的文本
 	[self.listLabel mas_makeConstraints:^(MASConstraintMaker *make) {
 		make.centerY.equalTo(self.bottomLabel);
-		make.left.equalTo(self.listImageView.mas_right).offset(HRCommonScreenW * 8);
+		make.left.equalTo(self.listImageView.mas_right).offset(4);
 		make.right.equalTo(self.mas_right).offset(- HRCommonScreenW *20);
 	}];
 }
@@ -497,7 +503,7 @@ typedef NS_ENUM(NSUInteger, FTPopOverMenuArrowDirection) {
         senderRect.origin.y = KSCREEN_HEIGHT;
     }
     
-    CGFloat menuHeight = FTDefaultMenuRowHeight * self.menuArray.count + FTDefaultMenuArrowHeight;
+    CGFloat menuHeight = FTDefaultMenuRowHeight * self.menuArray.count + FTDefaultMenuArrowHeight + 15;
     CGPoint menuArrowPoint = CGPointMake(senderRect.origin.x + (senderRect.size.width)/2, 0);
     CGFloat menuX = 0;
     CGRect menuRect = CGRectZero;

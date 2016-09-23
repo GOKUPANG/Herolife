@@ -20,6 +20,7 @@
 		//标题
 		UILabel *titleLabel = [[UILabel alloc] init];
 		titleLabel.font = [UIFont systemFontOfSize: 18];
+//		titleLabel.font = [UIFont fontWithName:@"HelveticaNeue-Thin" size:18.f];
 		titleLabel.textAlignment = NSTextAlignmentCenter;
 		titleLabel.textColor = [UIColor whiteColor];
 		[self addSubview:titleLabel];
@@ -34,6 +35,8 @@
 		//右边label
 		UILabel *rightLabel = [[UILabel alloc] init];
 		rightLabel.font = [UIFont systemFontOfSize: 17];
+		
+//		rightLabel.font = [UIFont fontWithName:@"HelveticaNeue-Thin" size:18.f];
 		rightLabel.textAlignment = NSTextAlignmentCenter;
 		rightLabel.textColor = [UIColor whiteColor];
 		[self addSubview:rightLabel];

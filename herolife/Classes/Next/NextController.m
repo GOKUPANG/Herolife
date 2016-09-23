@@ -27,7 +27,11 @@
 @end
 
 @implementation NextController
-
+- (void)setQrData:(NSString *)qrData
+{
+	_qrData = qrData;
+	self.navView.leftButton = nil;
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
 	
@@ -40,7 +44,6 @@
 //初始化
 - (void)setupViews
 {
-	
 	self.navigationController.navigationBar.hidden = YES;
 	
 	//背景图片
@@ -58,6 +61,7 @@
 	navView.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.1];
 	[navView.leftButton setImage:[UIImage imageNamed:@"返回号"] forState:UIControlStateNormal];
 	[navView.leftButton addTarget:self action:@selector(leftButtonClick:) forControlEvents:UIControlEventTouchUpInside];
+
 	[self.view addSubview:navView];
 	self.navView = navView;
 	
@@ -75,7 +79,7 @@
 	
 	//头像
 	UIImageView *iconImage = [[UIImageView alloc] init];
-	iconImage.image = [UIImage imageNamed:@"Default-568h@3x-1"];
+	iconImage.image = [UIImage imageNamed:@"图"];
 	self.iconImage.layer.borderColor = [UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:0.2].CGColor;
 	self.iconImage.layer.masksToBounds = YES;
 	
@@ -161,6 +165,7 @@
 #pragma mark - UI事件
 - (void)leftButtonClick:(UIButton *)btn
 {
+	
 	[self.navigationController popViewControllerAnimated:YES];
 }
 - (void)nextButtonClick:(UIButton *)btn

@@ -95,6 +95,8 @@ static NSString *ViewOfCustomerTableViewCellIdentifier = @"ViewOfCustomerTableVi
 @property(nonatomic, copy) NSString *hour;
 /** 记录当前选择的分钟 */
 @property(nonatomic, copy) NSString *minute;
+/** 用户管理员密码输入框 */
+@property(nonatomic, weak) UITextField *manageField;
 
 @end
 
@@ -643,7 +645,7 @@ static BOOL isShowOverMenu = NO;
 -(void)makeTemporaryAlertView
 {
     CGFloat dilX = 25;
-    CGFloat dilH = 200 + 55;
+    CGFloat dilH = 200 + 55 + 50;
     YXCustomAlertView *alertV = [[YXCustomAlertView alloc] initAlertViewWithFrame:CGRectMake(dilX, 0, HRUIScreenW - 40, dilH) andSuperView:self.navigationController.view];
     
 	alertV.tag = 11;
@@ -677,15 +679,47 @@ static BOOL isShowOverMenu = NO;
 	pwdField.layer.borderWidth = 1;
 	pwdField.layer.cornerRadius = 4;
 	pwdField.clearButtonMode = UITextFieldViewModeWhileEditing;
-	pwdField.placeholder = @"请输入用户登陆密码";
+	pwdField.placeholder = @"请输入用户App登陆密码";
 	
 	pwdField.textColor = [UIColor whiteColor];
 	self.pwdField = pwdField;
 	
 	[alertV addSubview:pwdField];
 	
+	
+	//管理员密码相关
+	UILabel * manageLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 100, loginX, 32)];
+	
+	[alertV addSubview:manageLabel];
+	manageLabel.text = @"管理员密码";
+	manageLabel.textColor = [UIColor whiteColor];
+	
+	manageLabel.textAlignment = NSTextAlignmentCenter;
+	
+	
+	UITextField *manageField = [[UITextField alloc] initWithFrame:CGRectMake(loginX, 100, alertV.frame.size.width -  loginX*1.2, 32)];
+	manageField.layer.borderColor = [[UIColor colorWithWhite:0.9 alpha:1] CGColor];
+	manageField.secureTextEntry = YES;
+	UIView *manageView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 8, 32)];
+	
+	
+	manageField.leftViewMode = UITextFieldViewModeAlways;
+	manageField.leftView = manageView;
+	
+	
+	manageField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
+	manageField.layer.borderWidth = 1;
+	manageField.layer.cornerRadius = 4;
+	manageField.clearButtonMode = UITextFieldViewModeWhileEditing;
+	manageField.placeholder = @"请输入用户管理员密码";
+	
+	manageField.textColor = [UIColor whiteColor];
+	self.manageField = manageField;
+	
+	[alertV addSubview:manageField];
+	
 	// 手机号码相关
-    UILabel * numberLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 100, loginX, 32)];
+    UILabel * numberLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 150, loginX, 32)];
     
     [alertV addSubview:numberLabel];
     numberLabel.text = @"手机号码";
@@ -694,7 +728,7 @@ static BOOL isShowOverMenu = NO;
     numberLabel.textAlignment = NSTextAlignmentCenter;
     
 	
-    UITextField *loginPwdField = [[UITextField alloc] initWithFrame:CGRectMake(loginX, 100, alertV.frame.size.width -  loginX*1.2, 32)];
+    UITextField *loginPwdField = [[UITextField alloc] initWithFrame:CGRectMake(loginX, 150, alertV.frame.size.width -  loginX*1.2, 32)];
     loginPwdField.layer.borderColor = [[UIColor colorWithWhite:0.9 alpha:1] CGColor];
     UIView *leftView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 8, 32)];
     
@@ -714,7 +748,7 @@ static BOOL isShowOverMenu = NO;
     
     
     
-    AutherTimePickView *timeFiled = [[AutherTimePickView alloc] initWithFrame:CGRectMake(loginX, 150, alertV.frame.size.width -  loginX*1.2, 32)];
+    AutherTimePickView *timeFiled = [[AutherTimePickView alloc] initWithFrame:CGRectMake(loginX, 200, alertV.frame.size.width -  loginX*1.2, 32)];
 	
 	timeFiled.layer.borderColor = [[UIColor colorWithWhite:0.9 alpha:1] CGColor];
 	
@@ -735,7 +769,7 @@ static BOOL isShowOverMenu = NO;
 	
 	timeFiled.textColor = [UIColor whiteColor];
 						   
-    UILabel * PswLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 150, loginX, 32)];
+    UILabel * PswLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 200, loginX, 32)];
     
     [alertV addSubview:PswLabel];
     PswLabel.text = @"时间";
@@ -834,9 +868,9 @@ static BOOL isShowOverMenu = NO;
 - (void)addTemporaryAuther
 {
 	
-	if (self.pwdField.text.length < 0.5 || self.PhoneTfield.text.length < 0.5 || self.TimeTfield.text.length < 0.5) {
+	if (self.pwdField.text.length < 0.5 || self.PhoneTfield.text.length < 0.5 || self.TimeTfield.text.length < 0.5 || self.manageField.text.length < 0.5) {
 		
-		[SVProgressTool hr_showErrorWithStatus:@"用户密码或手机号码或时间不能为空!"];
+		[SVProgressTool hr_showErrorWithStatus:@"用户或管理员密码或手机号码或时间不能为空!"];
 		[self.FamilyAlertView.layer shake];
 		return;
 	}
@@ -858,8 +892,9 @@ static BOOL isShowOverMenu = NO;
 	
 	
 	NSArray *permit = @[@"1",@"none",@"none",@"none"];
-	
-	NSArray *person = @[paswd, self.PhoneTfield.text];
+	NSString *base64pswd = [NSString hr_stringWithBase64String:self.manageField.text];
+	//这里不是传用户app密码
+	NSArray *person = @[base64pswd, self.PhoneTfield.text];
 	
 	NSString *str = [NSString stringWithSocketAddTemporaryAutherLockWithlockUUID:self.listModel.uuid person:person permit:permit autherTime:[NSString stringWithFormat:@"%@:%@", self.hour,self.minute]];
 	[self.appDelegate sendMessageWithString:str];
@@ -1152,7 +1187,6 @@ static BOOL isShowOverMenu = NO;
         view = [[CustomerInfoSectionView alloc]init];
 
         //在这里写入头部视图的信息
-        
 		DeviceAutherModel *listModel = self.deviceAutherArray[section];
 		NSString *autherName = listModel.person.lastObject;
 		NSString *time = listModel.time;

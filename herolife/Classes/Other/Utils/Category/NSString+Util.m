@@ -608,6 +608,8 @@
 	msgDict[@"state"] = @"20";
 	msgDict[@"person"] = person;
 	msgDict[@"permit"] = permit;
+	//新增字段
+	msgDict[@"admin"] = user;
 	msgDict[@"time"] = autherTime;
 	NSMutableDictionary *dict = [NSMutableDictionary dictionary];
 	dict[@"hrpush"] = hrpushDict;

@@ -18,14 +18,10 @@
 - (void)layoutSubviews
 {
 	[super layoutSubviews];
-	CGRect rect = self.imageView.frame;
-	rect.origin.y = 8;
-	self.imageView.frame = rect;
-	
-	self.titleLabel.hr_centerX = self.imageView.hr_centerX;
-	CGRect titleRect = self.titleLabel.frame;
-	titleRect.origin.y = CGRectGetMaxY(rect) +2;
-	self.titleLabel.frame = titleRect;
-	
+	self.imageView.hr_centerX = self.hr_width * 0.5;
+	self.imageView.hr_y = 5;
+	self.titleLabel.hr_y = self.imageView.hr_height + 4;
+	self.titleLabel.hr_height = self.hr_height - self.titleLabel.hr_y ;
+	self.titleLabel.hr_centerX = self.hr_width * 0.5;
 }
 @end

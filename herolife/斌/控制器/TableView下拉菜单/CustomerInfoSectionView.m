@@ -136,7 +136,7 @@
     
     _userNameLabel.text = userName;
     
-    _userNameLabel.font = [UIFont systemFontOfSize:17.f];
+    _userNameLabel.font = [UIFont fontWithName:@"PingFang SC regular" size:17.f];
 
     _userNameLabel.textColor = [UIColor whiteColor];
     
@@ -159,8 +159,8 @@
     _timeLabel.textColor = [UIColor whiteColor];
     
     _timeLabel.text = time;
-    
-    
+	_timeLabel.font = [UIFont fontWithName:@"PingFangSCregular" size:17.f];;
+	
     
     
     

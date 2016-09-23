@@ -763,7 +763,7 @@
     PushLabel2.font = [UIFont fontWithName:@"PingFangSC-Regular" size:17 * HRMyScreenH];
 
     PushLabel3 .textColor = [UIColor whiteColor];
-    PushLabel3.text = @"长时间未开锁提醒推送";
+    PushLabel3.text = @"长时间未开锁提醒推送(72h)";
     PushLabel3.font = [UIFont fontWithName:@"PingFangSC-Regular" size:17 * HRMyScreenH];
 
     PushLabel4 .textColor = [UIColor whiteColor];

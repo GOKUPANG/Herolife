@@ -134,6 +134,8 @@ static NSInteger disconnectCount = 0;
 }
 - (void)applicationDidFinishLaunching:(UIApplication *)application
 {
+	//让启动图片显示久一些
+	[NSThread sleepForTimeInterval:1.0];
 	if([[[UIDevice currentDevice]systemVersion]floatValue] >=8.0)
 		
 	{
@@ -357,6 +359,10 @@ static BOOL isOverTime = NO;
 {
 	[[SDWebImageManager sharedManager].imageCache clearMemory];
 	[[SDWebImageManager sharedManager] cancelAll];
+	
+	//清除QQ用户名
+	[kNSUserDefaults setObject:@"" forKey:kNSUserDefaultsNickname];
+	[kNSUserDefaults synchronize];
 }
 
 #pragma mark ***************************** Socket处理相关 ***************************

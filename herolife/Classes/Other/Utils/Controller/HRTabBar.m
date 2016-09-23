@@ -23,7 +23,7 @@
 {
 	if (self = [super initWithFrame:frame]) {
 		self.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.2];
-		self.qrButton = [self setupButtonWithImage:@"扫描白" selectImage:@"扫描蓝" tag:1 title:@"扫描"];
+		self.qrButton = [self setupButtonWithImage:@"扫描白" selectImage:@"扫描蓝" tag:1 title:@"添加"];
 		self.homeButton = [self setupButtonWithImage:@"首页白" selectImage:@"首页蓝" tag:2 title:@"首页"];
 		self.qrButton = [self setupButtonWithImage:@"设置白" selectImage:@"设置蓝" tag:3 title:@"设置"];
 		[self btnClick:self.homeButton];

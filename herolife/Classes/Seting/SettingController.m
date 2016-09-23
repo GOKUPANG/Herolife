@@ -64,7 +64,8 @@ static NSString *cellID = @"cellID";
         self.backImgView.image =[UIImage imageNamed:imgName];
     }
 
-    
+	
+	
     NSLog(@"设置页面ViewWillappear");
     
 }
@@ -93,7 +94,7 @@ static NSString *cellID = @"cellID";
 	
 	//背景图片
 	UIImageView *backgroundImage = [[UIImageView alloc] initWithFrame:[UIScreen mainScreen].bounds];
-	backgroundImage.image = [UIImage imageNamed:@"Snip20160825_3"];
+	backgroundImage.image = [UIImage imageNamed:@"3.jpg"];
     self.backImgView=backgroundImage;
     
 	[self.view addSubview:self.backImgView];
@@ -117,7 +118,18 @@ static NSString *cellID = @"cellID";
 	
 	//头像
 	UIImageView *iconImage = [[UIImageView alloc] init];
-	iconImage.image = [UIImage imageNamed:@"Default-568h@3x-1"];
+	
+	NSString *iconString = [kUserDefault objectForKey:kDefaultsIconURL];
+	if (iconString.length > 0) {
+		NSURL *url = [NSURL URLWithString:iconString];
+		[iconImage sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"头像占位图片.jpg"]];
+		
+	}else
+	{
+		iconImage.image = [UIImage imageNamed:@"头像占位图片.jpg"];
+		
+	}
+	
 	self.iconImage.layer.cornerRadius = self.iconImage.hr_height *0.5;
 	self.iconImage.layer.borderWidth = HRCommonScreenW * 20;
 	self.iconImage.layer.borderColor = [UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:0.2].CGColor;
@@ -145,10 +157,18 @@ static NSString *cellID = @"cellID";
 	userLabel.font = [UIFont systemFontOfSize:17];
     
     /** 斌 用户的用户名*/
+	NSString *textName = @"";
     NSString *userName =   [kUserDefault valueForKey:kDefaultsUserName];
-    
-    
-    userLabel.text = userName;
+	textName = userName;
+	//qq用户名称
+    NSString *qqUserNmae = [kUserDefault valueForKey:kNSUserDefaultsNickname];
+	if (qqUserNmae.length > 0) {
+		
+		textName = qqUserNmae;
+		
+	}
+	
+    userLabel.text = textName;
     
 	userLabel.textAlignment = NSTextAlignmentCenter;
 	userLabel.textColor = [UIColor whiteColor];
@@ -159,11 +179,20 @@ static NSString *cellID = @"cellID";
 	/** 用户的邮箱*/
 	UILabel *emailLabel = [[UILabel alloc] init];
 	emailLabel.font = [UIFont systemFontOfSize:11];
-    
-    NSString * mailName =   [kUserDefault valueForKey:kDefaultsUserMail];
+	
+	NSString *emailName = @"";
+	NSString * mailName =   [kUserDefault valueForKey:kDefaultsUserMail];
+	emailName = mailName;
+	//qq用户名称
+	if (qqUserNmae.length > 0) {
+		
+		emailName = @"当前用户为QQ用户";
+		
+	}
+	
 
     
-	emailLabel.text = mailName;
+	emailLabel.text = emailName;
 	emailLabel.textAlignment = NSTextAlignmentCenter;
 	emailLabel.textColor = [UIColor whiteColor];
 	[self.view addSubview:emailLabel];
@@ -266,6 +295,12 @@ static NSString *cellID = @"cellID";
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
+    if (section== 0) {
+        return 2;
+        
+    }
+    
+    
 	return 3;
 }
 
@@ -286,11 +321,19 @@ static NSString *cellID = @"cellID";
 		{
 			[cell.rightButton setImage:[UIImage imageNamed:@"进入号"] forState:UIControlStateNormal];
 			if (indexPath.row == 0) {
-				cell.leftImage.image = [UIImage imageNamed:@"子账号"];
-				cell.leftLabel.text = @"子帐号管理";
-			}else if(indexPath.row == 1) {
-				cell.leftImage.image = [UIImage imageNamed:@"手势"];
-				cell.leftLabel.text = @"手势设置";
+                
+                
+                cell.leftImage.image = [UIImage imageNamed:@"手势"];
+                cell.leftLabel.text = @"手势设置";
+                
+            }else if(indexPath.row == 1) {
+				
+                
+                cell.leftImage.image = [UIImage imageNamed:@"背景图"];
+                cell.leftLabel.text = @"背景图设置";
+                
+                
+                
 			}else if(indexPath.row == 2) {
 				cell.leftImage.image = [UIImage imageNamed:@"背景图"];
 				cell.leftLabel.text = @"背景图设置";
@@ -330,21 +373,24 @@ static NSString *cellID = @"cellID";
         case 0:{
             if (indexPath.row==0)
             {
-                
+                GestureViewController * GVC = [GestureViewController new];
+                [self.navigationController pushViewController:GVC animated:YES];
+
             }
             
             else if (indexPath.row == 1)
             {
-                GestureViewController * GVC = [GestureViewController new];
-                [self.navigationController pushViewController:GVC animated:YES];
+                
+                
+                BackPicSetController *BPC = [BackPicSetController new];
+                [self.navigationController pushViewController:BPC animated:YES];
                 
             }
             
             
             else if(indexPath.row == 2)
             {
-                BackPicSetController *BPC = [BackPicSetController new];
-                [self.navigationController pushViewController:BPC animated:YES];
+               
                 
             }
             
@@ -399,11 +445,13 @@ static NSString *cellID = @"cellID";
 	//弹出登陆界面
 	
 	LoginController *login = [[LoginController alloc] init];
-	[self.navigationController pushViewController:login animated:YES];
+//	[self.navigationController pushViewController:login animated:YES];
+    [self.tabBarController presentViewController:login animated:YES completion:nil];
 	
 	//发送注销请求
 	[HRServicesManager logout:nil];
 	[self IsTabBarHidden:YES];
+	[kUserDefault setObject:@"" forKey:kNSUserDefaultsNickname];
 }
 #pragma mark - 隐藏底部条
 - (void)IsTabBarHidden:(BOOL)hidden

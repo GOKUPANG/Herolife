@@ -9,6 +9,11 @@
 #define KScreenW [UIScreen mainScreen].bounds.size.width
 #define KScreenH [UIScreen mainScreen].bounds.size.height
 
+#define HRMyScreenH (HRUIScreenH / 667.0)
+#define HRMyScreenW (HRUIScreenW / 375.0 )
+
+#define HRAPI_UpdateDoorPsw_URL @"http://183.63.118.58:9885/hrctest/?q=huaruiapi/node/%@"
+
 
 #import "DeviceListController.h"
 // Components
@@ -30,17 +35,36 @@
 #import "HRPushMode.h"
 #import "DeviceAutherModel.h"
 #import "SRActionSheet.h"
+#import "YXCustomAlertView.h"
 
 
 
 #define HRNavigationBarFrame self.navigationController.navigationBar.bounds
-@interface DeviceListController ()<UICollectionViewDelegate,UICollectionViewDataSource,UITableViewDelegate,UITableViewDataSource,UIGestureRecognizerDelegate>
+@interface DeviceListController ()<UICollectionViewDelegate,UICollectionViewDataSource,UITableViewDelegate,UITableViewDataSource,UIGestureRecognizerDelegate,YXCustomAlertViewDelegate>
 
 {
-    UIView *bg;
-    UIView *bgView;
+   // UIView *bg;
+    
+    UIView *bg ;
+    
+    UIVisualEffectView * bgView;
     UITextView *txt;
-    UIButton *close;
+    UITextField * newDvNameField;
+    
+    UIButton * close;
+    
+    UIButton * comfirBtn ;
+    
+    UILabel * oldDeviceNameLB;
+    
+    UILabel * detailNameLB;
+    
+    UILabel *newDvName;
+
+    
+    
+    CGFloat tfLength;
+    
 }
 /** 顶部条 */
 @property(nonatomic, weak) HRNavigationBar *navView;
@@ -70,7 +94,7 @@
 /** appDelegte */
 @property(nonatomic, weak) AppDelegate *appDelegate;
 
-/** 模型数组 */
+/** 存放设备列表HTTP模型数组 */
 @property(nonatomic, strong) NSMutableArray *homeArray;
 /**  */
 @property(nonatomic, strong) NSTimer *timer;
@@ -85,6 +109,21 @@
 @property(nonatomic, strong) NSMutableArray *autherPersonArray;
 /** 别人授权给我的设备模型数组 */
 @property(nonatomic, strong) NSMutableArray *personDeviceArray;
+/** 最后一次操作的时间 */
+@property(nonatomic, copy) NSString *lastOptionTime;
+/** 目标设备不在线 提示框 */
+@property(nonatomic, weak) UILabel *onLineLabel;
+
+
+
+
+@property(nonatomic,strong) YXCustomAlertView *  FamilyAlertView;
+
+
+
+/** 删除设备的登录密码输入框*/
+
+@property(nonatomic,strong)UITextField * pswTF;
 
 
 @end
@@ -92,6 +131,27 @@
 @implementation DeviceListController
 //定时60s查询设备状态
 NSInteger const timerDuration = 60.0;
+
+#pragma mark - label 懒加载
+- (UILabel *)onLineLabel
+{
+	if (!_onLineLabel) {
+		
+		UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(UIScreenW *0.28, UIScreenH * 0.8, UIScreenW - UIScreenW *0.56, 32)];
+		label.text = @"目标设备不在线!";
+		label.textAlignment = NSTextAlignmentCenter;
+		label.font = [UIFont systemFontOfSize:17];
+		label.textColor = [UIColor whiteColor];
+//		label.backgroundColor = [UIColor themeColor];
+		
+		label.backgroundColor = [UIColor blackColor];
+		_onLineLabel = label;
+		
+		
+		[[UIApplication sharedApplication].keyWindow addSubview:label];
+	}
+	return _onLineLabel;
+}
 - (NSMutableArray *)homeArray
 {
 	if (!_homeArray) {
@@ -150,6 +210,7 @@ NSInteger const timerDuration = 60.0;
         self.backImgView.image =[UIImage imageNamed:imgName];
     }
 	
+	[self IsTabBarHidden:NO];
 }
 
 - (NSMutableArray *)photoModelArray
@@ -211,9 +272,10 @@ static NSString *cellID = @"cellID";
         // UICollectionViewCell* cell =
         // [self.collectionView cellForItemAtIndexPath:indexPath];
         // do stuff with the cell
-        
-        
-        [SRActionSheet sr_showActionSheetViewWithTitle:@"用户名" cancelButtonTitle:@"取消" destructiveButtonTitle:@"" otherButtonTitles:@[@"删除设备", @"修改设备信息"] selectSheetBlock:^(SRActionSheet *actionSheetView, NSInteger index) {
+		
+		
+		
+        [SRActionSheet sr_showActionSheetViewWithTitle:@"设备名" cancelButtonTitle:@"取消" destructiveButtonTitle:@"" otherButtonTitles:@[@"删除设备", @"修改设备信息"] selectSheetBlock:^(SRActionSheet *actionSheetView, NSInteger index) {
             
             
             
@@ -222,7 +284,8 @@ static NSString *cellID = @"cellID";
                 
                 NSLog(@"取消授权");
                 
-                [self beginANimation];
+                
+                [self deleteDoorUI];
                 
                 
             }
@@ -231,7 +294,11 @@ static NSString *cellID = @"cellID";
                 
                 
                 
-                NSLog(@"修改授权信息");
+                
+                
+                [self beginANimation];
+                
+
                 
             }
             
@@ -243,19 +310,396 @@ static NSString *cellID = @"cellID";
 }
 
 
+
+
+#pragma mark -删除门锁弹窗代理方法
+
+
+- (void) customAlertView:(YXCustomAlertView *) customAlertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    
+    if (buttonIndex==0) {
+        
+        
+        
+        
+        
+        
+        [UIView animateWithDuration:0.5 animations:^{
+            
+            
+            CGRect AlertViewFrame = customAlertView.frame;
+            
+            AlertViewFrame.origin.y = 0;
+            
+            customAlertView.alpha = 0;
+            
+            
+            
+            customAlertView.frame = AlertViewFrame;
+            
+            
+            
+            
+            
+        } completion:^(BOOL finished) {
+            
+            
+            [customAlertView dissMiss];
+            
+            
+        }];
+    }
+    
+    
+    
+    else{
+        
+        
+        //处理删除门锁事件
+        
+        
+       // UITextField * pwTF = (UITextField *)[self.view viewWithTag:7];
+        
+        NSLog(@"输入框的字符串是%@",self.pswTF.text);
+        
+        
+        if (self.pswTF.text.length == 0 ) {
+            [customAlertView.layer shake];
+            return;
+            
+        }
+        
+        
+        
+        NSString * passWord = [kUserDefault objectForKey:kDefaultsPassWord];
+        
+        
+        if (![self.pswTF.text isEqualToString:passWord]) {
+            
+            [customAlertView.layer shake];
+            NSLog(@"密码不正确");
+            
+         //   [self addHudWith:@"hahahah"];
+            
+            [self removeHudWith:@"密码不正确"];
+            
+            
+            return;
+            
+        }
+        
+        
+        
+        
+        
+        [self deleteDoor];
+        
+        
+        
+        
+        
+        
+        [UIView animateWithDuration:0.8 animations:^{
+            
+            
+            CGRect AlertViewFrame = customAlertView.frame;
+            
+            AlertViewFrame.origin.y = HRUIScreenH ;
+            
+            
+            customAlertView.frame = AlertViewFrame;
+            
+            customAlertView.alpha = 0;
+            
+            
+            
+            
+            
+            
+        } completion:^(BOOL finished) {
+            
+            
+            [customAlertView dissMiss];
+            
+        }];
+        
+
+    }
+}
+
+
+- (void)removeHudWith:(NSString *)text
+{
+    if(text){//判断 成功/失败 结尾
+        if ([text hasSuffix:@"成功"]||[text hasSuffix:@"全部"]) {
+            [SVProgressHUD showSuccessWithStatus:text];
+        } else {
+            [SVProgressHUD showErrorWithStatus:text];
+        }
+    }
+    
+        [SVProgressHUD setBackgroundColor:[UIColor colorWithHex:0x444444]];
+        [SVProgressHUD setForegroundColor:[UIColor colorWithHex:0xFFFFFF]];
+        [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
+         SVProgressHUD.defaultStyle = SVProgressHUDStyleDark;
+
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.5 * NSEC_PER_SEC), dispatch_get_main_queue(), ^(void){
+        [SVProgressHUD dismiss];
+    });
+}
+
+
+#pragma mark - activityView
+- (void)addHudWith:(NSString *)text
+{
+    [SVProgressHUD setBackgroundColor:[UIColor colorWithHex:0x444444]];
+    [SVProgressHUD setForegroundColor:[UIColor colorWithHex:0xFFFFFF]];
+    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
+    SVProgressHUD.defaultStyle = SVProgressHUDStyleDark;
+    SVProgressHUD.minimumDismissTimeInterval = 0.5;
+    [SVProgressHUD showWithStatus:text];
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#pragma mark -删除门锁UI设置
+-(void)deleteDoorUI
+{
+    
+    CGFloat dilX = 25;
+    CGFloat dilH = 150;
+    YXCustomAlertView *alertV = [[YXCustomAlertView alloc] initAlertViewWithFrame:CGRectMake(dilX, 0, HRUIScreenW - 40, dilH) andSuperView:self.navigationController.view];
+    
+    
+   // alertV.tag = tag;
+    alertV.delegate = self;
+    alertV.titleStr = @"删除设备";
+    
+    
+    CGFloat loginX = 200 *HRCommonScreenH;
+    
+    
+    //密码相关view
+    UILabel * paswdLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 55, loginX, 32)];
+    
+    [alertV addSubview:paswdLabel];
+    paswdLabel.text = @"用户密码";
+    paswdLabel.textColor = [UIColor whiteColor];
+    
+    paswdLabel.textAlignment = NSTextAlignmentCenter;
+    
+    UITextField *pwdField = [[UITextField alloc] initWithFrame:CGRectMake(loginX, 55, alertV.frame.size.width -  loginX*1.2, 32)];
+    pwdField.layer.borderColor = [[UIColor colorWithWhite:0.9 alpha:1] CGColor];
+    pwdField.secureTextEntry = YES;
+    UIView *leftpPwdView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 8, 32)];
+    
+    
+    pwdField.leftViewMode = UITextFieldViewModeAlways;
+    pwdField.leftView = leftpPwdView;
+    
+    
+    pwdField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
+    pwdField.layer.borderWidth = 1;
+    pwdField.layer.cornerRadius = 4;
+    
+    pwdField.placeholder = @"请输入用户登陆密码";
+    pwdField.clearButtonMode = UITextFieldViewModeWhileEditing;
+    
+    
+    pwdField.textColor = [UIColor whiteColor];
+    
+    /** 标记这个输入框*/
+    pwdField.tag = 7;
+    
+    
+    
+    self.pswTF = pwdField;
+    
+    
+    [alertV addSubview:self.pswTF];
+    
+    
+    
+    self.FamilyAlertView = alertV;
+    
+    
+    [UIView animateWithDuration:0.5 animations:^{
+        
+        self.FamilyAlertView.center = CGPointMake(HRUIScreenW/2, HRUIScreenH/2-100);
+        
+        self.FamilyAlertView.alpha=1;
+        
+    } completion:^(BOOL finished) {
+        
+        
+        
+        
+    }];
+
+}
+
+
 -(void)beginANimation{
     bg = [[UIView alloc] initWithFrame:self.view.frame];
+    
+    
+   
+    
     bg.backgroundColor = [UIColor colorWithRed:0/255.0 green:0/255.0 blue:0/255.0 alpha:0.5];
+
+   // bgView = [[UIView alloc] initWithFrame:CGRectMake(KScreenW/2,100, 0, KScreenH-200)];
+       CGFloat dilX = 25;
+    CGFloat dilH = 200;
     
-    // bgView.backgroundColor = [UIColor greenColor];
+    bgView =   [[UIVisualEffectView alloc] initWithEffect:[UIBlurEffect effectWithStyle:UIBlurEffectStyleLight]];
+    
+    bgView.frame =   CGRectMake(KScreenW/2, 64+40, 0, dilH);
+   // bgView = [[UIView alloc] initWithFrame:CGRectMake(KScreenW/2, 64+40, 0, dilH) ];
     
     
-    bgView = [[UIView alloc] initWithFrame:CGRectMake(KScreenW/2,100, 0, KScreenH-200)];
-    bgView.backgroundColor = [UIColor colorWithRed:0/255.0 green:118/255.0 blue:254/255.0 alpha:1.0];
+    bgView.layer.cornerRadius = 15;
     
-    
+    bgView.clipsToBounds = YES;
     
     [bg addSubview:bgView];
+    
+     CGFloat loginX = 200 *HRCommonScreenH;
+    
+    
+     oldDeviceNameLB = [[UILabel alloc]initWithFrame:CGRectMake(5, 30, loginX, 32)];
+    
+    oldDeviceNameLB.text = @"设备名称";
+    oldDeviceNameLB.textColor = [UIColor whiteColor];
+    
+    oldDeviceNameLB.textAlignment = NSTextAlignmentLeft;
+
+    
+    [bgView addSubview:oldDeviceNameLB];
+    
+    
+     detailNameLB = [[UILabel alloc]initWithFrame:CGRectMake(loginX  + 10, 30,  KScreenW-50 -  loginX*1.2 ,32)];
+    
+    
+    detailNameLB.text = self.currentStateModel.title;
+    
+    
+    
+    detailNameLB.textColor = [UIColor whiteColor];
+    
+    detailNameLB.textAlignment = NSTextAlignmentLeft;
+    
+    [bgView addSubview:detailNameLB];
+    
+    
+    /** 新设备名称  */
+    
+    newDvName = [[UILabel alloc]initWithFrame:CGRectMake(5, 80, loginX, 32)];
+    
+    
+    newDvName.text = @"新设备名称";
+    
+    
+    newDvName.textColor = [UIColor whiteColor];
+    
+    newDvName.textAlignment = NSTextAlignmentLeft;
+    
+    [bgView addSubview:newDvName];
+    
+    
+    /** 输入框 */
+ //   UITextField * newDvNameField = [[UITextField alloc]initWithFrame:CGRectMake(loginX, 80, KScreenW-50 -  loginX*1.2, 32)];
+    //UITextField * newDvNameField = [[UITextField alloc]initWithFrame:CGRectMake((KScreenW-loginX-50)/2, 80,0, 32)];
+    
+    CGFloat fieldLength =  KScreenW-50 -  loginX*1.2;
+    
+    tfLength  = loginX +fieldLength/2;
+    
+    
+   newDvNameField = [[UITextField alloc]initWithFrame:CGRectMake((loginX +fieldLength/2), 80,0, 32)];
+
+
+    
+    newDvNameField.layer.borderColor = [[UIColor colorWithWhite:0.9 alpha:1] CGColor];
+    
+    
+    
+    newDvNameField.leftViewMode = UITextFieldViewModeAlways;
+    
+    UIView *leftView1 = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 8, 32)];
+    
+    newDvNameField.leftView = leftView1;
+    
+    
+    newDvNameField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
+    newDvNameField.layer.borderWidth = 1;
+    newDvNameField.layer.cornerRadius = 10;
+    
+//    newDvNameField.placeholder = @"输入新的名称";
+//    
+//    [newDvNameField setValue:[UIColor whiteColor] forKeyPath:@"_placeholderLabel.textColor"];
+
+    
+    newDvNameField.textColor = [UIColor whiteColor];
+    
+    newDvNameField.backgroundColor = [UIColor orangeColor];
+    
+    
+    
+    [bgView addSubview:newDvNameField];
+    
+    
+    
+    //确定按钮
+    
+    
+    
+  //  UIButton * comfirBtn  =  [[UIButton alloc]initWithFrame:CGRectMake((KScreenW-60)/2, 140, 30, 30)];
+    
+    comfirBtn  =  [[UIButton alloc]init];
+    [bgView addSubview:comfirBtn];
+
+    
+    comfirBtn.sd_layout
+    .bottomSpaceToView(bgView , 20.0 * HRMyScreenH)
+    .rightSpaceToView(bgView,98.0 *HRMyScreenW)
+    .widthIs(130.0 *HRMyScreenW)
+    .heightIs(45.0 *HRMyScreenH);
+
+    comfirBtn.layer.cornerRadius = 15;
+    comfirBtn.clipsToBounds = YES;
+    comfirBtn.layer.borderWidth = 1;
+    
+    [comfirBtn setTitle:@"确定" forState:UIControlStateNormal];
+    
+    
+    comfirBtn.layer.borderColor = [[UIColor colorWithWhite:0.9 alpha:1] CGColor];
+
+
+    
+    
+    comfirBtn.backgroundColor = [UIColor clearColor];
+    
+    
+    
+    /** ************  确定按钮*/
+    [comfirBtn addTarget:self action:@selector(comfirClick) forControlEvents:UIControlEventTouchUpInside];
+    
+    
+    
+    
     
     close = [[UIButton alloc] initWithFrame:CGRectMake(KScreenW-30-30, 110, 20, 20)];
     [close setTitle:@"X" forState:UIControlStateNormal];
@@ -265,15 +709,20 @@ static NSString *cellID = @"cellID";
     txt = [[UITextView alloc] initWithFrame:CGRectMake((KScreenW-60)/2, (bgView.frame.size.height-30)/2, 0, 30)];
     txt.layer.cornerRadius = 10;
     txt.layer.masksToBounds =YES;
-    [bgView addSubview:txt];
+ //   [bgView addSubview:txt];
     
     [UIView animateWithDuration:0.5 animations:^{
         
-        bgView.frame = CGRectMake(30,100, KScreenW-60, KScreenH-200);
+        //bgView.frame = CGRectMake(30,100, KScreenW-60, KScreenH-200);
+        
+        bgView.frame =CGRectMake(dilX, 64+40, HRUIScreenW - 50, dilH);
         
     } completion:^(BOOL finished) {
         [bg addSubview:close];
-        [UIView animateWithDuration:0.4 animations:^{
+        [UIView animateWithDuration:0.6 animations:^{
+            
+            newDvNameField.frame = CGRectMake(loginX, 80,  KScreenW-50 -  loginX*1.2, 32);
+            
             txt.frame = CGRectMake(30, (bgView.frame.size.height-30)/2, KScreenW-120, 30);
             //NSLog(NSStringFromCGRect(txt.frame));
         }];
@@ -286,18 +735,103 @@ static NSString *cellID = @"cellID";
 }
 
 
+#pragma mark - 修改门锁名称弹窗确定
+
+-(void)comfirClick
+{
+    
+    if ( newDvNameField.text.length == 0 ) {
+        [bgView.layer shake];
+        return;
+        
+    }
+    
+    //先判断 是不是自己的锁 自己的锁就删除这个锁 ，不是自己的锁就取消授权
+    
+    
+    [self updateDoor];
+    
+    
+    [self closeView];
+    
+}
+#pragma mark -删除门锁
+
+-(void)deleteDoor
+{
+    [SVProgressTool hr_showWithStatus:@"正在删除..."];
+    
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager hrManager];
+    [manager DELETE:[NSString stringWithFormat:HRAPI_UpdateDoorPsw_URL, self.currentStateModel.did] parameters:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        
+        
+        
+        
+        
+        
+        [SVProgressHUD showSuccessWithStatus:@"删除成功!"];
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        DDLogDebug(@"%@", error);
+        
+        
+        NSLog(@"删除失败");
+        
+        
+        
+        [ErrorCodeManager showError:error];
+    }];
+
+}
+
+
+
+#pragma mark - 更新门锁信息
+-(void)updateDoor
+{
+  
+    
+    
+    
+    
+   
+    
+    
+    
+  
+    
+    
+}
+
 
 -(void)closeView{
     
-    [UIView animateWithDuration:0.5 animations:^{
+    
+    
+    comfirBtn.alpha= 0;
+    
+    oldDeviceNameLB.alpha = 0 ;
+    
+    detailNameLB.alpha = 0 ;
+    
+    newDvName.alpha = 0 ;
+    
+    [UIView animateWithDuration:0.6 animations:^{
         txt.frame = CGRectMake((KScreenW-60)/2, (bgView.frame.size.height-30)/2, 0, 30);
+        
+      newDvNameField.frame = CGRectMake(tfLength, 80,0, 32);
+
+        
+        
+        
+        
+        
         close.transform = CGAffineTransformMakeRotation(M_PI);
         close.transform = CGAffineTransformMakeScale(0.1, 0.1);
     } completion:^(BOOL finished) {
         [close removeFromSuperview];
         [UIView animateWithDuration:0.5 animations:^{
             //bgView.frame = CGRectMake(KScreenW/2,150, 0, KScreenH-300);
-            bgView.frame = CGRectMake(KScreenW/2,KScreenH/2, 0, 0);
+            bgView.frame = CGRectMake(KScreenW/2,(bgView.frame.size.height+104.0)/2, 0, 0);
             
         } completion:^(BOOL finished) {
             [bg removeFromSuperview];
@@ -325,8 +859,65 @@ static BOOL isShowOverMenu = NO;
 - (void)receviedWithNotOnline
 {
 	isShowOverMenu = YES;
-	[SVProgressTool hr_showErrorWithStatus:@"目标设备不在线!"];
+//	[SVProgressTool hr_showErrorWithStatus:@"目标设备不在线!"];
+	self.onLineLabel.backgroundColor = [UIColor blackColor];
+	[UIView animateWithDuration:0.01 animations:^{
+		self.onLineLabel.alpha = 0.0;
+	} completion:^(BOOL finished) {
+		[UIView animateWithDuration:0.5 animations:^{
+			self.onLineLabel.alpha = 1.0;
+		} completion:^(BOOL finished) {
+			[UIView animateWithDuration:0.5 delay:1.5 options:UIViewAnimationOptionAllowUserInteraction animations:^{
+				self.onLineLabel.alpha = 0.0;
+				
+			} completion:^(BOOL finished) {
+				
+				[self.onLineLabel removeFromSuperview];
+			}];
+		}];
+	}];
+	
+//	dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//	});
+//	[SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
+//	[SVProgressHUD showErrorWithStatus:@"目标设备不在线!"];
+//	dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//		[SVProgressHUD dismiss];
+//	});
+	
+	
+	self.lastOptionTime = @"";
+		NSString *uuid = self.currentStateModel.uuid;
+		
+		NSMutableArray *homeMu = [NSMutableArray array];
+		for (DeviceListModel *model  in self.homeArray) {
+			if ([model.uuid isEqualToString:uuid]) {
+				
+				model.state = @"0";
+				model.online = @"on";
+				model.level = @"";
+				
+			}
+			// 重新给锁添加 数组图片
+			if ([model.types isEqualToString:@"hrsc"]) {
+				
+				
+				[homeMu addObject:model];
+			}
+			self.homeArray = homeMu;
+		}
+	
+			
+		self.listLabel.text = self.currentStateModel.title;
+			
+		//修改921
+		//按钮图片
+		self.listImageView.image = [UIImage imageNamed:@"空心离线"];
+		[self.tableView reloadData];
+		[self.collectionView reloadData];
+	
 }
+// 921修改
 - (void)receiveDeviceState:(NSNotification *)note
 {
 	AppDelegate *app = (AppDelegate *)[UIApplication sharedApplication].delegate;
@@ -337,7 +928,6 @@ static BOOL isShowOverMenu = NO;
 		
 		
 		NSString *uuid = mode.src[@"dev"];
-		[self.photoModelArray removeAllObjects];
 		
 		NSMutableArray *homeMu = [NSMutableArray array];
 		for (DeviceListModel *model  in self.homeArray) {
@@ -348,27 +938,28 @@ static BOOL isShowOverMenu = NO;
 				model.level = tcpModel.level;
 				
 			}
-			
 			// 重新给锁添加 数组图片
 			if ([model.types isEqualToString:@"hrsc"]) {
-    
-				if ([model.state isEqualToString:@"0"]) {
-					
-					[self.photoModelArray addObject:
-					 [PhotoModel modelWithImageNamed:@"离线锁"
-										 description:@""]];
-					
-				}else
-				{
-					[self.photoModelArray addObject:
-					 [PhotoModel modelWithImageNamed:@"原锁"
-										 description:@""]];
-				}
-
+				
 			
 			[homeMu addObject:model];
 		}
 		self.homeArray = homeMu;
+		}
+		
+		if ([uuid isEqualToString:self.currentStateModel.uuid]) {
+			
+			self.listLabel.text = self.currentStateModel.title;
+			
+			//修改921
+			//按钮图片
+			if ([tcpModel.state isEqualToString:@"1"]) {
+				self.listImageView.image = [UIImage imageNamed:@"空心在线"];
+			}else
+			{
+				
+				self.listImageView.image = [UIImage imageNamed:@"空心离线"];
+			}
 		}
 		
 //		self.currentStateModel.state = tcpModel.state;
@@ -430,7 +1021,7 @@ static BOOL isShowOverMenu = NO;
 	[self.view addSubview:listButton];
 	self.listButton = listButton;
 	
-	UIImageView *listImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"标签"]];
+	UIImageView *listImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@""]];
 	CGRect rect = listImageView.frame;
 	rect.origin = CGPointMake(HRUIScreenW *10, 0);
 	listImageView.frame = rect;
@@ -494,6 +1085,15 @@ static BOOL isShowOverMenu = NO;
 	[_layout invalidateLayout];
 }
 
+#pragma mark - 隐藏底部条
+- (void)IsTabBarHidden:(BOOL)hidden
+{
+	for (UIView *view  in self.tabBarController.view.subviews) {
+		if ([NSStringFromClass([view class]) isEqualToString:@"HRTabBar"]) {
+			view.hidden = hidden;
+		}
+	}
+}
 - (void)viewDidLayoutSubviews
 {
 	[super viewDidLayoutSubviews];
@@ -527,28 +1127,34 @@ static BOOL isShowOverMenu = NO;
 	[self.listButton mas_makeConstraints:^(MASConstraintMaker *make) {
 		make.top.equalTo(self.collectionView.mas_bottom).offset(HRCommonScreenH *32);
 		make.centerX.equalTo(self.view);
-		make.width.mas_equalTo(HRCommonScreenW * 271);
-		make.height.mas_equalTo(HRCommonScreenH * 50);
+//		make.width.mas_equalTo(HRCommonScreenW * 271);
+		make.width.mas_equalTo(HRCommonScreenW * 350);
+		make.height.mas_equalTo(30);
 	}];
 	
 	
 	//列表按钮里左边的图片
 	[self.listImageView mas_makeConstraints:^(MASConstraintMaker *make) {
-		make.left.equalTo(self.listButton).offset(HRCommonScreenW * 10);
-		make.centerY.equalTo(self.listButton);
+		make.left.equalTo(self.listButton).offset(10);
+		make.bottom.equalTo(self.listButton).offset(-5);
+		make.top.equalTo(self.listButton).offset(5);
+		make.width.mas_equalTo(20);
 	}];
 	
 	//列表按钮里的文本
 	[self.listLabel mas_makeConstraints:^(MASConstraintMaker *make) {
 		make.center.equalTo(self.listButton);
-		make.left.equalTo(self.listImageView.mas_right).offset(HRCommonScreenW * 8);
-		make.width.mas_equalTo(HRCommonScreenW * 146);
+		make.left.equalTo(self.listImageView.mas_right).offset(4);
+//		make.width.mas_equalTo(HRCommonScreenW * 146);
+		
+		make.width.mas_equalTo(HRCommonScreenW * 226);
 	}];
 	//列表按钮里的右边图片
 	[self.rightImageView mas_makeConstraints:^(MASConstraintMaker *make) {
-		make.right.equalTo(self.listButton).offset(- HRCommonScreenW *10);
+		make.right.equalTo(self.listButton).offset(- 10);
 		make.centerY.equalTo(self.listButton);
-		make.left.equalTo(self.listLabel.mas_right).offset(HRCommonScreenW * 20);
+		make.width.mas_equalTo(25);
+		make.left.equalTo(self.listLabel.mas_right).offset(8);
 	}];
 	
 	[self.alphaView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -570,7 +1176,6 @@ static BOOL isShowOverMenu = NO;
 - (void)listButtonClick:(UIButton *)btn
 {
 	btn.selected = !btn.selected;
-	DDLogInfo(@"selected---%d",btn.selected);
 	if (btn.selected) {
 		
 		self.rightImageView.layer.transform = CATransform3DMakeRotation(M_PI* 2, 0, 0, 1);
@@ -579,12 +1184,22 @@ static BOOL isShowOverMenu = NO;
 		self.rightImageView.layer.transform = CATransform3DMakeRotation(M_PI, 0, 0, 1);
 		
 	}
+	//修改921
 	NSMutableArray *titleArray = [NSMutableArray array];
 	NSMutableArray *iconArray = [NSMutableArray array];
+	
 	for (DeviceListModel *home in self.homeArray) {
 		NSString *title = home.title;
 		[titleArray addObject:title];
-		[iconArray addObject:@"标签"];
+		if ([home.state isEqualToString:@"1"]) {
+			
+			[iconArray addObject:@"空心在线"];
+		}else
+		{
+			[iconArray addObject:@"空心离线"];
+			
+		}
+		
 	}
 	
 	[FTPopOverMenu showForSender:btn
@@ -601,6 +1216,16 @@ static BOOL isShowOverMenu = NO;
 						   //定时发送选中的门锁 获取设备状态
 						   self.currentStateModel = self.homeArray[selectedIndex];
 						   self.listLabel.text = home.title;
+						   
+						   //修改921
+						   //按钮图片
+						   if ([self.currentStateModel.state isEqualToString:@"1"]) {
+							   self.listImageView.image = [UIImage imageNamed:@"空心在线"];
+						   }else
+						   {
+							   
+							   self.listImageView.image = [UIImage imageNamed:@"空心离线"];
+						   }
 						   [self addTimer];
 						   
 						   [self.tableView reloadData];
@@ -661,8 +1286,16 @@ static BOOL isShowOverMenu = NO;
 				
 			}
 			cell.leftLabel.text = @"手机开锁";
-			cell.rightLabel.text = @"最后一次操作的时间";
-			cell.minLabel.text = [NSString stringWithFormat:@"剩余电量%@", self.currentStateModel.level];
+			if (self.currentStateModel.level.length < 0.5) {
+				cell.minLabel.text =  @"";
+				cell.rightLabel.text = self.lastOptionTime;
+			}else
+			{
+				
+				cell.rightLabel.text = @"2016-09-21 18:27:28";
+				cell.minLabel.text = [NSString stringWithFormat:@"剩余电量%@", self.currentStateModel.level];
+				
+			}
 		}
 			break;
   case 1:
@@ -670,7 +1303,16 @@ static BOOL isShowOverMenu = NO;
 			
 			cell.leftImage.image = [UIImage imageNamed:@"记录"];
 			cell.leftLabel.text = @"记录查询";
-			cell.rightLabel.text = @"最后一次记录";
+//			cell.rightLabel.text = self.lastOptionTime;
+			if (self.currentStateModel.level.length < 0.5) {
+				cell.minLabel.text =  @"";
+				cell.rightLabel.text = self.lastOptionTime;
+			}else
+			{
+				
+				cell.rightLabel.text = @"2016-09-21 18:27:28";
+				
+			}
 		}
 			break;
   case 2:
@@ -880,9 +1522,18 @@ static BOOL isShowOverMenu = NO;
 	DeviceListModel *home = self.homeArray[index];
 	self.listLabel.text = home.title;
 	
-	
 	//定时发送选中的门锁 获取设备状态
 	self.currentStateModel = self.homeArray[index];
+	//修改921
+	//按钮图片
+	if ([self.currentStateModel.state isEqualToString:@"1"]) {
+		self.listImageView.image = [UIImage imageNamed:@"空心在线"];
+	}else
+	{
+		
+		self.listImageView.image = [UIImage imageNamed:@"空心离线"];
+	}
+	
 	[self.tableView reloadData];
 	[self addTimer];
 	
@@ -913,6 +1564,7 @@ static BOOL isShowOverMenu = NO;
 		NSString *str = [NSString stringWithPostTCPJsonVersion:@"0.0.1" status:@"200" token:@"ios" msgType:@"login" msgExplain:@"login" fromUserName:userName destUserName:@"huaruicloud" destDevName:@"huaruiPushServer" msgBodyStringDict:bodyDict];
 		DDLogWarn(@"登入认证登入认证--%@", str);
 		[self.appDelegate sendMessageWithString:str];
+		
 		
 	});
 	
@@ -951,37 +1603,36 @@ static BOOL isShowOverMenu = NO;
 		NSArray *responseArr = (NSArray*)responseObject;
 		
 		for (NSDictionary *dict in responseArr) {
+			
 			DeviceListModel *home = [DeviceListModel mj_objectWithKeyValues:dict];
 			if ([home.types isEqualToString:@"hrsc"]) {
-    
-			if ([home.state isEqualToString:@"0"]) {
-				
-				[weakSelf.photoModelArray addObject:
-				 [PhotoModel modelWithImageNamed:@"离线锁"
-									 description:@""]];
-				
-			}else
-			{
-				[weakSelf.photoModelArray addObject:
-				 [PhotoModel modelWithImageNamed:@"原锁"
-									 description:@""]];
-			}
-				
-				[weakSelf.homeArray addObject:home];
-				
-			}
+				//修改921
+			[weakSelf.photoModelArray addObject:
+			[PhotoModel modelWithImageNamed:@"图"
+								 description:@""]];
+			[weakSelf.homeArray addObject:home];
 		}
-		
+		}
 		weakSelf.currentStateModel = weakSelf.homeArray.firstObject;
 		weakSelf.listLabel.text = weakSelf.currentStateModel.title;
+		//修改921
+		//按钮图片
+		if ([self.currentStateModel.state isEqualToString:@"1"]) {
+			self.listImageView.image = [UIImage imageNamed:@"空心在线"];
+		}else
+		{
+			
+			self.listImageView.image = [UIImage imageNamed:@"空心离线"];
+		}
+		
 		[self.tableView reloadData];
 		
+		//定时60s查询设备状态
+		[self addTimer];
 		
 		//获得设备授权表
 		[self addAutherList];
 		
-		//定时60s查询设备状态
-		[self addTimer];
 	}];
 	
 }
@@ -1135,19 +1786,11 @@ static BOOL isShowOverMenu = NO;
 			
 			// 重新给锁添加 数组图片
 			if ([model.types isEqualToString:@"hrsc"]) {
-    
-				if ([model.state isEqualToString:@"0"]) {
-					
-					[self.photoModelArray addObject:
-					 [PhotoModel modelWithImageNamed:@"离线锁"
-										 description:@""]];
-					
-				}else
-				{
-					[self.photoModelArray addObject:
-					 [PhotoModel modelWithImageNamed:@"原锁"
-										 description:@""]];
-				}
+				//修改921
+				
+				[self.photoModelArray addObject:
+				 [PhotoModel modelWithImageNamed:@"图"
+									 description:@""]];
 				
 		}
 		}
@@ -1168,8 +1811,17 @@ static BOOL isShowOverMenu = NO;
 - (void)addTimer
 {
 	[self.timer invalidate];
+	
+	dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+		
+		NSString *user = [[NSUserDefaults standardUserDefaults] objectForKey:kDefaultsUserName];
+		DeviceListModel *testModel = self.currentStateModel;
+		[self sendSocketQuaryDeviceOnLineWithUser:user dev:testModel.uuid];
+	});
 	self.timer = [NSTimer scheduledTimerWithTimeInterval:timerDuration target:self selector:@selector(updateTimer) userInfo:nil repeats:YES];
 }
+
+
 - (void)updateTimer
 {
 	NSString *user = [[NSUserDefaults standardUserDefaults] objectForKey:kDefaultsUserName];
