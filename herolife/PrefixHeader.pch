@@ -59,6 +59,7 @@
 #import "UIView+HRExtension.h"
 #import "PCCircleViewConst.h"
 #import <MJExtension.h>
+
 #import <SVProgressHUD.h>
 #import "QRTools.h"
 #import "CreateXRHttpTools.h"
@@ -274,6 +275,8 @@
 #define kNotificationReceiveDeviceAutherInformation @"kNotificationReceiveDeviceAutherInformation"
 // 接收到临时授权数据数据 通知
 #define kNotificationReceiveTempAutherInformation @"kNotificationReceiveTempAutherInformation"
+// 接收到取消授权数据数据 通知
+#define kNotificationReceiveDeleteAutherInformation @"kNotificationReceiveDeleteAutherInformation"
 
 
 

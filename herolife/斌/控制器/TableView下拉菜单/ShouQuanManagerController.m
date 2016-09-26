@@ -290,11 +290,14 @@ static NSString *ViewOfCustomerTableViewCellIdentifier = @"ViewOfCustomerTableVi
 - (void)addObserverNotification
 {
 	[kNotification addObserver:self selector:@selector(receiveAutherInformation) name:kNotificationReceiveDeviceAutherInformation object:nil];
+	
+	[kNotification addObserver:self selector:@selector(receiveAutherInformation) name:kNotificationReceiveDeleteAutherInformation object:nil];
 	//监听设备是否在线
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receviedWithNotOnline) name:kNotificationNotOnline object:nil];
 	
 	//临时授权
 	[kNotification addObserver:self selector:@selector(receiveTempAutherInformation) name:kNotificationReceiveTempAutherInformation object:nil];
+	
 	
 }
 static BOOL isOvertime = NO;

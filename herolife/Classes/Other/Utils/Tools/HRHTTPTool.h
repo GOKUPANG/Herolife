@@ -13,4 +13,5 @@
 
 + (void)hr_getHttpWithURL:(NSString *)url parameters:(NSMutableDictionary *)parameters responseDict:(void(^)(id array, NSError *error))responseDict;
 + (void)hr_PutHttpWithURL:(NSString *)url parameters:(NSMutableDictionary *)parameters responseDict:(void(^)(id array, NSError *error))responseDict;
++ (void)hr_DeleteHttpWithURL:(NSString *)url parameters:(NSMutableDictionary *)parameters responseDict:(void(^)(id array, NSError *error))responseDict;
 @end

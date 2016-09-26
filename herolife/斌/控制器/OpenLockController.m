@@ -179,7 +179,11 @@
     [self addNotificationCenterObserver];
     
 }
-
+- (void)backButtonClick:(UIButton *)btn
+{
+	[self.navigationController popViewControllerAnimated:YES];
+	
+}
 #pragma mark - 添加通知
 
 -(void)addNotificationCenterObserver

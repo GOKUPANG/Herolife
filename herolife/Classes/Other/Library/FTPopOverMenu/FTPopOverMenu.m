@@ -483,7 +483,6 @@ typedef NS_ENUM(NSUInteger, FTPopOverMenuArrowDirection) {
     self.doneBlock = doneBlock;
     self.dismissBlock = dismissBlock;
     
-    
     [self adjustPopOverMenu];
 }
 

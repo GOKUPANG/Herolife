@@ -39,6 +39,10 @@ UIKIT_EXTERN CGFloat const HRNavH;
 #define HRAPI_CSRF_URL		[NSString stringWithFormat:@"%@%@", SERVER_DOMAIN, HRAPI_CSRF]
 #define HRAPI_LOGOUT_URL		[NSString stringWithFormat:@"%@%@", SERVER_DOMAIN, HRAPI_LOGOUT]
 
+/// 删除门锁HTTP请求
+#define HRAPI_UpdateDoorPsw_URL [NSString stringWithFormat:@"%@%@", SERVER_DOMAIN, @"huaruiapi/node/"]
+/// 修改门锁HTTP请求
+#define HRAPI_ModifyLock_URL		[NSString stringWithFormat:@"%@%@", SERVER_DOMAIN, @"huaruiapi/node/"]
 
 /// 门锁记录HTTP请求
 #define HRAPI_RecordeLock_URL		[NSString stringWithFormat:@"%@%@", SERVER_DOMAIN, @"huaruiapi/herolife-dev-hrsc-ml&uuid="]

@@ -47,4 +47,16 @@
 		
 	}];
 }
+
++ (void)hr_DeleteHttpWithURL:(NSString *)url parameters:(NSMutableDictionary *)parameters responseDict:(void(^)(id array, NSError *error))responseDict
+{
+	AFHTTPSessionManager *manager = [AFHTTPSessionManager hrManager];
+	[manager DELETE:url parameters:parameters success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+		responseDict(responseObject,nil);
+		
+	} failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+		responseDict(nil,error);
+		
+	}];
+}
 @end

@@ -12,6 +12,7 @@
 #import "GestureViewController.h"
 #import "BackPicSetController.h"
 #import "LoginController.h"
+#import "HerolifeViewController.h"
 
 @interface SettingController ()<UITableViewDelegate, UITableViewDataSource, UIAlertViewDelegate>
 /** 顶部条 */
@@ -42,9 +43,7 @@ static NSString *cellID = @"cellID";
     NSInteger  PicNum =   [[NSUserDefaults standardUserDefaults] integerForKey:@"PicNum"];
     
     if (!PicNum) {
-        
-        
-        
+		
         self.backImgView.image = [UIImage imageNamed:@"Snip20160825_3"];
     }
     
@@ -345,8 +344,9 @@ static NSString *cellID = @"cellID";
 			
 			if (indexPath.row == 0) {
 				cell.leftImage.image = [UIImage imageNamed:@"升级"];
-				cell.leftLabel.text = @"软件升级";
-				[cell.rightButton setTitle:@"V2.1.1" forState:UIControlStateNormal];
+				cell.leftLabel.text = @"软件版本";
+				NSString *version = [NSBundle mainBundle].infoDictionary[@"CFBundleShortVersionString"];
+				[cell.rightButton setTitle:version forState:UIControlStateNormal];
 				
 			}else if(indexPath.row == 1) {
 				cell.leftImage.image = [UIImage imageNamed:@"关于"];
@@ -401,10 +401,15 @@ static NSString *cellID = @"cellID";
             break;
             
             
-            case 1:
+	 case 1:
 		{
-			if (indexPath.row == 2) {
+			if (indexPath.row == 1) {
 				
+				HerolifeViewController *herVC = [[HerolifeViewController alloc] init];
+				[self.navigationController pushViewController:herVC animated:YES];
+				
+				
+			}else if (indexPath.row == 2) {
 				
 				UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"确定要退出当前登陆？" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"退出", nil];
 				[alert show];

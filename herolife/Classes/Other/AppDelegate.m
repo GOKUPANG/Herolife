@@ -895,7 +895,7 @@ static NSUInteger lengthInteger = 0;
 		DDLogInfo(@"删除家人授权数据%@", jsonDict);
 		
 		[self addDelegateAutherDict:jsonDict];
-		[[NSNotificationCenter defaultCenter] postNotificationName:kNotificationReceiveDeviceAutherInformation object:nil userInfo:jsonDict];
+		[[NSNotificationCenter defaultCenter] postNotificationName:kNotificationReceiveDeleteAutherInformation object:nil userInfo:jsonDict];
 		return;
 	}
 	

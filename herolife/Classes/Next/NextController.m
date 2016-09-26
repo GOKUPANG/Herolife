@@ -88,7 +88,7 @@
 	
 	//通过电源, 长按6秒, 直到指示灯闪烁 label
 	UILabel *promptLabel = [[UILabel alloc] init];
-	promptLabel.text = @"通过电源, 长按6秒, 直到指示灯闪烁";
+	promptLabel.text = @"接通电源，长按WiFi盒子set键5秒，直到指示灯闪烁";
 	promptLabel.textColor = [UIColor whiteColor];
 	promptLabel.font = [UIFont systemFontOfSize:14];
 	[self.view addSubview:promptLabel];

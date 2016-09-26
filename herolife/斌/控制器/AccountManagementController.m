@@ -21,7 +21,7 @@
 
 @property(nonatomic,strong)UITableView *tableView;
 /** 头像View*/
-@property(nonatomic,strong)UIView * headImgView;
+@property(nonatomic,strong)UIView * headView;
 
 /** 用户名*/
 @property(nonatomic,strong)UIView * userNameView;
@@ -197,14 +197,6 @@
 }
 
 
-#pragma mark -跳转到下一个界面  
-
--(void)nextPage
-{
-    DoorLockRecordConroller * Dlr =[DoorLockRecordConroller new];
-    [self.navigationController pushViewController:Dlr animated:YES];
-    
-}
 
 #pragma mark -判断确认按钮是否能点击
 
@@ -541,23 +533,28 @@
 #pragma mark -头像相关设置
     //用sd自动布局来创建几个类似tableViewcell的View
     //头像
-    _headImgView = [[UIView alloc]init];
-      [self.view addSubview:_headImgView];
+    _headView = [[UIView alloc]init];
+      [self.view addSubview:_headView];
     
-    _headImgView.sd_layout
+    _headView.sd_layout
     .topSpaceToView(self.navigationController.navigationBar,20)
     .leftEqualToView(self.view)
     .rightEqualToView(self.view)
     .heightIs(70);
     
-    _headImgView.backgroundColor = [UIColor whiteColor];
-    _headImgView.alpha = 0.2;
+    _headView.backgroundColor = [UIColor whiteColor];
+    _headView.alpha = 0.2;
     
-    _headImgView.userInteractionEnabled = YES;
+    _headView.userInteractionEnabled = YES;
     
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(test)];
     
-    [_headImgView addGestureRecognizer:tap];
+    [_headView addGestureRecognizer:tap];
+    
+    
+   
+    
+    
     
     
     
@@ -572,7 +569,7 @@
     [self.view addSubview:lineView];
     
     lineView.sd_layout
-    .topSpaceToView(_headImgView,0)
+    .topSpaceToView(_headView,0)
     .leftSpaceToView(self.view,5)
     .rightSpaceToView(self.view,5)
     .heightIs(1);
@@ -593,11 +590,46 @@
     headLabel.text = @"头像";
     headLabel.textColor = [UIColor whiteColor];
     
-    //headLabel.text = @"头像";
-//    NSMutableAttributedString *str = [[NSMutableAttributedString alloc] initWithString:@"Using NSAttributed String"];
-//    [str addAttribute:NSForegroundColorAttributeName value:[UIColor whiteColor] range:NSMakeRange(0,5)];
-//    headLabel.attributedText = str;
+    
+    UIImageView * headImgView = [[UIImageView alloc]init];
+    
+    [self.view addSubview:headImgView];
+    
+    headImgView.backgroundColor = [UIColor blueColor];
+    
+   // headImgView.image = [UIImage imageNamed:@"头像占位图片.jpg"];
+    
+    NSString *iconString = [kUserDefault objectForKey:kDefaultsIconURL];
+    if (iconString.length > 0) {
+        NSURL *url = [NSURL URLWithString:iconString];
+        [headImgView sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"头像占位图片.jpg"]];
+        
+    }else
+    {
+        headImgView.image = [UIImage imageNamed:@"头像占位图片.jpg"];
+        
+    }
+    
+    
+    headImgView.layer.cornerRadius = 30;
+    
+    headImgView.clipsToBounds = YES ;
+    
+    
+    
+    
+    
 
+    headImgView.sd_layout
+    .rightSpaceToView(self.view,15)
+    .bottomSpaceToView(lineView,5)
+    .widthIs(60)
+    .heightIs(60);
+    
+    
+    
+    
+ 
     #pragma mark -用户名相关设置
     //用户名
     
@@ -629,6 +661,33 @@
    userNameLabel.font = [UIFont systemFontOfSize:17];
    userNameLabel.text = @"用户名";
    userNameLabel.textColor = [UIColor whiteColor];
+    
+  
+    
+    
+    UILabel *  detailUserNameLB = [[ UILabel alloc]init];
+    
+    [self.view addSubview:detailUserNameLB];
+    
+    detailUserNameLB.sd_layout
+    .topSpaceToView(lineView,20)
+    .rightSpaceToView(self.view,15)
+    .leftSpaceToView(userNameLabel,20)
+    .heightIs(20);
+    
+    NSString * username = [kUserDefault objectForKey:kDefaultsUserName ];
+    
+    
+    detailUserNameLB.font = [UIFont systemFontOfSize:17];
+    detailUserNameLB.text = username ;
+    detailUserNameLB.textColor = [UIColor whiteColor];
+    detailUserNameLB.textAlignment = NSTextAlignmentRight;
+    
+    
+
+    
+    
+    
 
     
     
@@ -707,6 +766,9 @@
     _OldPswTF.clearButtonMode = UITextFieldViewModeWhileEditing;
     _OldPswTF.delegate = self;
     
+    _OldPswTF.textAlignment =NSTextAlignmentRight;
+    
+    
     //输入框添加方法
     
     [_OldPswTF addTarget:self action:@selector(textFieldDidChange) forControlEvents:UIControlEventEditingChanged];
@@ -776,6 +838,9 @@
     _NewPswTF.clearButtonMode = UITextFieldViewModeWhileEditing;
     _NewPswTF.delegate=self;
     
+    _NewPswTF.textAlignment = NSTextAlignmentRight ;
+    
+    
     [_NewPswTF addTarget:self action:@selector(textFieldDidChange) forControlEvents:UIControlEventEditingChanged];
 
     
@@ -843,6 +908,9 @@
     _confirmTF.secureTextEntry = YES;
    // _confirmTF.clearsOnBeginEditing  = YES;
     _confirmTF.clearButtonMode = UITextFieldViewModeWhileEditing;
+    
+    _confirmTF.textAlignment = NSTextAlignmentRight ;
+    
     _confirmTF.delegate=self;
     [_confirmTF addTarget:self action:@selector(textFieldDidChange) forControlEvents:UIControlEventEditingChanged];
 
