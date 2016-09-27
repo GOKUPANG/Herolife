@@ -23,9 +23,9 @@
 	range = [title rangeOfString:@"|" options:NSBackwardsSearch];
 	NSString *message = [title substringFromIndex:range.location + 1];
 	
-	self.timeLabel.text = time;
-	self.recordLabel.text = message;
-	self.userNameLabel.text = lockModel.person.firstObject ;
+	self.timeLabel.text = lockModel.person.firstObject;
+	self.recordLabel.text = time;
+	self.userNameLabel.text = message ;
 	
 	DDLogWarn(@"timeLabel%@recordLabel%@userNameLabel%@", self.timeLabel.text, self.recordLabel.text, self.userNameLabel.text);
 	
@@ -71,7 +71,7 @@
     //时间
  _timeLabel.sd_layout
     .leftSpaceToView(self.contentView,15.0/375.0 *self.contentView.frame.size.width)
-    .widthIs(110.0/375.0 * self.contentView.frame.size.width + 60)
+    .widthIs(110.0/375.0 * self.contentView.frame.size.width)
     .bottomSpaceToView(self.contentView,10.0)
     .heightIs(20.0);
     
@@ -85,7 +85,7 @@
     .rightSpaceToView(self.contentView,15.0)
     .bottomEqualToView(_timeLabel)
     .heightIs(20.0)
-    .widthIs(120.0/375.0 * self.contentView.frame.size.width);
+    .widthIs(120.0/375.0 * self.contentView.frame.size.width + 40);
     
    // NSLog(@"%f",120.0/375.0 *self.contentView.frame.size.width);
     

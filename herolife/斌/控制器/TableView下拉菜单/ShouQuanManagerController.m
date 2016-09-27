@@ -987,6 +987,7 @@ static BOOL isShowOverMenu = NO;
 {
 	
 	NSString *psw = [kUserDefault objectForKey:kDefaultsPassWord];
+	NSString *userName = [kUserDefault objectForKey:kDefaultsUserName];
 	
 	if (self.pwdField.text.length < 0.5) {
 		[SVProgressTool hr_showErrorWithStatus:@"密码不能为空,请输入密码!"];
@@ -1006,6 +1007,13 @@ static BOOL isShowOverMenu = NO;
 	if (self.AddPswNumberField.text.length < 0.5) {
 		
 		[SVProgressTool hr_showErrorWithStatus:@"用户名不能为空!"];
+		[customAlertView.layer shake];
+		return;
+	}
+	
+	if ([self.AddPswNumberField.text isEqualToString:userName]) {
+		
+		[SVProgressTool hr_showErrorWithStatus:@"不能授权给自己!"];
 		[customAlertView.layer shake];
 		return;
 	}

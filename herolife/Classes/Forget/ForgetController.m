@@ -17,9 +17,61 @@
 @property(nonatomic, weak)  UITextField *userNameField;
 /** <#name#> */
 @property(nonatomic, weak) UIButton *passwdButton;
+
+/** 背景图片*/
+
+@property(nonatomic,strong)UIImageView *backImgView;
+
+
 @end
 
 @implementation ForgetController
+
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    //	self.tabBarController.view.hidden = YES;
+    
+    for (UIView *view in self.tabBarController.view.subviews) {
+        if ([NSStringFromClass([view class]) isEqualToString:@"HRTabBar"]) {
+            
+            view.hidden = YES;
+        }
+    }
+    
+    NSInteger  PicNum =   [[NSUserDefaults standardUserDefaults] integerForKey:@"PicNum"];
+    
+    if (!PicNum) {
+        
+        
+        
+        self.backImgView.image = [UIImage imageNamed:@"Snip20160825_3"];
+    }
+    
+    
+    else if (PicNum == -1)
+    {
+        NSString *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES).lastObject;
+        path = [path stringByAppendingPathComponent:@"image.png"];
+        
+        self.backImgView.image =[UIImage imageWithContentsOfFile:path];
+    }
+    
+    else{
+        
+        NSString * imgName = [NSString stringWithFormat:@"%ld.jpg",PicNum];
+        
+        self.backImgView.image =[UIImage imageNamed:imgName];
+    }
+    
+    
+    
+}
+
+
+
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -38,19 +90,28 @@
 {
 	self.navigationController.navigationBar.hidden = YES;
 	
-	//背景图片
-	UIImageView *backgroundImage = [[UIImageView alloc] initWithFrame:[UIScreen mainScreen].bounds];
-	backgroundImage.image = [UIImage imageNamed:@"icon_bg.jpg"];
-	[self.view addSubview:backgroundImage];
-	
+    UIImageView *backgroundImage = [[UIImageView alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    backgroundImage.image = [UIImage imageNamed:@"Snip20160825_3"];
+    self.backImgView = backgroundImage;
+    
+    
+    [self.view addSubview:self.backImgView];
 	
 	UIView *view = [[UIView alloc] initWithFrame:[UIScreen mainScreen].bounds];
 	view.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.2];
+    
+    
 	[self.view addSubview:view];
 	
 	HRNavigationBar *navView = [[HRNavigationBar alloc] init];
 	navView.titleLabel.text = @"忘记密码";
 	[navView.leftButton setImage:[UIImage imageNamed:@"返回号"] forState:UIControlStateNormal];
+    
+    
+     [navView.leftButton addTarget:self action:@selector(leftButtonClick) forControlEvents:UIControlEventTouchUpInside];
+    
+    
+    
 	navView.backgroundColor = [UIColor colorWithRed:255/255.0 green:255/255.0 blue:255/255.0 alpha:25 /255.0];
 	[self.view addSubview:navView];
 	self.navView = navView;
@@ -103,6 +164,15 @@
 	[self.view addSubview:passwdButton];
 	self.passwdButton = passwdButton;
 	
+}
+
+/** 斌 重写导航栏 返回 */
+-(void)leftButtonClick
+{
+    [self.navigationController popViewControllerAnimated:YES];
+    
+    
+    
 }
 - (void)viewDidLayoutSubviews
 {

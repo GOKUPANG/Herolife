@@ -386,10 +386,11 @@
 			 
 			 //头像
 			 NSDictionary *rawDict = user.rawData;
-			 NSString *urlStr = [rawDict valueForKeyPath:@"figureurl_2"];
-			 [kNSUserDefaults setObject:urlStr forKey:kDefaultsIconURL];
-			 DDLogWarn(@"QQ头像%@",[ssdk valueForKeyPath:@"urlStr"]);
+			 NSString *urlStr = [rawDict valueForKeyPath:@"figureurl_qq_2"];
+			 [kNSUserDefaults setObject:urlStr forKey:kDefaultsQQIconURL];
+			 DDLogWarn(@"QQ头像%@",urlStr);
 			 [kNSUserDefaults synchronize];
+//			 openid = @"07E3BE2774B2801CC12505E121DCEE28";
 			 [self loginSSDKWithOpenID: openid];
 			 
 			 
@@ -419,7 +420,6 @@
 										  NSString *codeString = [code stringValue];
 										  //如果没有注册就去注册
 										  if ([codeString isEqualToString:@"401"]) {
-											  
 											  [self registerWithOpenID:openid muString:muString];
 											  
 										  }
@@ -445,6 +445,7 @@
 	parameters[@"mail"] = [NSString stringWithFormat:@"%@@gzhuarui.cn", openId];
 	parameters[@"pass"] = muString;
 	parameters[@"pass2"] = muString;
+	parameters[@"field_phone[und][0][value]"] = @"18000000000";
 	DDLogWarn(@"-----测试-----parameters-000-----%@",parameters);
 //	parameters[@"name"] = @"4EB2618888E358E8B777B0C03CC54BDE";
 //	parameters[@"mail"] = @"4EB2618888E358E8B777B0C03CC54BDE@gzhuarui.cn";
@@ -479,7 +480,7 @@
 		if (error) {
 			
 			DDLogDebug(@"注册失败error %@", error);
-			[self showRegisterError:error];
+			[self showRegisterError:error openId:openId muString:muString];
 		}
 	}];
 }
@@ -609,50 +610,72 @@
 
 
 #pragma mark - 错误提示
-- (void)showRegisterError:(NSError *)error
+- (void)showRegisterError:(NSError *)error openId:(NSString *)openId muString:(NSString *)muString
 {
-//	[SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
-//	if (error == nil) {
-//		return;
-//	}
-//	NSDictionary *dict = error.userInfo;
-//	NSString * code = [dict valueForKeyPath:@"statusCode"];
-//	NSString *str = [dict valueForKeyPath:@"body"];
-//	if (str) {
-//		DDLogInfo(@"str|%@|", str);
-//		NSScanner *theScanner;
-//		NSString *text = nil;
-//		theScanner = [NSScanner scannerWithString:str];
-//		
-//		while ([theScanner isAtEnd] == NO) {
-//			// find start of tag
-//			[theScanner scanUpToString:@"<" intoString:NULL] ;
-//			// find end of tag
-//			[theScanner scanUpToString:@">" intoString:&text] ;
-//			// replace the found tag with a space
-//			//(you can filter multi-spaces out later if you wish)
-//			str = [str stringByReplacingOccurrencesOfString:
-//				   [NSString stringWithFormat:@"%@>", text]
-//												 withString:@""];
-//		}
-//		DDLogInfo(@"str2|%@|", str);
-//		
-//		str = [str replaceUnicode:str];
-//		NSRange range1 = [str rangeOfString:@":{"];
-//		str = [str substringFromIndex:range1.location + 2];
-//		NSRange range2 = [str rangeOfString:@"}"];
-//		str = [str substringToIndex:range2.location - 1];
-//		NSString *description = [NSString stringWithFormat:@"%@  %@", code,str];
-//		DDLogInfo(@"description|%@|", description);
-//		[SVProgressHUD showErrorWithStatus:description  ];
-//		dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(dimissTimer * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-//			[SVProgressHUD dismiss];
-//		});
-//	}else
-//	{
-//		
-//		[SVProgressTool hr_showErrorWithStatus:@"请求超时!"];
-//	}
+	[SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
+	if (error == nil) {
+		return;
+	}
+	NSDictionary *dict = error.userInfo;
+	NSString * code = [NSString stringWithFormat:@"%@",[dict valueForKeyPath:@"statusCode"]];
+	if ([code isEqualToString:@"200"]) {
+		
+		
+		//注册成功之后登陆
+		[HRServicesManager loginWithUsername:openId
+									password:muString
+									  result:^(NSError *error) {
+										  
+										  
+										  if (error) {
+											  [ErrorCodeManager showError:error];
+											  
+										  } else {
+											  [SVProgressTool hr_dismiss];
+											  HRTabBarViewController *tabBarVC = [[HRTabBarViewController alloc] init];
+											  //												  [self.navigationController pushViewController:tabBarVC animated:YES];
+											  [self presentViewController:tabBarVC animated:NO completion:nil];
+										  }
+									  }];
+		
+		return;
+	}
+	NSString *str = [dict valueForKeyPath:@"body"];
+	if (str) {
+		DDLogInfo(@"str|%@|", str);
+		NSScanner *theScanner;
+		NSString *text = nil;
+		theScanner = [NSScanner scannerWithString:str];
+		
+		while ([theScanner isAtEnd] == NO) {
+			// find start of tag
+			[theScanner scanUpToString:@"<" intoString:NULL] ;
+			// find end of tag
+			[theScanner scanUpToString:@">" intoString:&text] ;
+			// replace the found tag with a space
+			//(you can filter multi-spaces out later if you wish)
+			str = [str stringByReplacingOccurrencesOfString:
+				   [NSString stringWithFormat:@"%@>", text]
+												 withString:@""];
+		}
+		DDLogInfo(@"str2|%@|", str);
+		
+		str = [str replaceUnicode:str];
+		NSRange range1 = [str rangeOfString:@":{"];
+		str = [str substringFromIndex:range1.location + 2];
+		NSRange range2 = [str rangeOfString:@"}"];
+		str = [str substringToIndex:range2.location - 1];
+		NSString *description = [NSString stringWithFormat:@"%@  %@", code,str];
+		DDLogInfo(@"description|%@|", description);
+		[SVProgressHUD showErrorWithStatus:description  ];
+		dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(10 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+			[SVProgressHUD dismiss];
+		});
+	}else
+	{
+		
+		[SVProgressTool hr_showErrorWithStatus:@"请求超时!"];
+	}
 	
 	
 }

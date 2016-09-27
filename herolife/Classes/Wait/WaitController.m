@@ -31,11 +31,23 @@
 
 /** 定时器 */
 @property (nonatomic, weak) NSTimer *timer;
+
+/** 背景图片*/
+
+@property(nonatomic,strong)UIImageView *backImgView;
+
+
+
 @end
 
 @implementation WaitController
 /** 停留时间 */
 static int const HRTimeDuration = 30;
+
+
+
+
+
 - (void)viewDidLoad {
     [super viewDidLoad];
 	

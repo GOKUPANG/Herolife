@@ -33,7 +33,6 @@ static HRUser *curLoginUser;
 
 +(void)doLogin: (NSDictionary *)loginData{
 	
-	DDLogError(@"%@", loginData);
 	
 	curLoginUser = [HRUser userFromJSONResponse:loginData];
 	//save to userdefaults

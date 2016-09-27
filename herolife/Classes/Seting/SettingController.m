@@ -13,6 +13,7 @@
 #import "BackPicSetController.h"
 #import "LoginController.h"
 #import "HerolifeViewController.h"
+#import "HRNavigationViewController.h"
 
 @interface SettingController ()<UITableViewDelegate, UITableViewDataSource, UIAlertViewDelegate>
 /** 顶部条 */
@@ -117,17 +118,28 @@ static NSString *cellID = @"cellID";
 	
 	//头像
 	UIImageView *iconImage = [[UIImageView alloc] init];
-	
-	NSString *iconString = [kUserDefault objectForKey:kDefaultsIconURL];
+	NSString *iconString;
+	//QQ头像
+	iconString = [kUserDefault objectForKey:kDefaultsQQIconURL];
 	if (iconString.length > 0) {
+		
 		NSURL *url = [NSURL URLWithString:iconString];
 		[iconImage sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"头像占位图片.jpg"]];
-		
 	}else
 	{
-		iconImage.image = [UIImage imageNamed:@"头像占位图片.jpg"];
+		iconString = [kUserDefault objectForKey:kDefaultsIconURL];
+		if (iconString.length > 0) {
+			NSURL *url = [NSURL URLWithString:iconString];
+			[iconImage sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"头像占位图片.jpg"]];
+			
+		}else
+		{
+			iconImage.image = [UIImage imageNamed:@"头像占位图片.jpg"];
+			
+		}
 		
 	}
+	
 	
 	self.iconImage.layer.cornerRadius = self.iconImage.hr_height *0.5;
 	self.iconImage.layer.borderWidth = HRCommonScreenW * 20;
@@ -219,6 +231,12 @@ static NSString *cellID = @"cellID";
 #pragma mark - 头像点击
 -(void)iconClick
 {
+	
+	//qq用户名称
+	NSString *qqUserNmae = [kUserDefault valueForKey:kNSUserDefaultsNickname];
+	if (qqUserNmae.length > 0) {
+		return;
+	}
     AccountManagementController *AMC = [AccountManagementController new];
     [self.navigationController pushViewController:AMC animated:YES];
 
@@ -449,14 +467,21 @@ static NSString *cellID = @"cellID";
 	
 	//弹出登陆界面
 	
-	LoginController *login = [[LoginController alloc] init];
-//	[self.navigationController pushViewController:login animated:YES];
-    [self.tabBarController presentViewController:login animated:YES completion:nil];
+    
+    
+    LoginController *loginVC = [[LoginController alloc] init];
+    
+    
+    HRNavigationViewController *nav = [[HRNavigationViewController alloc] initWithRootViewController:loginVC];
+    
+    [self.tabBarController presentViewController:nav animated:YES completion:nil];
+    
 	
-	//发送注销请求
+	//发送注销请求kDefaultsQQIconURL
 	[HRServicesManager logout:nil];
 	[self IsTabBarHidden:YES];
 	[kUserDefault setObject:@"" forKey:kNSUserDefaultsNickname];
+	[kUserDefault setObject:@"" forKey:kDefaultsQQIconURL];
 }
 #pragma mark - 隐藏底部条
 - (void)IsTabBarHidden:(BOOL)hidden

@@ -85,6 +85,8 @@
 #define kDefaultsUid @"kDefaultsUid"
 /** 保存的用户头像URL  */
 #define kDefaultsIconURL @"kDefaultsIconURL"
+/** 保存的QQ用户头像URL  */
+#define kDefaultsQQIconURL @"kDefaultsQQIconURL"
 /** 保存的用户email  */
 #define kDefaultsUserMail @"kDefaultsUserMail"
 

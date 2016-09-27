@@ -36,6 +36,8 @@
 @property(nonatomic,strong)UIImageView *backImgView;
 /** 保存记录查询数据 */
 @property(nonatomic, strong) NSMutableArray *queryArray;
+/** 表头 view */
+@property(nonatomic, weak) UIView *headerView;
 
 
 
@@ -352,16 +354,22 @@ static int indexCount = 0;
 #pragma mark -tableView UI 设置
 -(void)makeTableViewUI
 {
-   
-    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 64+(75.0/667.0)*self.view.bounds.size.height, self.view.bounds.size.width, 500) style:UITableViewStylePlain];
+	
+	UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 64+(75.0/667.0)*self.view.bounds.size.height, UIScreenW, 50)];
+	headerView.backgroundColor = [UIColor clearColor];
+	self.headerView = headerView;
+	[self.view addSubview:headerView];
+	
+    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 64+(75.0/667.0)*self.view.bounds.size.height + 50, self.view.bounds.size.width, 500) style:UITableViewStylePlain];
     
     _tableView.delegate = self;
     _tableView.dataSource = self;
     
     _tableView.backgroundColor = [UIColor clearColor];
-    
-    _tableView.tableHeaderView = [UIView new];
-    
+	
+//    _tableView.tableHeaderView = headerView;
+	
+	[self setUpHeardView];
     _tableView.rowHeight = 50 ;
     
     //隐藏滚动条
@@ -411,19 +419,79 @@ static int indexCount = 0;
 }
 
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+
+-(void)setUpHeardView
+{
+	
+//	self.separatorInset = UIEdgeInsetsMake(0, 10, 0, 10);
+	UILabel *timeLabel = [[UILabel alloc]init];
+	
+	UILabel *userNameLabel = [[UILabel alloc]init];
+	
+	UILabel *recordLabel = [[UILabel alloc]init];
+	
+	[self.headerView addSubview:timeLabel];
+	[self.headerView addSubview:userNameLabel];
+	[self.headerView addSubview:recordLabel];
+	
+	//布局
+	
+	/**
+	 时间      90
+	 用户名    150
+	 开锁记录  100
+	 */
+	
+ 
+	//用户名
+ timeLabel.sd_layout
+	.leftSpaceToView(self.headerView,15.0/375.0 *self.headerView.frame.size.width)
+	.widthIs(110.0/375.0 * self.headerView.frame.size.width)
+	.bottomSpaceToView(self.headerView,10.0)
+	.heightIs(20.0);
+	timeLabel.text = @"用户名";
+	timeLabel.font = [UIFont systemFontOfSize:17];
+	timeLabel.textColor = [UIColor whiteColor];
+	// _timeLabel.backgroundColor = [UIColor greenColor];
+	
+	
+	// 时间
+	recordLabel.sd_layout
+	.rightSpaceToView(self.headerView,15.0)
+	.bottomEqualToView(timeLabel)
+	.heightIs(20.0)
+	.widthIs(120.0/375.0 * self.headerView.frame.size.width + 40);
+	
+	// NSLog(@"%f",120.0/375.0 *self.contentView.frame.size.width);
+	
+	
+	recordLabel.text = @"时间";
+	recordLabel.font = [UIFont systemFontOfSize:17];
+	recordLabel.textColor = [UIColor whiteColor];
+	
+	recordLabel.textAlignment = NSTextAlignmentCenter;
+	
+	//  _recordLabel.backgroundColor = [UIColor greenColor];
+	
+	//操作
+	userNameLabel.sd_layout
+	.topEqualToView(timeLabel)
+	.bottomEqualToView(timeLabel)
+	.leftSpaceToView(timeLabel,0)
+	.rightSpaceToView(recordLabel,0);
+	
+	userNameLabel.text = @"操作";
+	userNameLabel.font = [UIFont systemFontOfSize:17];
+	userNameLabel.textColor = [UIColor whiteColor];
+	
+	userNameLabel.textAlignment = NSTextAlignmentCenter;
+	
+	
+	//_userNameLabel.backgroundColor = [UIColor blueColor];
+	
+	
+	
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

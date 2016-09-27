@@ -45,6 +45,39 @@ static NSTimeInterval const dimissTimer = 2;
 
 @implementation RegisterViewController
 
+
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    NSInteger  PicNum =   [[NSUserDefaults standardUserDefaults] integerForKey:@"PicNum"];
+    
+    if (!PicNum) {
+        
+        self.backgroundImage.image = [UIImage imageNamed:@"Snip20160825_3"];
+    }
+    
+    
+    else if (PicNum == -1)
+    {
+        NSString *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES).lastObject;
+        path = [path stringByAppendingPathComponent:@"image.png"];
+        
+        self.backgroundImage.image =[UIImage imageWithContentsOfFile:path];
+    }
+    
+    else{
+        
+        NSString * imgName = [NSString stringWithFormat:@"%ld.jpg",PicNum];
+        
+        self.backgroundImage.image =[UIImage imageNamed:imgName];
+    }
+    
+    
+    
+    NSLog(@"设置页面ViewWillappear");
+
+}
+
 - (void)viewDidLoad {
 	[super viewDidLoad];
 	
@@ -66,6 +99,14 @@ static NSTimeInterval const dimissTimer = 2;
 	[self.view endEditing:YES];
 	
 }
+
+
+-(void)leftButtonClick
+{
+    [self.navigationController popViewControllerAnimated:YES];
+    
+}
+
 - (void)setupViews
 {
 	
@@ -94,6 +135,11 @@ static NSTimeInterval const dimissTimer = 2;
 	navView.titleLabel.text = @"注册";
 	[navView.leftButton setImage:[UIImage imageNamed:@"返回号"] forState:UIControlStateNormal];
 	navView.backgroundColor = [UIColor colorWithRed:255/255.0 green:255/255.0 blue:255/255.0 alpha:25 /255.0];
+    
+    [navView.leftButton addTarget:self action:@selector(leftButtonClick) forControlEvents:UIControlEventTouchUpInside];
+
+    
+    
 	[self.view addSubview:navView];
 	self.navView = navView;
 	
@@ -343,20 +389,34 @@ static NSTimeInterval const dimissTimer = 2;
 		if (error) {
 			
 			DDLogDebug(@"注册失败error %@", error);
-			[self showRegisterError:error];
+			[self showRegisterError:error openId:self.userNameField.text muString:self.passwdConfirmField.text];
 		}
 	}];
 
 }
+
 #pragma mark - 错误提示
-- (void)showRegisterError:(NSError *)error
+- (void)showRegisterError:(NSError *)error openId:(NSString *)openId muString:(NSString *)muString
 {
 	[SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
 	if (error == nil) {
 		return;
 	}
 	NSDictionary *dict = error.userInfo;
-	NSString * code = [dict valueForKeyPath:@"statusCode"];
+	NSString * code = [NSString stringWithFormat:@"%@",[dict valueForKeyPath:@"statusCode"]];
+	if ([code isEqualToString:@"200"]) {
+		
+		
+		
+		[SVProgressHUD showSuccessWithStatus:@"注册成功!"];
+		
+		NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+		dict[@"user"] = self.userNameField.text;
+		dict[@"pass"] = self.passwdConfirmField.text;
+		[[NSNotificationCenter defaultCenter] postNotificationName:kNotificationRegister object:nil userInfo:dict];
+		[self.navigationController popViewControllerAnimated:YES];
+		return;
+	}
 	NSString *str = [dict valueForKeyPath:@"body"];
 	if (str) {
 		DDLogInfo(@"str|%@|", str);
@@ -385,7 +445,7 @@ static NSTimeInterval const dimissTimer = 2;
 		NSString *description = [NSString stringWithFormat:@"%@  %@", code,str];
 		DDLogInfo(@"description|%@|", description);
 		[SVProgressHUD showErrorWithStatus:description  ];
-		dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(dimissTimer * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+		dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(10 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
 			[SVProgressHUD dismiss];
 		});
 	}else

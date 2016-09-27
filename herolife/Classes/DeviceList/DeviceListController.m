@@ -148,6 +148,8 @@ NSInteger const timerDuration = 60.0;
 		label.textAlignment = NSTextAlignmentCenter;
 		label.font = [UIFont systemFontOfSize:17];
 		label.textColor = [UIColor whiteColor];
+		label.layer.cornerRadius = 5;
+		label.layer.masksToBounds = YES;
 //		label.backgroundColor = [UIColor themeColor];
 		
 		label.backgroundColor = [UIColor blackColor];
@@ -397,7 +399,7 @@ static BOOL isShowOverMenu = NO;
     
     self.backImgView = backgroundImage;
     
-	[self.view addSubview:backgroundImage];
+	[self.view addSubview:self.backImgView];
 	
 	
 	UIView *view = [[UIView alloc] initWithFrame:[UIScreen mainScreen].bounds];
@@ -623,28 +625,40 @@ static BOOL isShowOverMenu = NO;
 					   doneBlock:^(NSInteger selectedIndex) {
 						   btn.selected = NO;
 						   self.rightImageView.layer.transform = CATransform3DMakeRotation(M_PI, 0, 0, 1);
-						   
-						   //显示选择的title
-						   DeviceListModel *home = self.homeArray[selectedIndex];
-						   //显示电量
-						   
-						   //定时发送选中的门锁 获取设备状态
-						   self.currentStateModel = self.homeArray[selectedIndex];
-						   self.listLabel.text = home.title;
-						   
-						   //修改921
-						   //按钮图片
-						   if ([self.currentStateModel.state isEqualToString:@"1"]) {
-							   self.listImageView.image = [UIImage imageNamed:@"空心在线"];
+						   if (self.homeArray.count == 1) {//做判断点击某一行时让UICOllection旋转到对应的位置
+							   
+							   DeviceListModel *home = self.homeArray.firstObject;
+							   self.currentStateModel = home;
+							   [self setUpListButtonContent];
+							   [self.collectionView setContentOffset:CGPointMake(1 * HRCommonScreenW *345 *2, 0) animated:YES];
+						   }else if (self.homeArray.count == 2) {//做判断点击某一行时让UICOllection旋转到对应的位置
+							   if (selectedIndex == 0) {
+								   
+								   DeviceListModel *home = self.homeArray.firstObject;
+								   self.currentStateModel = home;
+								   [self setUpListButtonContent];
+								   [self.collectionView setContentOffset:CGPointMake(1 * HRCommonScreenW *345 *2, 0) animated:YES];
+							   }else if (selectedIndex == 1) {
+								   
+								   DeviceListModel *home = self.homeArray.lastObject;
+								   self.currentStateModel = home;
+								   [self setUpListButtonContent];
+								   [self.collectionView setContentOffset:CGPointMake(2 * HRCommonScreenW *345 *2, 0) animated:YES];
+							   }
 						   }else
 						   {
+							   //显示选择的title
+							   DeviceListModel *home = self.homeArray[selectedIndex];
+   
+							   self.currentStateModel = home;
+							   [self setUpListButtonContent];
 							   
-							   self.listImageView.image = [UIImage imageNamed:@"空心离线"];
+							   [self.collectionView setContentOffset:CGPointMake(selectedIndex * HRCommonScreenW *345 *2, 0) animated:YES];
 						   }
+						   
 						   [self addTimer];
 						   
 						   [self.tableView reloadData];
-						   [self.collectionView setContentOffset:CGPointMake(selectedIndex * HRCommonScreenW *345 *2, 0) animated:YES];
 						   NSLog(@"done block. do something. selectedIndex : %ld", (long)selectedIndex);
 						   
 					   } dismissBlock:^{
@@ -653,6 +667,7 @@ static BOOL isShowOverMenu = NO;
 						   NSLog(@"user canceled. do nothing.");
 						   
 					   }];
+	
 	
 }
 #pragma mark - tableview代理
@@ -921,7 +936,7 @@ static BOOL isShowOverMenu = NO;
 {
 	
 	CGFloat totalconsizeW = HRCommonScreenW *345 *2 ;
-	if (scrollView.contentOffset.x < 0.001) {
+	if (scrollView.contentOffset.x < 0.0) {
 		return;
 	}
 	int index = scrollView.contentOffset.x / totalconsizeW;
@@ -932,14 +947,54 @@ static BOOL isShowOverMenu = NO;
 	}
 	DDLogInfo(@"index%d", index);
 	DDLogInfo(@"yu%d", yu);
+//	NSArray *arr = @[@"22", @"22"];
+	if (self.homeArray.count == 1) {
+		
+		DeviceListModel *home = self.homeArray.firstObject;
+		self.currentStateModel = home;
+		[self setUpListButtonContent];
+		[self.collectionView setContentOffset:CGPointMake(1 * HRCommonScreenW *345 *2, 0) animated:YES];
+	}else if (self.homeArray.count == 2) {
+		
+		if (index == 0) {
+			
+			DeviceListModel *home = self.homeArray.firstObject;
+			self.currentStateModel = home;
+			[self setUpListButtonContent];
+			[self.collectionView setContentOffset:CGPointMake((1) * HRCommonScreenW *345 *2, 0) animated:YES];
+		}else if (index == 1) {
+			
+			DeviceListModel *home = self.homeArray.firstObject;
+			self.currentStateModel = home;
+			[self setUpListButtonContent];
+			[self.collectionView setContentOffset:CGPointMake((1) * HRCommonScreenW *345 *2, 0) animated:YES];
+		}else if (index == 2) {
+			
+			DeviceListModel *home = self.homeArray.lastObject;
+			self.currentStateModel = home;
+			[self setUpListButtonContent];
+			[self.collectionView setContentOffset:CGPointMake((2) * HRCommonScreenW *345 *2, 0) animated:YES];
+		}
+		
+	}else
+	{
+		//显示选择的title
+		DeviceListModel *home = self.homeArray[index];
+		
+		self.currentStateModel = home;
+		[self setUpListButtonContent];
+		[self.collectionView setContentOffset:CGPointMake(index * HRCommonScreenW *345 *2, 0) animated:YES];
+		
+	}
 	
-	//显示选择的title
-	DeviceListModel *home = self.homeArray[index];
-	self.listLabel.text = home.title;
+	[self.tableView reloadData];
+	[self addTimer];
 	
-	//定时发送选中的门锁 获取设备状态
-	self.currentStateModel = self.homeArray[index];
-	//修改921
+}
+
+- (void)setUpListButtonContent
+{
+	self.listLabel.text = self.currentStateModel.title;
 	//按钮图片
 	if ([self.currentStateModel.state isEqualToString:@"1"]) {
 		self.listImageView.image = [UIImage imageNamed:@"空心在线"];
@@ -949,12 +1004,7 @@ static BOOL isShowOverMenu = NO;
 		self.listImageView.image = [UIImage imageNamed:@"空心离线"];
 	}
 	
-	[self.tableView reloadData];
-	[self addTimer];
-	
-	[self.collectionView setContentOffset:CGPointMake(index * HRCommonScreenW *345 *2, 0) animated:YES];
 }
-
 #pragma mark - 建立socket连接 并组帧 发送请求数据
 /// 建立socket连接 并组帧 发送请求数据
 - (void)postTokenWithTCPSocket
@@ -1026,6 +1076,7 @@ static BOOL isShowOverMenu = NO;
 		[self.eptTable.mj_header endRefreshing];
 		if (error) {
 			[ErrorCodeManager showError:error];
+			NSLog(@"HRAPI_LockInFo_URL-error--%@", error);
 			return ;
 		}
 		
@@ -1053,11 +1104,10 @@ static BOOL isShowOverMenu = NO;
 			[weakSelf.homeArray addObject:home];
 		}
 		}
-		
+//		NSArray *arr = @[@"22", @"22"];
 		//显示占位图片
 		[self setUp3DEptPictureWithHomeArray:weakSelf.homeArray];
 		
-		[self.collectionView setContentOffset:CGPointMake(1 * HRCommonScreenW *345 *2, 0) animated:NO];
 		weakSelf.currentStateModel = weakSelf.homeArray.firstObject;
 		weakSelf.listLabel.text = weakSelf.currentStateModel.title;
 		//修改921
@@ -1095,6 +1145,7 @@ static BOOL isShowOverMenu = NO;
 		[self.photoModelArray addObject:
 		 [PhotoModel modelWithImageNamed:@"锁-透明"
 							 description:@""]];
+		[self.collectionView setContentOffset:CGPointMake(1 * HRCommonScreenW *345 *2, 0) animated:NO];
 	}else if (homeArray.count == 2) {//如果只有两个设备 就显示1张占位图片
 		
 		[self.photoModelArray addObject:
@@ -1106,6 +1157,8 @@ static BOOL isShowOverMenu = NO;
 		[self.photoModelArray addObject:
 		 [PhotoModel modelWithImageNamed:@"锁虚线"
 							 description:@""]];
+		
+		[self.collectionView setContentOffset:CGPointMake(1 * HRCommonScreenW *345 *2, 0) animated:NO];
 	}else
 	{
 		for (DeviceListModel *home in homeArray) {
@@ -1273,6 +1326,7 @@ static BOOL isShowOverMenu = NO;
 		}
 		
 		//显示占位图片
+//		NSArray *arr = @[@"22", @"22"];
 		[self setUp3DEptPictureWithHomeArray:weakSelf.homeArray];
 		[weakSelf.tableView reloadData];
 		[weakSelf.collectionView reloadData];
@@ -1370,7 +1424,6 @@ static BOOL isShowOverMenu = NO;
 		//判断数组的个数进行传值
 		if (self.homeArray.count == 1) {//当homeArray为1时
 			if (indexPath.row == 1) {
-				
 				self.showLockModel = self.homeArray.firstObject;
 				[self showSheet];
 			}
@@ -1424,7 +1477,7 @@ static BOOL isShowOverMenu = NO;
 	}
 	
 	//自己创建的设备
-	[SRActionSheet sr_showActionSheetViewWithTitle:self.currentStateModel.title cancelButtonTitle:@"取消" destructiveButtonTitle:@"" otherButtonTitles:@[@"删除设备", @"修改设备信息"] selectSheetBlock:^(SRActionSheet *actionSheetView, NSInteger index) {
+	[SRActionSheet sr_showActionSheetViewWithTitle:self.showLockModel.title cancelButtonTitle:@"取消" destructiveButtonTitle:@"" otherButtonTitles:@[@"删除设备", @"修改设备信息"] selectSheetBlock:^(SRActionSheet *actionSheetView, NSInteger index) {
 		
 		if (index == 0) {
 			

@@ -24,13 +24,13 @@
 	
 	manager.responseSerializer.acceptableContentTypes = [manager.responseSerializer.acceptableContentTypes setByAddingObject:@"text/plain"];
 	
+	
 	return manager;
 }
 
 + (instancetype)hrPostManager
 {
 	AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-	manager.responseSerializer = [AFHTTPResponseSerializer serializer];
 	
 	manager.responseSerializer = [AFNJSONResponseSerializerWithData serializer];
 	[manager.requestSerializer setValue:[self generateUserAgent] forHTTPHeaderField:@"User-Agent"];

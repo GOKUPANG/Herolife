@@ -25,11 +25,27 @@
 
 /** 定时器 */
 @property (nonatomic, weak) NSTimer *timer;
+
+/** 背景图片*/
+
+@property(nonatomic,strong)UIImageView *backImgView;
+
+
+
+
+
 @end
 /** 停留时间 */
 static int const HRTimeDuration = 601;
 
 @implementation GoToSetUpController
+
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    [self SetMyBackPic];
+
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -46,11 +62,47 @@ static int const HRTimeDuration = 601;
 	//haibo 隐藏底部条
 	[self IsTabBarHidden:YES];
 }
+
+
+-(void)SetMyBackPic
+{
+    NSInteger  PicNum =   [[NSUserDefaults standardUserDefaults] integerForKey:@"PicNum"];
+    
+    if (!PicNum) {
+        
+        
+        
+        self.backImgView.image = [UIImage imageNamed:@"Snip20160825_3"];
+    }
+    
+    
+    else if (PicNum == -1)
+    {
+        NSString *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES).lastObject;
+        path = [path stringByAppendingPathComponent:@"image.png"];
+        
+        self.backImgView.image =[UIImage imageWithContentsOfFile:path];
+    }
+    
+    else{
+        
+        NSString * imgName = [NSString stringWithFormat:@"%ld.jpg",PicNum];
+        
+        self.backImgView.image =[UIImage imageNamed:imgName];
+    }
+    
+
+}
+
+
 - (void)viewDidAppear:(BOOL)animated
 {
 	[super viewDidAppear:animated];
 	
 	self.ConfirmBtn.enabled = YES;
+    
+    
+    
 }
 
 -(void)makeUI
@@ -62,7 +114,10 @@ static int const HRTimeDuration = 601;
 	//背景图片
 	UIImageView *backgroundImage = [[UIImageView alloc] initWithFrame:[UIScreen mainScreen].bounds];
 	backgroundImage.image = [UIImage imageNamed:@"Snip20160825_3"];
-	[self.view addSubview:backgroundImage];
+    
+    self.backImgView = backgroundImage;
+    
+	[self.view addSubview:self.backImgView];
 	
 	
 	UIView *view = [[UIView alloc] initWithFrame:[UIScreen mainScreen].bounds];

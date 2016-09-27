@@ -360,7 +360,35 @@
     
     headImgView.layer.cornerRadius = 30 *HRMyScreenH;
     headImgView.layer.masksToBounds = YES;
-    headImgView.image = [UIImage imageNamed:@"4.jpg"];
+  //  headImgView.image = [UIImage imageNamed:@"4.jpg"];
+    
+    
+    
+    
+    NSString *iconString;
+    //QQ头像
+    iconString = [kUserDefault objectForKey:kDefaultsQQIconURL];
+    if (iconString.length > 0) {
+        
+        NSURL *url = [NSURL URLWithString:iconString];
+        [headImgView sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"头像占位图片.jpg"]];
+    }else
+    {
+        iconString = [kUserDefault objectForKey:kDefaultsIconURL];
+        if (iconString.length > 0) {
+            NSURL *url = [NSURL URLWithString:iconString];
+            [headImgView sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"头像占位图片.jpg"]];
+            
+        }else
+        {
+            headImgView.image = [UIImage imageNamed:@"头像占位图片.jpg"];
+            
+        }
+        
+    }
+    
+    
+    
     
     /****************************** 头像名字Label ******************************/
     
@@ -841,7 +869,6 @@
     
     [SaveBtn setTitle:@"保存" forState:UIControlStateNormal];
     
-   // [SaveBtn setba]
     
     [SaveBtn setBackgroundImage:[self imageWithColor:[UIColor colorWithHex:0xc6f0ff alpha:0.7]] forState:UIControlStateHighlighted];
     
@@ -1364,6 +1391,28 @@
 - (void) customAlertView:(YXCustomAlertView *) customAlertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if (buttonIndex==0) {
+        
+        
+        if (customAlertView == self.KidnapAlertView) {
+            
+            UISwitch * msw1 =  [self.view viewWithTag:5];
+            
+            msw1.on = NO;
+            
+            
+        }
+        
+        
+        else{
+            UISwitch *msw2 =   [self.view viewWithTag:6];
+            
+            msw2.on = NO;
+            
+            
+        }
+        
+        
+
     
     
     [UIView animateWithDuration:0.5 animations:^{

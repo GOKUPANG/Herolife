@@ -7,8 +7,11 @@
 //
 
 #define ShareSDKAppId @"164558e46c000"
-#define QQSDKAppId @"1105629306"
-#define QQSDKAppKey @"Ig2gYUcepC3rE9NH"
+//#define QQSDKAppId @"1105629306"
+//#define QQSDKAppKey @"Ig2gYUcepC3rE9NH"
+
+#define QQSDKAppId @"101350673"
+#define QQSDKAppKey @"1aad5325072a03bb9a70033c0ca70cb8"
 
 //#define QQSDKAppId @"1105687414"
 //#define QQSDKAppKey @"PsuNc7Du8MrvTW9H"
@@ -360,9 +363,6 @@ static BOOL isOverTime = NO;
 	[[SDWebImageManager sharedManager].imageCache clearMemory];
 	[[SDWebImageManager sharedManager] cancelAll];
 	
-	//清除QQ用户名
-	[kNSUserDefaults setObject:@"" forKey:kNSUserDefaultsNickname];
-	[kNSUserDefaults synchronize];
 }
 
 #pragma mark ***************************** Socket处理相关 ***************************
