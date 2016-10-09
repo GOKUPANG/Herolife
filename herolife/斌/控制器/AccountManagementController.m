@@ -97,7 +97,7 @@
         
         
         
-        self.backImgView.image = [UIImage imageNamed:@"Snip20160825_3"];
+        self.backImgView.image = [UIImage imageNamed:Defalt_BackPic];
     }
     
     
@@ -162,7 +162,7 @@
     
     //背景图片
     UIImageView *backgroundImage = [[UIImageView alloc] initWithFrame:[UIScreen mainScreen].bounds];
-    backgroundImage.image = [UIImage imageNamed:@"Snip20160825_3"];
+    backgroundImage.image = [UIImage imageNamed:Defalt_BackPic];
     self.backImgView = backgroundImage;
     
     [self.view addSubview:self.backImgView];
@@ -287,7 +287,11 @@
          dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableLeaves error:nil];
          
      }
-        [SVProgressHUD showSuccessWithStatus:@"修改密码成功"];
+       // [SVProgressHUD showSuccessWithStatus:@"修改密码成功"];
+        [SVProgressTool hr_showSuccessWithStatus:@"修改密码成功"];
+        
+        [self.navigationController popViewControllerAnimated:YES];
+
         
         //设置密码保存
         [kUserDefault setObject:dict[@"pass2"] forKey:kDefaultsPassWord];

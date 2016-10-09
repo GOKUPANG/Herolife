@@ -12,7 +12,11 @@
 
 @interface DoorLockRecordConroller : UIViewController
 
-/** <#name#> */
+/** name */
 @property(nonatomic, strong) DeviceListModel *listModel;
+
+/** 授权用户用户名 */
+@property(nonatomic,copy)NSString * AuthorUserName ;
+
 
 @end

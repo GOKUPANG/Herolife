@@ -13,5 +13,11 @@
 //** 上个界面传过来的模型 */
 @property(nonatomic, strong) DeviceListModel * listModel;
 
+/** 授权给我的用户名*/
+
+@property(nonatomic,copy)NSString * AuthorUserName;
+
+
+
 
 @end

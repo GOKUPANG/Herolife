@@ -86,7 +86,7 @@ static NSString *cellID = @"cellID";
 {
 	//背景图片
 	UIImageView *backgroundImage = [[UIImageView alloc] initWithFrame:[UIScreen mainScreen].bounds];
-	backgroundImage.image = [UIImage imageNamed:@"Snip20160825_3"];
+	backgroundImage.image = [UIImage imageNamed:Defalt_BackPic];
 	[self.view addSubview:backgroundImage];
 	
 	UIView *view = [[UIView alloc] initWithFrame:[UIScreen mainScreen].bounds];

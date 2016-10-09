@@ -3,8 +3,13 @@
 #ifndef Constant_h
 #define Constant_h
 
+
+
 /** 导航栏高度 */
 UIKIT_EXTERN CGFloat const HRNavH;
+
+
+#define Defalt_BackPic @"1.jpg"
 
 
 
@@ -99,7 +104,11 @@ UIKIT_EXTERN CGFloat const HRNavH;
 /// 注册小睿POST请求URL
 #define HRAPI_XiaoRuiRegister_URL @"http://www.gzhuarui.cn/?q=huaruiapi/user"
 /// 修改密码PUT请求URL
-#define HRAPI_XiaoRuiModifyPassword_URL @"http://www.gzhuarui.cn/?q=huaruiapi/user/"
+//#define HRAPI_XiaoRuiModifyPassword_URL @"http://www.gzhuarui.cn/?q=huaruiapi/user/"
+
+
+//斌修改 正式发布时要把接口换回去
+#define HRAPI_XiaoRuiModifyPassword_URL @"http://183.63.118.58:9885/hrctest/?q=huaruiapi/user/"
 
 /// 获取小睿红外空调信息GET请求URL
 #define HRAPI_XiaoRuiIRAC_URL @"http://www.gzhuarui.cn/?q=huaruiapi/xiaorui-irac"

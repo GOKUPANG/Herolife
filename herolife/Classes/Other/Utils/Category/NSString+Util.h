@@ -39,6 +39,8 @@
 
 /// 添加授权给家人 的锁
 + (NSString *)stringWithSocketAddFamilyLockWithDst:(NSMutableDictionary *)dst lockUUID:(NSString *)lockUUID admin:(NSString *)admin person:(NSArray *)person permit:(NSArray *)permit;
+#pragma mark - 取消别人授权给我的
++ (NSString *)stringWithSocketDelegateFamilyLockWithDstUuid:(NSString *)dstUuid lockUUID:(NSString *)lockUUID did:(NSString *)did devUser:(NSString *)devUser;
 #pragma mark - 删除授权给家人 的锁
 + (NSString *)stringWithSocketDelegateFamilyLockWithDstUuid:(NSString *)dstUuid lockUUID:(NSString *)lockUUID did:(NSString *)did;
 #pragma mark - 修改授权家人授权 的锁
@@ -66,4 +68,11 @@
  */
 + (NSString *)hr_stringWithBase64;
 + (NSString *)hr_stringWithBase64String:(NSString *)baseString;
+
+/** 斌添加 
+ 开锁加密方法
+ */
++(NSString *)hr_openLock_base64String:(NSString*)baseString
+                           dynamicStr:(NSString*)dymicString;
+
 @end

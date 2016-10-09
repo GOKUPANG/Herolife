@@ -35,7 +35,12 @@
 		AA029EA01D7D75B500EFF91C /* HWPopTool.m in Sources */ = {isa = PBXBuildFile; fileRef = AA029E9F1D7D75B500EFF91C /* HWPopTool.m */; };
 		AA2C52751D91574100D0BD3D /* NSString+PushSet.m in Sources */ = {isa = PBXBuildFile; fileRef = AA2C52741D91574100D0BD3D /* NSString+PushSet.m */; };
 		AA2C52781D91578D00D0BD3D /* PushSettingController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA2C52771D91578D00D0BD3D /* PushSettingController.m */; };
-		AA2C527E1D9159CA00D0BD3D /* DeviceListController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA2C527C1D9159CA00D0BD3D /* DeviceListController.m */; };
+		AA510E571D9BD94300D9FD67 /* OpenLockController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA510E561D9BD94300D9FD67 /* OpenLockController.m */; };
+		AA510E5E1D9CB4B700D9FD67 /* NSString+Util.m in Sources */ = {isa = PBXBuildFile; fileRef = AA510E5D1D9CB4B700D9FD67 /* NSString+Util.m */; };
+		AAA49AE81D9D0B5A00D4D248 /* EnterPSWController.m in Sources */ = {isa = PBXBuildFile; fileRef = AAA49AE71D9D0B5A00D4D248 /* EnterPSWController.m */; };
+		AAA49AEA1D9D0BBD00D4D248 /* SettingController.m in Sources */ = {isa = PBXBuildFile; fileRef = AAA49AE91D9D0BBD00D4D248 /* SettingController.m */; };
+		AAA49AED1D9D0BFE00D4D248 /* MissWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AAA49AEC1D9D0BFE00D4D248 /* MissWebViewController.m */; };
+		AAA49AEF1D9D0C0700D4D248 /* MissWebViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AAA49AEE1D9D0C0600D4D248 /* MissWebViewController.xib */; };
 		AAA8A9B71D8CE9D900ABA020 /* arrow_down@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = AAA8A9B01D8CE9D900ABA020 /* arrow_down@2x.png */; };
 		AAA8A9B81D8CE9D900ABA020 /* CustomerInfoSectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = AAA8A9B21D8CE9D900ABA020 /* CustomerInfoSectionView.m */; };
 		AAA8A9BA1D8CE9D900ABA020 /* ViewOfCustomerTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AAA8A9B61D8CE9D900ABA020 /* ViewOfCustomerTableViewCell.m */; };
@@ -51,9 +56,32 @@
 		AAA8A9DC1D8CEB4100ABA020 /* 未选择@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = AAA8A9D41D8CEB4100ABA020 /* 未选择@3x.png */; };
 		AAFFDDF31D800EFC005669BA /* SRActionSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = AAFFDDF21D800EFC005669BA /* SRActionSheet.m */; };
 		AAFFDE431D82CBA0005669BA /* NSString+DoorLock.m in Sources */ = {isa = PBXBuildFile; fileRef = AAFFDE421D82CBA0005669BA /* NSString+DoorLock.m */; };
-		AAFFDE461D82CBE8005669BA /* OpenLockController.m in Sources */ = {isa = PBXBuildFile; fileRef = AAFFDE451D82CBE8005669BA /* OpenLockController.m */; };
 		D1007CE01D8694280079D3DD /* DeviceAutherModel.m in Sources */ = {isa = PBXBuildFile; fileRef = D1007CDF1D8694280079D3DD /* DeviceAutherModel.m */; };
-		D17076741D94D6AD0027C46B /* SettingController.m in Sources */ = {isa = PBXBuildFile; fileRef = D17076731D94D6AD0027C46B /* SettingController.m */; };
+		D1352D641D9E0ECB003A83AB /* AddNewDeviceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1352D4A1D9E0ECB003A83AB /* AddNewDeviceViewController.m */; };
+		D1352D651D9E0ECB003A83AB /* backWhite@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D1352D4B1D9E0ECB003A83AB /* backWhite@2x.png */; };
+		D1352D661D9E0ECB003A83AB /* CreateXiaoRui.m in Sources */ = {isa = PBXBuildFile; fileRef = D1352D4D1D9E0ECB003A83AB /* CreateXiaoRui.m */; };
+		D1352D671D9E0ECB003A83AB /* CreateXiaoRui.xib in Resources */ = {isa = PBXBuildFile; fileRef = D1352D4E1D9E0ECB003A83AB /* CreateXiaoRui.xib */; };
+		D1352D681D9E0ECB003A83AB /* Default-568h@3x-1.png in Resources */ = {isa = PBXBuildFile; fileRef = D1352D4F1D9E0ECB003A83AB /* Default-568h@3x-1.png */; };
+		D1352D691D9E0ECB003A83AB /* HRQrButton.m in Sources */ = {isa = PBXBuildFile; fileRef = D1352D511D9E0ECB003A83AB /* HRQrButton.m */; };
+		D1352D6A1D9E0ECB003A83AB /* icon_qr.png in Resources */ = {isa = PBXBuildFile; fileRef = D1352D521D9E0ECB003A83AB /* icon_qr.png */; };
+		D1352D6B1D9E0ECB003A83AB /* instructions.rtf in Resources */ = {isa = PBXBuildFile; fileRef = D1352D531D9E0ECB003A83AB /* instructions.rtf */; };
+		D1352D6C1D9E0ECB003A83AB /* ManualCreateXiaoRui.m in Sources */ = {isa = PBXBuildFile; fileRef = D1352D551D9E0ECB003A83AB /* ManualCreateXiaoRui.m */; };
+		D1352D6D1D9E0ECB003A83AB /* ManualCreateXiaoRui.xib in Resources */ = {isa = PBXBuildFile; fileRef = D1352D561D9E0ECB003A83AB /* ManualCreateXiaoRui.xib */; };
+		D1352D6E1D9E0ECB003A83AB /* QRCodeController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1352D581D9E0ECB003A83AB /* QRCodeController.m */; };
+		D1352D6F1D9E0ECB003A83AB /* QRViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1352D5A1D9E0ECB003A83AB /* QRViewController.m */; };
+		D1352D701D9E0ECB003A83AB /* Scanning frame@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D1352D5B1D9E0ECB003A83AB /* Scanning frame@2x.png */; };
+		D1352D711D9E0ECB003A83AB /* Scanning line@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D1352D5C1D9E0ECB003A83AB /* Scanning line@2x.png */; };
+		D1352D721D9E0ECB003A83AB /* SearchDeviceView.m in Sources */ = {isa = PBXBuildFile; fileRef = D1352D5E1D9E0ECB003A83AB /* SearchDeviceView.m */; };
+		D1352D731D9E0ECB003A83AB /* SearchDeviceView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D1352D5F1D9E0ECB003A83AB /* SearchDeviceView.xib */; };
+		D1352D741D9E0ECB003A83AB /* whiteBack@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D1352D601D9E0ECB003A83AB /* whiteBack@2x.png */; };
+		D1352D751D9E0ECB003A83AB /* XiaoRuiNewQRcode.m in Sources */ = {isa = PBXBuildFile; fileRef = D1352D621D9E0ECB003A83AB /* XiaoRuiNewQRcode.m */; };
+		D1352D761D9E0ECB003A83AB /* XiaoRuiNewQRcode.xib in Resources */ = {isa = PBXBuildFile; fileRef = D1352D631D9E0ECB003A83AB /* XiaoRuiNewQRcode.xib */; };
+		D1352D781D9E0F35003A83AB /* HRTabBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1352D771D9E0F35003A83AB /* HRTabBarViewController.m */; };
+		D1352D7A1D9E0F5A003A83AB /* QRTools.m in Sources */ = {isa = PBXBuildFile; fileRef = D1352D791D9E0F5A003A83AB /* QRTools.m */; };
+		D1352D7C1D9E102D003A83AB /* DeviceListController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1352D7B1D9E102D003A83AB /* DeviceListController.m */; };
+		D1352D7E1D9E1065003A83AB /* NextController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1352D7D1D9E1065003A83AB /* NextController.m */; };
+		D1352D801D9E1180003A83AB /* WaitController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1352D7F1D9E1180003A83AB /* WaitController.m */; };
+		D1352D831D9E194C003A83AB /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D1352D821D9E194C003A83AB /* AppDelegate.m */; };
 		D17076761D94D6BB0027C46B /* LoginController.m in Sources */ = {isa = PBXBuildFile; fileRef = D17076751D94D6BB0027C46B /* LoginController.m */; };
 		D17076781D95180B0027C46B /* AccountManagementController.m in Sources */ = {isa = PBXBuildFile; fileRef = D17076771D95180B0027C46B /* AccountManagementController.m */; };
 		D17CF0F11D6567E7007C95DD /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D17CF0F01D6567E7007C95DD /* main.m */; };
@@ -69,7 +97,6 @@
 		D1A7DD211D8117DD00D051B0 /* ForgetController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1A7DBF21D8117DD00D051B0 /* ForgetController.m */; };
 		D1A7DD221D8117DD00D051B0 /* InputText.m in Sources */ = {isa = PBXBuildFile; fileRef = D1A7DBF51D8117DD00D051B0 /* InputText.m */; };
 		D1A7DD241D8117DD00D051B0 /* UIView+XD.m in Sources */ = {isa = PBXBuildFile; fileRef = D1A7DBF91D8117DD00D051B0 /* UIView+XD.m */; };
-		D1A7DD251D8117DD00D051B0 /* NextController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1A7DBFC1D8117DD00D051B0 /* NextController.m */; };
 		D1A7DD271D8117DD00D051B0 /* CustomCollectionViewCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D1A7DC031D8117DD00D051B0 /* CustomCollectionViewCollectionViewCell.m */; };
 		D1A7DD281D8117DD00D051B0 /* MJRefreshAutoFooter.m in Sources */ = {isa = PBXBuildFile; fileRef = D1A7DC071D8117DD00D051B0 /* MJRefreshAutoFooter.m */; };
 		D1A7DD291D8117DD00D051B0 /* MJRefreshBackFooter.m in Sources */ = {isa = PBXBuildFile; fileRef = D1A7DC091D8117DD00D051B0 /* MJRefreshBackFooter.m */; };
@@ -157,7 +184,6 @@
 		D1A7DD8B1D8117DD00D051B0 /* AFNJSONResponseSerializerWithData.m in Sources */ = {isa = PBXBuildFile; fileRef = D1A7DCB11D8117DD00D051B0 /* AFNJSONResponseSerializerWithData.m */; };
 		D1A7DD8C1D8117DD00D051B0 /* CALayer+Anim.m in Sources */ = {isa = PBXBuildFile; fileRef = D1A7DCB31D8117DD00D051B0 /* CALayer+Anim.m */; };
 		D1A7DD8D1D8117DD00D051B0 /* NSObject+Util.m in Sources */ = {isa = PBXBuildFile; fileRef = D1A7DCB51D8117DD00D051B0 /* NSObject+Util.m */; };
-		D1A7DD8E1D8117DD00D051B0 /* NSString+Util.m in Sources */ = {isa = PBXBuildFile; fileRef = D1A7DCB71D8117DD00D051B0 /* NSString+Util.m */; };
 		D1A7DD8F1D8117DD00D051B0 /* UIBarButtonItem+XMGExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = D1A7DCB91D8117DD00D051B0 /* UIBarButtonItem+XMGExtension.m */; };
 		D1A7DD901D8117DD00D051B0 /* UIColor+Util.m in Sources */ = {isa = PBXBuildFile; fileRef = D1A7DCBB1D8117DD00D051B0 /* UIColor+Util.m */; };
 		D1A7DD911D8117DD00D051B0 /* UIImage+Util.m in Sources */ = {isa = PBXBuildFile; fileRef = D1A7DCBD1D8117DD00D051B0 /* UIImage+Util.m */; };
@@ -167,7 +193,6 @@
 		D1A7DD951D8117DD00D051B0 /* HRNavigationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1A7DCC61D8117DD00D051B0 /* HRNavigationViewController.m */; };
 		D1A7DD961D8117DD00D051B0 /* HRTabBar.m in Sources */ = {isa = PBXBuildFile; fileRef = D1A7DCC81D8117DD00D051B0 /* HRTabBar.m */; };
 		D1A7DD971D8117DD00D051B0 /* HRTabBarButton.m in Sources */ = {isa = PBXBuildFile; fileRef = D1A7DCCA1D8117DD00D051B0 /* HRTabBarButton.m */; };
-		D1A7DD981D8117DD00D051B0 /* HRTabBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1A7DCCC1D8117DD00D051B0 /* HRTabBarViewController.m */; };
 		D1A7DD9A1D8117DD00D051B0 /* HRDOData.m in Sources */ = {isa = PBXBuildFile; fileRef = D1A7DCD11D8117DD00D051B0 /* HRDOData.m */; };
 		D1A7DD9B1D8117DD00D051B0 /* HRInfraredDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = D1A7DCD31D8117DD00D051B0 /* HRInfraredDevice.m */; };
 		D1A7DD9C1D8117DD00D051B0 /* HRMessageData.m in Sources */ = {isa = PBXBuildFile; fileRef = D1A7DCD51D8117DD00D051B0 /* HRMessageData.m */; };
@@ -188,20 +213,17 @@
 		D1A7DDAB1D8117DD00D051B0 /* HRServicesManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D1A7DCF41D8117DD00D051B0 /* HRServicesManager.m */; };
 		D1A7DDAC1D8117DD00D051B0 /* HRSqlite.m in Sources */ = {isa = PBXBuildFile; fileRef = D1A7DCF61D8117DD00D051B0 /* HRSqlite.m */; };
 		D1A7DDAD1D8117DD00D051B0 /* HRUDPSocketTool.m in Sources */ = {isa = PBXBuildFile; fileRef = D1A7DCF81D8117DD00D051B0 /* HRUDPSocketTool.m */; };
-		D1A7DDAE1D8117DD00D051B0 /* QRTools.m in Sources */ = {isa = PBXBuildFile; fileRef = D1A7DCFA1D8117DD00D051B0 /* QRTools.m */; };
 		D1A7DDAF1D8117DD00D051B0 /* SVProgressTool.m in Sources */ = {isa = PBXBuildFile; fileRef = D1A7DCFC1D8117DD00D051B0 /* SVProgressTool.m */; };
 		D1A7DDB01D8117DD00D051B0 /* HRButton.m in Sources */ = {isa = PBXBuildFile; fileRef = D1A7DCFF1D8117DD00D051B0 /* HRButton.m */; };
 		D1A7DDB11D8117DD00D051B0 /* HRLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = D1A7DD011D8117DD00D051B0 /* HRLabel.m */; };
 		D1A7DDB21D8117DD00D051B0 /* TipsLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = D1A7DD031D8117DD00D051B0 /* TipsLabel.m */; };
 		D1A7DDB31D8117DD00D051B0 /* ManualController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1A7DD061D8117DD00D051B0 /* ManualController.m */; };
 		D1A7DDB41D8117DD00D051B0 /* RegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1A7DD091D8117DD00D051B0 /* RegisterViewController.m */; };
-		D1A7DDB81D8117DD00D051B0 /* WaitController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1A7DD131D8117DD00D051B0 /* WaitController.m */; };
 		D1A7DDB91D8117DD00D051B0 /* HRPushMode.m in Sources */ = {isa = PBXBuildFile; fileRef = D1A7DD161D8117DD00D051B0 /* HRPushMode.m */; };
 		D1A7DDBA1D8117DD00D051B0 /* UDPModel.m in Sources */ = {isa = PBXBuildFile; fileRef = D1A7DD181D8117DD00D051B0 /* UDPModel.m */; };
 		D1A7DDBB1D8117DD00D051B0 /* WiFiListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D1A7DD1A1D8117DD00D051B0 /* WiFiListCell.m */; };
 		D1A7DDBC1D8117DD00D051B0 /* WiFiListController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1A7DD1C1D8117DD00D051B0 /* WiFiListController.m */; };
 		D1A7DDBD1D8117DD00D051B0 /* WIFIListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = D1A7DD1E1D8117DD00D051B0 /* WIFIListModel.m */; };
-		D1A7DDC21D81181600D051B0 /* EnterPSWController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1A7DDBF1D81181600D051B0 /* EnterPSWController.m */; };
 		D1A7DDC31D81181600D051B0 /* GoToSetUpController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1A7DDC11D81181600D051B0 /* GoToSetUpController.m */; };
 		D1A7DDCA1D811BB900D051B0 /* HRConst.m in Sources */ = {isa = PBXBuildFile; fileRef = D1A7DDC91D811BB900D051B0 /* HRConst.m */; };
 		D1A7DDCF1D811ED100D051B0 /* SettingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D1A7DDCC1D811ED100D051B0 /* SettingCell.m */; };
@@ -228,18 +250,10 @@
 		D1BDCAAE1D929B260022BDE2 /* GestureVerifyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1BDCAAD1D929B260022BDE2 /* GestureVerifyViewController.m */; };
 		D1BDCAB01D929B520022BDE2 /* GestureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1BDCAAF1D929B520022BDE2 /* GestureViewController.m */; };
 		D1C144241D8E2FD800FDDFA0 /* ShouAddFamilyModel.m in Sources */ = {isa = PBXBuildFile; fileRef = D1C144231D8E2FD800FDDFA0 /* ShouAddFamilyModel.m */; };
-		D1C7A8821D87AC9A00A97E78 /* backWhite@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D1C7A87A1D87AC9A00A97E78 /* backWhite@2x.png */; };
-		D1C7A8831D87AC9A00A97E78 /* Default-568h@3x-1.png in Resources */ = {isa = PBXBuildFile; fileRef = D1C7A87B1D87AC9A00A97E78 /* Default-568h@3x-1.png */; };
-		D1C7A8841D87AC9A00A97E78 /* instructions.rtf in Resources */ = {isa = PBXBuildFile; fileRef = D1C7A87C1D87AC9A00A97E78 /* instructions.rtf */; };
-		D1C7A8851D87AC9A00A97E78 /* QRCodeController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1C7A87E1D87AC9A00A97E78 /* QRCodeController.m */; };
-		D1C7A8861D87AC9A00A97E78 /* Scanning frame@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D1C7A87F1D87AC9A00A97E78 /* Scanning frame@2x.png */; };
-		D1C7A8871D87AC9A00A97E78 /* Scanning line@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D1C7A8801D87AC9A00A97E78 /* Scanning line@2x.png */; };
-		D1C7A8881D87AC9A00A97E78 /* whiteBack@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D1C7A8811D87AC9A00A97E78 /* whiteBack@2x.png */; };
 		D1D23DEF1D7570A100FCB5C9 /* AddDeivcecell.m in Sources */ = {isa = PBXBuildFile; fileRef = D1D23DEC1D7570A100FCB5C9 /* AddDeivcecell.m */; };
 		D1E35D871D90DE89002A766C /* AutherTimePickView.m in Sources */ = {isa = PBXBuildFile; fileRef = D1E35D861D90DE89002A766C /* AutherTimePickView.m */; };
 		D1E35D8A1D916BCB002A766C /* ShouQuanManagerController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1E35D891D916BCB002A766C /* ShouQuanManagerController.m */; };
 		D1EFCAC31D88EDD20045A0C0 /* DoorLockModel.m in Sources */ = {isa = PBXBuildFile; fileRef = D1EFCAC21D88EDD20045A0C0 /* DoorLockModel.m */; };
-		D1EFCAC61D8956000045A0C0 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D1EFCAC51D8956000045A0C0 /* AppDelegate.m */; };
 		DAE2A790C81C0FDB9C617E84 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DC40F28764523F49428DB0CE /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -310,8 +324,16 @@
 		AA2C52741D91574100D0BD3D /* NSString+PushSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+PushSet.m"; sourceTree = "<group>"; };
 		AA2C52761D91578D00D0BD3D /* PushSettingController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PushSettingController.h; sourceTree = "<group>"; };
 		AA2C52771D91578D00D0BD3D /* PushSettingController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PushSettingController.m; sourceTree = "<group>"; };
-		AA2C527C1D9159CA00D0BD3D /* DeviceListController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeviceListController.m; sourceTree = "<group>"; };
 		AA2C527D1D9159CA00D0BD3D /* DeviceListController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeviceListController.h; sourceTree = "<group>"; };
+		AA510E551D9BD94300D9FD67 /* OpenLockController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenLockController.h; sourceTree = "<group>"; };
+		AA510E561D9BD94300D9FD67 /* OpenLockController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OpenLockController.m; sourceTree = "<group>"; };
+		AA510E5C1D9CB4AA00D9FD67 /* NSString+Util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Util.h"; sourceTree = "<group>"; };
+		AA510E5D1D9CB4B700D9FD67 /* NSString+Util.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Util.m"; sourceTree = "<group>"; };
+		AAA49AE71D9D0B5A00D4D248 /* EnterPSWController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EnterPSWController.m; sourceTree = "<group>"; };
+		AAA49AE91D9D0BBD00D4D248 /* SettingController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingController.m; sourceTree = "<group>"; };
+		AAA49AEB1D9D0BFE00D4D248 /* MissWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MissWebViewController.h; sourceTree = "<group>"; };
+		AAA49AEC1D9D0BFE00D4D248 /* MissWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MissWebViewController.m; sourceTree = "<group>"; };
+		AAA49AEE1D9D0C0600D4D248 /* MissWebViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MissWebViewController.xib; sourceTree = "<group>"; };
 		AAA8A9B01D8CE9D900ABA020 /* arrow_down@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "arrow_down@2x.png"; sourceTree = "<group>"; };
 		AAA8A9B11D8CE9D900ABA020 /* CustomerInfoSectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomerInfoSectionView.h; sourceTree = "<group>"; };
 		AAA8A9B21D8CE9D900ABA020 /* CustomerInfoSectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomerInfoSectionView.m; sourceTree = "<group>"; };
@@ -334,12 +356,43 @@
 		AAFFDDF21D800EFC005669BA /* SRActionSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SRActionSheet.m; sourceTree = "<group>"; };
 		AAFFDE411D82CBA0005669BA /* NSString+DoorLock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+DoorLock.h"; sourceTree = "<group>"; };
 		AAFFDE421D82CBA0005669BA /* NSString+DoorLock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+DoorLock.m"; sourceTree = "<group>"; };
-		AAFFDE441D82CBE8005669BA /* OpenLockController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenLockController.h; sourceTree = "<group>"; };
-		AAFFDE451D82CBE8005669BA /* OpenLockController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OpenLockController.m; sourceTree = "<group>"; };
 		B1A28F2C2DAB37DA40A8D5EB /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		D1007CDE1D8694280079D3DD /* DeviceAutherModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeviceAutherModel.h; sourceTree = "<group>"; };
 		D1007CDF1D8694280079D3DD /* DeviceAutherModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeviceAutherModel.m; sourceTree = "<group>"; };
-		D17076731D94D6AD0027C46B /* SettingController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingController.m; sourceTree = "<group>"; };
+		D1352D491D9E0ECB003A83AB /* AddNewDeviceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddNewDeviceViewController.h; sourceTree = "<group>"; };
+		D1352D4A1D9E0ECB003A83AB /* AddNewDeviceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddNewDeviceViewController.m; sourceTree = "<group>"; };
+		D1352D4B1D9E0ECB003A83AB /* backWhite@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "backWhite@2x.png"; sourceTree = "<group>"; };
+		D1352D4C1D9E0ECB003A83AB /* CreateXiaoRui.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateXiaoRui.h; sourceTree = "<group>"; };
+		D1352D4D1D9E0ECB003A83AB /* CreateXiaoRui.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateXiaoRui.m; sourceTree = "<group>"; };
+		D1352D4E1D9E0ECB003A83AB /* CreateXiaoRui.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CreateXiaoRui.xib; sourceTree = "<group>"; };
+		D1352D4F1D9E0ECB003A83AB /* Default-568h@3x-1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@3x-1.png"; sourceTree = "<group>"; };
+		D1352D501D9E0ECB003A83AB /* HRQrButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HRQrButton.h; sourceTree = "<group>"; };
+		D1352D511D9E0ECB003A83AB /* HRQrButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HRQrButton.m; sourceTree = "<group>"; };
+		D1352D521D9E0ECB003A83AB /* icon_qr.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_qr.png; sourceTree = "<group>"; };
+		D1352D531D9E0ECB003A83AB /* instructions.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = instructions.rtf; sourceTree = "<group>"; };
+		D1352D541D9E0ECB003A83AB /* ManualCreateXiaoRui.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ManualCreateXiaoRui.h; sourceTree = "<group>"; };
+		D1352D551D9E0ECB003A83AB /* ManualCreateXiaoRui.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ManualCreateXiaoRui.m; sourceTree = "<group>"; };
+		D1352D561D9E0ECB003A83AB /* ManualCreateXiaoRui.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ManualCreateXiaoRui.xib; sourceTree = "<group>"; };
+		D1352D571D9E0ECB003A83AB /* QRCodeController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QRCodeController.h; sourceTree = "<group>"; };
+		D1352D581D9E0ECB003A83AB /* QRCodeController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QRCodeController.m; sourceTree = "<group>"; };
+		D1352D591D9E0ECB003A83AB /* QRViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QRViewController.h; sourceTree = "<group>"; };
+		D1352D5A1D9E0ECB003A83AB /* QRViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QRViewController.m; sourceTree = "<group>"; };
+		D1352D5B1D9E0ECB003A83AB /* Scanning frame@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Scanning frame@2x.png"; sourceTree = "<group>"; };
+		D1352D5C1D9E0ECB003A83AB /* Scanning line@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Scanning line@2x.png"; sourceTree = "<group>"; };
+		D1352D5D1D9E0ECB003A83AB /* SearchDeviceView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchDeviceView.h; sourceTree = "<group>"; };
+		D1352D5E1D9E0ECB003A83AB /* SearchDeviceView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchDeviceView.m; sourceTree = "<group>"; };
+		D1352D5F1D9E0ECB003A83AB /* SearchDeviceView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SearchDeviceView.xib; sourceTree = "<group>"; };
+		D1352D601D9E0ECB003A83AB /* whiteBack@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "whiteBack@2x.png"; sourceTree = "<group>"; };
+		D1352D611D9E0ECB003A83AB /* XiaoRuiNewQRcode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XiaoRuiNewQRcode.h; sourceTree = "<group>"; };
+		D1352D621D9E0ECB003A83AB /* XiaoRuiNewQRcode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XiaoRuiNewQRcode.m; sourceTree = "<group>"; };
+		D1352D631D9E0ECB003A83AB /* XiaoRuiNewQRcode.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XiaoRuiNewQRcode.xib; sourceTree = "<group>"; };
+		D1352D771D9E0F35003A83AB /* HRTabBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HRTabBarViewController.m; sourceTree = "<group>"; };
+		D1352D791D9E0F5A003A83AB /* QRTools.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QRTools.m; sourceTree = "<group>"; };
+		D1352D7B1D9E102D003A83AB /* DeviceListController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeviceListController.m; sourceTree = "<group>"; };
+		D1352D7D1D9E1065003A83AB /* NextController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NextController.m; sourceTree = "<group>"; };
+		D1352D7F1D9E1180003A83AB /* WaitController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WaitController.m; sourceTree = "<group>"; };
+		D1352D811D9E194C003A83AB /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		D1352D821D9E194C003A83AB /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		D17076751D94D6BB0027C46B /* LoginController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginController.m; sourceTree = "<group>"; };
 		D17076771D95180B0027C46B /* AccountManagementController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccountManagementController.m; sourceTree = "<group>"; };
 		D17CF0EC1D6567E7007C95DD /* HEROLIFE.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HEROLIFE.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -365,7 +418,6 @@
 		D1A7DBF81D8117DD00D051B0 /* UIView+XD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+XD.h"; sourceTree = "<group>"; };
 		D1A7DBF91D8117DD00D051B0 /* UIView+XD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+XD.m"; sourceTree = "<group>"; };
 		D1A7DBFB1D8117DD00D051B0 /* NextController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NextController.h; sourceTree = "<group>"; };
-		D1A7DBFC1D8117DD00D051B0 /* NextController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NextController.m; sourceTree = "<group>"; };
 		D1A7DC021D8117DD00D051B0 /* CustomCollectionViewCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomCollectionViewCollectionViewCell.h; sourceTree = "<group>"; };
 		D1A7DC031D8117DD00D051B0 /* CustomCollectionViewCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomCollectionViewCollectionViewCell.m; sourceTree = "<group>"; };
 		D1A7DC061D8117DD00D051B0 /* MJRefreshAutoFooter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJRefreshAutoFooter.h; sourceTree = "<group>"; };
@@ -507,8 +559,6 @@
 		D1A7DCB31D8117DD00D051B0 /* CALayer+Anim.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CALayer+Anim.m"; sourceTree = "<group>"; };
 		D1A7DCB41D8117DD00D051B0 /* NSObject+Util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+Util.h"; sourceTree = "<group>"; };
 		D1A7DCB51D8117DD00D051B0 /* NSObject+Util.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Util.m"; sourceTree = "<group>"; };
-		D1A7DCB61D8117DD00D051B0 /* NSString+Util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Util.h"; sourceTree = "<group>"; };
-		D1A7DCB71D8117DD00D051B0 /* NSString+Util.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Util.m"; sourceTree = "<group>"; };
 		D1A7DCB81D8117DD00D051B0 /* UIBarButtonItem+XMGExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIBarButtonItem+XMGExtension.h"; sourceTree = "<group>"; };
 		D1A7DCB91D8117DD00D051B0 /* UIBarButtonItem+XMGExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIBarButtonItem+XMGExtension.m"; sourceTree = "<group>"; };
 		D1A7DCBA1D8117DD00D051B0 /* UIColor+Util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+Util.h"; sourceTree = "<group>"; };
@@ -528,7 +578,6 @@
 		D1A7DCC91D8117DD00D051B0 /* HRTabBarButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HRTabBarButton.h; sourceTree = "<group>"; };
 		D1A7DCCA1D8117DD00D051B0 /* HRTabBarButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HRTabBarButton.m; sourceTree = "<group>"; };
 		D1A7DCCB1D8117DD00D051B0 /* HRTabBarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HRTabBarViewController.h; sourceTree = "<group>"; };
-		D1A7DCCC1D8117DD00D051B0 /* HRTabBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HRTabBarViewController.m; sourceTree = "<group>"; };
 		D1A7DCD01D8117DD00D051B0 /* HRDOData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HRDOData.h; sourceTree = "<group>"; };
 		D1A7DCD11D8117DD00D051B0 /* HRDOData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HRDOData.m; sourceTree = "<group>"; };
 		D1A7DCD21D8117DD00D051B0 /* HRInfraredDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HRInfraredDevice.h; sourceTree = "<group>"; };
@@ -570,7 +619,6 @@
 		D1A7DCF71D8117DD00D051B0 /* HRUDPSocketTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HRUDPSocketTool.h; sourceTree = "<group>"; };
 		D1A7DCF81D8117DD00D051B0 /* HRUDPSocketTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HRUDPSocketTool.m; sourceTree = "<group>"; };
 		D1A7DCF91D8117DD00D051B0 /* QRTools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QRTools.h; sourceTree = "<group>"; };
-		D1A7DCFA1D8117DD00D051B0 /* QRTools.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QRTools.m; sourceTree = "<group>"; };
 		D1A7DCFB1D8117DD00D051B0 /* SVProgressTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVProgressTool.h; sourceTree = "<group>"; };
 		D1A7DCFC1D8117DD00D051B0 /* SVProgressTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVProgressTool.m; sourceTree = "<group>"; };
 		D1A7DCFE1D8117DD00D051B0 /* HRButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HRButton.h; sourceTree = "<group>"; };
@@ -584,7 +632,6 @@
 		D1A7DD081D8117DD00D051B0 /* RegisterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegisterViewController.h; sourceTree = "<group>"; };
 		D1A7DD091D8117DD00D051B0 /* RegisterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegisterViewController.m; sourceTree = "<group>"; };
 		D1A7DD121D8117DD00D051B0 /* WaitController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WaitController.h; sourceTree = "<group>"; };
-		D1A7DD131D8117DD00D051B0 /* WaitController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WaitController.m; sourceTree = "<group>"; };
 		D1A7DD151D8117DD00D051B0 /* HRPushMode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HRPushMode.h; sourceTree = "<group>"; };
 		D1A7DD161D8117DD00D051B0 /* HRPushMode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HRPushMode.m; sourceTree = "<group>"; };
 		D1A7DD171D8117DD00D051B0 /* UDPModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UDPModel.h; sourceTree = "<group>"; };
@@ -596,7 +643,6 @@
 		D1A7DD1D1D8117DD00D051B0 /* WIFIListModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WIFIListModel.h; sourceTree = "<group>"; };
 		D1A7DD1E1D8117DD00D051B0 /* WIFIListModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WIFIListModel.m; sourceTree = "<group>"; };
 		D1A7DDBE1D81181600D051B0 /* EnterPSWController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EnterPSWController.h; sourceTree = "<group>"; };
-		D1A7DDBF1D81181600D051B0 /* EnterPSWController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EnterPSWController.m; sourceTree = "<group>"; };
 		D1A7DDC01D81181600D051B0 /* GoToSetUpController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoToSetUpController.h; sourceTree = "<group>"; };
 		D1A7DDC11D81181600D051B0 /* GoToSetUpController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GoToSetUpController.m; sourceTree = "<group>"; };
 		D1A7DDC41D81190200D051B0 /* PrefixHeader.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
@@ -641,14 +687,6 @@
 		D1BDCAAF1D929B520022BDE2 /* GestureViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GestureViewController.m; sourceTree = "<group>"; };
 		D1C144221D8E2FD800FDDFA0 /* ShouAddFamilyModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShouAddFamilyModel.h; sourceTree = "<group>"; };
 		D1C144231D8E2FD800FDDFA0 /* ShouAddFamilyModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShouAddFamilyModel.m; sourceTree = "<group>"; };
-		D1C7A87A1D87AC9A00A97E78 /* backWhite@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "backWhite@2x.png"; sourceTree = "<group>"; };
-		D1C7A87B1D87AC9A00A97E78 /* Default-568h@3x-1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@3x-1.png"; sourceTree = "<group>"; };
-		D1C7A87C1D87AC9A00A97E78 /* instructions.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = instructions.rtf; sourceTree = "<group>"; };
-		D1C7A87D1D87AC9A00A97E78 /* QRCodeController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QRCodeController.h; sourceTree = "<group>"; };
-		D1C7A87E1D87AC9A00A97E78 /* QRCodeController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QRCodeController.m; sourceTree = "<group>"; };
-		D1C7A87F1D87AC9A00A97E78 /* Scanning frame@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Scanning frame@2x.png"; sourceTree = "<group>"; };
-		D1C7A8801D87AC9A00A97E78 /* Scanning line@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Scanning line@2x.png"; sourceTree = "<group>"; };
-		D1C7A8811D87AC9A00A97E78 /* whiteBack@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "whiteBack@2x.png"; sourceTree = "<group>"; };
 		D1D23DEB1D7570A100FCB5C9 /* AddDeivcecell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AddDeivcecell.h; path = ../AddDeivcecell.h; sourceTree = "<group>"; };
 		D1D23DEC1D7570A100FCB5C9 /* AddDeivcecell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AddDeivcecell.m; path = ../AddDeivcecell.m; sourceTree = "<group>"; };
 		D1E35D851D90DE89002A766C /* AutherTimePickView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AutherTimePickView.h; path = ../AutherTimePickView.h; sourceTree = "<group>"; };
@@ -657,8 +695,6 @@
 		D1E35D891D916BCB002A766C /* ShouQuanManagerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShouQuanManagerController.m; sourceTree = "<group>"; };
 		D1EFCAC11D88EDD20045A0C0 /* DoorLockModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DoorLockModel.h; sourceTree = "<group>"; };
 		D1EFCAC21D88EDD20045A0C0 /* DoorLockModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DoorLockModel.m; sourceTree = "<group>"; };
-		D1EFCAC41D8956000045A0C0 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = Other/AppDelegate.h; sourceTree = "<group>"; };
-		D1EFCAC51D8956000045A0C0 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = Other/AppDelegate.m; sourceTree = "<group>"; };
 		DC40F28764523F49428DB0CE /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -717,7 +753,7 @@
 			isa = PBXGroup;
 			children = (
 				D1A7DDBE1D81181600D051B0 /* EnterPSWController.h */,
-				D1A7DDBF1D81181600D051B0 /* EnterPSWController.m */,
+				AAA49AE71D9D0B5A00D4D248 /* EnterPSWController.m */,
 				D1A7DDC01D81181600D051B0 /* GoToSetUpController.h */,
 				D1A7DDC11D81181600D051B0 /* GoToSetUpController.m */,
 				18C6975F1D7462B9004DA2B1 /* cell */,
@@ -766,10 +802,10 @@
 				1868B8F61D76DDD400D19386 /* BackPicSetController.m */,
 				18C697661D7462B9004DA2B1 /* AccountManagementController.h */,
 				D17076771D95180B0027C46B /* AccountManagementController.m */,
-				AAFFDE441D82CBE8005669BA /* OpenLockController.h */,
-				AAFFDE451D82CBE8005669BA /* OpenLockController.m */,
 				AAA8A9C71D8CEABF00ABA020 /* APPPSWController.h */,
 				D1BDCAAB1D929A6A0022BDE2 /* APPPSWController.m */,
+				AA510E551D9BD94300D9FD67 /* OpenLockController.h */,
+				AA510E561D9BD94300D9FD67 /* OpenLockController.m */,
 				18C6976A1D7462B9004DA2B1 /* DoorLockRecordConroller.h */,
 				18C6976B1D7462B9004DA2B1 /* DoorLockRecordConroller.m */,
 				D1EFCAC11D88EDD20045A0C0 /* DoorLockModel.h */,
@@ -1048,12 +1084,11 @@
 		D1A7DBE91D8117DD00D051B0 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				D1EFCAC41D8956000045A0C0 /* AppDelegate.h */,
-				D1EFCAC51D8956000045A0C0 /* AppDelegate.m */,
+				D1352D811D9E194C003A83AB /* AppDelegate.h */,
+				D1352D821D9E194C003A83AB /* AppDelegate.m */,
 				D1A7DDC81D811BB900D051B0 /* HRConst.h */,
 				D1A7DDC91D811BB900D051B0 /* HRConst.m */,
 				D1A7DBFD1D8117DD00D051B0 /* Other */,
-				D1A7DBEA1D8117DD00D051B0 /* AddLock */,
 				D1A7DBEB1D8117DD00D051B0 /* DeviceList */,
 				D1A7DBF01D8117DD00D051B0 /* Forget */,
 				D1A7DBF31D8117DD00D051B0 /* Login */,
@@ -1061,6 +1096,7 @@
 				D1A7DD041D8117DD00D051B0 /* QRcode */,
 				D1A7DD071D8117DD00D051B0 /* register */,
 				D1A7DD0A1D8117DD00D051B0 /* Seting */,
+				D1A7DBEA1D8117DD00D051B0 /* AddLock */,
 				D1A7DD0F1D8117DD00D051B0 /* Wait */,
 				D1A7DD141D8117DD00D051B0 /* WiFiList */,
 			);
@@ -1084,7 +1120,7 @@
 				D1AA2E5F1D83F48600D1AEC9 /* DeviceListModel.h */,
 				D1AA2E601D83F48600D1AEC9 /* DeviceListModel.m */,
 				AA2C527D1D9159CA00D0BD3D /* DeviceListController.h */,
-				AA2C527C1D9159CA00D0BD3D /* DeviceListController.m */,
+				D1352D7B1D9E102D003A83AB /* DeviceListController.m */,
 				D1AA2E611D83F48600D1AEC9 /* DeviceListTcpModel.h */,
 				D1AA2E621D83F48600D1AEC9 /* DeviceListTcpModel.m */,
 				D1007CDE1D8694280079D3DD /* DeviceAutherModel.h */,
@@ -1119,7 +1155,7 @@
 			isa = PBXGroup;
 			children = (
 				D1A7DBFB1D8117DD00D051B0 /* NextController.h */,
-				D1A7DBFC1D8117DD00D051B0 /* NextController.m */,
+				D1352D7D1D9E1065003A83AB /* NextController.m */,
 			);
 			path = Next;
 			sourceTree = "<group>";
@@ -1410,8 +1446,8 @@
 				D1A7DCB31D8117DD00D051B0 /* CALayer+Anim.m */,
 				D1A7DCB41D8117DD00D051B0 /* NSObject+Util.h */,
 				D1A7DCB51D8117DD00D051B0 /* NSObject+Util.m */,
-				D1A7DCB61D8117DD00D051B0 /* NSString+Util.h */,
-				D1A7DCB71D8117DD00D051B0 /* NSString+Util.m */,
+				AA510E5C1D9CB4AA00D9FD67 /* NSString+Util.h */,
+				AA510E5D1D9CB4B700D9FD67 /* NSString+Util.m */,
 				D1A7DCB81D8117DD00D051B0 /* UIBarButtonItem+XMGExtension.h */,
 				D1A7DCB91D8117DD00D051B0 /* UIBarButtonItem+XMGExtension.m */,
 				D1A7DCBA1D8117DD00D051B0 /* UIColor+Util.h */,
@@ -1438,7 +1474,7 @@
 				D1A7DCC91D8117DD00D051B0 /* HRTabBarButton.h */,
 				D1A7DCCA1D8117DD00D051B0 /* HRTabBarButton.m */,
 				D1A7DCCB1D8117DD00D051B0 /* HRTabBarViewController.h */,
-				D1A7DCCC1D8117DD00D051B0 /* HRTabBarViewController.m */,
+				D1352D771D9E0F35003A83AB /* HRTabBarViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -1494,7 +1530,7 @@
 				D1A7DCF71D8117DD00D051B0 /* HRUDPSocketTool.h */,
 				D1A7DCF81D8117DD00D051B0 /* HRUDPSocketTool.m */,
 				D1A7DCF91D8117DD00D051B0 /* QRTools.h */,
-				D1A7DCFA1D8117DD00D051B0 /* QRTools.m */,
+				D1352D791D9E0F5A003A83AB /* QRTools.m */,
 				D1A7DCFB1D8117DD00D051B0 /* SVProgressTool.h */,
 				D1A7DCFC1D8117DD00D051B0 /* SVProgressTool.m */,
 			);
@@ -1538,7 +1574,7 @@
 				D1A7DDCB1D811ED100D051B0 /* SettingCell.h */,
 				D1A7DDCC1D811ED100D051B0 /* SettingCell.m */,
 				D1A7DDCD1D811ED100D051B0 /* SettingController.h */,
-				D17076731D94D6AD0027C46B /* SettingController.m */,
+				AAA49AE91D9D0BBD00D4D248 /* SettingController.m */,
 				D1B3CB321D966D6D009F96D2 /* HerolifeViewController.h */,
 				D1B3CB331D966D6D009F96D2 /* HerolifeViewController.m */,
 				D1B3CB341D966D6D009F96D2 /* HerolifeViewController.xib */,
@@ -1548,6 +1584,9 @@
 				D1B3CB3C1D966DCA009F96D2 /* HerolifeLabelCell.h */,
 				D1B3CB3D1D966DCA009F96D2 /* HerolifeLabelCell.m */,
 				D1B3CB3E1D966DCA009F96D2 /* HerolifeLabelCell.xib */,
+				AAA49AEB1D9D0BFE00D4D248 /* MissWebViewController.h */,
+				AAA49AEC1D9D0BFE00D4D248 /* MissWebViewController.m */,
+				AAA49AEE1D9D0C0600D4D248 /* MissWebViewController.xib */,
 			);
 			path = Seting;
 			sourceTree = "<group>";
@@ -1556,7 +1595,7 @@
 			isa = PBXGroup;
 			children = (
 				D1A7DD121D8117DD00D051B0 /* WaitController.h */,
-				D1A7DD131D8117DD00D051B0 /* WaitController.m */,
+				D1352D7F1D9E1180003A83AB /* WaitController.m */,
 			);
 			path = Wait;
 			sourceTree = "<group>";
@@ -1608,14 +1647,33 @@
 		D1C7A8791D87AC9A00A97E78 /* QRcode */ = {
 			isa = PBXGroup;
 			children = (
-				D1C7A87A1D87AC9A00A97E78 /* backWhite@2x.png */,
-				D1C7A87B1D87AC9A00A97E78 /* Default-568h@3x-1.png */,
-				D1C7A87C1D87AC9A00A97E78 /* instructions.rtf */,
-				D1C7A87D1D87AC9A00A97E78 /* QRCodeController.h */,
-				D1C7A87E1D87AC9A00A97E78 /* QRCodeController.m */,
-				D1C7A87F1D87AC9A00A97E78 /* Scanning frame@2x.png */,
-				D1C7A8801D87AC9A00A97E78 /* Scanning line@2x.png */,
-				D1C7A8811D87AC9A00A97E78 /* whiteBack@2x.png */,
+				D1352D491D9E0ECB003A83AB /* AddNewDeviceViewController.h */,
+				D1352D4A1D9E0ECB003A83AB /* AddNewDeviceViewController.m */,
+				D1352D4B1D9E0ECB003A83AB /* backWhite@2x.png */,
+				D1352D4C1D9E0ECB003A83AB /* CreateXiaoRui.h */,
+				D1352D4D1D9E0ECB003A83AB /* CreateXiaoRui.m */,
+				D1352D4E1D9E0ECB003A83AB /* CreateXiaoRui.xib */,
+				D1352D4F1D9E0ECB003A83AB /* Default-568h@3x-1.png */,
+				D1352D501D9E0ECB003A83AB /* HRQrButton.h */,
+				D1352D511D9E0ECB003A83AB /* HRQrButton.m */,
+				D1352D521D9E0ECB003A83AB /* icon_qr.png */,
+				D1352D531D9E0ECB003A83AB /* instructions.rtf */,
+				D1352D541D9E0ECB003A83AB /* ManualCreateXiaoRui.h */,
+				D1352D551D9E0ECB003A83AB /* ManualCreateXiaoRui.m */,
+				D1352D561D9E0ECB003A83AB /* ManualCreateXiaoRui.xib */,
+				D1352D571D9E0ECB003A83AB /* QRCodeController.h */,
+				D1352D581D9E0ECB003A83AB /* QRCodeController.m */,
+				D1352D591D9E0ECB003A83AB /* QRViewController.h */,
+				D1352D5A1D9E0ECB003A83AB /* QRViewController.m */,
+				D1352D5B1D9E0ECB003A83AB /* Scanning frame@2x.png */,
+				D1352D5C1D9E0ECB003A83AB /* Scanning line@2x.png */,
+				D1352D5D1D9E0ECB003A83AB /* SearchDeviceView.h */,
+				D1352D5E1D9E0ECB003A83AB /* SearchDeviceView.m */,
+				D1352D5F1D9E0ECB003A83AB /* SearchDeviceView.xib */,
+				D1352D601D9E0ECB003A83AB /* whiteBack@2x.png */,
+				D1352D611D9E0ECB003A83AB /* XiaoRuiNewQRcode.h */,
+				D1352D621D9E0ECB003A83AB /* XiaoRuiNewQRcode.m */,
+				D1352D631D9E0ECB003A83AB /* XiaoRuiNewQRcode.xib */,
 			);
 			path = QRcode;
 			sourceTree = "<group>";
@@ -1755,36 +1813,42 @@
 				AAA8A9DB1D8CEB4100ABA020 /* 未选择@2x.png in Resources */,
 				D1B3CB401D966DCA009F96D2 /* HerolifeLabelCell.xib in Resources */,
 				1868B91B1D79289500D19386 /* 3.jpg in Resources */,
-				D1C7A8871D87AC9A00A97E78 /* Scanning line@2x.png in Resources */,
+				D1352D701D9E0ECB003A83AB /* Scanning frame@2x.png in Resources */,
 				D1B3CB361D966D6D009F96D2 /* HerolifeViewController.xib in Resources */,
 				18C6979A1D7462B9004DA2B1 /* 键盘@3x.png in Resources */,
+				AAA49AEF1D9D0C0700D4D248 /* MissWebViewController.xib in Resources */,
+				D1352D6A1D9E0ECB003A83AB /* icon_qr.png in Resources */,
+				D1352D741D9E0ECB003A83AB /* whiteBack@2x.png in Resources */,
 				AAA8A9D71D8CEB4100ABA020 /* 未选择.png in Resources */,
 				AAA8A9D91D8CEB4100ABA020 /* 授权选择@2x.png in Resources */,
 				D1BDCAA81D926F530022BDE2 /* LaunchScreen.storyboard in Resources */,
 				1868B8EB1D76C4A200D19386 /* 后退@2x.png in Resources */,
 				1868B9191D79289500D19386 /* 1.jpg in Resources */,
+				D1352D6B1D9E0ECB003A83AB /* instructions.rtf in Resources */,
 				AAA8A9D81D8CEB4100ABA020 /* 未选择@2x.png in Resources */,
-				D1C7A8831D87AC9A00A97E78 /* Default-568h@3x-1.png in Resources */,
+				D1352D711D9E0ECB003A83AB /* Scanning line@2x.png in Resources */,
 				D1A7DDD51D813C6400D051B0 /* Info.plist in Resources */,
 				D17CF0FC1D6567E7007C95DD /* Assets.xcassets in Resources */,
 				D1B7924A1D8BF78C00DDA4DD /* EBMute.mp3 in Resources */,
 				D17CF0FA1D6567E7007C95DD /* Main.storyboard in Resources */,
 				D1B3CB3B1D966DB5009F96D2 /* HerolifeImageCell.xib in Resources */,
+				D1352D681D9E0ECB003A83AB /* Default-568h@3x-1.png in Resources */,
+				D1352D671D9E0ECB003A83AB /* CreateXiaoRui.xib in Resources */,
 				18C697A71D7462B9004DA2B1 /* JCAlertView.bundle in Resources */,
 				AAA8A9DC1D8CEB4100ABA020 /* 未选择@3x.png in Resources */,
 				1868B8ED1D76C4B300D19386 /* 后退@3x.png in Resources */,
 				1868B8F11D76CD4A00D19386 /* 智能开锁@3x.png in Resources */,
+				D1352D731D9E0ECB003A83AB /* SearchDeviceView.xib in Resources */,
 				AAA8A9D61D8CEB4100ABA020 /* 授权选择@2x.png in Resources */,
-				D1C7A8881D87AC9A00A97E78 /* whiteBack@2x.png in Resources */,
 				18C697991D7462B9004DA2B1 /* 键盘@2x.png in Resources */,
+				D1352D6D1D9E0ECB003A83AB /* ManualCreateXiaoRui.xib in Resources */,
 				AAA8A9B71D8CE9D900ABA020 /* arrow_down@2x.png in Resources */,
 				D1B792481D8BF78C00DDA4DD /* EBBannerView.xib in Resources */,
-				D1C7A8841D87AC9A00A97E78 /* instructions.rtf in Resources */,
 				1868B8EF1D76CD3C00D19386 /* 智能开锁@2x.png in Resources */,
+				D1352D761D9E0ECB003A83AB /* XiaoRuiNewQRcode.xib in Resources */,
 				AAA8A9D51D8CEB4100ABA020 /* 授权选择.png in Resources */,
-				D1C7A8861D87AC9A00A97E78 /* Scanning frame@2x.png in Resources */,
 				D1A7DD361D8117DD00D051B0 /* MJRefresh.bundle in Resources */,
-				D1C7A8821D87AC9A00A97E78 /* backWhite@2x.png in Resources */,
+				D1352D651D9E0ECB003A83AB /* backWhite@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1877,15 +1941,15 @@
 				D1A7DDA41D8117DD00D051B0 /* IrgmData.m in Sources */,
 				D1A7DD401D8117DD00D051B0 /* FMDatabasePool.m in Sources */,
 				D1A7DD8F1D8117DD00D051B0 /* UIBarButtonItem+XMGExtension.m in Sources */,
-				AAFFDE461D82CBE8005669BA /* OpenLockController.m in Sources */,
 				D1A7DDAB1D8117DD00D051B0 /* HRServicesManager.m in Sources */,
+				D1352D641D9E0ECB003A83AB /* AddNewDeviceViewController.m in Sources */,
 				D1A7DD4D1D8117DD00D051B0 /* NVActivityIndicatorAnimationBallPulseSync.swift in Sources */,
+				AAA49AEA1D9D0BBD00D4D248 /* SettingController.m in Sources */,
 				AAA8A9B81D8CE9D900ABA020 /* CustomerInfoSectionView.m in Sources */,
 				D1A7DD3F1D8117DD00D051B0 /* FMDatabaseAdditions.m in Sources */,
 				D1A7DD271D8117DD00D051B0 /* CustomCollectionViewCollectionViewCell.m in Sources */,
 				D1A7DD901D8117DD00D051B0 /* UIColor+Util.m in Sources */,
 				D1A7DD801D8117DD00D051B0 /* UIView+WebCacheOperation.m in Sources */,
-				D1A7DDC21D81181600D051B0 /* EnterPSWController.m in Sources */,
 				18C6979D1D7462B9004DA2B1 /* DoorLockRecordConroller.m in Sources */,
 				D1A7DDB41D8117DD00D051B0 /* RegisterViewController.m in Sources */,
 				D1AA2E651D83F48600D1AEC9 /* DeviceListModel.m in Sources */,
@@ -1899,27 +1963,26 @@
 				D1A7DDAF1D8117DD00D051B0 /* SVProgressTool.m in Sources */,
 				D1A7DD9C1D8117DD00D051B0 /* HRMessageData.m in Sources */,
 				D1A7DDCA1D811BB900D051B0 /* HRConst.m in Sources */,
-				D1A7DDAE1D8117DD00D051B0 /* QRTools.m in Sources */,
 				D1A7DD5B1D8117DD00D051B0 /* NVActivityIndicatorAnimationLineScaleParty.swift in Sources */,
 				D1A7DD611D8117DD00D051B0 /* NVActivityIndicatorAnimationSemiCircleSpin.swift in Sources */,
 				D1B3CB3A1D966DB5009F96D2 /* HerolifeImageCell.m in Sources */,
 				18C697AC1D7462B9004DA2B1 /* PCCircleInfoView.m in Sources */,
 				D1A7DDA01D8117DD00D051B0 /* HRTotalData.m in Sources */,
 				D1A7DDBD1D8117DD00D051B0 /* WIFIListModel.m in Sources */,
-				AA2C527E1D9159CA00D0BD3D /* DeviceListController.m in Sources */,
 				D1A7DD711D8117DD00D051B0 /* MKAnnotationView+WebCache.m in Sources */,
 				D1A7DDA81D8117DD00D051B0 /* ErrorCodeManager.m in Sources */,
 				1868B8F71D76DDD400D19386 /* BackPicSetController.m in Sources */,
 				AAA8A9BA1D8CE9D900ABA020 /* ViewOfCustomerTableViewCell.m in Sources */,
 				D1A7DD221D8117DD00D051B0 /* InputText.m in Sources */,
 				D1A7DD4A1D8117DD00D051B0 /* NVActivityIndicatorAnimationBallGridPulse.swift in Sources */,
-				D1A7DD8E1D8117DD00D051B0 /* NSString+Util.m in Sources */,
 				D1A7DD631D8117DD00D051B0 /* NVActivityIndicatorAnimationTriangleSkewSpin.swift in Sources */,
 				D1A7DD571D8117DD00D051B0 /* NVActivityIndicatorAnimationBallZigZagDeflect.swift in Sources */,
 				D1A7DDAC1D8117DD00D051B0 /* HRSqlite.m in Sources */,
 				D1A7DD3B1D8117DD00D051B0 /* UIView+MJExtension.m in Sources */,
 				D1A7DD8C1D8117DD00D051B0 /* CALayer+Anim.m in Sources */,
+				D1352D7C1D9E102D003A83AB /* DeviceListController.m in Sources */,
 				D1A7DD8B1D8117DD00D051B0 /* AFNJSONResponseSerializerWithData.m in Sources */,
+				D1352D751D9E0ECB003A83AB /* XiaoRuiNewQRcode.m in Sources */,
 				D1A7DD421D8117DD00D051B0 /* FMResultSet.m in Sources */,
 				D1A7DD2E1D8117DD00D051B0 /* MJRefreshAutoNormalFooter.m in Sources */,
 				18C697A61D7462B9004DA2B1 /* CALayer+Anim.m in Sources */,
@@ -1930,8 +1993,10 @@
 				D1A7DD651D8117DD00D051B0 /* NVActivityIndicatorShape.swift in Sources */,
 				D1A7DDB01D8117DD00D051B0 /* HRButton.m in Sources */,
 				D1A7DDA71D8117DD00D051B0 /* CreateXRHttpTools.m in Sources */,
-				D1A7DD981D8117DD00D051B0 /* HRTabBarViewController.m in Sources */,
+				D1352D7E1D9E1065003A83AB /* NextController.m in Sources */,
+				D1352D6C1D9E0ECB003A83AB /* ManualCreateXiaoRui.m in Sources */,
 				D1A7DDA31D8117DD00D051B0 /* IracData.m in Sources */,
+				AAA49AED1D9D0BFE00D4D248 /* MissWebViewController.m in Sources */,
 				D1A7DD471D8117DD00D051B0 /* NVActivityIndicatorAnimationBallClipRotateMultiple.swift in Sources */,
 				D1A7DD601D8117DD00D051B0 /* NVActivityIndicatorAnimationPacman.swift in Sources */,
 				D1A7DD7B1D8117DD00D051B0 /* UIImage+GIF.m in Sources */,
@@ -1939,6 +2004,7 @@
 				D1E35D871D90DE89002A766C /* AutherTimePickView.m in Sources */,
 				D1A7DD5E1D8117DD00D051B0 /* NVActivityIndicatorAnimationLineSpinFadeLoader.swift in Sources */,
 				D1A7DDBB1D8117DD00D051B0 /* WiFiListCell.m in Sources */,
+				AA510E571D9BD94300D9FD67 /* OpenLockController.m in Sources */,
 				D1A7DD511D8117DD00D051B0 /* NVActivityIndicatorAnimationBallScaleMultiple.swift in Sources */,
 				D1A7DD3E1D8117DD00D051B0 /* FMDatabase.m in Sources */,
 				D1A7DD411D8117DD00D051B0 /* FMDatabaseQueue.m in Sources */,
@@ -1947,21 +2013,25 @@
 				D1A7DD9D1D8117DD00D051B0 /* HRNewUser.m in Sources */,
 				D1A7DDB21D8117DD00D051B0 /* TipsLabel.m in Sources */,
 				D1A7DD7C1D8117DD00D051B0 /* UIImage+MultiFormat.m in Sources */,
+				D1352D721D9E0ECB003A83AB /* SearchDeviceView.m in Sources */,
 				D17076761D94D6BB0027C46B /* LoginController.m in Sources */,
 				D1A7DD761D8117DD00D051B0 /* SDWebImageDownloader.m in Sources */,
 				D1A7DD781D8117DD00D051B0 /* SDWebImageManager.m in Sources */,
 				D1A7DD5F1D8117DD00D051B0 /* NVActivityIndicatorAnimationOrbit.swift in Sources */,
 				D1A7DD5C1D8117DD00D051B0 /* NVActivityIndicatorAnimationLineScalePulseOut.swift in Sources */,
+				D1352D781D9E0F35003A83AB /* HRTabBarViewController.m in Sources */,
 				18C697A81D7462B9004DA2B1 /* JCAlertView.m in Sources */,
 				1868B9131D79200200D19386 /* ChooseBackPicCtl.m in Sources */,
 				D1A7DD211D8117DD00D051B0 /* ForgetController.m in Sources */,
 				D1A7DD241D8117DD00D051B0 /* UIView+XD.m in Sources */,
+				D1352D6E1D9E0ECB003A83AB /* QRCodeController.m in Sources */,
 				D1A7DD491D8117DD00D051B0 /* NVActivityIndicatorAnimationBallGridBeat.swift in Sources */,
 				D1A7DD481D8117DD00D051B0 /* NVActivityIndicatorAnimationBallClipRotatePulse.swift in Sources */,
 				D1A7DD9F1D8117DD00D051B0 /* HRTempHumid.m in Sources */,
 				D1A7DD501D8117DD00D051B0 /* NVActivityIndicatorAnimationBallScale.swift in Sources */,
 				D1A7DDA61D8117DD00D051B0 /* Push.m in Sources */,
 				D1A7DD441D8117DD00D051B0 /* NVActivityIndicatorAnimationAudioEqualizer.swift in Sources */,
+				D1352D831D9E194C003A83AB /* AppDelegate.m in Sources */,
 				D1A7DD461D8117DD00D051B0 /* NVActivityIndicatorAnimationBallClipRotate.swift in Sources */,
 				D1A7DD7D1D8117DD00D051B0 /* UIImage+WebP.m in Sources */,
 				D1A7DD7E1D8117DD00D051B0 /* UIImageView+HighlightedWebCache.m in Sources */,
@@ -1971,10 +2041,12 @@
 				D1A7DD3D1D8117DD00D051B0 /* YRCoverFlowLayout.m in Sources */,
 				D1B3CB3F1D966DCA009F96D2 /* HerolifeLabelCell.m in Sources */,
 				D1A7DD9B1D8117DD00D051B0 /* HRInfraredDevice.m in Sources */,
+				D1352D7A1D9E0F5A003A83AB /* QRTools.m in Sources */,
 				D1A7DD621D8117DD00D051B0 /* NVActivityIndicatorAnimationSquareSpin.swift in Sources */,
 				D1A7DD371D8117DD00D051B0 /* MJRefreshConst.m in Sources */,
 				D1A7DD531D8117DD00D051B0 /* NVActivityIndicatorAnimationBallScaleRippleMultiple.swift in Sources */,
 				D1A7DD5A1D8117DD00D051B0 /* NVActivityIndicatorAnimationLineScale.swift in Sources */,
+				AA510E5E1D9CB4B700D9FD67 /* NSString+Util.m in Sources */,
 				D1A7DD551D8117DD00D051B0 /* NVActivityIndicatorAnimationBallTrianglePath.swift in Sources */,
 				D1A7DD951D8117DD00D051B0 /* HRNavigationViewController.m in Sources */,
 				D1A7DD921D8117DD00D051B0 /* UIImageView+Util.m in Sources */,
@@ -1982,9 +2054,9 @@
 				D1A7DD301D8117DD00D051B0 /* MJRefreshBackGifFooter.m in Sources */,
 				D1A7DD281D8117DD00D051B0 /* MJRefreshAutoFooter.m in Sources */,
 				D1A7DD4F1D8117DD00D051B0 /* NVActivityIndicatorAnimationBallRotateChase.swift in Sources */,
-				D17076741D94D6AD0027C46B /* SettingController.m in Sources */,
 				18C697A51D7462B9004DA2B1 /* PCCircleViewConst.m in Sources */,
 				D1A7DD2A1D8117DD00D051B0 /* MJRefreshComponent.m in Sources */,
+				AAA49AE81D9D0B5A00D4D248 /* EnterPSWController.m in Sources */,
 				D1A7DD8D1D8117DD00D051B0 /* NSObject+Util.m in Sources */,
 				D1A7DD321D8117DD00D051B0 /* MJRefreshBackStateFooter.m in Sources */,
 				D1A7DDAD1D8117DD00D051B0 /* HRUDPSocketTool.m in Sources */,
@@ -1992,7 +2064,6 @@
 				AAFFDDF31D800EFC005669BA /* SRActionSheet.m in Sources */,
 				D1A7DD751D8117DD00D051B0 /* SDWebImageDecoder.m in Sources */,
 				D1A7DD6F1D8117DD00D051B0 /* AsyncSocket.m in Sources */,
-				D1A7DD251D8117DD00D051B0 /* NextController.m in Sources */,
 				D1B7924D1D8BF78C00DDA4DD /* UILabel+ContentSize.m in Sources */,
 				D1A7DD341D8117DD00D051B0 /* MJRefreshNormalHeader.m in Sources */,
 				D1A7DD4C1D8117DD00D051B0 /* NVActivityIndicatorAnimationBallPulseRise.swift in Sources */,
@@ -2000,14 +2071,13 @@
 				D1A7DD8A1D8117DD00D051B0 /* AFHTTPSessionManager+Util.m in Sources */,
 				D1007CE01D8694280079D3DD /* DeviceAutherModel.m in Sources */,
 				D1A7DD451D8117DD00D051B0 /* NVActivityIndicatorAnimationBallBeat.swift in Sources */,
+				D1352D6F1D9E0ECB003A83AB /* QRViewController.m in Sources */,
 				D1A7DDB31D8117DD00D051B0 /* ManualController.m in Sources */,
 				D1A7DD391D8117DD00D051B0 /* UIScrollView+MJExtension.m in Sources */,
 				D1A7DD2F1D8117DD00D051B0 /* MJRefreshAutoStateFooter.m in Sources */,
 				D1A7DD2D1D8117DD00D051B0 /* MJRefreshAutoGifFooter.m in Sources */,
 				D1E35D8A1D916BCB002A766C /* ShouQuanManagerController.m in Sources */,
-				D1A7DDB81D8117DD00D051B0 /* WaitController.m in Sources */,
 				D1A7DD521D8117DD00D051B0 /* NVActivityIndicatorAnimationBallScaleRipple.swift in Sources */,
-				D1C7A8851D87AC9A00A97E78 /* QRCodeController.m in Sources */,
 				D1A7DD731D8117DD00D051B0 /* SDImageCache.m in Sources */,
 				D1A7DD291D8117DD00D051B0 /* MJRefreshBackFooter.m in Sources */,
 				18C697A91D7462B9004DA2B1 /* MyButton.m in Sources */,
@@ -2016,11 +2086,13 @@
 				D1A7DD661D8117DD00D051B0 /* NVActivityIndicatorView.swift in Sources */,
 				D1A7DD741D8117DD00D051B0 /* SDWebImageCompat.m in Sources */,
 				D1B3CB351D966D6D009F96D2 /* HerolifeViewController.m in Sources */,
+				D1352D691D9E0ECB003A83AB /* HRQrButton.m in Sources */,
 				18C697AA1D7462B9004DA2B1 /* UITableView+SDAutoTableViewCellHeight.m in Sources */,
 				D1A7DDAA1D8117DD00D051B0 /* HRRefreshHeader.m in Sources */,
 				D1A7DDB11D8117DD00D051B0 /* HRLabel.m in Sources */,
 				AA029EA01D7D75B500EFF91C /* HWPopTool.m in Sources */,
 				AAA8A9C61D8CEA5E00ABA020 /* DoorPswModel.m in Sources */,
+				D1352D801D9E1180003A83AB /* WaitController.m in Sources */,
 				D1B792491D8BF78C00DDA4DD /* EBForeNotification.m in Sources */,
 				D1A7DD4E1D8117DD00D051B0 /* NVActivityIndicatorAnimationBallRotate.swift in Sources */,
 				D1A7DD671D8117DD00D051B0 /* NVActivityIndicatorViewable.swift in Sources */,
@@ -2045,8 +2117,8 @@
 				D1A7DDBC1D8117DD00D051B0 /* WiFiListController.m in Sources */,
 				D1AA2E661D83F48600D1AEC9 /* DeviceListTcpModel.m in Sources */,
 				D1A7DD961D8117DD00D051B0 /* HRTabBar.m in Sources */,
-				D1EFCAC61D8956000045A0C0 /* AppDelegate.m in Sources */,
 				AAA8A9BE1D8CEA0E00ABA020 /* YXCustomAlertView.m in Sources */,
+				D1352D661D9E0ECB003A83AB /* CreateXiaoRui.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2187,6 +2259,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEFINES_MODULE = YES;
+				ENABLE_BITCODE = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/herolife/Classes/Other-其他/Library/Umeng",
@@ -2445,6 +2518,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/herolife/Classes/Other-其他/Library/Umeng",
 				);
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.huarui.herolife;
 				PRODUCT_NAME = HEROLIFE;
 				PROVISIONING_PROFILE = "";
@@ -2463,6 +2537,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEFINES_MODULE = YES;
+				ENABLE_BITCODE = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/herolife/Classes/Other-其他/Library/Umeng",
@@ -2721,6 +2796,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/herolife/Classes/Other-其他/Library/Umeng",
 				);
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.huarui.herolife;
 				PRODUCT_NAME = HEROLIFE;
 				PROVISIONING_PROFILE = "";

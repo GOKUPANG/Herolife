@@ -81,7 +81,7 @@
 		
 		NSMutableDictionary *dict = [NSMutableDictionary dictionary];
 		dict[@"result"] = result;
-		[kNotification postNotificationName:kNotificationQRCodeCreateLock object:nil userInfo:dict];
+		[kNotification postNotificationName:kNotificationQRCodeCreateXiaoRui object:nil userInfo:dict];
 		
 		DDLogInfo(@"%@", result);
 	}];

@@ -78,24 +78,54 @@
 
 
 @property(nonatomic, weak) AppDelegate *appDelegate;
-
-/** 模型数组 */
-@property(nonatomic, strong) NSMutableArray *homeArray;
+/** 目标设备不在线 提示框 */
+@property(nonatomic, weak) UILabel *onLineLabel;
+/**  */
+@property(nonatomic, strong) NSTimer *timer;
 
 
 @end
 
 @implementation PushSettingController
-
-
-
-- (NSMutableArray *)homeArray
+#pragma mark - label 懒加载
+- (UILabel *)onLineLabel
 {
-    if (!_homeArray) {
-        _homeArray = [NSMutableArray array];
-    }
-    return _homeArray;
+	if (!_onLineLabel) {
+		
+		UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(UIScreenW *0.28, UIScreenH * 0.8, UIScreenW - UIScreenW *0.56, 32)];
+		label.text = @"目标设备不在线!";
+		label.textAlignment = NSTextAlignmentCenter;
+		label.font = [UIFont systemFontOfSize:17];
+		label.textColor = [UIColor whiteColor];
+		label.layer.cornerRadius = 5;
+		label.layer.masksToBounds = YES;
+		//		label.backgroundColor = [UIColor themeColor];
+		
+		label.backgroundColor = [UIColor blackColor];
+		_onLineLabel = label;
+		
+		
+		[[UIApplication sharedApplication].keyWindow addSubview:label];
+	}
+	return _onLineLabel;
 }
+
+- (void)setListModel:(DeviceListModel *)listModel
+{
+	_listModel = listModel;
+	AppDelegate *app = (AppDelegate *)[UIApplication sharedApplication].delegate;
+	
+	DDLogWarn(@"获得我授权给别人的授权表setListModel%@count-%lu", app.homeArray, (unsigned long)app.homeArray.count);
+	for (DeviceListModel *model in app.homeArray) {
+		if ([model.uuid isEqualToString: listModel.uuid]) {
+			
+			_listModel = model;
+			
+		}
+		
+	}
+}
+
 
 - (void)viewWillAppear:(BOOL)animated
 {
@@ -115,7 +145,7 @@
         
         
         
-        self.backImgView.image = [UIImage imageNamed:@"Snip20160825_3"];
+        self.backImgView.image = [UIImage imageNamed:Defalt_BackPic];
     }
     
     
@@ -171,11 +201,12 @@
 
 
 - (void)viewDidLoad {
+	
     [super viewDidLoad];
     
     
     UIImageView *backgroundImage = [[UIImageView alloc] initWithFrame:[UIScreen mainScreen].bounds];
-    backgroundImage.image = [UIImage imageNamed:@"Snip20160825_3"];
+    backgroundImage.image = [UIImage imageNamed:Defalt_BackPic];
     self.backImgView = backgroundImage;
     
     
@@ -202,10 +233,8 @@
     
     
     /***************** 获取门锁op数组 *******************/
-
-    
-    [self getHttpDoorOP];
-    
+	
+	[self makeBaseUI];
     
     
     /***************** 与服务器建立socket连接 *******************/
@@ -217,96 +246,53 @@
     [self setString ];
     
 
-    
-   
+	//添加通知
+	[self addObserverNotification];
+	
 }
-
-#pragma mark - 获取门锁op数组
--(void)getHttpDoorOP
+#pragma mark - 通知
+- (void)addObserverNotification
 {
-    
-    NSLog(@"来到这里");
-    
-    NSLog(@"设备的uuid%@",self.listModel.uuid);
-    
-    
-    /// 从偏好设置里加载数据
-    NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
-    NSString *user = [userDefault objectForKey:kDefaultsUserName];
-    
-    NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
-    parameters[@"user"] = user;
-    HRWeakSelf
-    [HRHTTPTool hr_getHttpWithURL:HRAPI_LockInFo_URL parameters:parameters responseDict:^(id responseObject, NSError *error) {
-        
-        if (error) {
-            [ErrorCodeManager showError:error];
-            return ;
-        }
-        
-        DDLogWarn(@"获取设备信息HTTP请求%@", responseObject);
-        //如果responseObject不是数组类型就不是我们想要的数据，应该过滤掉
-        if (![responseObject isKindOfClass:[NSArray class]]) {
-            [weakSelf.homeArray removeAllObjects];
-            DDLogDebug(@"responseObject不是NSArray");
-            return;
-            
-            
-        }
-        //去除服务器发过来的数据里没有值的情况
-        if (((NSArray*)responseObject).count < 1 ) {
-            DDLogDebug(@"responseObject count == 0");
-            return;
-        }
-        
-        [weakSelf.homeArray removeAllObjects];
-        NSArray *responseArr = (NSArray*)responseObject;
-        
-        for (NSDictionary *dict in responseArr) {
-            DeviceListModel *home = [DeviceListModel mj_objectWithKeyValues:dict];
-            if ([home.types isEqualToString:@"hrsc"]) {
-                
-                if ([home.uuid isEqualToString:self.listModel.uuid]) {
-                    
-                    
-                    self.listModel=home;
-                    
-                    NSLog(@"Home的op数组是%@",home.op);
-                    
-                    NSLog(@"我的op数组是%@",self.listModel.op);
-                    
-                    
-                    
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        
-                        [self makeBaseUI];
-
-                        
-                    });
-
-                   
-                    
-                    
-                }
-                
-                
-                [weakSelf.homeArray addObject:home];
-                
-               
-                
-            }
-        }
-        
-        
-    }];
-    
-    /***************** 建立UI界面 *******************/
-    
-   
+	//监听设备是否在线
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receviedWithNotOnline) name:kNotificationNotOnline object:nil];
+	
+	[kNotification addObserver:self selector:@selector(receivePushDeviceInformation:) name:kNotificationReceivePushDeviceInformation object:nil];
+	
 }
 
-
-#pragma mark - 
+static BOOL isShowOverMenu = NO;
+- (void)receviedWithNotOnline
+{
+	isShowOverMenu = YES;
+	[SVProgressTool hr_dismiss];
+	self.onLineLabel.backgroundColor = [UIColor blackColor];
+	[UIView animateWithDuration:0.01 animations:^{
+		self.onLineLabel.alpha = 0.0;
+	} completion:^(BOOL finished) {
+		[UIView animateWithDuration:0.5 animations:^{
+			self.onLineLabel.alpha = 1.0;
+		} completion:^(BOOL finished) {
+			[UIView animateWithDuration:0.5 delay:1.5 options:UIViewAnimationOptionAllowUserInteraction animations:^{
+				self.onLineLabel.alpha = 0.0;
+				
+			} completion:^(BOOL finished) {
+				
+				[self.onLineLabel removeFromSuperview];
+			}];
+		}];
+	}];
+	
+	
+}
+// 921修改
+static BOOL isOvertime = NO;
+- (void)receivePushDeviceInformation:(NSNotification *)note
+{
+	isOvertime = YES;
+	[SVProgressTool hr_dismiss];
+	[self.navigationController popViewControllerAnimated:YES];
+}
+#pragma mark -
 -(void)setString
 {
     self.FriendPhone = [self.listModel.op objectAtIndex:4];
@@ -327,8 +313,6 @@
     self.appDelegate = appDelegate;
     
 }
-
-
 
 
 #pragma mark - 界面设置
@@ -403,7 +387,10 @@
     
     headLabel.textColor = [UIColor whiteColor];
     
-    headLabel.text =@"HEROLIFE";
+    NSString * userName  = [kUserDefault objectForKey:kDefaultsUserName];
+    
+    
+    headLabel.text = userName ;
     
     
     headLabel.sd_layout
@@ -437,7 +424,7 @@
     [self.view addSubview:pushLabel];
     
     pushLabel.sd_layout
-    .bottomSpaceToView(lineView2,10*HRMyScreenH)
+    .bottomSpaceToView(lineView2,10 * HRMyScreenH)
     .leftSpaceToView(self.view,15)
     .heightIs(20)
     .rightEqualToView(self.view);
@@ -450,7 +437,7 @@
     
     lineView3.sd_layout
     .topSpaceToView(lineView2,45.0 * HRMyScreenH)
-    .leftSpaceToView(self.view,42.5 *HRMyScreenW)
+    .leftSpaceToView(self.view,42.5 * HRMyScreenW)
     .rightEqualToView(lineView2)
     .heightIs(1);
     
@@ -537,8 +524,6 @@
     .rightEqualToView(lineView8)
     .heightIs(1);
 
-
-    
     /****************************** 推送开关 ******************************/
 
     
@@ -998,6 +983,8 @@
     
     loginPwdField.placeholder = @"对方常用手机";
     
+    [loginPwdField setValue:[UIColor colorWithWhite:1.0 alpha:0.7] forKeyPath:@"_placeholderLabel.textColor"];
+    
     loginPwdField.textColor = [UIColor whiteColor];
     
     
@@ -1021,6 +1008,7 @@
     PSWNameField.layer.cornerRadius = 4;
     
     PSWNameField.placeholder = @"对方称呼";
+    [PSWNameField setValue:[UIColor colorWithWhite:1.0 alpha:0.7] forKeyPath:@"_placeholderLabel.textColor"];
     
     PSWNameField.textColor = [UIColor whiteColor];
     
@@ -1058,6 +1046,8 @@
     
     MyNameField.placeholder = @"您的称呼";
     
+    [MyNameField setValue:[UIColor colorWithWhite:1.0 alpha:0.7] forKeyPath:@"_placeholderLabel.textColor"];
+    
     MyNameField.textColor = [UIColor whiteColor];
     
     
@@ -1094,6 +1084,7 @@
     DoorAdressField.layer.cornerRadius = 4;
     
     DoorAdressField.placeholder = @"门锁所在地";
+    [DoorAdressField setValue:[UIColor colorWithWhite:1.0 alpha:0.7] forKeyPath:@"_placeholderLabel.textColor"];
     
     DoorAdressField.textColor = [UIColor whiteColor];
     
@@ -1202,6 +1193,8 @@
     
     loginPwdField.placeholder = @"提醒人的手机";
     
+    [loginPwdField setValue:[UIColor colorWithWhite:1.0 alpha:0.7] forKeyPath:@"_placeholderLabel.textColor"];
+    
     loginPwdField.textColor = [UIColor whiteColor];
     
     
@@ -1225,6 +1218,7 @@
     PSWNameField.layer.cornerRadius = 4;
     
     PSWNameField.placeholder = @"防撬提醒人姓名";
+    [PSWNameField setValue:[UIColor colorWithWhite:1.0 alpha:0.7] forKeyPath:@"_placeholderLabel.textColor"];
     
     PSWNameField.textColor = [UIColor whiteColor];
     
@@ -1379,11 +1373,21 @@
     
     
     [self.appDelegate sendMessageWithString:RequestStr];
-    
-    [self.navigationController popViewControllerAnimated:YES];
-    
+	
+	[SVProgressTool hr_showWithStatus:@"正在保存推送设置..."];
+	// 设置超时
+	isOvertime = NO;
+	isShowOverMenu = NO;
+	// 启动定时器
+	[_timer invalidate];
+	_timer = [NSTimer scheduledTimerWithTimeInterval:HRTimeInterval target:self selector:@selector(startTimer) userInfo:nil repeats:NO];
 
-    
+}
+- (void)startTimer
+{
+	if (!isOvertime && !isShowOverMenu) {
+		[SVProgressTool hr_showErrorWithStatus:@"请求超时!"];
+	}
 }
 
 #pragma mark - YXCustomAlertViewDelegate 劫持提醒与防撬提醒的弹窗选中

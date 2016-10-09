@@ -50,6 +50,8 @@
 @property(nonatomic, weak)  UILabel *loginLabel;
 /** QQ第三方登陆 */
 @property(nonatomic, weak)  UIButton *qqButton;
+/** <#name#> */
+@property(nonatomic, weak) UIImageView *backImgView;
 @property (nonatomic, assign) BOOL chang;
 
 
@@ -72,11 +74,40 @@
 {
 	[kNotification removeObserver:self];
 }
+
 - (void)viewWillAppear:(BOOL)animated
 {
 	[super viewWillAppear:animated];
-//	[self.userNameField becomeFirstResponder];
+	
+	
+	NSInteger  PicNum =   [[NSUserDefaults standardUserDefaults] integerForKey:@"PicNum"];
+	
+	if (!PicNum) {
+		
+		
+		
+		self.backImgView.image = [UIImage imageNamed:@"1.jpg"];
+	}
+	
+	
+	else if (PicNum == -1)
+	{
+		NSString *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES).lastObject;
+		path = [path stringByAppendingPathComponent:@"image.png"];
+		
+		self.backImgView.image =[UIImage imageWithContentsOfFile:path];
+	}
+	
+	else{
+		
+		NSString * imgName = [NSString stringWithFormat:@"%ld.jpg",PicNum];
+		
+		self.backImgView.image =[UIImage imageNamed:imgName];
+	}
+	
+	
 }
+
 
 - (void)viewDidAppear:(BOOL)animated
 {
@@ -219,7 +250,8 @@
 	
 	//背景图片
 	UIImageView *backgroundImage = [[UIImageView alloc] initWithFrame:[UIScreen mainScreen].bounds];
-	backgroundImage.image = [UIImage imageNamed:@"4.jpg"];
+	backgroundImage.image = [UIImage imageNamed:@"1.jpg"];
+	self.backImgView = backgroundImage;
 	[self.view addSubview:backgroundImage];
 	
 	
@@ -355,6 +387,8 @@
 	[self.navigationController pushViewController:forgetVC animated:YES];
 }
 //注册
+
+#pragma mark -注册按钮的点击
 - (void)registerButtonClick:(UIButton *)button
 {
 	RegisterViewController *registerVC = [[RegisterViewController alloc] init];
@@ -521,7 +555,8 @@
 			  [SVProgressTool hr_dismiss];
 			  HRTabBarViewController *tabBarVC = [[HRTabBarViewController alloc] init];
 //			  [self.navigationController pushViewController:tabBarVC animated:YES];
-			  [self presentViewController:tabBarVC animated:YES completion:nil];
+			  [UIApplication sharedApplication].keyWindow.rootViewController = tabBarVC;
+//			  [self presentViewController:tabBarVC animated:YES completion:nil];
 			  
 		  }
 	  }];

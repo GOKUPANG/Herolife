@@ -8,8 +8,6 @@
 
 #import "QRCodeController.h"
 #import <AVFoundation/AVFoundation.h>
-
-#import "ManualController.h"
 #import "NextController.h"
 
 @interface QRCodeController ()<AVCaptureMetadataOutputObjectsDelegate, UIAlertViewDelegate>
@@ -19,17 +17,9 @@
     UIView *highlightView;
 }
 
-
-/** 扫描二维码 按钮 */
-@property(nonatomic, weak) UIButton *leftButton;
-/** 扫描二维码 label */
-@property(nonatomic, weak) UILabel *qrLabel;
-/** 手动添加 按钮 */
-@property(nonatomic, weak) UIButton *rightButton;
-/** 手动添加Label */
-@property(nonatomic, weak) UILabel *rightLabel;
-/** <#name#> */
 @property(nonatomic, strong) NSTimer *timer;
+/** 保存当前扫描到的数据 */
+@property(nonatomic, copy) NSString *currentData;
 @end
 
 @implementation QRCodeController
@@ -42,32 +32,13 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self instanceDevice];
-	
-}
-- (void)viewWillAppear:(BOOL)animated
-{
-	[super viewWillAppear:animated];
-	self.leftButton.selected = YES;
-	self.rightButton.selected = NO;
-}
-- (void)viewDidAppear:(BOOL)animated
-{
-	[super viewDidAppear:animated];
-}
-- (void)setupViews
-{
-	self.navigationController.navigationBar.hidden = YES;
-	HRNavigationBar *navView = [[HRNavigationBar alloc] initWithFrame:CGRectMake(0, 20, HRUIScreenW, HRNavH)];
-	navView.titleLabel.text = @"二维码添加设备";
-	navView.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.1];
-	[self.view addSubview:navView];
-}
-- (void)viewDidLayoutSubviews
-{
-	[super viewDidLayoutSubviews];
 }
 
-#pragma mark - 配置相机属性
+/**
+ *  @author Whde
+ *
+ *  配置相机属性
+ */
 - (void)instanceDevice{
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:YES];
     line_tag = 1872637;
@@ -118,8 +89,16 @@
     [session startRunning];
 }
 
-
-#pragma mark -  监听扫码状态-修改扫描动画
+/**
+ *  @author Whde
+ *
+ *  监听扫码状态-修改扫描动画
+ *
+ *  @param keyPath
+ *  @param object
+ *  @param change
+ *  @param context
+ */
 - (void)observeValueForKeyPath:(NSString *)keyPath
                       ofObject:(id)object
                         change:(NSDictionary *)change
@@ -134,80 +113,47 @@
     }
 }
 
-
-#pragma mark -  获取扫码结果
+/**
+ *  @author Whde
+ *
+ *  获取扫码结果
+ *
+ *  @param captureOutput
+ *  @param metadataObjects
+ *  @param connection
+ */
 -(void)captureOutput:(AVCaptureOutput *)captureOutput didOutputMetadataObjects:(NSArray *)metadataObjects fromConnection:(AVCaptureConnection *)connection{
-    if (metadataObjects.count>0) {
-        AVMetadataMachineReadableCodeObject * metadataObject = [metadataObjects objectAtIndex :0];
-        
-        //二维码扫描的数据
-		
-		[kUserDefault setObject:@"" forKey:kUserDefaultQrData];
-		[kUserDefault synchronize];
-        NSString *data = metadataObject.stringValue;
-		
-		//过滤
-		if ([data containsString:@"HRSC"]) {
-			
-			[session stopRunning];
-			[kUserDefault setObject:data forKey:kUserDefaultQrData];
-			[kUserDefault synchronize];
-			[self selfRemoveFromSuperview];
-			
-			NextController *next = [[NextController alloc] init];
-			next.qrData = data;
-			[self.navigationController pushViewController:next animated:YES];
-		}else
-		{
-			NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:3.0 target:self selector:@selector(showError) userInfo:nil repeats:NO];
-			self.timer = timer;
-			
-		}
-//        if (_didReceiveBlock) {
-//            _didReceiveBlock(data);
-//
-//        } else {
-//            if (IS_VAILABLE_IOS8) {
-//                UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"扫码" message:data preferredStyle:UIAlertControllerStyleAlert];
-//                [alert addAction:[UIAlertAction actionWithTitle:@"好" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-//                    [session startRunning];
-//                }]];
-//                [self presentViewController:alert animated:YES completion:nil];
-////            } else {
-//                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"扫码" message:data delegate:self cancelButtonTitle:@"好" otherButtonTitles:nil];
-//                [alert show];
-//
-//            }
-//        }
-    }
-}
-- (void)showError
-{
-	[SVProgressTool hr_showErrorWithStatus:@"请对准本门锁进行扫描"];
 	
-}
-- (void)dealloc
-{
-	[self.timer invalidate];
-}
-- (void)goToHomeList
-{
-	for (UIView *view  in self.tabBarController.view.subviews) {
-		if ([NSStringFromClass([view class]) isEqualToString:@"HRTabBar"]) {
-			view.hidden = NO;
-			for (UIButton *btn in view.subviews) {
-    
-				if (btn.tag == 2) {
-					btn.selected = YES;
-				}
+	if (metadataObjects.count>0) {
+		[session stopRunning];
+		AVMetadataMachineReadableCodeObject * metadataObject = [metadataObjects objectAtIndex :0];
+		
+		//输出扫描字符串
+		NSString *data = metadataObject.stringValue;
+		if (_didReceiveBlock) {
+			_didReceiveBlock(data);
+			[self selfRemoveFromSuperview];
+		} else {
+			if (IS_VAILABLE_IOS8) {
+				UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"扫码" message:data preferredStyle:UIAlertControllerStyleAlert];
+				[alert addAction:[UIAlertAction actionWithTitle:@"好" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+					[session startRunning];
+				}]];
+				[self presentViewController:alert animated:YES completion:nil];
+			} else {
+				UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"扫码" message:data delegate:self cancelButtonTitle:@"好" otherButtonTitles:nil];
+				[alert show];
 			}
 		}
 	}
-	self.tabBarController.selectedIndex = 1;
-	[self.navigationController popToRootViewControllerAnimated:YES];
 }
-
-#pragma mark -  未识别(其他)的二维码提示点击"好",继续扫码
+/**
+ *  @author Whde
+ *
+ *  未识别(其他)的二维码提示点击"好",继续扫码
+ *
+ *  @param alertView
+ */
 - (void)alertViewCancel:(UIAlertView *)alertView {
     [session startRunning];
 }
@@ -221,142 +167,85 @@
     [super didReceiveMemoryWarning];
 }
 
-
-#pragma mark -   创建扫码页面
+/**
+ *  @author Whde
+ *
+ *  创建扫码页面
+ */
 - (void)setOverlayPickerView
 {
-	[self setupViews];
     //左侧的view
-    UIImageView *leftView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, HRCommonScreenW * 194, self.view.frame.size.height)];
+    UIImageView *leftView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 30, self.view.frame.size.height)];
     leftView.alpha = 0.5;
     leftView.backgroundColor = [UIColor blackColor];
     [self.view addSubview:leftView];
     //右侧的view
-    UIImageView *rightView = [[UIImageView alloc] initWithFrame:CGRectMake(self.view.frame.size.width- HRCommonScreenW * 194, 0, HRCommonScreenW * 194, self.view.frame.size.height)];
+    UIImageView *rightView = [[UIImageView alloc] initWithFrame:CGRectMake(self.view.frame.size.width-30, 0, 30, self.view.frame.size.height)];
     rightView.alpha = 0.5;
     rightView.backgroundColor = [UIColor blackColor];
     [self.view addSubview:rightView];
     
     //最上部view
-    UIImageView* upView = [[UIImageView alloc] initWithFrame:CGRectMake(HRCommonScreenW * 194, 0, self.view.frame.size.width- (HRCommonScreenW * 194) *2, (self.view.center.y-(self.view.frame.size.width- (HRCommonScreenW * 194) *2)/2))];
+    UIImageView* upView = [[UIImageView alloc] initWithFrame:CGRectMake(30, 0, self.view.frame.size.width-60, (self.view.center.y-(self.view.frame.size.width-60)/2))];
     upView.alpha = 0.5;
     upView.backgroundColor = [UIColor blackColor];
     [self.view addSubview:upView];
     
     //底部view
-    UIImageView * downView = [[UIImageView alloc] initWithFrame:CGRectMake(HRCommonScreenW * 194, (self.view.center.y+(self.view.frame.size.width- (HRCommonScreenW * 194) *2)/2), (self.view.frame.size.width- (HRCommonScreenW * 194) *2), (self.view.frame.size.height-(self.view.center.y-(self.view.frame.size.width- (HRCommonScreenW * 194) *2)/2)))];
+    UIImageView * downView = [[UIImageView alloc] initWithFrame:CGRectMake(30, (self.view.center.y+(self.view.frame.size.width-60)/2), (self.view.frame.size.width-60), (self.view.frame.size.height-(self.view.center.y-(self.view.frame.size.width-60)/2)))];
     downView.alpha = 0.5;
     downView.backgroundColor = [UIColor blackColor];
     [self.view addSubview:downView];
     
-    UIImageView *centerView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width- (HRCommonScreenW * 194) *2, self.view.frame.size.width- (HRCommonScreenW * 194) *2)];
+    UIImageView *centerView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width-60, self.view.frame.size.width-60)];
     centerView.center = self.view.center;
     centerView.image = [UIImage imageNamed:@"Scanning frame"];
     centerView.contentMode = UIViewContentModeScaleAspectFit;
     centerView.backgroundColor = [UIColor clearColor];
     [self.view addSubview:centerView];
     
-    UIImageView *line = [[UIImageView alloc] initWithFrame:CGRectMake((HRCommonScreenW * 194), CGRectGetMaxY(upView.frame), self.view.frame.size.width- (HRCommonScreenW * 194) *2, 2)];
+    UIImageView *line = [[UIImageView alloc] initWithFrame:CGRectMake(30, CGRectGetMaxY(upView.frame), self.view.frame.size.width-60, 2)];
     line.tag = line_tag;
     line.image = [UIImage imageNamed:@"Scanning line"];
     line.contentMode = UIViewContentModeScaleAspectFill;
     line.backgroundColor = [UIColor clearColor];
     [self.view addSubview:line];
-	//求字体长度
-	NSMutableDictionary *dictFont = [NSMutableDictionary dictionary];
-	dictFont[NSFontAttributeName] = [UIFont systemFontOfSize:12];
-	CGSize size = [@"扫描二维码添加" sizeWithAttributes:dictFont];
-	
-    UILabel *msg = [[UILabel alloc] initWithFrame:CGRectMake(30, CGRectGetMinY(downView.frame) + HRCommonScreenH *10, size.width, size.height)];
-	msg.hr_centerX = self.view.hr_centerX;
+    
+    UILabel *msg = [[UILabel alloc] initWithFrame:CGRectMake(30, CGRectGetMinY(downView.frame), self.view.frame.size.width-60, 60)];
     msg.backgroundColor = [UIColor clearColor];
     msg.textColor = [UIColor whiteColor];
     msg.textAlignment = NSTextAlignmentCenter;
-    msg.font = [UIFont systemFontOfSize:12];
-    msg.text = @"扫描二维码添加";
+    msg.font = [UIFont systemFontOfSize:16];
+    msg.text = @"将二维码放入框内,即可自动扫描";
     [self.view addSubview:msg];
-	
-	//求字体长度
-	NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-	dict[NSFontAttributeName] = [UIFont systemFontOfSize:14];
-	CGSize labelSize = [@"将设备进入激活模式并扫描屏幕二维码" sizeWithAttributes:dict];
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(msg.frame) + HRCommonScreenH*28, labelSize.width, labelSize.height)];
-	label.hr_centerX = self.view.hr_centerX;
+    
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height-100, self.view.frame.size.width, 100)];
     label.backgroundColor = [UIColor clearColor];
     label.textColor = [UIColor whiteColor];
     label.textAlignment = NSTextAlignmentCenter;
-    label.font = [UIFont systemFontOfSize:14];
-    label.text = @"将设备进入激活模式并扫描屏幕二维码";
+    label.font = [UIFont systemFontOfSize:24];
+    label.text = @"";
     [self.view addSubview:label];
-	
-	/// 自己添加的按钮
-	//二维码按钮
-	CGFloat tabbarMinY = HRUIScreenH - 49;
-	UIButton *leftButton= [UIButton buttonWithType:UIButtonTypeCustom];
-	[leftButton setBackgroundImage:[UIImage imageNamed:@"新增二维码"] forState:UIControlStateNormal];
-	[leftButton setBackgroundImage:[UIImage imageNamed:@"新增发光二维"] forState:UIControlStateSelected];
-	leftButton.frame = CGRectMake(0, tabbarMinY - HRCommonScreenH *(104 +72), HRCommonScreenW * 72, HRCommonScreenW * 72);
-	leftButton.hr_centerX = self.view.hr_centerX - HRCommonScreenW *134;
-	[leftButton addTarget:self action:@selector(qrcodeButtonClick:) forControlEvents:UIControlEventTouchUpInside];
-	[self.view addSubview:leftButton];
-	
-	self.leftButton = leftButton;
-	CGSize leftSize = [@"扫描添加" sizeWithAttributes:dict];
-	
-	
-	UILabel *qrLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(leftButton.frame) + HRCommonScreenH*10, leftSize.width, leftSize.height)];
-	qrLabel.hr_centerX = leftButton.hr_centerX;
-	qrLabel.backgroundColor = [UIColor clearColor];
-	qrLabel.textColor = [UIColor whiteColor];
-	qrLabel.textAlignment = NSTextAlignmentCenter;
-	qrLabel.font = [UIFont systemFontOfSize:14];
-	qrLabel.text = @"扫描添加";
-	
-	[self.view addSubview:qrLabel];
-	self.qrLabel = qrLabel;
-	
-	//手动添加按钮
-	UIButton *rightButton= [UIButton buttonWithType:UIButtonTypeCustom];
-	[rightButton setBackgroundImage:[UIImage imageNamed:@"新增手动"] forState:UIControlStateNormal];
-	[rightButton setBackgroundImage:[UIImage imageNamed:@"新增发光手"] forState:UIControlStateSelected];
-	rightButton.frame = CGRectMake(0, tabbarMinY - HRCommonScreenH *(104 +72), HRCommonScreenW * 72, HRCommonScreenW * 72);
-	rightButton.hr_centerX = self.view.hr_centerX + HRCommonScreenW *134;
-	[rightButton addTarget:self action:@selector(manualButtonClick:) forControlEvents:UIControlEventTouchUpInside];
-	[self.view addSubview:rightButton];
-	self.rightButton = rightButton;
-	
-	CGSize rightSize = [@"手动添加" sizeWithAttributes:dict];
-	UILabel *rightLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(leftButton.frame) + HRCommonScreenH*10, rightSize.width, rightSize.height)];
-	rightLabel.hr_centerX = rightButton.hr_centerX;
-	rightLabel.backgroundColor = [UIColor clearColor];
-	rightLabel.textColor = [UIColor whiteColor];
-	rightLabel.textAlignment = NSTextAlignmentCenter;
-	rightLabel.font = [UIFont systemFontOfSize:14];
-	rightLabel.text = @"手动添加";
-	
-	[self.view addSubview:rightLabel];
-	self.rightLabel = rightLabel;
-}
-#pragma mark - UI事件
-- (void)qrcodeButtonClick:(UIButton *)btn
-{
-}
-- (void)manualButtonClick:(UIButton *)btn
-{
-	self.leftButton.selected = NO;
-	self.rightButton.selected = YES;
-	ManualController *manulVC = [[ManualController alloc] init];
-	
-	[self.navigationController pushViewController:manulVC animated:NO];
-	
-	
+    
+    
+    CGRect leftFrame;
+    leftFrame = CGRectMake(-2, 10, 60, 64);
+    UIButton *leftButton= [UIButton buttonWithType:UIButtonTypeCustom];
+    leftButton.frame =leftFrame;
+    [leftButton addTarget:self action:@selector(dismissOverlayView:) forControlEvents:UIControlEventTouchUpInside];
+    [leftButton setImage:[UIImage imageNamed:@"backWhite"] forState:UIControlStateNormal];
+    [self.view addSubview:leftButton];
 }
 
-#pragma mark -   添加扫码动画
+/**
+ *  @author Whde
+ *
+ *  添加扫码动画
+ */
 - (void)addAnimation{
     UIView *line = [self.view viewWithTag:line_tag];
     line.hidden = NO;
-    CABasicAnimation *animation = [QRCodeController moveYTime:2 fromY:[NSNumber numberWithFloat:0] toY:[NSNumber numberWithFloat:self.view.frame.size.width-(HRCommonScreenW * 194) *2 - 2] rep:OPEN_MAX];
+    CABasicAnimation *animation = [QRCodeController moveYTime:2 fromY:[NSNumber numberWithFloat:0] toY:[NSNumber numberWithFloat:self.view.frame.size.width-60-2] rep:OPEN_MAX];
     [line.layer addAnimation:animation forKey:@"LineAnimation"];
 }
 
@@ -380,7 +269,6 @@
  *
  *  去除扫码动画
  */
-#pragma mark - 去除扫码动画
 - (void)removeAnimation{
     UIView *line = [self.view viewWithTag:line_tag];
     [line.layer removeAnimationForKey:@"LineAnimation"];
@@ -394,7 +282,6 @@
  *
  *  @return
  */
-#pragma mark - 扫码取消button方法
 - (void)dismissOverlayView:(id)sender{
     [self selfRemoveFromSuperview];
 }
@@ -404,7 +291,6 @@
  *
  *  从父视图中移出
  */
-#pragma mark - 从父视图中移出
 - (void)selfRemoveFromSuperview{
     [session removeObserver:self forKeyPath:@"running" context:nil];
     [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
@@ -414,7 +300,6 @@
         [self removeFromParentViewController];
     }];
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault animated:YES];
-	
 }
 
 /*!

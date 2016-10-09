@@ -279,6 +279,8 @@
 #define kNotificationReceiveTempAutherInformation @"kNotificationReceiveTempAutherInformation"
 // 接收到取消授权数据数据 通知
 #define kNotificationReceiveDeleteAutherInformation @"kNotificationReceiveDeleteAutherInformation"
+// 接收到推送设置界面服务器返回的数据数据 通知
+#define kNotificationReceivePushDeviceInformation @"kNotificationReceivePushDeviceInformation"
 
 
 

@@ -81,7 +81,7 @@ extern NSInteger showNum;
         
         
         
-        self.backImgView.image = [UIImage imageNamed:@"Snip20160825_3"];
+        self.backImgView.image = [UIImage imageNamed:Defalt_BackPic];
     }
     
     
@@ -142,7 +142,7 @@ extern NSInteger showNum;
     
     //背景图片
     UIImageView *backgroundImage = [[UIImageView alloc] initWithFrame:[UIScreen mainScreen].bounds];
-    backgroundImage.image        = [UIImage imageNamed:@"Snip20160825_3"];
+    backgroundImage.image        = [UIImage imageNamed:Defalt_BackPic];
     self.backImgView             = backgroundImage;
 
     [self.view addSubview:self.backImgView];

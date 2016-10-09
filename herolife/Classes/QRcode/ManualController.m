@@ -71,7 +71,7 @@
         
         
         
-        self.backImgView.image = [UIImage imageNamed:@"Snip20160825_3"];
+        self.backImgView.image = [UIImage imageNamed:Defalt_BackPic];
     }
     
     
@@ -100,7 +100,7 @@
 	
 	//背景图片
     UIImageView *backgroundImage = [[UIImageView alloc] initWithFrame:[UIScreen mainScreen].bounds];
-    backgroundImage.image = [UIImage imageNamed:@"Snip20160825_3"];
+    backgroundImage.image = [UIImage imageNamed:Defalt_BackPic];
     self.backImgView = backgroundImage;
     
     

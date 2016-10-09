@@ -41,6 +41,8 @@
 @property(nonatomic, strong) NSMutableArray *autherArray;
 /** 授权设备信息 模型数组 */
 @property(nonatomic, strong) NSArray *autherDeviceArray;
+/** 保存推送设置界面服务器返回的数据数据 */
+@property(nonatomic, strong) NSMutableArray *homeArray;
 
 
 /**

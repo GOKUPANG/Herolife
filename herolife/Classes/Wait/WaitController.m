@@ -51,38 +51,61 @@ static int const HRTimeDuration = 30;
 - (void)viewDidLoad {
     [super viewDidLoad];
 	
+	DDLogWarn(@"wifi----------WaitController-------%@", [NSString stringWithGetWifiName]);
+	[self setupViews];
 	//添加定时器
 	[self addTimer];
-	[self setupViews];
 	[self sendHTTPData];
 	
+}
+- (void)viewDidAppear:(BOOL)animated
+{
+	[super viewDidAppear:animated];
+	DDLogWarn(@"WaitController--------viewDidAppear");
 }
 #pragma mark - HTTP
 - (void)sendHTTPData
 {
 	//先去查询, HTTP查询如果有数据就去更新, 如果没有就创建&uid=uid&type=hrsc&uuid=uuid
-	NSString *user = [kUserDefault objectForKey:kDefaultsUserName];
 	AppDelegate *app = (AppDelegate *)[UIApplication sharedApplication].delegate;
 	NSDictionary *msg = app.msgDictionary;
-	NSString *ssid = msg[@"ssid"];
+	NSString *ssid = msg[@"uuid"];
 	NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-	dict[@"user"] = user;
+//	NSString *user = [kUserDefault objectForKey:kDefaultsUserName];  这里去掉user这个字段
+//	dict[@"user"] = user;
 	dict[@"types"] = @"hrsc";
 	dict[@"uuid"] = ssid;
 	[HRHTTPTool hr_getHttpWithURL:HRAPI_QueryLock_URL parameters:dict responseDict:^(id dictionary, NSError *error) {
 		DDLogWarn(@"array--%@---error---%@", dictionary,error);
 		DDLogWarn(@"class--%@", [dictionary class]);
+		
+		if (error) {
+			[ErrorCodeManager showError:error];
+			
+			return ;
+		}
 		if ([[dictionary class] isSubclassOfClass:[NSArray class]]) {
 			NSArray *arr = (NSArray *)dictionary;
 			if (arr.count > 0) {
 				
 				for (NSDictionary *dict in arr) {
 					NSString *uuid = [dict valueForKeyPath:@"uuid"];
+					NSString *uid = [dict valueForKeyPath:@"uid"];
+					NSString *defaultUid = [kUserDefault objectForKey:kDefaultsUid];
 					if ([uuid isEqualToString:ssid]) {
-						
 						AddLockController *addLockVC = [[AddLockController alloc] init];
-						addLockVC.did = [dict valueForKeyPath:@"did"];
-						[self.navigationController pushViewController:addLockVC animated:YES];
+						if ([defaultUid isEqualToString:uid]) {
+							
+							addLockVC.did = [dict valueForKeyPath:@"did"];
+							[self.navigationController pushViewController:addLockVC animated:YES];
+						}else
+						{
+							[SVProgressTool hr_showErrorWithStatus:@"该门锁在其他帐号上已经添加,请在其他帐号上删除该门锁,再重试!"];
+							dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+								
+								[self.navigationController popViewControllerAnimated:YES];
+							});
+						}
 					}
 				}
 			}else
@@ -111,18 +134,23 @@ static int const HRTimeDuration = 30;
 	dict[@"field_level[und][0][value]"] = @"90%";
 	dict[@"field_state[und][0][value]"] = @"0";
 	dict[@"field_online[und][0][value]"] = @"off";
-	dict[@"field_op[und][0][value]"] = @"0";
-	dict[@"field_op[und][1][value]"] = @"0";
-	dict[@"field_op[und][2][value]"] = @"0";
-	dict[@"field_op[und][3][value]"] = @"0";
-	dict[@"field_op[und][4][value]"] = @"none/phone number";
-	dict[@"field_op[und][5][value]"] = @"none/emergency contact";
-	dict[@"field_op[und][6][value]"] = @"none/your name";
-	dict[@"field_op[und][7][value]"] = @"none/lock address";
-	dict[@"field_op[und][8][value]"] = @"none/phone number";
-	dict[@"field_op[und][9][value]"] = @"none/your name";
+	dict[@"field_op[und][0][value]"] = @"1";
+	dict[@"field_op[und][1][value]"] = @"1";
+	dict[@"field_op[und][2][value]"] = @"1";
+	dict[@"field_op[und][3][value]"] = @"1";
+	dict[@"field_op[und][4][value]"] = @"none";
+	dict[@"field_op[und][5][value]"] = @"none";
+	dict[@"field_op[und][6][value]"] = @"none";
+	dict[@"field_op[und][7][value]"] = @"none";
+	dict[@"field_op[und][8][value]"] = @"none";
+	dict[@"field_op[und][9][value]"] = @"none";
 	
 	[HRHTTPTool hr_postHttpWithURL:HRAPI_AddLock_URL parameters:dict responseDict:^(id dictionary, NSError *error) {
+		
+		if (error) {
+			[ErrorCodeManager showError:error];
+			return ;
+		}
 		NSDictionary *dict = (NSDictionary *)dictionary;
 		AddLockController *addLockVC = [[AddLockController alloc] init];
 		addLockVC.did = [dict valueForKeyPath:@"nid"];
@@ -131,6 +159,41 @@ static int const HRTimeDuration = 30;
 		
 	}];
 }
+
+
+- (void)viewWillAppear:(BOOL)animated
+{
+	[super viewWillAppear:animated];
+	
+	
+	NSInteger  PicNum =   [[NSUserDefaults standardUserDefaults] integerForKey:@"PicNum"];
+	
+	if (!PicNum) {
+		
+		
+		
+		self.backImgView.image = [UIImage imageNamed:@"1.jpg"];
+	}
+	
+	
+	else if (PicNum == -1)
+	{
+		NSString *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES).lastObject;
+		path = [path stringByAppendingPathComponent:@"image.png"];
+		
+		self.backImgView.image =[UIImage imageWithContentsOfFile:path];
+	}
+	
+	else{
+		
+		NSString * imgName = [NSString stringWithFormat:@"%ld.jpg",PicNum];
+		
+		self.backImgView.image =[UIImage imageNamed:imgName];
+	}
+	
+	
+}
+
 #pragma mark - 内部方法
 - (void)setupViews
 {
@@ -154,10 +217,31 @@ static int const HRTimeDuration = 30;
 	
 	//头像
 	UIImageView *iconImage = [[UIImageView alloc] init];
-	iconImage.image = [UIImage imageNamed:@"Default-568h@3x-1"];
+	NSString *iconString;
+	//QQ头像
+	iconString = [kUserDefault objectForKey:kDefaultsQQIconURL];
+	if (iconString.length > 0) {
+		
+		NSURL *url = [NSURL URLWithString:iconString];
+		[iconImage sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"头像占位图片.jpg"]];
+	}else
+	{
+		iconString = [kUserDefault objectForKey:kDefaultsIconURL];
+		if (iconString.length > 0) {
+			NSURL *url = [NSURL URLWithString:iconString];
+			[iconImage sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"头像占位图片.jpg"]];
+			
+		}else
+		{
+			iconImage.image = [UIImage imageNamed:@"头像占位图片.jpg"];
+			
+		}
+		
+	}
+
+	
 	[self.view addSubview:iconImage];
 	self.iconImage = iconImage;
-	
 	//动画图片
 //	UIImageView *animImage = [[UIImageView alloc] init];
 //	animImage.image = [UIImage imageNamed:@"Default-568h@3x-1"];
@@ -280,6 +364,10 @@ static int const HRTimeDuration = 30;
 	NSString *title = [NSString stringWithFormat:@"%zd秒", self.leftTime];
 	self.timeLabel.text = title;
 	if (self.leftTime == 0) {
+		
+		[self cancelButtonClick:self.cancelButton];
+		[SVProgressTool hr_showErrorWithStatus:@"请求超时!"];
+		
 		[self.timer invalidate];
 	}
 	
@@ -297,6 +385,9 @@ static int const HRTimeDuration = 30;
 			view.hidden = NO;
 			for (UIButton *btn in view.subviews) {
     
+				if (btn.tag == 1) {
+					btn.selected = NO;
+				}
 				if (btn.tag == 2) {
 					btn.selected = YES;
 				}

@@ -12,6 +12,7 @@
 #import "DeviceListModel.h"
 
 
+
 /** 高度比例*/
 #define Percent_H 75.0/667.0
 /** 宽度比例*/
@@ -40,6 +41,7 @@
 
 /** 输入框*/
 @property(nonatomic,strong)UITextField * MimaTF;
+
 /** 锁 */
 @property(nonatomic,strong)UIButton * DoorLockBtn;
 
@@ -52,7 +54,18 @@
 
 @property(nonatomic,strong)UIImageView *backImgView;
 
+
 @property(nonatomic, weak) AppDelegate *appDelegate;
+
+/** 获得的动态秘钥*/
+@property(nonatomic,copy)NSString * dynamicKey ;
+
+/** 开锁 定时器*/
+
+@property(nonatomic,strong) NSTimer * timer;
+
+
+
 
 
 
@@ -83,7 +96,7 @@
         
         
         
-        self.backImgView.image = [UIImage imageNamed:@"Snip20160825_3"];
+        self.backImgView.image = [UIImage imageNamed:@"1.jpg"];
     }
     
     
@@ -139,7 +152,7 @@
     
     //背景图片
     UIImageView *backgroundImage = [[UIImageView alloc] initWithFrame:[UIScreen mainScreen].bounds];
-    backgroundImage.image = [UIImage imageNamed:@"Snip20160825_3"];
+    backgroundImage.image = [UIImage imageNamed:@"1.jpg"];
     self.backImgView = backgroundImage;
     
     
@@ -176,9 +189,13 @@
     [self postTokenWithTCPSocket];
     
     /********************   添加通知 ****************************/
+    
     [self addNotificationCenterObserver];
     
 }
+
+static BOOL isOvertime = NO;
+
 - (void)backButtonClick:(UIButton *)btn
 {
 	[self.navigationController popViewControllerAnimated:YES];
@@ -206,7 +223,15 @@
 
 -(void)receviedWithBoxNotOnline
 {
-    [SVProgressTool hr_showErrorWithStatus:@"目标设备不在线"];
+    //[SVProgressTool hr_showErrorWithStatus:@"目标设备不在线"];
+    
+   isOvertime  = YES;
+    
+    NSLog(@"------------------收到目标设备不在线-----------------设置不超时");
+
+    
+    
+    
     [self.navigationController popViewControllerAnimated:YES];
     
     
@@ -214,7 +239,20 @@
 
 #pragma mark - 门锁是否在线通知实现方法
 -(void)receviedWithDoorOnlineOrNot:(NSNotification *)notification
+
+
 {
+    
+    
+    
+    NSLog(@"------------------收到门锁在线与否的帧-----------------设置不超时");
+    
+    
+    
+    
+    
+    isOvertime = YES ;
+    
     NSDictionary *dict = notification.userInfo;
     
     int stateFloat  =  [dict[@"msg"][@"state"] intValue];
@@ -235,6 +273,21 @@
             
             
             NSString * dynamicKey = dict[@"msg"][@"key"];
+            
+            _dynamicKey = dict[@"msg"][@"key"] ;
+            
+            
+         //   NSString * jiamiStr = [NSString hr_stringWithBase64String:_MimaTF.text];
+            
+     NSString * jiamiStr =       [NSString hr_openLock_base64String:_MimaTF.text dynamicStr:_dynamicKey];
+            
+            
+            
+            NSLog(@"动态秘钥是%@",dynamicKey);
+            
+            
+            
+          
             
             NSLog(@"门锁状态正常  继续发送帧请求开锁");
             
@@ -259,12 +312,43 @@
             
             
             
-            //把获得的dynamicKey放到auth这个字段中去
-             NSString * RequestStr = [NSString stringWithHROpenLockVersion:@"0.01" status:@"200" token:token type:@"control1" desc:@"none" srcUserName:srcUserName srcDevName:UUID dstUserName:srcUserName dstDevName:DoorUUID msgTypes:@"hrsc" uid:uid did:did uuid:DoorUUID state:@"none" online:@"none" control:@"2" number:@"none" key:@"none" auth:dynamicKey];
+           if (self.AuthorUserName.length > 0   )
+           {  //把获得的dynamicKey放到auth这个字段中去
+               NSString * RequestStr = [NSString stringWithHROpenLockVersion:@"0.01" status:@"200" token:token type:@"control1" desc:@"none" srcUserName:srcUserName srcDevName:UUID dstUserName:self.AuthorUserName dstDevName:DoorUUID msgTypes:@"hrsc" uid:uid did:did uuid:DoorUUID state:@"none" online:@"none" control:@"2" number:@"none" key:@"none" auth:jiamiStr];
+               
+               
+               
+               
+               
+               
+               [self.appDelegate sendMessageWithString:RequestStr];
+
+               
+           }
             
-          
+           else{
+               
+               //把获得的dynamicKey放到auth这个字段中去
+               NSString * RequestStr = [NSString stringWithHROpenLockVersion:@"0.01" status:@"200" token:token type:@"control1" desc:@"none" srcUserName:srcUserName srcDevName:UUID dstUserName:srcUserName dstDevName:DoorUUID msgTypes:@"hrsc" uid:uid did:did uuid:DoorUUID state:@"none" online:@"none" control:@"2" number:@"none" key:@"none" auth:jiamiStr];
+               
+               
+               
+               
+               
+               
+               [self.appDelegate sendMessageWithString:RequestStr];
+               
+           }
             
-            [self.appDelegate sendMessageWithString:RequestStr];
+//            //把获得的dynamicKey放到auth这个字段中去
+//             NSString * RequestStr = [NSString stringWithHROpenLockVersion:@"0.01" status:@"200" token:token type:@"control1" desc:@"none" srcUserName:srcUserName srcDevName:UUID dstUserName:srcUserName dstDevName:DoorUUID msgTypes:@"hrsc" uid:uid did:did uuid:DoorUUID state:@"none" online:@"none" control:@"2" number:@"none" key:@"none" auth:jiamiStr];
+//            
+//            
+//        
+//            
+//          
+//            
+//            [self.appDelegate sendMessageWithString:RequestStr];
             
             
         }
@@ -318,10 +402,19 @@
     
 }
 
+
 #pragma mark - 开锁是否成功通知实现方法
 -(void)receviedWithDoorOpenOrNot:(NSNotification *)notification
 {
     
+    
+    NSLog(@"------------------收到门锁第二个帧-----------------设置不超时");
+
+    
+    
+    isOvertime = YES;
+    
+
     NSDictionary *dict = notification.userInfo;
     
     int controlNum = [dict[@"msg"][@"control"] intValue];
@@ -388,6 +481,44 @@
     
     NSLog(@"获得的密码是%@",_MimaTF.text);
     
+     
+    
+    
+    if (_MimaTF.text.length>12||_MimaTF.text.length<6) {
+        NSLog(@"请输入6到12位的开锁密码");
+       
+        
+        
+        UIAlertController * alertController = [UIAlertController alertControllerWithTitle:nil message:@"请输入6到12位的开锁密码" preferredStyle:UIAlertControllerStyleAlert];
+        
+        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            
+        }];
+        
+               
+        
+        [alertController addAction:cancelAction];
+        
+        
+        [self presentViewController:alertController animated:YES completion:nil];
+        
+        
+        
+         return;
+        
+        
+        
+    }
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
     NSString *token = [[NSUserDefaults standardUserDefaults] objectForKey:@"PushToken"];
     
     NSString *srcUserName  =  [kUserDefault objectForKey:kDefaultsUserName];
@@ -397,45 +528,95 @@
     DeviceListModel *model = self.listModel;
     
     
-   // NSString *
     
     NSString * uid = model.uid;
     
-   // NSString *msguuid = model.uuid;
     
     NSString * did  =  model.did;
     
+    
     NSString *DoorUUID  = model.uuid;
     
-    //NSString *msgtitle = model.title;
     
-    NSLog(@"token是%@",token);
-    
-    
-    
-    
+    if (self.AuthorUserName.length > 0   ) {
+        NSLog(@"---------------------我是别人授权给我的----------------------------");
+        
+        
+        
+        NSLog(@"-------授权给我的这个锁的主人的名字是%@---------",self.AuthorUserName);
+        
+        
+        
+        NSString * RequestStr = [NSString stringWithHROpenLockVersion:@"0.01" status:@"200" token:token type:@"control1" desc:@"none" srcUserName:srcUserName srcDevName:UUID dstUserName:self.AuthorUserName dstDevName:DoorUUID msgTypes:@"hrsc" uid:uid did:did uuid:DoorUUID state:@"none" online:@"none" control:@"0" number:@"none" key:@"none" auth:@"none"];
+        
+        [self.appDelegate sendMessageWithString:RequestStr];
+        
+           NSLog(@"请求帧wjjtest是%@",RequestStr);
 
+        
+        
+    }
+    
+    else{
+        NSLog(@"-------------------我不是别人授权的我是我自己-----------------------");
+        
+        
+        NSString * RequestStr = [NSString stringWithHROpenLockVersion:@"0.01" status:@"200" token:token type:@"control1" desc:@"none" srcUserName:srcUserName srcDevName:UUID dstUserName:srcUserName dstDevName:DoorUUID msgTypes:@"hrsc" uid:uid did:did uuid:DoorUUID state:@"none" online:@"none" control:@"0" number:@"none" key:@"none" auth:@"none"];
+        
+        
+        [self.appDelegate sendMessageWithString:RequestStr];
+        
+        
+    }
 
     
-
-    NSString * RequestStr = [NSString stringWithHROpenLockVersion:@"0.01" status:@"200" token:token type:@"control1" desc:@"none" srcUserName:srcUserName srcDevName:UUID dstUserName:srcUserName dstDevName:DoorUUID msgTypes:@"hrsc" uid:uid did:did uuid:DoorUUID state:@"none" online:@"none" control:@"0" number:@"none" key:@"none" auth:@"none"];
-    
-    NSLog(@"请求的字符串是%@",RequestStr);
     
     
     
     
-    [self.appDelegate sendMessageWithString:RequestStr];
+//    NSString * RequestStr = [NSString stringWithHROpenLockVersion:@"0.01" status:@"200" token:token type:@"control1" desc:@"none" srcUserName:srcUserName srcDevName:UUID dstUserName:srcUserName dstDevName:DoorUUID msgTypes:@"hrsc" uid:uid did:did uuid:DoorUUID state:@"none" online:@"none" control:@"0" number:@"none" key:@"none" auth:@"none"];
+//    
+//    NSLog(@"请求的字符串是%@",RequestStr);
+//    
+//    
+//    
+//    
+//    [self.appDelegate sendMessageWithString:RequestStr];
+    
+     [SVProgressTool hr_showWithStatus:@"正在开锁"];
+    
+    
+    _timer = [NSTimer scheduledTimerWithTimeInterval:6.0 target:self selector:@selector(startTimer) userInfo:nil repeats:NO];
     
     
     
-    NSLog(@"正在开锁");
     
     /** 密码正确 改变门锁图标为开锁状态*/
     
     _DoorLockBtn.selected = YES;
     
     
+}
+
+
+#pragma mark - 定时器事件
+-(void)startTimer
+{
+    
+    if (!isOvertime) {
+        
+        
+        [SVProgressTool hr_showErrorWithStatus:@"请求超时!"];
+        
+        
+        [_timer invalidate];
+        
+        
+    }
+    
+    
+    
+   
 }
 
 
@@ -492,11 +673,10 @@
     
     _MimaTF = [[UITextField alloc]initWithFrame:CGRectMake(10.0/667 * SCREEN_H, 0, SCREEN_W-80, 40.0/667.0 * SCREEN_H)];
     
-    _MimaTF.placeholder = @"请输入密码";
+    _MimaTF.placeholder = @"请输入6到12位的开锁密码";
     #pragma mark -修改输入框提示语的颜色 KVO
     
-    [_MimaTF setValue:[UIColor whiteColor] forKeyPath:@"_placeholderLabel.textColor"];
-    
+  [_MimaTF setValue:[UIColor colorWithWhite:1.0 alpha:0.7] forKeyPath:@"_placeholderLabel.textColor"];
     
     
     _MimaTF.secureTextEntry = YES;
@@ -690,8 +870,6 @@
     
     if (tag ==11) {
         
-        
-        
          _MimaTF.text =  [oldtext stringByAppendingString:[NSString stringWithFormat:@"%ld",tag-11 ]];
         
     }
@@ -709,14 +887,9 @@
     }
     
     else{
-         _MimaTF.text =  [oldtext stringByAppendingString:[NSString stringWithFormat:@"%ld",tag ]];
         
+         _MimaTF.text =  [oldtext stringByAppendingString:[NSString stringWithFormat:@"%ld",tag ]];
     }
-    
-   
-    
-    
-    
 }
 
 

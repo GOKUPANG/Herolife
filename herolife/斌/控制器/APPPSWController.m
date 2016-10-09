@@ -22,7 +22,7 @@
 #define HRAPI_AddDoorPsw_URL @"http://183.63.118.58:9885/hrctest/?q=huaruiapi/node"
 
 
-#define HRAPI_UpdateDoorPsw_URL @"http://183.63.118.58:9885/hrctest/?q=huaruiapi/node/%@"
+#define HRAPI_UpdateDoorNum_URL @"http://183.63.118.58:9885/hrctest/?q=huaruiapi/node/%@"
 
 
 #import "APPPSWController.h"
@@ -123,7 +123,7 @@
         
         
         
-        self.backImgView.image = [UIImage imageNamed:@"Snip20160825_3"];
+        self.backImgView.image = [UIImage imageNamed:Defalt_BackPic];
     }
     
     
@@ -180,8 +180,13 @@
     // Do any additional setup after loading the view.
     
     UIImageView *backgroundImage = [[UIImageView alloc] initWithFrame:[UIScreen mainScreen].bounds];
-    backgroundImage.image = [UIImage imageNamed:@"Snip20160825_3"];
+    backgroundImage.image = [UIImage imageNamed:Defalt_BackPic];
     self.backImgView = backgroundImage;
+    
+    
+    
+    NSLog(@"sb");
+    
     
     
     [self.view addSubview:self.backImgView];
@@ -280,9 +285,11 @@
     loginPwdField.layer.borderWidth = 1;
     loginPwdField.layer.cornerRadius = 4;
     
-    loginPwdField.placeholder = @"请输入要添加的密码编号";
+    loginPwdField.placeholder = @"请输入密码编号";
     
     loginPwdField.textColor = [UIColor whiteColor];
+    
+     [loginPwdField setValue:[UIColor colorWithWhite:1.0 alpha:0.7] forKeyPath:@"_placeholderLabel.textColor"];
     
     
     
@@ -304,7 +311,10 @@
     PSWNameField.layer.borderWidth = 1;
     PSWNameField.layer.cornerRadius = 4;
     
-    PSWNameField.placeholder = @"请给该编号的密码命名";
+    PSWNameField.placeholder = @"请给密码命名";
+    
+    [PSWNameField setValue:[UIColor colorWithWhite:1.0 alpha:0.7] forKeyPath:@"_placeholderLabel.textColor"];
+
     
     PSWNameField.textColor = [UIColor whiteColor];
     
@@ -550,6 +560,8 @@
     
     loginPwdField.placeholder = model.PswName;
     
+     [loginPwdField setValue:[UIColor colorWithWhite:1.0 alpha:0.7] forKeyPath:@"_placeholderLabel.textColor"];
+    
     
     
     self.FixField = loginPwdField;
@@ -605,20 +617,12 @@
             
             customAlertView.alpha = 0;
 
-            
-            
             customAlertView.frame = AlertViewFrame;
-            
-            
-            
             
             
         } completion:^(BOOL finished) {
             
-            
             [customAlertView dissMiss];
-            
-            
         }];
 
         
@@ -672,6 +676,10 @@
                 [  manager POST:HRAPI_AddDoorPsw_URL parameters:ParametersDict success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
                     NSLog(@"上传成功");
                     
+               // NSDictionary * dict =[NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
+                    
+
+                    
                     NSLog(@"返回的数据是%@",responseObject);
                     
                     
@@ -680,6 +688,10 @@
                     model.PswName = self.AddPswNameField.text;
                     
                     model.PswNumber = self.AddPswNumberField.text;
+                    
+                    model.did = responseObject[@"nid"];
+                    
+                    
                     
                     /** 在数组的第一个元素添加*/
                     [_dataArray insertObject:model atIndex:0  ];
@@ -728,6 +740,8 @@
             
             #pragma mark -修改密码弹窗 确定
             NSLog(@"我是修改密码弹窗");
+                DDLogWarn(@"模型数组的长度是%ld",_dataArray.count);
+                
             
             DoorPswModel * model = _dataArray[_MYRow];
             
@@ -739,8 +753,11 @@
                 
                 #pragma mark - 等下回来这里
            // NSString *  Str =@"http://www.gzhuarui.cn/?q=huaruiapi/node/%@";
+                
+                NSLog(@"这个密码的did是%@",did);
+                
             
-            NSString *urlStr = [NSString stringWithFormat:HRAPI_UpdateDoorPsw_URL,did];
+            NSString *urlStr = [NSString stringWithFormat:HRAPI_UpdateDoorNum_URL,did];
             
             
             NSMutableDictionary * paraDict = [NSMutableDictionary dictionary];
@@ -774,6 +791,10 @@
             } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
                 
                 NSLog(@"修改密码失败");
+                
+                [ErrorCodeManager showError:error];
+                
+                DDLogWarn(@"修改密码失败%@",error);
                 
                 
             }

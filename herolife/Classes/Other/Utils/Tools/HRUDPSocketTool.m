@@ -100,6 +100,7 @@ static id _instance;
 			
 		}
 		
+		
 		//接收到返回的wifi数据
 		if ([jsonDict[@"hrpush"][@"type"] isEqualToString:@"set"])
 		{

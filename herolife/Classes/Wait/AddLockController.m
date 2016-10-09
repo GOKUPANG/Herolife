@@ -35,13 +35,17 @@
 	//初始化
 	[self setupViews];
 }
-
+- (void)viewDidAppear:(BOOL)animated
+{
+	[super viewDidAppear:animated];
+	DDLogWarn(@"AddLockController--------viewDidAppear");
+}
 - (void)setupViews
 {
 	
 	//背景图片
 	UIImageView *backgroundImage = [[UIImageView alloc] initWithFrame:[UIScreen mainScreen].bounds];
-	backgroundImage.image = [UIImage imageNamed:@"Snip20160825_3"];
+	backgroundImage.image = [UIImage imageNamed:Defalt_BackPic];
 	[self.view addSubview:backgroundImage];
 	
 	
@@ -168,18 +172,29 @@
 }
 - (void)createModifyLock
 {
+	if (self.nameField.text.length < 1) {
+		[SVProgressTool hr_showErrorWithStatus:@"设备名不能为空!"];
+		return;
+	}
 	NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
 	parameters[@"type"] = @"hrsc";
 	parameters[@"title"] = self.nameField.text;
 	
+	DDLogWarn(@"parameters--%@---", parameters);
 	NSString *httplast = [NSString stringWithFormat:@"%@%@", HRAPI_ModifyLock_URL, self.did];
 	[HRHTTPTool hr_PutHttpWithURL:httplast parameters:parameters responseDict:^(id dictionary, NSError *error) {
 		
+		DDLogWarn(@"array--%@---error---%@", dictionary,error);
+		if (error) {
+			[ErrorCodeManager showError:error];
+			return ;
+		}
 		NSDictionary *dict = (NSDictionary *)dictionary;
 		if ([dict valueForKeyPath:@"nid"]) {
+			
+			[SVProgressTool hr_showSuccessWithStatus:@"添加成功!"];
 			[self goToHomeList];
 		}
-		DDLogWarn(@"array--%@---error---%@", dictionary,error);
 		
 	}];
 
@@ -190,7 +205,10 @@
 		if ([NSStringFromClass([view class]) isEqualToString:@"HRTabBar"]) {
 			view.hidden = NO;
 			for (UIButton *btn in view.subviews) {
-    
+				if (btn.tag == 1) {
+					btn.selected = NO;
+				}
+				
 				if (btn.tag == 2) {
 					btn.selected = YES;
 				}

@@ -46,6 +46,11 @@
 
 @property(nonatomic,strong)UIImageView *backImgView;
 
+/** 定时器 */
+@property (nonatomic, weak) NSTimer *timer;
+/** 停留时间 */
+@property(nonatomic, assign) int leftTime;
+
 
 @end
 
@@ -53,6 +58,8 @@
 @implementation EnterPSWController
 
 
+/** 停留时间 */
+static int const HRTimeDuration = 120;
 
 
 -(void)viewWillAppear:(BOOL)animated
@@ -61,7 +68,7 @@
     
     if (!PicNum) {
         
-        self.backImgView.image = [UIImage imageNamed:@"Snip20160825_3"];
+        self.backImgView.image = [UIImage imageNamed:Defalt_BackPic];
     }
     
     
@@ -132,13 +139,30 @@ static BOOL ispush = YES;
 	NSDictionary *dic = app.msgDictionary;
 	NSString *set = dic[@"set"];
 	if ([set isEqualToString:@"5"]) {
-		[SVProgressTool hr_dismiss];
 		
-		if (ispush) {
-			WaitController *waitVC = [[WaitController alloc] init];
-			[self.navigationController pushViewController:waitVC animated:YES];
-			ispush = NO;
+		//发送set = 7的帧, 目的是为了让服务器确认我已经收到服务器发给我的set = 5的帧
+		[self.udpSocket connectWithUDPSocket];
+		
+		NSInteger index = 0;
+		NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+		dict[@"set"] = @"7";
+		dict[@"ssid"] = self.WIFILabel.text;
+		AppDelegate *app = (AppDelegate *)[UIApplication sharedApplication].delegate;
+		for (int i = 0; i < app.wifiNameArray.count -1; i++) {
+			if ([app.wifiNameArray[i] isEqualToString:self.WIFILabel.text]) {
+				index = i;
+			}
 		}
+		dict[@"pass"] = self.WIFITextField.text;
+		dict[@"auth"] = app.authlistArray[index];
+		
+		NSString *sendString = [NSString stringWithUDPMsgDict:dict];
+		
+		[_udpSocket sendUDPSockeWithString:sendString];
+		
+		DDLogWarn(@"--------------------------------sendUDPSockeWithString");
+		[self addTimer];//wifi搜索需要时间, 这时我需要检测当前的wifi是否是wifi盒子的wifi, 如果切换到了用户的wifi才让跳转
+		
 	}else if ([set isEqualToString:@"6"]) {
 		[SVProgressTool hr_showErrorWithStatus:@"添加wifi失败, 请重试!"];
 	}
@@ -434,7 +458,6 @@ static BOOL ispush = YES;
 		[SVProgressTool hr_showErrorWithStatus:@"wifi名或密码不能为空!"];
 	}else
 	{
-		[SVProgressTool hr_showWithStatus:@"正在添加..."];
 		[self setupUDPSocket];
 		
 	}
@@ -443,31 +466,7 @@ static BOOL ispush = YES;
 #pragma mark - haibo 建立UDP连接
 - (void)setupUDPSocket
 {
-//	NSInteger index = 0;
-//	self.udpSocket = [HRUDPSocketTool shareHRUDPSocketTool];
-//	[self.udpSocket connectWithUDPSocket];
-//	
-//	NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-//	dict[@"set"] = @"4";
-//	dict[@"ssid"] = self.WIFILabel.text;
-//	AppDelegate *app = (AppDelegate *)[UIApplication sharedApplication].delegate;
-//	for (int i = 0; i < app.wifiNameArray.count -1; i++) {
-//		if ([app.wifiNameArray[i] isEqualToString:self.WIFILabel.text]) {
-//			index = i;
-//		}
-//	}
-//	dict[@"pass"] = self.WIFITextField.text;
-//	dict[@"auth"] = app.authlistArray[index];
-//	
-//	NSString *sendString = [NSString stringWithUDPMsgDict:dict];
-	
-//	[NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(updateTime) userInfo:nil repeats:YES	];
-	[self updateTime];
-	
-	
-}
-- (void)updateTime
-{
+	[SVProgressTool hr_showWithStatus:@"正在添加..."];
 	NSInteger index = 0;
 	self.udpSocket = [HRUDPSocketTool shareHRUDPSocketTool];
 	[self.udpSocket connectWithUDPSocket];
@@ -488,13 +487,14 @@ static BOOL ispush = YES;
 	
 	[_udpSocket sendUDPSockeWithString:sendString];
 	
-	DDLogWarn(@"--------------------------------sendUDPSockeWithString");
+	DDLogWarn(@"------sendUDPSockeWithSet = 4--%@", sendString);
 	isOvertime = NO;
 	dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(30.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
 		if (!isOvertime) {
 			[SVProgressTool hr_showErrorWithStatus:@"请求超时!"];
 		}
 	});
+	
 }
 
 #pragma mark - tableView的UI设置
@@ -549,6 +549,53 @@ static BOOL ispush = YES;
     return cell;
     
 }
+
+#pragma mark - 添加定时器
+- (void)addTimer
+{
+	self.leftTime = HRTimeDuration;
+	self.timer = [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(updateTimeLabel) userInfo:nil repeats:YES];
+	
+}
+static NSString *wift;
+- (void)updateTimeLabel
+{
+	
+	self.leftTime--;
+	DDLogWarn(@"--------连上了wifi--------%d", self.leftTime);
+	wift = [NSString stringWithGetWifiName];
+	if ([wift isEqualToString:@"HEROLIFE_SC_AP"] || wift.length < 1) {
+		
+		
+	}else
+	{
+		//延时2秒跳转
+		dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+			
+			[SVProgressTool hr_dismiss];
+			if (ispush) {
+				WaitController *waitVC = [[WaitController alloc] init];
+				[self.navigationController pushViewController:waitVC animated:YES];
+				ispush = NO;
+			}
+		});
+		
+		[self.timer invalidate];
+		self.timer = nil;
+	}
+	if (self.leftTime == 0) {
+		
+		[self.timer invalidate];
+		self.timer = nil;
+	}
+	
+}
+- (void)dealloc
+{
+	[self.timer invalidate];
+	self.timer = nil;
+}
+
 #pragma mark  - 海波代码
 - (void)viewWillDisappear:(BOOL)animated
 {

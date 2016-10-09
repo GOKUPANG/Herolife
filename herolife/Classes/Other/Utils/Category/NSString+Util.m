@@ -537,6 +537,8 @@
 	NSMutableDictionary *msgDict = [NSMutableDictionary dictionary];
 	/// 获取用户uid
 	NSString *uid = [kUserDefault objectForKey:kDefaultsUid];
+	NSString *userName = [kUserDefault objectForKey:kDefaultsUserName];
+
 	msgDict[@"uid"] = uid;
 	msgDict[@"did"] = did;
 	msgDict[@"uuid"] = lockUUID;
@@ -545,6 +547,8 @@
 	msgDict[@"person"] = person;
 	msgDict[@"permit"] = permit;
 	msgDict[@"time"] = @"none";
+	msgDict[@"admin"] = userName;
+	
 	
 	NSMutableDictionary *dict = [NSMutableDictionary dictionary];
 	dict[@"hrpush"] = hrpushDict;
@@ -630,6 +634,67 @@
 	
 }
 
+#pragma mark - 取消别人授权给我的锁
++ (NSString *)stringWithSocketDelegateFamilyLockWithDstUuid:(NSString *)dstUuid lockUUID:(NSString *)lockUUID did:(NSString *)did devUser:(NSString *)devUser
+{
+	
+	NSString *token = [[NSUserDefaults standardUserDefaults] objectForKey:PushToken];
+	NSString *user = [[NSUserDefaults standardUserDefaults] objectForKey:kDefaultsUserName];
+	
+	/// 获取用户UUID
+	NSString *ramStr = [kUserDefault objectForKey:kUserDefaultUUID];
+	
+	//起始地址
+	NSMutableDictionary *msgFromDict = [NSMutableDictionary dictionary];
+	msgFromDict[@"user"] = user;
+	msgFromDict[@"dev"] = ramStr;
+	
+	NSMutableDictionary *hrpushDict = [NSMutableDictionary dictionary];
+	hrpushDict[@"version"] = @"0.0.1";
+	hrpushDict[@"status"] = @"200";
+	hrpushDict[@"time"] = [self loadCurrentDate];
+	
+	//从偏好设置里 取token
+	hrpushDict[@"token"] = token;
+	hrpushDict[@"type"] = @"delete";
+	hrpushDict[@"desc"] = @"none";
+	hrpushDict[@"src"] = msgFromDict;
+	
+	//目标地址
+	NSMutableDictionary *dst = [NSMutableDictionary dictionary];
+	dst[@"user"] = devUser;
+	dst[@"dev"] = dstUuid;
+	
+	hrpushDict[@"dst"] = dst;
+	
+	NSMutableDictionary *msgDict = [NSMutableDictionary dictionary];
+	/// 获取用户uid
+	NSString *uid = [kUserDefault objectForKey:kDefaultsUid];
+	msgDict[@"uid"] = uid;
+	msgDict[@"did"] = did;
+	msgDict[@"uuid"] = lockUUID;
+	msgDict[@"types"] = @"common";
+	msgDict[@"sy"] = @"hrsc-al";
+	
+	NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+	dict[@"hrpush"] = hrpushDict;
+	dict[@"msg"] = msgDict;
+	
+	NSData *jsonDataDict = [NSJSONSerialization dataWithJSONObject:dict options:kNilOptions error:nil];
+	
+	NSString *dictStr = [[NSString alloc] initWithData:jsonDataDict encoding:NSUTF8StringEncoding];
+	
+	NSString *hrpush = @"hrpush\r\n";
+	
+	NSString *hrlength = [NSString stringWithFormat:@"length\r\n%lu\r\n", (unsigned long)dictStr.length];
+	
+	NSString *footerStr = @"\r\n\0";
+	NSString *urlString = [NSString stringWithFormat:@"%@%@%@%@", hrpush, hrlength, dictStr, footerStr];
+	
+	return urlString;
+	
+}
+
 #pragma mark - 删除授权给家人 的锁
 + (NSString *)stringWithSocketDelegateFamilyLockWithDstUuid:(NSString *)dstUuid lockUUID:(NSString *)lockUUID did:(NSString *)did
 {
@@ -690,6 +755,7 @@
 	return urlString;
 	
 }
+
 
 
 #pragma mark - UDP
@@ -905,9 +971,40 @@
 	DDLogWarn(@"%@",string);
 	return string;
 }
+
+
+
+
++(NSString *)hr_openLock_base64String:(NSString*)baseString
+                           dynamicStr:(NSString*)dymicString
+{
+    //组帧
+    NSString *str = baseString;
+    
+    NSString *dongtaiStr = dymicString;
+    
+    
+    DDLogWarn(@"str--%@",str);
+    
+    DDLogWarn(@"传进来的动态秘钥是%@",dongtaiStr);
+    
+    char *result = da_encode((char *)[str UTF8String], (char *)[dongtaiStr UTF8String]);
+    
+    NSString *string = @(result);
+    
+    //	NSString *string = nil;
+    DDLogWarn(@"最后组合出来的字符串%@",string);
+    return string;
+
+}
+
 #pragma mark - C  base64加密
 
 char *enlic2="437frhsRE5TW4Gfgki56y54yh64T5tHY65YRHTT45y45ygtaR4W64YUHE54YGR54Y45rfhy6u57hger8567ygvf43tftg44regft547get4345TGREY7587EGTDA5tg5";
+
+
+
+
 char *base64_encode(const char* data, int data_len,char* out)
 {
 	char base[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
@@ -994,6 +1091,27 @@ char *hrencode(char *pass)
 	char result[64];
 	base64_encode(ret,i,result);
 	return result;
+}
+
+
+
+
+char *da_encode(char *pass,char * enlic)
+{
+    
+    char ret[102];
+    int i=0;
+    for (i=0; i < strlen(pass); i++) {
+        
+        char temp = (char)pass[i]^enlic[i];
+        printf("%d---|src--%c--enlic2--%c--temp---%c|\n",i, pass[i],enlic[i], temp);
+        ret[i]=temp;
+        
+    }
+    ret[i]='\0';
+    char *result=(char *)malloc(64);
+    base64_encode(ret,i,result);
+    return result;
 }
 
 @end

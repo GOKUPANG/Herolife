@@ -9,10 +9,12 @@
 #import "NextController.h"
 
 #import "GoToSetUpController.h"
+#import "QRCodeController.h"
+#import "HRTabBar.h"
 
 @interface NextController ()
 /** 顶部条 */
-@property(nonatomic, weak) HRNavigationBar *navView;
+@property(nonatomic, weak) UIView *navView;
 /** 头像 */
 @property(nonatomic, weak) UIImageView *iconImage;
 /** 头像底纹viwe 上*/
@@ -28,7 +30,13 @@
 
 @property(nonatomic,strong)UIImageView *backImgView;
 
-
+//------------------------导航条相关控件---------
+/** 标题label */
+@property(nonatomic, weak) UILabel *titleLabel;
+/** 左边 button */
+@property(nonatomic, weak) UIButton *leftButton;
+/** 右边Label */
+@property(nonatomic, weak) UILabel *rightLabel;
 @end
 
 @implementation NextController
@@ -43,7 +51,7 @@
 - (void)setQrData:(NSString *)qrData
 {
 	_qrData = qrData;
-	self.navView.leftButton = nil;
+	self.leftButton = nil;
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -71,14 +79,39 @@
 	[self.view addSubview:view];
 	
 	//导航条
-	HRNavigationBar *navView = [[HRNavigationBar alloc] init];
-	navView.titleLabel.text = @"设备列表";
+	UIView *navView = [[UIView alloc] init];
 	navView.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.1];
-	[navView.leftButton setImage:[UIImage imageNamed:@"返回号"] forState:UIControlStateNormal];
-	[navView.leftButton addTarget:self action:@selector(leftButtonClick:) forControlEvents:UIControlEventTouchUpInside];
 
 	[self.view addSubview:navView];
 	self.navView = navView;
+	//------------------------------------导航条控件start----------------------------//
+	//标题
+	UILabel *titleLabel = [[UILabel alloc] init];
+	titleLabel.font = [UIFont systemFontOfSize: 18];
+	//		titleLabel.font = [UIFont fontWithName:@"HelveticaNeue-Thin" size:18.f];
+	titleLabel.textAlignment = NSTextAlignmentCenter;
+	titleLabel.text = @"设备列表";
+	titleLabel.textColor = [UIColor whiteColor];
+	[navView addSubview:titleLabel];
+	self.titleLabel = titleLabel;
+	//左边view
+	UIButton *leftButton = [UIButton buttonWithType:UIButtonTypeCustom];
+	[leftButton setImage:[UIImage imageNamed:@"返回号"] forState:UIControlStateNormal];
+	[leftButton addTarget:self action:@selector(backClick:) forControlEvents:UIControlEventTouchUpInside];
+	leftButton.imageEdgeInsets = UIEdgeInsetsMake(5, - HRCommonScreenW *30, 5, HRCommonScreenW - HRCommonScreenW *30);
+	[navView addSubview:leftButton];
+	self.leftButton = leftButton;
+	
+	//右边label
+	UILabel *rightLabel = [[UILabel alloc] init];
+	rightLabel.font = [UIFont systemFontOfSize: 17];
+	
+	rightLabel.textAlignment = NSTextAlignmentCenter;
+	rightLabel.textColor = [UIColor whiteColor];
+	[navView addSubview:rightLabel];
+	self.rightLabel = rightLabel;
+	
+	//------------------------------------导航条控件end----------------------------//
 	
 	//头像底纹viwe 上
 	UIView *upView = [[UIView alloc] init];
@@ -129,6 +162,23 @@
 		make.height.mas_equalTo(HRNavH);
 	}];
 	
+	
+	[self.titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+		make.center.equalTo(self.navView);
+	}];
+	
+	[self.leftButton mas_makeConstraints:^(MASConstraintMaker *make) {
+		make.left.equalTo(self.navView).offset(0);
+		make.bottom.equalTo(self.navView).offset(0);
+		make.top.equalTo(self.navView).offset(0);
+		make.width.mas_offset(HRNavH);
+	}];
+	[self.rightLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+		make.right.equalTo(self.navView).offset(- HRCommonScreenW *30);
+		make.centerY.equalTo(self.navView);
+	}];
+	
+	
 	[self.upView mas_makeConstraints:^(MASConstraintMaker *make) {
 		
 		make.top.equalTo(self.navView.mas_bottom).offset(HRCommonScreenH *112);
@@ -178,8 +228,9 @@
 	self.nextButton.layer.masksToBounds = YES;
 }
 #pragma mark - UI事件
-- (void)leftButtonClick:(UIButton *)btn
+- (void)backClick:(UIButton *)btn
 {
+	
 	
 	[self.navigationController popViewControllerAnimated:YES];
 }
@@ -201,10 +252,10 @@
     if (!PicNum) {
         
         
-        
-        self.backImgView.image = [UIImage imageNamed:@"Snip20160825_3"];
+		
+		self.backImgView.image = [UIImage imageNamed:@"1.jpg"];
     }
-    
+	
     
     else if (PicNum == -1)
     {

@@ -76,7 +76,7 @@ static int indexCount = 0;
         
         
         
-        self.backImgView.image = [UIImage imageNamed:@"Snip20160825_3"];
+        self.backImgView.image = [UIImage imageNamed:Defalt_BackPic];
     }
     
     
@@ -139,7 +139,7 @@ static int indexCount = 0;
 	[self.queryArray removeAllObjects];
 	indexCount = 0;
     UIImageView *backgroundImage = [[UIImageView alloc] initWithFrame:[UIScreen mainScreen].bounds];
-    backgroundImage.image = [UIImage imageNamed:@"Snip20160825_3"];
+    backgroundImage.image = [UIImage imageNamed:Defalt_BackPic];
     
     self.backImgView = backgroundImage;
     
@@ -228,6 +228,14 @@ static int indexCount = 0;
 
 -(void)ViewClick
 {
+    
+    
+    if (self.AuthorUserName.length > 0) {
+        
+        [SVProgressTool hr_showErrorWithStatus:@"授权用户无法设置推送"];
+        return;
+        
+    }
     
     PushSettingController * PSC = [PushSettingController new];
     PSC.listModel = self.listModel;
@@ -318,6 +326,8 @@ static int indexCount = 0;
     .heightIs(30);
     _pushLabel.text = @"推送";
     _pushLabel.font = [UIFont systemFontOfSize:17];
+   // _pushLabel.font = [UIFont fontWithName:@"HelveticaNeue-Thin" size:18];
+
     
     
     _pushLabel.textColor = [UIColor whiteColor];
@@ -451,6 +461,7 @@ static int indexCount = 0;
 	.heightIs(20.0);
 	timeLabel.text = @"用户名";
 	timeLabel.font = [UIFont systemFontOfSize:17];
+   
 	timeLabel.textColor = [UIColor whiteColor];
 	// _timeLabel.backgroundColor = [UIColor greenColor];
 	
@@ -467,6 +478,8 @@ static int indexCount = 0;
 	
 	recordLabel.text = @"时间";
 	recordLabel.font = [UIFont systemFontOfSize:17];
+    
+    
 	recordLabel.textColor = [UIColor whiteColor];
 	
 	recordLabel.textAlignment = NSTextAlignmentCenter;
@@ -482,6 +495,9 @@ static int indexCount = 0;
 	
 	userNameLabel.text = @"操作";
 	userNameLabel.font = [UIFont systemFontOfSize:17];
+    
+   // userNameLabel.font = [UIFont fontWithName:@"HelveticaNeue-Thin" size:18];
+
 	userNameLabel.textColor = [UIColor whiteColor];
 	
 	userNameLabel.textAlignment = NSTextAlignmentCenter;

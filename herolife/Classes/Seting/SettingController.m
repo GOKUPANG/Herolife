@@ -12,8 +12,8 @@
 #import "GestureViewController.h"
 #import "BackPicSetController.h"
 #import "LoginController.h"
-#import "HerolifeViewController.h"
 #import "HRNavigationViewController.h"
+#import "MissWebViewController.h"
 
 @interface SettingController ()<UITableViewDelegate, UITableViewDataSource, UIAlertViewDelegate>
 /** 顶部条 */
@@ -45,7 +45,7 @@ static NSString *cellID = @"cellID";
     
     if (!PicNum) {
 		
-        self.backImgView.image = [UIImage imageNamed:@"Snip20160825_3"];
+        self.backImgView.image = [UIImage imageNamed:Defalt_BackPic];
     }
     
     
@@ -66,6 +66,7 @@ static NSString *cellID = @"cellID";
 
 	
 	
+	self.navigationController.navigationBar.hidden = YES;
     NSLog(@"设置页面ViewWillappear");
     
 }
@@ -73,13 +74,14 @@ static NSString *cellID = @"cellID";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+	
     NSLog(@"设置页面ViewDidLoad");
     
 	[self setupViews];
 	//注册
 	[self.tableView registerClass:[SettingCell class] forCellReuseIdentifier:cellID];
 }
+
 #pragma mark - 内部方法
 //初始化
 - (void)setupViews
@@ -421,10 +423,16 @@ static NSString *cellID = @"cellID";
             
 	 case 1:
 		{
-			if (indexPath.row == 1) {
+			if (indexPath.row == 1) {//关于
 				
-				HerolifeViewController *herVC = [[HerolifeViewController alloc] init];
-				[self.navigationController pushViewController:herVC animated:YES];
+				MissWebViewController *web = [[MissWebViewController alloc] init];
+				self.navigationController.navigationBar.hidden = NO;
+				//隐藏底部条
+				for (UIView *view  in self.tabBarController.view.subviews) {
+					if ([NSStringFromClass([view class]) isEqualToString:@"HRTabBar"]) {
+						view.hidden = YES;					}
+				}
+				[self.navigationController pushViewController:web animated:YES];
 				
 				
 			}else if (indexPath.row == 2) {
@@ -475,7 +483,8 @@ static NSString *cellID = @"cellID";
     HRNavigationViewController *nav = [[HRNavigationViewController alloc] initWithRootViewController:loginVC];
     
     [self.tabBarController presentViewController:nav animated:YES completion:nil];
-    
+//	[self.navigationController pushViewController:nav animated:YES];
+	
 	
 	//发送注销请求kDefaultsQQIconURL
 	[HRServicesManager logout:nil];

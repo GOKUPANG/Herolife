@@ -144,7 +144,7 @@ static NSString *ViewOfCustomerTableViewCellIdentifier = @"ViewOfCustomerTableVi
         
         
         
-        self.backImgView.image = [UIImage imageNamed:@"Snip20160825_3"];
+        self.backImgView.image = [UIImage imageNamed:Defalt_BackPic];
     }
     
     
@@ -230,7 +230,7 @@ static NSString *ViewOfCustomerTableViewCellIdentifier = @"ViewOfCustomerTableVi
     
     //背景图片
     UIImageView *backgroundImage = [[UIImageView alloc] initWithFrame:[UIScreen mainScreen].bounds];
-    backgroundImage.image = [UIImage imageNamed:@"Snip20160825_3"];
+    backgroundImage.image = [UIImage imageNamed:Defalt_BackPic];
     self.backImgView             = backgroundImage;
     
     [self.view addSubview:self.backImgView];
@@ -415,6 +415,7 @@ static BOOL isShowOverMenu = NO;
 	pwdField.layer.cornerRadius = 4;
 	
 	pwdField.placeholder = @"请输入用户登陆密码";
+    [pwdField setValue:[UIColor colorWithWhite:1.0 alpha:0.7] forKeyPath:@"_placeholderLabel.textColor"];
 	pwdField.clearButtonMode = UITextFieldViewModeWhileEditing;
 	
 	
@@ -451,6 +452,7 @@ static BOOL isShowOverMenu = NO;
 	loginPwdField.layer.cornerRadius = 4;
 	
 	loginPwdField.placeholder = @"想要授权的用户";
+    [loginPwdField setValue:[UIColor colorWithWhite:1.0 alpha:0.7] forKeyPath:@"_placeholderLabel.textColor"];
 	loginPwdField.clearButtonMode = UITextFieldViewModeWhileEditing;
 	
 	
@@ -602,6 +604,8 @@ static BOOL isShowOverMenu = NO;
 	pwdField.layer.cornerRadius = 4;
 	
 	pwdField.placeholder = @"请输入用户登陆密码";
+    
+    [pwdField setValue:[UIColor colorWithWhite:1.0 alpha:0.7] forKeyPath:@"_placeholderLabel.textColor"];
 	pwdField.clearButtonMode = UITextFieldViewModeWhileEditing;
 	
 	
@@ -683,6 +687,7 @@ static BOOL isShowOverMenu = NO;
 	pwdField.layer.cornerRadius = 4;
 	pwdField.clearButtonMode = UITextFieldViewModeWhileEditing;
 	pwdField.placeholder = @"请输入用户App登陆密码";
+    [pwdField setValue:[UIColor colorWithWhite:1.0 alpha:0.7] forKeyPath:@"_placeholderLabel.textColor"];
 	
 	pwdField.textColor = [UIColor whiteColor];
 	self.pwdField = pwdField;
@@ -715,6 +720,7 @@ static BOOL isShowOverMenu = NO;
 	manageField.layer.cornerRadius = 4;
 	manageField.clearButtonMode = UITextFieldViewModeWhileEditing;
 	manageField.placeholder = @"请输入用户管理员密码";
+    [manageField setValue:[UIColor colorWithWhite:1.0 alpha:0.7] forKeyPath:@"_placeholderLabel.textColor"];
 	
 	manageField.textColor = [UIColor whiteColor];
 	self.manageField = manageField;
@@ -746,6 +752,7 @@ static BOOL isShowOverMenu = NO;
     loginPwdField.layer.cornerRadius = 4;
     
     loginPwdField.placeholder = @"授权对象的手机号码";
+    [loginPwdField setValue:[UIColor colorWithWhite:1.0 alpha:0.7] forKeyPath:@"_placeholderLabel.textColor"];
     
     loginPwdField.textColor = [UIColor whiteColor];
     
@@ -769,6 +776,7 @@ static BOOL isShowOverMenu = NO;
 	timeFiled.layer.cornerRadius = 4;
 	
 	timeFiled.placeholder = @"授权时长";
+    [timeFiled setValue:[UIColor colorWithWhite:1.0 alpha:0.7] forKeyPath:@"_placeholderLabel.textColor"];
 	
 	timeFiled.textColor = [UIColor whiteColor];
 						   
@@ -1228,7 +1236,7 @@ static BOOL isShowOverMenu = NO;
 		}else
 		{
 			
-			cell.warnImgView.image = [UIImage imageNamed:@"未选择"] ;
+			cell.warnImgView.image = [UIImage imageNamed:@"未选择.png"] ;
 		}
 	}
 	
@@ -1240,7 +1248,7 @@ static BOOL isShowOverMenu = NO;
 		}else
 		{
 			
-			cell.warnImgView.image = [UIImage imageNamed:@"未选择"] ;
+			cell.warnImgView.image = [UIImage imageNamed:@"未选择.png"] ;
 		}
 	}
 

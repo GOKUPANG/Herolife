@@ -41,6 +41,7 @@
 #import "HRPushMode.h"
 #import "EBForeNotification.h"
 #import "DeviceAutherModel.h"
+#import "DeviceListModel.h"
 
 
 
@@ -170,7 +171,30 @@ static NSInteger disconnectCount = 0;
 	
 	[kUserDefault setObject:deToken forKey:kUserDefaultUUID];
 	[kUserDefault synchronize];
-	NSLog(@"token:%@", deToken);
+     NSLog(@".......token:%@", deToken);
+   
+    
+    
+    /*
+     
+     弹窗 弹出token 
+    UIAlertController * alertController = [UIAlertController alertControllerWithTitle:@"温馨提示" message:deToken preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        
+    }];
+    
+    [alertController addAction:cancelAction];
+    [self.window.rootViewController presentViewController:alertController animated:YES completion:nil];
+     
+     
+     */
+    
+    
+    
+    
+    
+    
 	
 }
 - (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error
@@ -191,18 +215,37 @@ static BOOL isOverTime = NO;
 - (void)receiveWiFiList
 {
 	isOverTime = YES;
-	UIViewController *topController = [AppDelegate currentViewController];
-	if ([topController isKindOfClass:[EnterPSWController class]]) {
-		DDLogWarn(@"VC-%@",NSStringFromClass([topController class]));
-	}else
-	{
-		//收到通知跳转到wifi 输入密码这个界面
-		EnterPSWController *enterVC = [[EnterPSWController alloc] init];
-		DDLogWarn(@"VC2-%@",NSStringFromClass([topController class]));
-		
-		[topController.navigationController pushViewController:enterVC animated:YES];
-		
+	[SVProgressTool hr_dismiss];
+	UINavigationController *nav = (UINavigationController *)[NSObject activityViewController];
+	
+	for (UIViewController *topVC in nav.childViewControllers) {
+		HRNavigationViewController *hrNav = (HRNavigationViewController *)topVC;
+		for (id navVC in hrNav.childViewControllers) {
+			
+			NSLog(@"topVC%@", NSStringFromClass([navVC class]));
+			if ([navVC isKindOfClass:[EnterPSWController class]]) {
+				DDLogWarn(@"VC-%@",NSStringFromClass([navVC class]));
+			}else if ([navVC isKindOfClass:[GoToSetUpController class]]) {
+				DDLogWarn(@"VC-%@",NSStringFromClass([navVC class]));
+				EnterPSWController *enterVC = [[EnterPSWController alloc] init];
+				GoToSetUpController *gto = (GoToSetUpController *)navVC;
+			[gto.navigationController pushViewController:enterVC animated:YES];
+			}
+//			{
+//				//收到通知跳转到wifi 输入密码这个界面
+//				EnterPSWController *enterVC = [[EnterPSWController alloc] init];
+//				DDLogWarn(@"VC2-%@",NSStringFromClass([topController class]));
+//				
+//				[topController.navigationController pushViewController:enterVC animated:YES];
+//				
+//			}
+
+		}
 	}
+	UIViewController *topController = nav.childViewControllers.lastObject;
+	
+//	UIViewController *topController = [AppDelegate currentViewController];
+	
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {
@@ -264,7 +307,8 @@ static BOOL isOverTime = NO;
 		// 启动定时器
 		isOverTime = NO;
 		[_overTimer invalidate];
-		_overTimer = [NSTimer scheduledTimerWithTimeInterval:HRTimeInterval target:self selector:@selector(startTimer) userInfo:nil repeats:NO];
+		//十秒之后如果没有数据就提示超时
+		_overTimer = [NSTimer scheduledTimerWithTimeInterval:30.0 target:self selector:@selector(startTimer) userInfo:nil repeats:NO];
 	});
 	
 	
@@ -555,6 +599,13 @@ static BOOL isOverTime = NO;
 		_autherArray = [NSMutableArray array];
 	}
 	return _autherArray;
+}
+- (NSMutableArray *)homeArray
+{
+	if (!_homeArray) {
+		_homeArray = [NSMutableArray array];
+	}
+	return _homeArray;
 }
 static NSString *sockDataStr = @"";
 static NSUInteger lengthInteger = 0;
@@ -919,11 +970,38 @@ static NSUInteger lengthInteger = 0;
 		[[NSNotificationCenter defaultCenter] postNotificationName:kNotificationReceiveTempAutherInformation object:nil userInfo:jsonDict];
 		return;
 	}
+	
+	
+	// 推送设置界面
+	if ([jsonDict[@"hrpush"][@"type"] isEqualToString:@"update"] && [jsonDict[@"msg"][@"types"] isEqualToString:@"hrsc"]) {
+		
+		DDLogInfo(@"推送设置界面%@", jsonDict);
+		
+		[self addPushDeviceDict:jsonDict];
+		[[NSNotificationCenter defaultCenter] postNotificationName:kNotificationReceivePushDeviceInformation object:nil userInfo:jsonDict];
+		return;
+	}
 }
 #pragma mark - 保存  数据 相关
+#pragma mark - 推送设置
+- (void)addPushDeviceDict:(NSDictionary *)dict
+{
+	DeviceListModel *listModel = [DeviceListModel mj_objectWithKeyValues: dict[@"msg"]];
+	NSMutableArray *muArr = [NSMutableArray array];
+	for (DeviceListModel *mode in self.homeArray) {
+		if ([mode.uuid isEqualToString: listModel.uuid] && [mode.did isEqualToString: listModel.did] && [mode.uid isEqualToString: listModel.uid])
+		{
+			mode.op = listModel.op;
+		}
+		[muArr addObject:mode];
+	}
+	self.homeArray = muArr;
+	
+}
 #pragma mark - 授权管理
 - (void)addModifyAutherDict:(NSDictionary *)dict
 {
+	DDLogWarn(@"addModifyAutherDict---%@%lu", self.homeArray, (unsigned long)self.homeArray.count);
 	DeviceAutherModel *auther = [DeviceAutherModel mj_objectWithKeyValues: dict[@"msg"]];
 	NSMutableArray *muArr = [NSMutableArray array];
 	for (DeviceAutherModel *mode in self.autherArray) {

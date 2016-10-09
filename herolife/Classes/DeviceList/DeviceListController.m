@@ -197,11 +197,15 @@ NSInteger const timerDuration = 60.0;
 }
 -(void)viewWillAppear:(BOOL)animated
 {
+	for (UINavigationController *nav in self.tabBarController.childViewControllers) {
+		UIViewController *VC = nav.childViewControllers.firstObject;
+		NSLog(@"viewVC--%@", NSStringFromClass([VC class]));
+	}
     NSInteger  PicNum =  [[NSUserDefaults standardUserDefaults] integerForKey:@"PicNum"];
     
     if (!PicNum) {
 		
-        self.backImgView.image = [UIImage imageNamed:@"Snip20160825_3"];
+        self.backImgView.image = [UIImage imageNamed:@"1.jpg"];
     }
     
     
@@ -218,7 +222,6 @@ NSInteger const timerDuration = 60.0;
         self.backImgView.image =[UIImage imageNamed:imgName];
     }
 	
-	[self IsTabBarHidden:NO];
 }
 
 - (NSMutableArray *)photoModelArray
@@ -275,9 +278,14 @@ static BOOL isOvertime = NO;
 		if ([model.uuid isEqualToString:uuid]) {//如果要删除的UUID 和设备列表数组里的UUID是一样的就删除
 			continue;
 		}
+		
 		[mu addObject:model];
 	}
+	//清空当前数据
+	self.currentStateModel.uuid = @"";
 	self.homeArray = mu;
+	//重新获取数据
+	[self getHttpRequset];
 	[self.collectionView reloadData];
 }
 static BOOL isShowOverMenu = NO;
@@ -495,6 +503,8 @@ static BOOL isShowOverMenu = NO;
 	dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
 		[_collectionView reloadData];
 	});
+	
+	[self IsTabBarHidden:NO];
 }
 - (void)viewWillLayoutSubviews {
 	[super viewWillLayoutSubviews];
@@ -722,7 +732,7 @@ static BOOL isShowOverMenu = NO;
 			}else
 			{
 				
-				cell.rightLabel.text = @"2016-09-21 18:27:28";
+				cell.rightLabel.text = @"2016-09-25 09:35:28";
 				cell.minLabel.text = [NSString stringWithFormat:@"剩余电量%@", self.currentStateModel.level];
 				
 			}
@@ -740,7 +750,7 @@ static BOOL isShowOverMenu = NO;
 			}else
 			{
 				
-				cell.rightLabel.text = @"2016-09-21 18:27:28";
+				cell.rightLabel.text = @"2016-09-25 09:35:28";
 				
 			}
 		}
@@ -784,6 +794,7 @@ static BOOL isShowOverMenu = NO;
 					if ([arr[0] isEqualToString:@"1"]) {
 						
 						OLC.listModel = self.currentStateModel;
+						OLC.AuthorUserName = auther.admin;
 						[self.navigationController pushViewController:OLC animated:YES];
 						
 					}else
@@ -886,6 +897,10 @@ static BOOL isShowOverMenu = NO;
 				}
 			}
 			
+			
+			AppDelegate *app = (AppDelegate *)[UIApplication sharedApplication].delegate;
+			
+			DDLogWarn(@"获得我授权给别人的授权表app%@count-%lu", app.autherArray, (unsigned long)app.autherArray.count);
 			SQC.listModel = self.currentStateModel;
 			
 			[self.navigationController pushViewController:SQC animated:YES];
@@ -939,6 +954,7 @@ static BOOL isShowOverMenu = NO;
 	if (scrollView.contentOffset.x < 0.0) {
 		return;
 	}
+	
 	int index = scrollView.contentOffset.x / totalconsizeW;
 	int yu = (int)scrollView.contentOffset.x % (int)totalconsizeW;
 	
@@ -1090,7 +1106,6 @@ static BOOL isShowOverMenu = NO;
 		//去除服务器发过来的数据里没有值的情况
 		if (((NSArray*)responseObject).count < 1 ) {
 			DDLogDebug(@"responseObject count == 0");
-			return;
 		}
 		
 		[weakSelf.homeArray removeAllObjects];
@@ -1104,11 +1119,25 @@ static BOOL isShowOverMenu = NO;
 			[weakSelf.homeArray addObject:home];
 		}
 		}
-//		NSArray *arr = @[@"22", @"22"];
+		weakSelf.appDelegate.homeArray = weakSelf.homeArray;
+		DDLogWarn(@"---------weakSelf.appDelegate.homeArray%@count%lu--------", weakSelf.appDelegate.homeArray, (unsigned long)weakSelf.appDelegate.homeArray.count);
 		//显示占位图片
 		[self setUp3DEptPictureWithHomeArray:weakSelf.homeArray];
 		
-		weakSelf.currentStateModel = weakSelf.homeArray.firstObject;
+		//判断当前的mode是否为空, 如果为空就让他等于数组的第一个值, 如果不为空就让他等于当前值, 刷新是刷新的当前的数组个数和状态
+		if (self.currentStateModel.uuid.length < 1) {
+			
+			weakSelf.currentStateModel = weakSelf.homeArray.firstObject;
+		}else
+		{
+			for (DeviceListModel *model in weakSelf.homeArray) {
+				if ([model.uuid isEqualToString:weakSelf.currentStateModel.uuid]) {//取出和当前的UUID一样的这条数据覆盖掉,currentStateModel数据
+					weakSelf.currentStateModel = model;
+					
+				}
+			}
+		}
+		
 		weakSelf.listLabel.text = weakSelf.currentStateModel.title;
 		//修改921
 		//按钮图片
@@ -1119,6 +1148,7 @@ static BOOL isShowOverMenu = NO;
 			
 			self.listImageView.image = [UIImage imageNamed:@"空心离线"];
 		}
+		
 		
 		[self.tableView reloadData];
 		
@@ -1195,19 +1225,20 @@ static BOOL isShowOverMenu = NO;
 		//去除服务器发过来的数据里没有值的情况
 		if (((NSArray*)responseObject).count < 1 ) {
 			DDLogDebug(@"responseObject count == 0");
-			return;
 		}
 		
+		AppDelegate *app = (AppDelegate *)[UIApplication sharedApplication].delegate;
+		[app.autherArray removeAllObjects];
 		[weakSelf.autherArray removeAllObjects];
 		[weakSelf.autherDeviceArray removeAllObjects];
 		
 		NSArray *responseArr = (NSArray*)responseObject;
-		
+		NSMutableArray *mb = [NSMutableArray array];
 		for (NSDictionary *dict in responseArr) {
 			DeviceAutherModel *auther = [DeviceAutherModel mj_objectWithKeyValues:dict];
 			[weakSelf.autherArray addObject:auther];
 			
-			
+			[mb addObject:auther];
 			for (DeviceListModel *listModel in weakSelf.homeArray) {
 				if ([listModel.uuid isEqualToString:auther.uuid]) {
 					[weakSelf.autherDeviceArray addObject:listModel];
@@ -1216,10 +1247,7 @@ static BOOL isShowOverMenu = NO;
 			
 		}
 		
-		AppDelegate *app = (AppDelegate *)[UIApplication sharedApplication].delegate;
-		[app addHTTPAutherArray:weakSelf.autherArray];
-		
-		DDLogWarn(@"获得我授权给别人的授权表app%@count-%lu", app.autherArray, (unsigned long)app.autherArray.count);
+		[app addHTTPAutherArray:mb];
 		
 	}];
 	
@@ -1321,13 +1349,37 @@ static BOOL isShowOverMenu = NO;
 			if ([model.types isEqualToString:@"hrsc"]) {
 				//修改921
 				
-				
 			}
+		}
+		
+		//判断当前的mode是否为空, 如果为空就让他等于数组的第一个值, 如果不为空就让他等于当前值, 刷新是刷新的当前的数组个数和状态
+		if (self.currentStateModel.uuid.length < 1) {
+			
+			weakSelf.currentStateModel = weakSelf.homeArray.firstObject;
+		}else
+		{
+			for (DeviceListModel *model in weakSelf.homeArray) {
+				if ([model.uuid isEqualToString:weakSelf.currentStateModel.uuid]) {//取出和当前的UUID一样的这条数据覆盖掉,currentStateModel数据
+					weakSelf.currentStateModel = model;
+					
+				}
+			}
+		}
+		weakSelf.listLabel.text = weakSelf.currentStateModel.title;
+		//修改921
+		//按钮图片
+		if ([self.currentStateModel.state isEqualToString:@"1"]) {
+			self.listImageView.image = [UIImage imageNamed:@"空心在线"];
+		}else
+		{
+			
+			self.listImageView.image = [UIImage imageNamed:@"空心离线"];
 		}
 		
 		//显示占位图片
 //		NSArray *arr = @[@"22", @"22"];
 		[self setUp3DEptPictureWithHomeArray:weakSelf.homeArray];
+		
 		[weakSelf.tableView reloadData];
 		[weakSelf.collectionView reloadData];
 		
@@ -1545,6 +1597,10 @@ static BOOL isShowOverMenu = NO;
 	pwdField.layer.cornerRadius = 4;
 	
 	pwdField.placeholder = @"请输入用户登陆密码";
+    
+    
+    [pwdField setValue:[UIColor colorWithWhite:1.0 alpha:0.7] forKeyPath:@"_placeholderLabel.textColor"];
+    
 	pwdField.clearButtonMode = UITextFieldViewModeWhileEditing;
 	
 	
@@ -1909,8 +1965,7 @@ static BOOL isShowOverMenu = NO;
 	NSString *dstUUId = mode.uuid;
 	NSString *did = mode.did;
 	
-	
-	NSString *str = [NSString stringWithSocketDelegateFamilyLockWithDstUuid:dstUUId lockUUID:dstUUId did:did];
+	NSString *str = [NSString stringWithSocketDelegateFamilyLockWithDstUuid:dstUUId lockUUID:dstUUId did:did devUser:mode.admin];
 	[self.appDelegate sendMessageWithString:str];
 	
 	// 启动定时器
@@ -1934,9 +1989,16 @@ static BOOL isShowOverMenu = NO;
 	
 	dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
 		
-		NSString *user = [[NSUserDefaults standardUserDefaults] objectForKey:kDefaultsUserName];
 		DeviceListModel *testModel = self.currentStateModel;
-		[self sendSocketQuaryDeviceOnLineWithUser:user dev:testModel.uuid];
+		
+		for (DeviceAutherModel *model in self.autherPersonArray) {//目标设备的名字要填,别人授权给我的管理员名字
+			if ([model.uuid isEqualToString:testModel.uuid]) {
+				
+				
+				[self sendSocketQuaryDeviceOnLineWithUser:model.admin dev:testModel.uuid];
+			}
+		}
+		
 	});
 	self.timer = [NSTimer scheduledTimerWithTimeInterval:timerDuration target:self selector:@selector(updateTimer) userInfo:nil repeats:YES];
 }
@@ -1944,11 +2006,19 @@ static BOOL isShowOverMenu = NO;
 
 - (void)updateTimer
 {
-	NSString *user = [[NSUserDefaults standardUserDefaults] objectForKey:kDefaultsUserName];
 	DeviceListModel *testModel = self.currentStateModel;
-	[self sendSocketQuaryDeviceOnLineWithUser:user dev:testModel.uuid];
+	
+	for (DeviceAutherModel *model in self.autherPersonArray) {//目标设备的名字要填,别人授权给我的管理员名字
+		if ([model.uuid isEqualToString:testModel.uuid]) {
+			
+			
+			[self sendSocketQuaryDeviceOnLineWithUser:model.admin dev:testModel.uuid];
+		}
+	}
+	
 	
 }
+
 #pragma mark - 定时60s查询设备状态
 - (void)sendSocketQuaryDeviceOnLineWithUser:(NSString *)user dev:(NSString *)dev
 {

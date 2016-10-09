@@ -53,7 +53,7 @@ static NSTimeInterval const dimissTimer = 2;
     
     if (!PicNum) {
         
-        self.backgroundImage.image = [UIImage imageNamed:@"Snip20160825_3"];
+        self.backgroundImage.image = [UIImage imageNamed:Defalt_BackPic];
     }
     
     
@@ -145,6 +145,9 @@ static NSTimeInterval const dimissTimer = 2;
 	
 	//用户名
 	self.userNameField = [self setupTextFieldWithImageName:@"用户" placeholder:@"用户名"];
+    
+    [self.userNameField setValue:[UIColor colorWithWhite:1.0 alpha:0.7] forKeyPath:@"_placeholderLabel.textColor"];
+    
 	UIView *userLine = [[UIView alloc] init];
 	userLine.backgroundColor = [UIColor whiteColor];
 	[self.view addSubview:userLine];
@@ -152,6 +155,9 @@ static NSTimeInterval const dimissTimer = 2;
 	
 	//密码
 	self.passwdField = [self setupTextFieldWithImageName:@"用户" placeholder:@"密码"];
+    
+    [self.passwdField setValue:[UIColor colorWithWhite:1.0 alpha:0.7] forKeyPath:@"_placeholderLabel.textColor"];
+    
 	[self.passwdField setSecureTextEntry:YES];
 	UIView *passwdLine = [[UIView alloc] init];
 	passwdLine.backgroundColor = [UIColor whiteColor];
@@ -160,7 +166,11 @@ static NSTimeInterval const dimissTimer = 2;
 	
 	//确认密码
 	self.passwdConfirmField = [self setupTextFieldWithImageName:@"确认密码" placeholder:@"确认密码"];
+    
+    [self.passwdConfirmField setValue:[UIColor colorWithWhite:1.0 alpha:0.7] forKeyPath:@"_placeholderLabel.textColor"];
+    
 	[self.passwdConfirmField setSecureTextEntry:YES];
+    
 	UIView *passwdConfirmLine = [[UIView alloc] init];
 	passwdConfirmLine.backgroundColor = [UIColor whiteColor];
 	[self.view addSubview:passwdConfirmLine];
@@ -168,7 +178,10 @@ static NSTimeInterval const dimissTimer = 2;
 	
 	//常用邮箱
 	self.emailField = [self setupTextFieldWithImageName:@"邮箱" placeholder:@"常用邮箱"];
+    [self.emailField setValue:[UIColor colorWithWhite:1.0 alpha:0.7] forKeyPath:@"_placeholderLabel.textColor"];
+    
 	UIView *emailLine = [[UIView alloc] init];
+    
 	emailLine.backgroundColor = [UIColor whiteColor];
 	[self.view addSubview:emailLine];
 	self.emailLine = emailLine;
@@ -176,6 +189,8 @@ static NSTimeInterval const dimissTimer = 2;
 	//手机号码
 	self.phoneField = [self setupTextFieldWithImageName:@"手机" placeholder:@"手机号码"];
 	[self.phoneField setReturnKeyType:UIReturnKeyGo];
+    [self.phoneField setValue:[UIColor colorWithWhite:1.0 alpha:0.7] forKeyPath:@"_placeholderLabel.textColor"];
+    
 	UIView *phoneLine = [[UIView alloc] init];
 	phoneLine.backgroundColor = [UIColor whiteColor];
 	[self.view addSubview:phoneLine];

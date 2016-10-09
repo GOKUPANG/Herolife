@@ -173,7 +173,7 @@
     
     //导航条
     HRNavigationBar *navView = [[HRNavigationBar alloc] init];
-    navView.titleLabel.text = @"APP软件密码";
+    navView.titleLabel.text = @"背景图选择";
        
     navView.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.1];
     
