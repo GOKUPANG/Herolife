@@ -6,6 +6,8 @@
 #import "PCCircleInfoView.h"
 #import "PCCircle.h"
 #import "LoginController.h"
+#import "HRTabBarViewController.h"
+#import "HRNavigationViewController.h"
 
 @interface GestureViewController ()<CircleViewDelegate>
 
@@ -46,16 +48,7 @@
 
 
 
-
-
-
 #pragma mark - tabbar 设置
-
-
-
-
-
-
 
 - (void)viewWillDisappear:(BOOL)animated
 {
@@ -66,6 +59,7 @@
             view.hidden = NO;
         }
     }
+	
 }
 
 #pragma mark - 导航条 设置
@@ -96,42 +90,6 @@
     [PCCircleViewConst saveGesture:nil Key:gestureOneSaveKey];
     
     
-    for (UIView *view in self.tabBarController.view.subviews) {
-        if ([NSStringFromClass([view class]) isEqualToString:@"HRTabBar"]) {
-            
-            view.hidden = YES;
-        }
-    }
-
-    
-    NSInteger  PicNum =   [[NSUserDefaults standardUserDefaults] integerForKey:@"PicNum"];
-    
-    if (!PicNum) {
-        
-        
-        
-        self.backImgView.image = [UIImage imageNamed:Defalt_BackPic];
-    }
-    
-    
-    else if (PicNum == -1)
-    {
-        NSString *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES).lastObject;
-        path = [path stringByAppendingPathComponent:@"image.png"];
-        
-        self.backImgView.image =[UIImage imageWithContentsOfFile:path];
-    }
-    
-    else{
-        
-        NSString * imgName = [NSString stringWithFormat:@"%ld.jpg",PicNum];
-        
-        self.backImgView.image =[UIImage imageNamed:imgName];
-    }
-    
-
-    
-    
 }
 
 - (instancetype)init
@@ -148,18 +106,20 @@
 -(void)popToLastVC
 {
     [self.navigationController popViewControllerAnimated:YES];
-    
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    
-    [self.view setBackgroundColor:
-     CircleViewBackgroundColor];
-    
-    self.title = @"手势解锁";
-    
+	
+	for (UIView *view in self.tabBarController.view.subviews) {
+		if ([NSStringFromClass([view class]) isEqualToString:@"HRTabBar"]) {
+			
+			view.hidden = YES;
+		}
+	}
+	
+	[self.view setBackgroundColor:CircleViewBackgroundColor];
     //背景图片
     UIImageView *backgroundImage = [[UIImageView alloc] initWithFrame:[UIScreen mainScreen].bounds];
     backgroundImage.image = [UIImage imageNamed:Defalt_BackPic];
@@ -167,12 +127,40 @@
     self.backImgView =  backgroundImage;
     
     [self.view addSubview:backgroundImage];
-    
+	
+	
+	
     UIView *view = [[UIView alloc] initWithFrame:[UIScreen mainScreen].bounds];
     view.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.2];
     [self.view addSubview:view];
-
-    
+	
+	
+	//设置背景图片
+	NSInteger  PicNum =   [[NSUserDefaults standardUserDefaults] integerForKey:@"PicNum"];
+	
+	if (!PicNum) {
+		
+		
+		
+		self.backImgView.image = [UIImage imageNamed:Defalt_BackPic];
+	}
+	
+	
+	else if (PicNum == -1)
+	{
+		NSString *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES).lastObject;
+		path = [path stringByAppendingPathComponent:@"image.png"];
+		
+		self.backImgView.image =[UIImage imageWithContentsOfFile:path];
+	}
+	
+	else{
+		
+		NSString * imgName = [NSString stringWithFormat:@"%ld.jpg",PicNum];
+		
+		self.backImgView.image =[UIImage imageNamed:imgName];
+	}
+	
     
     //导航条
     HRNavigationBar *navView = [[HRNavigationBar alloc] init];
@@ -208,46 +196,24 @@
 {
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
     [button addTarget:self action:@selector(didClickBtn:)forControlEvents:UIControlEventTouchUpInside];
+	
+    NSString *titleString = @"删除手势";
+    button.hr_x = UIScreenW *0.5 - 130 *0.5;
+    button.hr_y = UIScreenH - 22 - 40;
     
-    //	button.frame = CGRectMake(UIScreenW *0.5 - UIScreenW *0.5 *0.5, CGRectGetMaxY(self.lockView.frame), 150, 30);
-    NSString *titleString = @"删除手势密码";
-    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-    dict[NSFontAttributeName] = [UIFont systemFontOfSize:17];
-    CGSize size = [titleString sizeWithAttributes:dict];
-    button.hr_x = UIScreenW *0.5 - size.width *0.5;
-    button.hr_y = CGRectGetMaxY(self.lockView.frame);
-    
-    button.hr_height = size.height;
-    button.hr_width = size.width;
-    
-    [button setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
+    button.hr_height = 40;
+    button.hr_width = 130;
+	button.layer.cornerRadius = 40 * 0.5;
+	button.layer.masksToBounds = YES;
+	
+	[button setTitle:titleString forState:UIControlStateNormal];
+    [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     button.titleLabel.font = [UIFont systemFontOfSize:17];
     button.titleLabel.textAlignment = NSTextAlignmentCenter;
-    [button setTitle:titleString forState:UIControlStateNormal];
-    [button sizeToFit];
     button.tag = buttonTagReset;
-    [button setContentHorizontalAlignment:UIControlContentHorizontalAlignmentRight];
+	button.backgroundColor = [UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:122 / 255.0];
     [self.view addSubview:button];
     self.resetBtn = button;
-}
-
-
-
-
-#pragma mark - 创建UIBarButtonItem
-- (UIBarButtonItem *)itemWithTitle:(NSString *)title target:(id)target action:(SEL)action tag:(NSInteger)tag
-{
-    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-    [button setTitle:title forState:UIControlStateNormal];
-    [button addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
-    button.frame = (CGRect){CGPointZero, {100, 20}};
-    [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    button.titleLabel.font = [UIFont systemFontOfSize:17];
-    button.tag = tag;
-    [button setContentHorizontalAlignment:UIControlContentHorizontalAlignmentRight];
-    [button setHidden:YES];
-    self.resetBtn = button;
-    return [[UIBarButtonItem alloc] initWithCustomView:button];
 }
 
 #pragma mark - 界面不同部分生成器
@@ -268,8 +234,6 @@
 #pragma mark - 界面相同部分生成器
 - (void)setupSameUI
 {
-    // 创建导航栏右边按钮
-    self.navigationItem.rightBarButtonItem = [self itemWithTitle:@"重设" target:self action:@selector(didClickBtn:) tag:buttonTagReset];
     
     // 解锁界面
     PCCircleView *lockView = [[PCCircleView alloc] init];
@@ -279,7 +243,7 @@
     
     PCLockLabel *msgLabel = [[PCLockLabel alloc] init];
     msgLabel.frame = CGRectMake(0, 0, kScreenW, 14);
-    msgLabel.center = CGPointMake(kScreenW/2, CGRectGetMinY(lockView.frame) - 30);
+    msgLabel.center = CGPointMake(kScreenW/2, CGRectGetMinY(lockView.frame) - 20 - 30);
     self.msgLabel = msgLabel;
     [self.view addSubview:msgLabel];
     
@@ -300,7 +264,7 @@
     
     PCCircleInfoView *infoView = [[PCCircleInfoView alloc] init];
     infoView.frame = CGRectMake(0, 0, CircleRadius * 2 * 0.6, CircleRadius * 2 * 0.6);
-    infoView.center = CGPointMake(kScreenW/2, CGRectGetMinY(self.msgLabel.frame) - CGRectGetHeight(infoView.frame)/2 - 10);
+    infoView.center = CGPointMake(kScreenW/2, CGRectGetMinY(self.msgLabel.frame) - CGRectGetHeight(infoView.frame)/2 - 10 );
     self.infoView = infoView;
     [self.view addSubview:infoView];
 }
@@ -309,20 +273,54 @@
 - (void)setupSubViewsLoginVc
 {
     [self.lockView setType:CircleViewTypeLogin];
-    
+	self.navView.hidden = YES;
+	
+	//头像底纹viwe
+	UIView *eptView = [[UIView alloc] init];
+	eptView.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.2];
+	eptView.frame = CGRectMake(0, 0, 110, 110);
+	eptView.center = CGPointMake(kScreenW/2, kScreenH/5);
+	eptView.layer.cornerRadius = eptView.hr_width *0.5;
+	eptView.layer.masksToBounds = YES;
+	[self.view addSubview:eptView];
+	
+	
     // 头像
     UIImageView  *imageView = [[UIImageView alloc] init];
-    imageView.frame = CGRectMake(0, 0, 65, 65);
+    imageView.frame = CGRectMake(0, 0, 100, 100);
     imageView.center = CGPointMake(kScreenW/2, kScreenH/5);
-    [imageView setImage:[UIImage imageNamed:@"1.jpg"]];
+	
+	//显示图片
+	NSString *iconString;
+	//QQ头像
+	iconString = [kUserDefault objectForKey:kDefaultsQQIconURL];
+	if (iconString.length > 0) {
+		
+		NSURL *url = [NSURL URLWithString:iconString];
+		[imageView sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"头像占位图片.jpg"]];
+	}else
+	{
+		iconString = [kUserDefault objectForKey:kDefaultsIconURL];
+		if (iconString.length > 0) {
+			NSURL *url = [NSURL URLWithString:iconString];
+			[imageView sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"头像占位图片.jpg"]];
+			
+		}else
+		{
+			imageView.image = [UIImage imageNamed:@"头像占位图片.jpg"];
+			
+		}
+		
+	}
+	
+	imageView.layer.cornerRadius = imageView.hr_width *0.5;
+	imageView.layer.masksToBounds = YES;
     [self.view addSubview:imageView];
     
     #pragma mark -斌添加的代码1
     
     /***************添加的代码 ************/
-    
-    
-    
+	
     UILabel *label = [[UILabel alloc] init];
     label.frame = CGRectMake(0, 0, 200, 47);
     label.center = CGPointMake(kScreenW/2, CGRectGetMaxY(imageView.frame) + 20);
@@ -331,7 +329,17 @@
     
     //从 偏好设置里取用户名
     NSString *str = [[NSUserDefaults standardUserDefaults] objectForKey:kDefaultsUserName];
-    label.text = str;
+	//qq用户名称
+	NSString *qqUserNmae = [kUserDefault valueForKey:kNSUserDefaultsNickname];
+	if (qqUserNmae.length > 0) {
+		
+		label.text = @"当前用户为QQ用户";
+		
+	}else
+	{
+		
+		label.text = str;
+	}
     [self.view addSubview:label];
 
     
@@ -346,6 +354,8 @@
     // 登录其他账户
     UIButton *rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [self creatButton:rightBtn frame:CGRectMake(kScreenW/2 - CircleViewEdgeMargin - 20, kScreenH - 60, kScreenW/2, 20) title:@"登陆其他账户" alignment:UIControlContentHorizontalAlignmentRight tag:buttonTagForget];
+	
+	self.resetBtn.hidden = YES;
 }
 
 #pragma mark - 创建UIButton
@@ -370,35 +380,23 @@
         {
             NSLog(@"点击了重设按钮");
             // 1.隐藏按钮
-           // [self.resetBtn setHidden:YES];
-            
-        //    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
             [SVProgressHUD showSuccessWithStatus:@"成功删除手势!" ];
-            
-            //[SVProgressHUD  showInfoWithStatus:@"成功删除手势"];
-            
+			
             
             // 2.infoView取消选中
             [self infoViewDeselectedSubviews];
             
             // 3.msgLabel提示文字复位
             [self.msgLabel showNormalMsg:gestureTextBeforeSet];
-            
-            // 4.清除之前存储的密码
-          //  [PCCircleViewConst saveGesture:nil Key:gestureOneSaveKey];
-            
-            #pragma mark -添加的代码2 
-            
-            /***************添加的代码2*****************/
+			
+             //4.清除之前存储的密码
             [PCCircleViewConst saveGesture:nil Key:gestureOneSaveKey];
             [PCCircleViewConst saveGesture:nil Key:gestureFinalSaveKey];
             
             //从数据库删除
             NSString *uid = [kUserDefault objectForKey:kDefaultsUid];
             [HRSqlite hrSqliteDeleteUnlockWithUid:uid];
-            
-            
-            /***************添加的代码2*****************/
+			
 
         }
             break;
@@ -432,12 +430,18 @@
 - (void)getLoginHttpRequest
 {
     LoginController * loginVc = [LoginController new];
-    
-    
-    [self presentViewController:loginVc animated:YES completion:nil];
-
-    //[self.navigationController pushViewController:loginVC animated:NO];
-    
+	//qq用户名称
+	NSString *qqUserNmae = [kUserDefault valueForKey:kNSUserDefaultsNickname];
+	if (qqUserNmae.length > 0) {
+		loginVc.isClear = YES;
+		
+	}else
+	{
+		loginVc.isClear = NO;
+	}
+	HRNavigationViewController *nav = [[HRNavigationViewController alloc] initWithRootViewController:loginVc];
+	
+	[UIApplication sharedApplication].keyWindow.rootViewController = nav;
     //发送注销请求
     [HRServicesManager logout:nil];
 }
@@ -448,13 +452,9 @@
 {
     
     LoginController * loginVc = [LoginController new];
-
-   // loginVC.isLokeToLogin = YES;
-   // loginVC.isOtherToLogin = YES;
-    
-    [self presentViewController:loginVc animated:YES completion:nil];
-
-  //  [self.navigationController pushViewController:loginVc animated:NO];
+	loginVc.isClear = YES;
+	HRNavigationViewController *nav = [[HRNavigationViewController alloc] initWithRootViewController:loginVc];
+	[UIApplication sharedApplication].keyWindow.rootViewController = nav;
     
     //发送注销请求
     [HRServicesManager logout:nil];
@@ -504,17 +504,16 @@
         
         #pragma mark -修改代码3 重点 返回上一层的东西
         [HRSqlite saveUnlockWithUid:uid lockPassword:gesture];
-        
-      //  HomeViewController *home = [[HomeViewController alloc] init];
-     //   home.isSetLockToHome = YES;
-     //   [self.navigationController pushViewController:home animated:NO];
-
-        
+		
         [self.navigationController popToRootViewControllerAnimated:YES];
         
     } else {
         NSLog(@"两次手势不匹配！");
-        
+		
+		//从数据库删除
+		NSString *uid = [kUserDefault objectForKey:kDefaultsUid];
+		[HRSqlite hrSqliteDeleteUnlockWithUid:uid];
+		
         [self.msgLabel showWarnMsgAndShake:gestureTextDrawAgainError];
         [self.resetBtn setHidden:NO];
     }
@@ -528,7 +527,9 @@
         
         if (equal) {
             NSLog(@"登陆成功！");
-            [self.navigationController popToRootViewControllerAnimated:YES];
+			//手势正确,就让他跳到首页
+			HRTabBarViewController *tabBarVC = [[HRTabBarViewController alloc] init];
+			[UIApplication sharedApplication].keyWindow.rootViewController = tabBarVC;
         } else {
             NSLog(@"密码错误！");
             [self.msgLabel showWarnMsgAndShake:gestureTextGestureVerifyError];

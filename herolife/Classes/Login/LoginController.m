@@ -19,7 +19,7 @@
 #import "HRTabBarViewController.h"
 #import "RegisterViewController.h"
 
-@interface LoginController ()<UITextFieldDelegate>
+@interface LoginController ()<UITableViewDelegate, UITableViewDataSource,UITextFieldDelegate, UIGestureRecognizerDelegate>
 /** 背景图片 */
 @property(nonatomic, weak)  UIImageView *backgroundImageView;
 /** 用户名文本 */
@@ -53,14 +53,50 @@
 /** <#name#> */
 @property(nonatomic, weak) UIImageView *backImgView;
 @property (nonatomic, assign) BOOL chang;
+/** 头像底纹viwe */
+@property(nonatomic, weak) UIView *eptView;
+/** 头像 */
+@property(nonatomic, weak) UIImageView  *imageView;
 
+
+/** 保存数据库存放的用户名 */
+@property(nonatomic, strong) NSArray *sqlitArray;
+/** 保存数据库存放的用户名 */
+@property(nonatomic, strong) NSMutableArray *userNameArray;
+/** 用户名列表 */
+@property(nonatomic, weak) UITableView *tableView;
+/** 隐藏表格 */
+@property(nonatomic, assign) BOOL isHiddenTabel;
 
 @end
 
 @implementation LoginController
+#pragma mark - set方法
+- (void)setIsClear:(BOOL)isClear
+{
+	_isClear = isClear;
+	
+}
+- (NSArray *)sqlitArray
+{
+	if (!_sqlitArray) {
+		NSArray *arr = [HRSqlite hrSqliteReceiveUserName];
+		_sqlitArray = arr;
+	}
+	return _sqlitArray;
+}
+- (NSMutableArray *)userNameArray
+{
+	if (!_userNameArray) {
+		_userNameArray = [NSMutableArray array];
+	}
+	return _userNameArray;
+}
 
 - (void)viewDidLoad {
-    [super viewDidLoad];
+	[super viewDidLoad];
+	//发送注销请求
+	[HRServicesManager logout:nil];
 	//初始化view
 	[self setupViews];
 	//设置所有监听器
@@ -78,7 +114,18 @@
 - (void)viewWillAppear:(BOOL)animated
 {
 	[super viewWillAppear:animated];
+	if (_isClear) {
+		self.userNameField.text = @"";
+		self.passwdField.text = @"";
+		self.eptView.hidden = YES;
+		self.imageView.hidden = YES;
+		_isClear = NO;
+	}
 	
+	if (self.userNameField.text.length > 0) {
+		
+		[self diminishTextName:self.userNameLabel];
+	}
 	
 	NSInteger  PicNum =   [[NSUserDefaults standardUserDefaults] integerForKey:@"PicNum"];
 	
@@ -117,10 +164,8 @@
 - (void)viewWillLayoutSubviews
 {
 	[super viewWillLayoutSubviews];
-	//w375.000000h667.000000
-	// 比例
-//	CGFloat const HRCommonScreenH = HRUIScreenH / 667 /2;
-//	CGFloat const HRCommonScreenW = HRUIScreenW / 375 /2;
+	
+	
 	//底部条
 	[self.tabBarView mas_makeConstraints:^(MASConstraintMaker *make) {
 		make.left.right.bottom.equalTo(self.view);
@@ -224,6 +269,19 @@
 		
 	}];
 	
+	
+	CGFloat rowH = self.sqlitArray.count *40;
+	if (rowH > 120) {
+		rowH = 120;
+	}
+	
+	[self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
+		make.width.mas_equalTo(self.userNameField);
+		make.height.mas_equalTo(rowH);
+		make.top.equalTo(self.userNameField.mas_bottom);
+		make.left.equalTo(self.userNameField).offset(10);
+	}];
+	
 }
 #pragma mark - 通知
 - (void)recevedRegister:(NSNotification *)note
@@ -259,6 +317,52 @@
 	view.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.2];
 	[self.view addSubview:view];
 	
+	
+	
+	//头像底纹viwe
+	UIView *eptView = [[UIView alloc] init];
+	eptView.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.2];
+	eptView.frame = CGRectMake(0, 0, 110, 110);
+	eptView.center = CGPointMake(kScreenW/2, kScreenH/5);
+	eptView.layer.cornerRadius = eptView.hr_width *0.5;
+	eptView.hidden = NO;
+	eptView.layer.masksToBounds = YES;
+	[self.view addSubview:eptView];
+	self.eptView = eptView;
+	
+	// 头像
+	UIImageView  *imageView = [[UIImageView alloc] init];
+	imageView.frame = CGRectMake(0, 0, 100, 100);
+	imageView.center = CGPointMake(kScreenW/2, kScreenH/5);
+	imageView.hidden = NO;
+	//显示图片
+	NSString *iconString;
+	//QQ头像
+	iconString = [kUserDefault objectForKey:kDefaultsQQIconURL];
+	if (iconString.length > 0) {
+		
+		NSURL *url = [NSURL URLWithString:iconString];
+		[imageView sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"头像占位图片.jpg"]];
+	}else
+	{
+		iconString = [kUserDefault objectForKey:kDefaultsIconURL];
+		if (iconString.length > 0) {
+			NSURL *url = [NSURL URLWithString:iconString];
+			[imageView sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"头像占位图片.jpg"]];
+			
+		}else
+		{
+			eptView.hidden = YES;
+			
+		}
+		
+	}
+	
+	imageView.layer.cornerRadius = imageView.hr_width *0.5;
+	imageView.layer.masksToBounds = YES;
+	[self.view addSubview:imageView];
+	self.imageView = imageView;
+	
 	//用户名
 	CGFloat centerX = self.view.width * 0.5;
 	InputText *inputText = [[InputText alloc] init];
@@ -273,7 +377,9 @@
 	userNameField.textColor = [UIColor whiteColor];
 	[userNameField setClearButtonMode:UITextFieldViewModeWhileEditing];
 	userNameField.font = [UIFont systemFontOfSize:17];
-
+	
+	[self.userNameField addTarget:self  action:@selector(valueChanged:)  forControlEvents:UIControlEventAllEditingEvents];
+	
 	[self.view addSubview:userNameField];
 	
 	UILabel *userNameLabel = [self setupTextName:@"用户名" frame:userNameField.frame];
@@ -289,7 +395,9 @@
 	passwdField.backgroundColor = [UIColor clearColor];
 	passwdField.textColor = [UIColor whiteColor];
 	[passwdField setClearButtonMode:UITextFieldViewModeWhileEditing];
-
+	
+	
+	[passwdField addTarget:self  action:@selector(passWdBeginEditing:)  forControlEvents:UIControlEventAllEditingEvents];
 	passwdField.font = [UIFont systemFontOfSize:17];
 	[passwdField setSecureTextEntry:YES];
 	passwdField.delegate = self;
@@ -377,12 +485,187 @@
 	[qqButton addTarget:self action:@selector(qqButtonClick:) forControlEvents:UIControlEventTouchUpInside];
 	[tabBarView addSubview:qqButton];
 	self.qqButton = qqButton;
+	
+	
+	/*填充文字（如果有）*/
+	HRUser *user = [Login curLoginUser];
+	
+	if (user) {
+		//qq用户名称
+		NSString *qqUserNmae = [kUserDefault valueForKey:kNSUserDefaultsNickname];
+		if (qqUserNmae.length > 0) {
+			
+			_userNameField.text = @"";
+			_passwdField.text = @"";
+			
+		}else
+		{
+			_userNameField.text = user.name;
+			_passwdField.text = user.password;
+		}
+	}
+	
+	
+	//添加选择用户提示表格
+	
+	UITableView *tableView = [[UITableView alloc] init];
+	
+	UIView *tabview = [[UIView alloc] initWithFrame:CGRectZero];
+	tableView.tableFooterView = tabview;
+	tableView.delegate = self;
+	tableView.dataSource = self;
+	tableView.rowHeight = 40;
+	tableView.backgroundColor = [UIColor lightGrayColor];
+	
+	[self.view addSubview:tableView];
+	
+	self.tableView = tableView;
+	self.tableView.alpha = 0.0;
+	/********* 点击空白 *********/
+	UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapBackground)];
+	tap.delegate = self;
+	[self.view  addGestureRecognizer:tap];
 }
+#pragma mark - 表格相关
+- (void) tapBackground {
+	self.isHiddenTabel = YES;
+	[self.userNameField resignFirstResponder];
+	[self.passwdField resignFirstResponder];
+	[self setUpTabelViewAnimationWithStatus:YES];
+}
+
+/**
+ *  给tableview做动画
+ *
+ *  @param status 显示或隐藏
+ */
+- (void)setUpTabelViewAnimationWithStatus:(BOOL)status
+{
+	[UIView animateWithDuration:0.3 animations:^{
+		
+		if (status == YES) {
+			
+			self.tableView.alpha = 0.0;
+		}else
+		{
+			self.tableView.alpha = 1.0;
+		}
+	} completion:^(BOOL finished) {
+		[self.view.layer removeAllAnimations];
+	}];
+}
+
+#pragma mark - UITableViewDelegate
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+	return self.userNameArray.count;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	static NSString *cellID = @"cell";
+	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellID];
+	if (!cell) {
+		cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
+	}
+	cell.backgroundColor = [[UIColor lightGrayColor] colorWithAlphaComponent:0.6];
+	cell.textLabel.text = self.userNameArray[indexPath.row];
+	
+	return cell;
+	
+}
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	NSLog(@"didSelectRowAtIndexPath");
+	UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+	self.userNameField.text = cell.textLabel.text;
+	[self setUpTabelViewAnimationWithStatus:YES];
+	
+}
+#pragma mark - UIGestureRecognizerDelegate
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch
+{
+	if ([NSStringFromClass([touch.view class]) isEqualToString:@"UITableViewCellContentView"]) {
+		return NO;
+	}
+	
+	if ([NSStringFromClass([touch.view class]) isEqualToString:@"UITableViewCell"]) {
+		return NO;
+	}
+	return YES;
+}
+
+#pragma mark - UITextField 监听所有事件
+
+- (void)passWdBeginEditing:(UITextField *)field
+{
+	
+	self.tableView.alpha = 0.0;
+}
+
+- (void)valueChanged:(UITextField *)field
+{
+	if (self.isHiddenTabel) {
+		self.isHiddenTabel = NO;
+		return;
+	}
+	NSLog(@"1-%@", field.text);
+	if (field.text.length > 0) {
+		
+		[self setUpUserNameArrayWithFieldString:field.text];
+		
+	}else
+	{
+		[self setUpTabelViewAnimationWithStatus:YES];
+	}
+	
+	[self.tableView reloadData];
+	
+}
+/**
+ *  设置用户名数组
+ *
+ *  @param fieldString 用户输入的文本
+ */
+- (void)setUpUserNameArrayWithFieldString:(NSString *)fieldString
+{
+	
+	[self.userNameArray removeAllObjects];
+	for (NSString *str in self.sqlitArray) {
+		if (str == nil && str == [NSNull class] ) {
+			
+			return;
+		}
+		
+		if (str.length >= fieldString.length) {
+			NSString *fistName = [str substringToIndex:fieldString.length];
+			if ([fistName isEqualToString:fieldString]) {
+				self.tableView.alpha = 1.0;
+				[self.userNameArray addObject:str];
+				
+				
+			}else
+			{
+				if (self.userNameArray.count == 0) {
+					self.tableView.alpha = 0.0;
+				}
+			}
+		}else
+		{
+			self.tableView.alpha = 0.0;
+		}
+		
+		
+	}
+}
+
 #pragma mark - UI事件
 
 //忘记密码
 - (void)forgetButtonClick:(UIButton *)button
 {
+	self.isHiddenTabel = YES;
 	ForgetController *forgetVC = [[ForgetController alloc] init];
 	[self.navigationController pushViewController:forgetVC animated:YES];
 }
@@ -391,12 +674,15 @@
 #pragma mark -注册按钮的点击
 - (void)registerButtonClick:(UIButton *)button
 {
+	self.isHiddenTabel = YES;
 	RegisterViewController *registerVC = [[RegisterViewController alloc] init];
 	[self.navigationController pushViewController:registerVC animated:YES];
 }
 //第三方登陆事件
 - (void)qqButtonClick:(UIButton *)button
 {
+	
+	self.isHiddenTabel = YES;
 	[ShareSDK cancelAuthorize:SSDKPlatformTypeQQ];
 	DDLogWarn(@"---------------qqButtonClick------------------");
 	//例如QQ的登录
@@ -434,6 +720,45 @@
 		 }
 		 
 	 }];
+}
+
+
+- (void)loginButtonClick:(UIButton *)button
+{
+	self.isHiddenTabel = YES;
+	//清空QQ数据
+	[kUserDefault setObject:@"" forKey:kNSUserDefaultsNickname];
+	[kUserDefault setObject:@"" forKey:kDefaultsQQIconURL];
+	
+	[self backKeyBrody];
+	
+	if (self.userNameField.text.length == 0 && self.passwdField.text.length == 0) {
+		
+		[SVProgressTool hr_showErrorWithStatus:@"用户名或密码不能为空!"];
+		return;
+	}
+	
+	[SVProgressTool hr_showWithStatus:@"正在登陆..."];
+	
+	[HRServicesManager loginWithUsername:_userNameField.text
+								password:_passwdField.text
+								  result:^(NSError *error) {
+									  
+									  
+									  if (error) {
+										  [ErrorCodeManager showError:error];
+										  
+									  } else {
+										  
+										  [SVProgressTool hr_dismiss];
+										  HRTabBarViewController *tabBarVC = [[HRTabBarViewController alloc] init];
+										  //			  [self.navigationController pushViewController:tabBarVC animated:YES];
+										  [UIApplication sharedApplication].keyWindow.rootViewController = tabBarVC;
+										  //			  [self presentViewController:tabBarVC animated:YES completion:nil];
+										  
+									  }
+								  }];
+	
 }
 
 #pragma mark - 登陆授权 用OPENID 注册账号
@@ -529,40 +854,6 @@
 	
 }
 
-
-- (void)loginButtonClick:(UIButton *)button
-{
-	[self backKeyBrody];
-	
-	if (self.userNameField.text.length == 0 && self.passwdField.text.length == 0) {
-		
-		[SVProgressTool hr_showErrorWithStatus:@"用户名或密码不能为空!"];
-		return;
-	}
-	
-	[SVProgressTool hr_showWithStatus:@"正在登陆..."];
-	
-	[HRServicesManager loginWithUsername:_userNameField.text
-								password:_passwdField.text
-								  result:^(NSError *error) {
-									  
-		  
-		  if (error) {
-			  [ErrorCodeManager showError:error];
-			  
-		  } else {
-			  
-			  [SVProgressTool hr_dismiss];
-			  HRTabBarViewController *tabBarVC = [[HRTabBarViewController alloc] init];
-//			  [self.navigationController pushViewController:tabBarVC animated:YES];
-			  [UIApplication sharedApplication].keyWindow.rootViewController = tabBarVC;
-//			  [self presentViewController:tabBarVC animated:YES completion:nil];
-			  
-		  }
-	  }];
-	
-}
-
 //退出键盘
 - (void)backKeyBrody
 {
@@ -590,6 +881,7 @@
 		[self restoreTextName:self.passwdLabel textField:self.passwdField];
 		
 	} else if (textField == self.passwdField) {
+		
 		[self diminishTextName:self.passwdLabel];
 		[self restoreTextName:self.userNameLabel textField:self.userNameField];
 	}

@@ -305,7 +305,7 @@
 	
 	cell.backgroundColor = [UIColor clearColor];
 	
-	cell.DeviceNameLabel.text = @"智能门锁";
+	cell.DeviceNameLabel.text = @"物联网智能锁";
 	
 	// cell.textLabel.textColor = [UIColor whiteColor];
 	

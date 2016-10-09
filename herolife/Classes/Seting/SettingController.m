@@ -393,7 +393,8 @@ static NSString *cellID = @"cellID";
         case 0:{
             if (indexPath.row==0)
             {
-                GestureViewController * GVC = [GestureViewController new];
+				GestureViewController * GVC = [GestureViewController new];
+				GVC.type = GestureViewControllerTypeSetting;
                 [self.navigationController pushViewController:GVC animated:YES];
 
             }
@@ -478,8 +479,14 @@ static NSString *cellID = @"cellID";
     
     
     LoginController *loginVC = [[LoginController alloc] init];
-    
-    
+	NSString *QQName = [kUserDefault objectForKey:@"kNSUserDefaultsNickname"];
+	if (QQName.length > 0) {
+		loginVC.isClear = YES;
+	}else
+	{
+		loginVC.isClear = NO;
+	}
+	
     HRNavigationViewController *nav = [[HRNavigationViewController alloc] initWithRootViewController:loginVC];
     
     [self.tabBarController presentViewController:nav animated:YES completion:nil];

@@ -42,7 +42,8 @@
 #import "EBForeNotification.h"
 #import "DeviceAutherModel.h"
 #import "DeviceListModel.h"
-
+#import "GestureViewController.h"
+#import "NewFeatureController.h"
 
 
 @interface AppDelegate ()<AsyncSocketDelegate>
@@ -1445,11 +1446,37 @@ static NSUInteger lengthInteger = 0;
 	
 	self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
 	
+	NSString *herolife = [kUserDefault objectForKey:@"fisteDownLoadHerolife"];
+	if (herolife.length < 1) {
+		NewFeatureController *feature = [[NewFeatureController alloc] init];
+		self.window.rootViewController = feature;
+		[kUserDefault setObject:@"fisteDownLoadHerolife" forKey:@"fisteDownLoadHerolife"];
+		[kUserDefault synchronize];
+		return;
+	}
+	
+	
 	LoginController *loginVC = [[LoginController alloc] init];
 	HRNavigationViewController *nav = [[HRNavigationViewController alloc] initWithRootViewController:loginVC];
 	HRTabBarViewController *tabBarVC = [[HRTabBarViewController alloc] init];
 	
 	if ([Login isLogined]) {
+		
+		// /从数据库中取手势密码
+		NSString *uid = [kUserDefault objectForKey:kDefaultsUid];
+		NSString *pas = [HRSqlite hrSqliteReceiveUnlockWithUid:uid];
+		
+		//如果数据库中有就让他显示手势解锁界面
+		if (pas && ![pas isKindOfClass:[NSNull class]]) {
+			GestureViewController *gestureVc = [[GestureViewController alloc] init];
+			DDLogInfo(@"Appdegate---pas%@", pas);
+			gestureVc.type = GestureViewControllerTypeLogin;
+			
+			self.window.rootViewController = gestureVc;
+			return;
+		}
+		
+		//如果没有就让他显示tabbar界面
 		self.window.rootViewController = tabBarVC;
 	}else
 	{

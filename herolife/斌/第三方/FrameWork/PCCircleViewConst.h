@@ -14,8 +14,8 @@
 /**
  *  解锁背景色
  */
-//#define CircleViewBackgroundColor rgba(13,52,89,1)
-#define CircleViewBackgroundColor [UIColor colorWithPatternImage:[UIImage imageNamed:@"2"]]
+#define CircleViewBackgroundColor rgba(13,52,89,1)
+//#define CircleViewBackgroundColor [UIColor colorWithPatternImage:[UIImage imageNamed:@"2"]]
 
 /**
  *  普通状态下外空心圆颜色

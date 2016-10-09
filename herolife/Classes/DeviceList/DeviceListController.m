@@ -1532,9 +1532,57 @@ static BOOL isShowOverMenu = NO;
 	[SRActionSheet sr_showActionSheetViewWithTitle:self.showLockModel.title cancelButtonTitle:@"取消" destructiveButtonTitle:@"" otherButtonTitles:@[@"删除设备", @"修改设备信息"] selectSheetBlock:^(SRActionSheet *actionSheetView, NSInteger index) {
 		
 		if (index == 0) {
+			NSString *iconString;
+            //qq头像
+            
+            iconString = [kUserDefault objectForKey:kDefaultsQQIconURL];
+            
+            if (iconString.length > 0) {
+                
+                 //这里是qq登陆
+                
+                NSLog(@"我是qq登陆的");
+                
+                UIAlertController * alertController = [UIAlertController alertControllerWithTitle:@"确定删除" message:@"" preferredStyle:UIAlertControllerStyleAlert];
+                
+                UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                    
+                }];
+                
+                
+                UIAlertAction *confirmAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                    
+                    [self deleteDoor];
+                    
+                    
+                }];
+                
+                
+                [alertController addAction:confirmAction];
+                
+                
+                [alertController addAction:cancelAction];
+                [self presentViewController:alertController animated:YES completion:nil];
+                
+
+                
+                
+            }
+ 
+            
+            else
+            {
+               
+            //删除设备
+             [self deleteDoorUI];
+
+                
+                NSLog(@"我不是qq登陆的我要删除设备了");
+                
+                
+            }
+            
 			
-			//删除设备
-			[self deleteDoorUI];
 		}
 		
 		else if (index == 1){

@@ -20,7 +20,6 @@
 		18C697981D7462B9004DA2B1 /* DoorRecordCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 18C697611D7462B9004DA2B1 /* DoorRecordCell.m */; };
 		18C697991D7462B9004DA2B1 /* 键盘@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 18C697631D7462B9004DA2B1 /* 键盘@2x.png */; };
 		18C6979A1D7462B9004DA2B1 /* 键盘@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 18C697641D7462B9004DA2B1 /* 键盘@3x.png */; };
-		18C6979D1D7462B9004DA2B1 /* DoorLockRecordConroller.m in Sources */ = {isa = PBXBuildFile; fileRef = 18C6976B1D7462B9004DA2B1 /* DoorLockRecordConroller.m */; };
 		18C697A31D7462B9004DA2B1 /* PCCircle.m in Sources */ = {isa = PBXBuildFile; fileRef = 18C697791D7462B9004DA2B1 /* PCCircle.m */; };
 		18C697A41D7462B9004DA2B1 /* PCCircleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 18C6977B1D7462B9004DA2B1 /* PCCircleView.m */; };
 		18C697A51D7462B9004DA2B1 /* PCCircleViewConst.m in Sources */ = {isa = PBXBuildFile; fileRef = 18C6977D1D7462B9004DA2B1 /* PCCircleViewConst.m */; };
@@ -78,7 +77,6 @@
 		D1352D761D9E0ECB003A83AB /* XiaoRuiNewQRcode.xib in Resources */ = {isa = PBXBuildFile; fileRef = D1352D631D9E0ECB003A83AB /* XiaoRuiNewQRcode.xib */; };
 		D1352D781D9E0F35003A83AB /* HRTabBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1352D771D9E0F35003A83AB /* HRTabBarViewController.m */; };
 		D1352D7A1D9E0F5A003A83AB /* QRTools.m in Sources */ = {isa = PBXBuildFile; fileRef = D1352D791D9E0F5A003A83AB /* QRTools.m */; };
-		D1352D7C1D9E102D003A83AB /* DeviceListController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1352D7B1D9E102D003A83AB /* DeviceListController.m */; };
 		D1352D7E1D9E1065003A83AB /* NextController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1352D7D1D9E1065003A83AB /* NextController.m */; };
 		D1352D801D9E1180003A83AB /* WaitController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1352D7F1D9E1180003A83AB /* WaitController.m */; };
 		D1352D831D9E194C003A83AB /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D1352D821D9E194C003A83AB /* AppDelegate.m */; };
@@ -232,6 +230,10 @@
 		D1AA2E651D83F48600D1AEC9 /* DeviceListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = D1AA2E601D83F48600D1AEC9 /* DeviceListModel.m */; };
 		D1AA2E661D83F48600D1AEC9 /* DeviceListTcpModel.m in Sources */ = {isa = PBXBuildFile; fileRef = D1AA2E621D83F48600D1AEC9 /* DeviceListTcpModel.m */; };
 		D1AA2E6C1D83F50500D1AEC9 /* AddLockController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1AA2E6B1D83F50500D1AEC9 /* AddLockController.m */; };
+		D1B088E51DAA475000072214 /* NewFeatureController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1B088E41DAA475000072214 /* NewFeatureController.m */; };
+		D1B088E81DAA484200072214 /* NewFeatureCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D1B088E71DAA484200072214 /* NewFeatureCell.m */; };
+		D1B088EA1DAA5BB500072214 /* DoorLockRecordConroller.m in Sources */ = {isa = PBXBuildFile; fileRef = D1B088E91DAA5BB500072214 /* DoorLockRecordConroller.m */; };
+		D1B088EC1DAA5BD100072214 /* DeviceListController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1B088EB1DAA5BD100072214 /* DeviceListController.m */; };
 		D1B3CB351D966D6D009F96D2 /* HerolifeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1B3CB331D966D6D009F96D2 /* HerolifeViewController.m */; };
 		D1B3CB361D966D6D009F96D2 /* HerolifeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D1B3CB341D966D6D009F96D2 /* HerolifeViewController.xib */; };
 		D1B3CB3A1D966DB5009F96D2 /* HerolifeImageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D1B3CB381D966DB4009F96D2 /* HerolifeImageCell.m */; };
@@ -247,7 +249,6 @@
 		D1B7924D1D8BF78C00DDA4DD /* UILabel+ContentSize.m in Sources */ = {isa = PBXBuildFile; fileRef = D1B792451D8BF78C00DDA4DD /* UILabel+ContentSize.m */; };
 		D1BDCAA81D926F530022BDE2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D1BDCAA71D926F530022BDE2 /* LaunchScreen.storyboard */; };
 		D1BDCAAC1D929A6A0022BDE2 /* APPPSWController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1BDCAAB1D929A6A0022BDE2 /* APPPSWController.m */; };
-		D1BDCAAE1D929B260022BDE2 /* GestureVerifyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1BDCAAD1D929B260022BDE2 /* GestureVerifyViewController.m */; };
 		D1BDCAB01D929B520022BDE2 /* GestureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1BDCAAF1D929B520022BDE2 /* GestureViewController.m */; };
 		D1C144241D8E2FD800FDDFA0 /* ShouAddFamilyModel.m in Sources */ = {isa = PBXBuildFile; fileRef = D1C144231D8E2FD800FDDFA0 /* ShouAddFamilyModel.m */; };
 		D1D23DEF1D7570A100FCB5C9 /* AddDeivcecell.m in Sources */ = {isa = PBXBuildFile; fileRef = D1D23DEC1D7570A100FCB5C9 /* AddDeivcecell.m */; };
@@ -294,7 +295,6 @@
 		18C697641D7462B9004DA2B1 /* 键盘@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "键盘@3x.png"; sourceTree = "<group>"; };
 		18C697661D7462B9004DA2B1 /* AccountManagementController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccountManagementController.h; sourceTree = "<group>"; };
 		18C6976A1D7462B9004DA2B1 /* DoorLockRecordConroller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DoorLockRecordConroller.h; sourceTree = "<group>"; };
-		18C6976B1D7462B9004DA2B1 /* DoorLockRecordConroller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DoorLockRecordConroller.m; sourceTree = "<group>"; };
 		18C697781D7462B9004DA2B1 /* PCCircle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PCCircle.h; sourceTree = "<group>"; };
 		18C697791D7462B9004DA2B1 /* PCCircle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PCCircle.m; sourceTree = "<group>"; };
 		18C6977A1D7462B9004DA2B1 /* PCCircleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PCCircleView.h; sourceTree = "<group>"; };
@@ -316,7 +316,6 @@
 		18C6978E1D7462B9004DA2B1 /* PCCircleInfoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PCCircleInfoView.m; sourceTree = "<group>"; };
 		18C6978F1D7462B9004DA2B1 /* PCLockLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PCLockLabel.h; sourceTree = "<group>"; };
 		18C697901D7462B9004DA2B1 /* PCLockLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PCLockLabel.m; sourceTree = "<group>"; };
-		18C697941D7462B9004DA2B1 /* GestureVerifyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GestureVerifyViewController.h; sourceTree = "<group>"; };
 		18C697961D7462B9004DA2B1 /* GestureViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GestureViewController.h; sourceTree = "<group>"; };
 		AA029E9E1D7D75B500EFF91C /* HWPopTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HWPopTool.h; sourceTree = "<group>"; };
 		AA029E9F1D7D75B500EFF91C /* HWPopTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HWPopTool.m; sourceTree = "<group>"; };
@@ -388,7 +387,6 @@
 		D1352D631D9E0ECB003A83AB /* XiaoRuiNewQRcode.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XiaoRuiNewQRcode.xib; sourceTree = "<group>"; };
 		D1352D771D9E0F35003A83AB /* HRTabBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HRTabBarViewController.m; sourceTree = "<group>"; };
 		D1352D791D9E0F5A003A83AB /* QRTools.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QRTools.m; sourceTree = "<group>"; };
-		D1352D7B1D9E102D003A83AB /* DeviceListController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeviceListController.m; sourceTree = "<group>"; };
 		D1352D7D1D9E1065003A83AB /* NextController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NextController.m; sourceTree = "<group>"; };
 		D1352D7F1D9E1180003A83AB /* WaitController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WaitController.m; sourceTree = "<group>"; };
 		D1352D811D9E194C003A83AB /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -660,6 +658,12 @@
 		D1AA2E621D83F48600D1AEC9 /* DeviceListTcpModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeviceListTcpModel.m; sourceTree = "<group>"; };
 		D1AA2E6A1D83F50500D1AEC9 /* AddLockController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AddLockController.h; path = herolife/Classes/Wait/AddLockController.h; sourceTree = SOURCE_ROOT; };
 		D1AA2E6B1D83F50500D1AEC9 /* AddLockController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AddLockController.m; path = herolife/Classes/Wait/AddLockController.m; sourceTree = SOURCE_ROOT; };
+		D1B088E31DAA475000072214 /* NewFeatureController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewFeatureController.h; sourceTree = "<group>"; };
+		D1B088E41DAA475000072214 /* NewFeatureController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewFeatureController.m; sourceTree = "<group>"; };
+		D1B088E61DAA484200072214 /* NewFeatureCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewFeatureCell.h; sourceTree = "<group>"; };
+		D1B088E71DAA484200072214 /* NewFeatureCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewFeatureCell.m; sourceTree = "<group>"; };
+		D1B088E91DAA5BB500072214 /* DoorLockRecordConroller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DoorLockRecordConroller.m; sourceTree = "<group>"; };
+		D1B088EB1DAA5BD100072214 /* DeviceListController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeviceListController.m; sourceTree = "<group>"; };
 		D1B3CB321D966D6D009F96D2 /* HerolifeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HerolifeViewController.h; sourceTree = "<group>"; };
 		D1B3CB331D966D6D009F96D2 /* HerolifeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HerolifeViewController.m; sourceTree = "<group>"; };
 		D1B3CB341D966D6D009F96D2 /* HerolifeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HerolifeViewController.xib; sourceTree = "<group>"; };
@@ -683,7 +687,6 @@
 		D1B792461D8BF78C00DDA4DD /* EBForeNotification.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EBForeNotification.h; sourceTree = "<group>"; };
 		D1BDCAA71D926F530022BDE2 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D1BDCAAB1D929A6A0022BDE2 /* APPPSWController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APPPSWController.m; sourceTree = "<group>"; };
-		D1BDCAAD1D929B260022BDE2 /* GestureVerifyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GestureVerifyViewController.m; sourceTree = "<group>"; };
 		D1BDCAAF1D929B520022BDE2 /* GestureViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GestureViewController.m; sourceTree = "<group>"; };
 		D1C144221D8E2FD800FDDFA0 /* ShouAddFamilyModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShouAddFamilyModel.h; sourceTree = "<group>"; };
 		D1C144231D8E2FD800FDDFA0 /* ShouAddFamilyModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShouAddFamilyModel.m; sourceTree = "<group>"; };
@@ -807,7 +810,7 @@
 				AA510E551D9BD94300D9FD67 /* OpenLockController.h */,
 				AA510E561D9BD94300D9FD67 /* OpenLockController.m */,
 				18C6976A1D7462B9004DA2B1 /* DoorLockRecordConroller.h */,
-				18C6976B1D7462B9004DA2B1 /* DoorLockRecordConroller.m */,
+				D1B088E91DAA5BB500072214 /* DoorLockRecordConroller.m */,
 				D1EFCAC11D88EDD20045A0C0 /* DoorLockModel.h */,
 				D1EFCAC21D88EDD20045A0C0 /* DoorLockModel.m */,
 			);
@@ -905,8 +908,6 @@
 		18C697931D7462B9004DA2B1 /* 手势解锁库文件 */ = {
 			isa = PBXGroup;
 			children = (
-				18C697941D7462B9004DA2B1 /* GestureVerifyViewController.h */,
-				D1BDCAAD1D929B260022BDE2 /* GestureVerifyViewController.m */,
 				18C697961D7462B9004DA2B1 /* GestureViewController.h */,
 				D1BDCAAF1D929B520022BDE2 /* GestureViewController.m */,
 			);
@@ -1099,6 +1100,7 @@
 				D1A7DBEA1D8117DD00D051B0 /* AddLock */,
 				D1A7DD0F1D8117DD00D051B0 /* Wait */,
 				D1A7DD141D8117DD00D051B0 /* WiFiList */,
+				D1B088E21DAA46DD00072214 /* NewFeature */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -1120,7 +1122,7 @@
 				D1AA2E5F1D83F48600D1AEC9 /* DeviceListModel.h */,
 				D1AA2E601D83F48600D1AEC9 /* DeviceListModel.m */,
 				AA2C527D1D9159CA00D0BD3D /* DeviceListController.h */,
-				D1352D7B1D9E102D003A83AB /* DeviceListController.m */,
+				D1B088EB1DAA5BD100072214 /* DeviceListController.m */,
 				D1AA2E611D83F48600D1AEC9 /* DeviceListTcpModel.h */,
 				D1AA2E621D83F48600D1AEC9 /* DeviceListTcpModel.m */,
 				D1007CDE1D8694280079D3DD /* DeviceAutherModel.h */,
@@ -1617,6 +1619,18 @@
 			path = WiFiList;
 			sourceTree = "<group>";
 		};
+		D1B088E21DAA46DD00072214 /* NewFeature */ = {
+			isa = PBXGroup;
+			children = (
+				D1B088E31DAA475000072214 /* NewFeatureController.h */,
+				D1B088E41DAA475000072214 /* NewFeatureController.m */,
+				D1B088E61DAA484200072214 /* NewFeatureCell.h */,
+				D1B088E71DAA484200072214 /* NewFeatureCell.m */,
+			);
+			name = NewFeature;
+			path = WiFiList/NewFeature;
+			sourceTree = "<group>";
+		};
 		D1B792391D8BF78C00DDA4DD /* EBForeNotification */ = {
 			isa = PBXGroup;
 			children = (
@@ -1950,7 +1964,6 @@
 				D1A7DD271D8117DD00D051B0 /* CustomCollectionViewCollectionViewCell.m in Sources */,
 				D1A7DD901D8117DD00D051B0 /* UIColor+Util.m in Sources */,
 				D1A7DD801D8117DD00D051B0 /* UIView+WebCacheOperation.m in Sources */,
-				18C6979D1D7462B9004DA2B1 /* DoorLockRecordConroller.m in Sources */,
 				D1A7DDB41D8117DD00D051B0 /* RegisterViewController.m in Sources */,
 				D1AA2E651D83F48600D1AEC9 /* DeviceListModel.m in Sources */,
 				D1A7DD941D8117DD00D051B0 /* HRNavigationBar.m in Sources */,
@@ -1971,8 +1984,10 @@
 				D1A7DDBD1D8117DD00D051B0 /* WIFIListModel.m in Sources */,
 				D1A7DD711D8117DD00D051B0 /* MKAnnotationView+WebCache.m in Sources */,
 				D1A7DDA81D8117DD00D051B0 /* ErrorCodeManager.m in Sources */,
+				D1B088EC1DAA5BD100072214 /* DeviceListController.m in Sources */,
 				1868B8F71D76DDD400D19386 /* BackPicSetController.m in Sources */,
 				AAA8A9BA1D8CE9D900ABA020 /* ViewOfCustomerTableViewCell.m in Sources */,
+				D1B088EA1DAA5BB500072214 /* DoorLockRecordConroller.m in Sources */,
 				D1A7DD221D8117DD00D051B0 /* InputText.m in Sources */,
 				D1A7DD4A1D8117DD00D051B0 /* NVActivityIndicatorAnimationBallGridPulse.swift in Sources */,
 				D1A7DD631D8117DD00D051B0 /* NVActivityIndicatorAnimationTriangleSkewSpin.swift in Sources */,
@@ -1980,7 +1995,6 @@
 				D1A7DDAC1D8117DD00D051B0 /* HRSqlite.m in Sources */,
 				D1A7DD3B1D8117DD00D051B0 /* UIView+MJExtension.m in Sources */,
 				D1A7DD8C1D8117DD00D051B0 /* CALayer+Anim.m in Sources */,
-				D1352D7C1D9E102D003A83AB /* DeviceListController.m in Sources */,
 				D1A7DD8B1D8117DD00D051B0 /* AFNJSONResponseSerializerWithData.m in Sources */,
 				D1352D751D9E0ECB003A83AB /* XiaoRuiNewQRcode.m in Sources */,
 				D1A7DD421D8117DD00D051B0 /* FMResultSet.m in Sources */,
@@ -2008,6 +2022,7 @@
 				D1A7DD511D8117DD00D051B0 /* NVActivityIndicatorAnimationBallScaleMultiple.swift in Sources */,
 				D1A7DD3E1D8117DD00D051B0 /* FMDatabase.m in Sources */,
 				D1A7DD411D8117DD00D051B0 /* FMDatabaseQueue.m in Sources */,
+				D1B088E51DAA475000072214 /* NewFeatureController.m in Sources */,
 				D1A7DD9A1D8117DD00D051B0 /* HRDOData.m in Sources */,
 				18C697A31D7462B9004DA2B1 /* PCCircle.m in Sources */,
 				D1A7DD9D1D8117DD00D051B0 /* HRNewUser.m in Sources */,
@@ -2101,6 +2116,7 @@
 				D1A7DD931D8117DD00D051B0 /* UIView+HRExtension.m in Sources */,
 				D1BDCAAC1D929A6A0022BDE2 /* APPPSWController.m in Sources */,
 				D1A7DD591D8117DD00D051B0 /* NVActivityIndicatorAnimationCubeTransition.swift in Sources */,
+				D1B088E81DAA484200072214 /* NewFeatureCell.m in Sources */,
 				D1AA2E631D83F48600D1AEC9 /* DeviceListCell.m in Sources */,
 				D1A7DDBA1D8117DD00D051B0 /* UDPModel.m in Sources */,
 				D1A7DD351D8117DD00D051B0 /* MJRefreshStateHeader.m in Sources */,
@@ -2108,7 +2124,6 @@
 				D1A7DD7A1D8117DD00D051B0 /* UIButton+WebCache.m in Sources */,
 				D1A7DDA21D8117DD00D051B0 /* HRXiaorui.m in Sources */,
 				D1A7DDB91D8117DD00D051B0 /* HRPushMode.m in Sources */,
-				D1BDCAAE1D929B260022BDE2 /* GestureVerifyViewController.m in Sources */,
 				D1A7DD2C1D8117DD00D051B0 /* MJRefreshHeader.m in Sources */,
 				D1A7DDA91D8117DD00D051B0 /* HRHTTPTool.m in Sources */,
 				AA2C52781D91578D00D0BD3D /* PushSettingController.m in Sources */,

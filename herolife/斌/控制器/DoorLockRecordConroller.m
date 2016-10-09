@@ -430,6 +430,37 @@ static int indexCount = 0;
 
 
 
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    DoorLockModel *model = self.queryArray[indexPath.row];
+    
+    NSString *title = model.title;
+    NSRange range = [title rangeOfString:@"|"];
+    
+    NSString *time = [title substringToIndex:range.location];
+    NSString *user = model.person.firstObject;
+    
+    
+    range = [title rangeOfString:@"|" options:NSBackwardsSearch];
+    NSString *message = [title substringFromIndex:range.location + 1];
+    
+    
+    NSString  *finalString = [NSString stringWithFormat:@"用户名:%@\n操作:%@\n时间:%@\n", user, message, time];
+    
+    
+    
+    UIAlertController * alertController = [UIAlertController alertControllerWithTitle:@"" message:finalString preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        
+    }];
+    
+    [alertController addAction:cancelAction];
+    [self presentViewController:alertController animated:YES completion:nil];
+
+    
+}
+
 -(void)setUpHeardView
 {
 	

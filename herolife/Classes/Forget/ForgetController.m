@@ -196,7 +196,7 @@
 		make.left.equalTo(self.userNameField);
 		make.top.equalTo(self.userNameField.mas_bottom).offset(HRCommonScreenH *40);
 		make.height.mas_equalTo(HRCommonScreenH *80);
-		make.width.mas_equalTo(HRCommonScreenW *236);
+		make.width.mas_equalTo(236 * 0.5);
 	}];
 }
 #pragma mark - UI事件
