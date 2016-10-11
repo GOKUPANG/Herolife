@@ -67,6 +67,7 @@
 		  success:^(NSURLSessionDataTask * _Nonnull task, id  _Nonnull responseObject) {
 			  
 //			  HRAFNWriteToPlist(@"login");
+			  
 			  DDLogInfo(@"xiaoruiInfo---%@", responseObject);
               [HRServicesManager sharedManager].sessid       = responseObject[@"sessid"];
               [HRServicesManager sharedManager].session_name = responseObject[@"session_name"];

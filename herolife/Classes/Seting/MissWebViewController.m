@@ -95,7 +95,7 @@
 {
 	[SVProgressHUD dismiss];
 }
-- (void)webView:(UIWebView *)webView didFailLoadWithError:(nullable NSError *)error
+- (void)webView:(UIWebView *)webView didFailLoadWithError:( NSError *)error
 {
 	[SVProgressTool hr_showErrorWithStatus:@"加载失败!"];
 }

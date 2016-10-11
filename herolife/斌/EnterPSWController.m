@@ -339,12 +339,11 @@ static BOOL ispush = YES;
     [WIFITextField setValue:[UIColor colorWithRed:153.0/255.0 green:153.0/255.0 blue:153.0/255.0 alpha:1] forKeyPath:@"_placeholderLabel.textColor"];
     
     WIFITextField.clearButtonMode =    UITextFieldViewModeAlways;
-	WIFITextField.text = @"HRKJ39026922";
+	WIFITextField.text = @"";
 	self.WIFITextField = WIFITextField;
     
     
     /** WIFI密码输入框最右边的图片 */
-    
     
     UIImageView *EyeimageView = [[UIImageView alloc]init];
     [self.view addSubview:EyeimageView];

@@ -752,9 +752,7 @@
 										  
 										  [SVProgressTool hr_dismiss];
 										  HRTabBarViewController *tabBarVC = [[HRTabBarViewController alloc] init];
-										  //			  [self.navigationController pushViewController:tabBarVC animated:YES];
 										  [UIApplication sharedApplication].keyWindow.rootViewController = tabBarVC;
-										  //			  [self presentViewController:tabBarVC animated:YES completion:nil];
 										  
 									  }
 								  }];

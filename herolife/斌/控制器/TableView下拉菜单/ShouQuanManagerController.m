@@ -22,7 +22,8 @@
 #define FILTER_ITEMS_KEY        @"values"
 #define FILTER_IMAGES_KEY        @"image"
 #define UIColorFromRGB(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
-
+//查看开锁密码  文字key
+#define RecordeLockPassword @"查看开锁密码"
 static NSString *ViewOfCustomerTableViewCellIdentifier = @"ViewOfCustomerTableViewCellIdentifier";
 
 @interface ShouQuanManagerController ()<UITableViewDataSource,UITableViewDelegate,CustomerInfoSectionViewDelegate,SRActionSheetDelegate, AutherTimePickViewDelegate>
@@ -97,7 +98,10 @@ static NSString *ViewOfCustomerTableViewCellIdentifier = @"ViewOfCustomerTableVi
 @property(nonatomic, copy) NSString *minute;
 /** 用户管理员密码输入框 */
 @property(nonatomic, weak) UITextField *manageField;
-
+/** 弹框密码 label */
+@property(nonatomic, weak) UILabel * paswdLabel;
+/** 当前锁的UUID */
+@property(nonatomic, copy) NSString *currentUuid;
 @end
 
 @implementation ShouQuanManagerController
@@ -106,6 +110,7 @@ static NSString *ViewOfCustomerTableViewCellIdentifier = @"ViewOfCustomerTableVi
 - (void)setListModel:(DeviceListModel *)listModel
 {
 	_listModel = listModel;
+	self.currentUuid = listModel.uuid;
 	// 我授权给别人的数据和当前点击的数据里的UUID进行比较,看是否有有权限跳转
 	AppDelegate *app = (AppDelegate *)[UIApplication sharedApplication].delegate;
 	
@@ -119,7 +124,6 @@ static NSString *ViewOfCustomerTableViewCellIdentifier = @"ViewOfCustomerTableVi
 		}
 		
 	}
-	
 	self.deviceAutherArray = mu;
 	[self.listTableView reloadData];
 	
@@ -298,11 +302,38 @@ static NSString *ViewOfCustomerTableViewCellIdentifier = @"ViewOfCustomerTableVi
 	//临时授权
 	[kNotification addObserver:self selector:@selector(receiveTempAutherInformation) name:kNotificationReceiveTempAutherInformation object:nil];
 	
-	
 }
 static BOOL isOvertime = NO;
 - (void)receiveTempAutherInformation
 {
+	
+	// 更新数据
+	AppDelegate *app = (AppDelegate *)[UIApplication sharedApplication].delegate;
+	
+	DDLogWarn(@"获得我授权给别人的授权表setListModel%@count-%lu", app.autherArray, (unsigned long)app.autherArray.count);
+	NSMutableArray *mu = [NSMutableArray array];
+	for (DeviceAutherModel *model in app.autherArray) {
+		if ([model.uuid isEqualToString: _listModel.uuid]) {
+			
+			[mu addObject:model];
+			
+		}
+		
+	}
+	
+	self.deviceAutherArray = mu;
+	
+	// _listTableView要显示的section数目
+	for (int i = 0; i < self.deviceAutherArray.count; i++)
+	{
+		NSMutableDictionary *dic = [[NSMutableDictionary alloc]init];
+		[dic setValue:@"55555" forKey:@"detail"];
+		[_dataArray addObject:dic];
+		
+	}
+	
+	[self.listTableView reloadData];
+	
 	
 	[UIView animateWithDuration:0.5 animations:^{
 		
@@ -334,11 +365,9 @@ static BOOL isOvertime = NO;
 	AppDelegate *app = (AppDelegate *)[UIApplication sharedApplication].delegate;
 	DDLogWarn(@"receiveAutherInformationreceiveAutherInformation%@%lu", app.autherArray, app.autherArray.count);
 	
-	
-	
 	NSMutableArray *mu = [NSMutableArray array];
 	for (DeviceAutherModel *model in app.autherArray) {
-		if ([model.uuid isEqualToString: _listModel.uuid]) {
+		if ([model.uuid isEqualToString: self.currentUuid]) {
 			
 			[mu addObject:model];
 			
@@ -391,9 +420,17 @@ static BOOL isShowOverMenu = NO;
 	CGFloat loginX = 200 *HRCommonScreenH;
 	
 	
+	//qq用户
+	NSString *qqName = [kUserDefault objectForKey:kNSUserDefaultsNickname];
+	
 	//密码相关view
 	UILabel * paswdLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 55, loginX, 32)];
-	
+	if (qqName && qqName.length > 0) {
+		paswdLabel.hidden = YES;
+	}else
+	{
+		paswdLabel.hidden = NO;
+	}
 	[alertV addSubview:paswdLabel];
 	paswdLabel.text = @"用户密码";
 	paswdLabel.textColor = [UIColor whiteColor];
@@ -418,7 +455,12 @@ static BOOL isShowOverMenu = NO;
     [pwdField setValue:[UIColor colorWithWhite:1.0 alpha:0.7] forKeyPath:@"_placeholderLabel.textColor"];
 	pwdField.clearButtonMode = UITextFieldViewModeWhileEditing;
 	
-	
+	if (qqName && qqName.length > 0) {
+		pwdField.hidden = YES;
+	}else
+	{
+		pwdField.hidden = NO;
+	}
 	pwdField.textColor = [UIColor whiteColor];
 	self.pwdField = pwdField;
 	
@@ -579,15 +621,24 @@ static BOOL isShowOverMenu = NO;
 	
 	CGFloat loginX = 200 *HRCommonScreenH;
 	
-	
-	//密码相关view
+	//判断是否是QQ用户如果是就不让显示输入密码
+	NSString *qqName = [kUserDefault objectForKey:kNSUserDefaultsNickname];
+		//密码相关view
 	UILabel * paswdLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 55, loginX, 32)];
 	
 	[alertV addSubview:paswdLabel];
+	if (qqName && qqName.length > 0) {
+		paswdLabel.hidden = YES;
+	}else
+	{
+		
+		paswdLabel.hidden = NO;
+	}
 	paswdLabel.text = @"用户密码";
 	paswdLabel.textColor = [UIColor whiteColor];
 	
 	paswdLabel.textAlignment = NSTextAlignmentCenter;
+	self.paswdLabel = paswdLabel;
 	
 	UITextField *pwdField = [[UITextField alloc] initWithFrame:CGRectMake(loginX, 55, alertV.frame.size.width -  loginX*1.2, 32)];
 	pwdField.layer.borderColor = [[UIColor colorWithWhite:0.9 alpha:1] CGColor];
@@ -602,7 +653,13 @@ static BOOL isShowOverMenu = NO;
 	pwdField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
 	pwdField.layer.borderWidth = 1;
 	pwdField.layer.cornerRadius = 4;
-	
+	if (qqName && qqName.length > 0) {
+		pwdField.hidden = YES;
+	}else
+	{
+		
+		pwdField.hidden = NO;
+	}
 	pwdField.placeholder = @"请输入用户登陆密码";
     
     [pwdField setValue:[UIColor colorWithWhite:1.0 alpha:0.7] forKeyPath:@"_placeholderLabel.textColor"];
@@ -662,6 +719,9 @@ static BOOL isShowOverMenu = NO;
     
     CGFloat loginX = 200 *HRCommonScreenH;
 	
+	//qq用户
+	NSString *qqName = [kUserDefault objectForKey:kNSUserDefaultsNickname];
+
 	//用户名密码相关
 	UILabel * paswdLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 55, loginX, 32)];
 	
@@ -670,7 +730,12 @@ static BOOL isShowOverMenu = NO;
 	paswdLabel.textColor = [UIColor whiteColor];
 	
 	paswdLabel.textAlignment = NSTextAlignmentCenter;
-	
+	if (qqName && qqName.length > 0) {
+		paswdLabel.hidden = YES;
+	}else
+	{
+		paswdLabel.hidden = NO;
+	}
 	
 	UITextField *pwdField = [[UITextField alloc] initWithFrame:CGRectMake(loginX, 55, alertV.frame.size.width -  loginX*1.2, 32)];
 	pwdField.layer.borderColor = [[UIColor colorWithWhite:0.9 alpha:1] CGColor];
@@ -680,7 +745,12 @@ static BOOL isShowOverMenu = NO;
 	
 	pwdField.leftViewMode = UITextFieldViewModeAlways;
 	pwdField.leftView = leftpPwdView;
-	
+	if (qqName && qqName.length > 0) {
+		pwdField.hidden = YES;
+	}else
+	{
+		pwdField.hidden = NO;
+	}
 	
 	pwdField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
 	pwdField.layer.borderWidth = 1;
@@ -755,9 +825,8 @@ static BOOL isShowOverMenu = NO;
     [loginPwdField setValue:[UIColor colorWithWhite:1.0 alpha:0.7] forKeyPath:@"_placeholderLabel.textColor"];
     
     loginPwdField.textColor = [UIColor whiteColor];
-    
-    
-    
+	
+	
     AutherTimePickView *timeFiled = [[AutherTimePickView alloc] initWithFrame:CGRectMake(loginX, 200, alertV.frame.size.width -  loginX*1.2, 32)];
 	
 	timeFiled.layer.borderColor = [[UIColor colorWithWhite:0.9 alpha:1] CGColor];
@@ -779,7 +848,7 @@ static BOOL isShowOverMenu = NO;
     [timeFiled setValue:[UIColor colorWithWhite:1.0 alpha:0.7] forKeyPath:@"_placeholderLabel.textColor"];
 	
 	timeFiled.textColor = [UIColor whiteColor];
-						   
+	
     UILabel * PswLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 200, loginX, 32)];
     
     [alertV addSubview:PswLabel];
@@ -848,11 +917,43 @@ static BOOL isShowOverMenu = NO;
 		 
 		 if (buttonIndex == 1) {
 			 
-			//修改授权信息
+			//删除授权信息
 			[self sendDataDeleteAuthor];
 		 }
 		 
-	}
+	 }else if (customAlertView.tag == 14) {//查询门锁密码
+		 
+		 
+		 if (buttonIndex == 1) {
+			 
+			 ////查询门锁密码
+			 //判断label是否为门锁密码, 如果是, 用户点击确定按钮就要让弹框消失
+			 if ([self.paswdLabel.text isEqualToString:@"门锁密码"]) {
+				 
+				 [UIView animateWithDuration:0.3 animations:^{
+					 
+					 CGRect AlertViewFrame = customAlertView.frame;
+					 
+					 AlertViewFrame.origin.x = -50;
+					 
+					 customAlertView.alpha = 0;
+					 
+					 customAlertView.frame = AlertViewFrame;
+					 
+				 } completion:^(BOOL finished) {
+					 
+					 [customAlertView dissMiss];
+					 
+				 }];
+
+			 }else
+			 {
+				 
+				 [self sendDataQueryLockPassword];
+			 }
+		 }
+		 
+	 }
 	
 	if (buttonIndex==0) {
 		
@@ -879,25 +980,48 @@ static BOOL isShowOverMenu = NO;
 - (void)addTemporaryAuther
 {
 	
-	if (self.pwdField.text.length < 0.5 || self.PhoneTfield.text.length < 0.5 || self.TimeTfield.text.length < 0.5 || self.manageField.text.length < 0.5) {
+	//qq用户
+	NSString *qqName = [kUserDefault objectForKey:kNSUserDefaultsNickname];
+	if (qqName && qqName.length > 0) {
 		
-		[SVProgressTool hr_showErrorWithStatus:@"用户或管理员密码或手机号码或时间不能为空!"];
-		[self.FamilyAlertView.layer shake];
-		return;
-	}
-	if (self.PhoneTfield.text.length != 11 ) {
+		if (self.PhoneTfield.text.length < 0.5 || self.TimeTfield.text.length < 0.5 || self.manageField.text.length < 0.5) {
+			
+			[SVProgressTool hr_showErrorWithStatus:@"管理员密码或手机号码或时间不能为空!"];
+			[self.FamilyAlertView.layer shake];
+			return;
+		}
+		if (self.PhoneTfield.text.length != 11 ) {
+			
+			[SVProgressTool hr_showErrorWithStatus:@"该手机号码格式错误,请重新输入!"];
+			[self.FamilyAlertView.layer shake];
+			return;
+		}
+	}else
+	{
 		
-		[SVProgressTool hr_showErrorWithStatus:@"该手机号码格式错误,请重新输入!"];
-		[self.FamilyAlertView.layer shake];
-		return;
-	}
-	NSString *paswd = [kNSUserDefaults objectForKey:kDefaultsPassWord];
-	if (![self.pwdField.text isEqualToString:paswd]) {
+		if (self.pwdField.text.length < 0.5 || self.PhoneTfield.text.length < 0.5 || self.TimeTfield.text.length < 0.5 || self.manageField.text.length < 0.5) {
+			
+			[SVProgressTool hr_showErrorWithStatus:@"用户或管理员密码或手机号码或时间不能为空!"];
+			[self.FamilyAlertView.layer shake];
+			return;
+		}
+		if (self.PhoneTfield.text.length != 11 ) {
+			
+			[SVProgressTool hr_showErrorWithStatus:@"该手机号码格式错误,请重新输入!"];
+			[self.FamilyAlertView.layer shake];
+			return;
+		}
 		
-		[SVProgressTool hr_showErrorWithStatus:@"密码错误, 请重新输入密码!"];
-		[self.FamilyAlertView.layer shake];
-		return;
+		NSString *paswd = [kNSUserDefaults objectForKey:kDefaultsPassWord];
+		if (![self.pwdField.text isEqualToString:paswd]) {
+			
+			[SVProgressTool hr_showErrorWithStatus:@"密码错误, 请重新输入密码!"];
+			[self.FamilyAlertView.layer shake];
+			return;
+		}
 	}
+	
+	
 	
 	[SVProgressTool hr_showWithStatus:@"正在临时授权..."];
 	
@@ -907,7 +1031,7 @@ static BOOL isShowOverMenu = NO;
 	//这里不是传用户app密码
 	NSArray *person = @[base64pswd, self.PhoneTfield.text];
 	
-	NSString *str = [NSString stringWithSocketAddTemporaryAutherLockWithlockUUID:self.listModel.uuid person:person permit:permit autherTime:[NSString stringWithFormat:@"%@:%@", self.hour,self.minute]];
+	NSString *str = [NSString stringWithSocketAddTemporaryAutherLockWithlockUUID:self.currentUuid person:person permit:permit autherTime:[NSString stringWithFormat:@"%@:%@", self.hour,self.minute]];
 	[self.appDelegate sendMessageWithString:str];
 	
 	DDLogWarn(@"发送临时授权%@", str);
@@ -921,22 +1045,34 @@ static BOOL isShowOverMenu = NO;
 #pragma mark - 取消授权
 - (void)sendDataDeleteAuthor
 {
-	if (self.pwdAutherField.text.length > 0) {
 		NSString *paswd = [kNSUserDefaults objectForKey:kDefaultsPassWord];
-		if (![self.pwdAutherField.text isEqualToString:paswd]) {
+		
+		//qq用户
+		NSString *qqName = [kUserDefault objectForKey:kNSUserDefaultsNickname];
+		if (qqName && qqName.length > 0) {
 			
-			[SVProgressTool hr_showErrorWithStatus:@"密码错误, 请重新输入密码!"];
-			[self.FamilyAlertView.layer shake];
-			return;
+		}else
+		{
+			
+			if (![self.pwdAutherField.text isEqualToString:paswd]) {
+				
+				[SVProgressTool hr_showErrorWithStatus:@"密码错误, 请重新输入密码!"];
+				[self.FamilyAlertView.layer shake];
+				return;
+			}
 		}
+		
 		[SVProgressTool hr_showWithStatus:@"正在删除授权..."];
 		
 		DeviceAutherModel *mode = self.deviceAutherArray[selectIndexPath];
 		NSString *dstUUId = mode.uuid;
 		NSString *did = mode.did;
+//		NSString *dstUUId = self.listModel.uuid;
+//		NSString *did = self.listModel.did;
 		
 		
 		NSString *str = [NSString stringWithSocketDelegateFamilyLockWithDstUuid:dstUUId lockUUID:dstUUId did:did];
+		DDLogInfo(@"取消授权%@", str);
 		[self.appDelegate sendMessageWithString:str];
 		
 		// 启动定时器
@@ -944,10 +1080,39 @@ static BOOL isShowOverMenu = NO;
 		isOvertime = NO;
 		isShowOverMenu = NO;
 		_timer = [NSTimer scheduledTimerWithTimeInterval:HRTimeInterval target:self selector:@selector(startTimer) userInfo:nil repeats:NO];
+	
+}
+#pragma mark - 查看门锁密码
+- (void)sendDataQueryLockPassword
+{
+	//qq用户
+	NSString *qqName = [kUserDefault objectForKey:kNSUserDefaultsNickname];
+	if (qqName && qqName.length > 0) {
+		
 	}else
 	{
-		[SVProgressTool hr_showErrorWithStatus:@"密码为空,请输入密码!"];
+		NSString *paswd = [kNSUserDefaults objectForKey:kDefaultsPassWord];
+		if (![self.pwdAutherField.text isEqualToString:paswd]) {
+			
+			[SVProgressTool hr_showErrorWithStatus:@"密码错误, 请重新输入密码!"];
+			[self.FamilyAlertView.layer shake];
+			return;
+		}
 	}
+	
+	
+		[SVProgressTool hr_showWithStatus:@"正在查看开锁密码..."];
+		dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+			[SVProgressTool hr_dismiss];
+			self.paswdLabel.text = @"门锁密码";
+			
+			DeviceAutherModel *mode = self.deviceAutherArray[selectIndexPath];
+			
+			self.pwdAutherField.secureTextEntry = NO;
+			self.pwdAutherField.userInteractionEnabled = NO;
+			self.pwdAutherField.text = mode.person.firstObject;
+		});
+		
 	
 }
 
@@ -959,16 +1124,24 @@ static BOOL isShowOverMenu = NO;
 	
 	NSString *uerName = [kUserDefault objectForKey:kDefaultsUserName];
 	
-	if (self.pwdField.text.length < 0.5) {
-		[SVProgressTool hr_showErrorWithStatus:@"密码不能为空,请输入密码!"];
-		return;
+	//qq用户
+	NSString *qqName = [kUserDefault objectForKey:kNSUserDefaultsNickname];
+	if (qqName && qqName.length > 0) {
+		
 	}else
 	{
-		if (![self.pwdField.text isEqualToString:uerName]) {
-			
-			[SVProgressTool hr_showErrorWithStatus:@"密码不正确,请输入密码!"];
+		if (self.pwdField.text.length < 0.5) {
+			[SVProgressTool hr_showErrorWithStatus:@"密码不能为空,请输入密码!"];
+			return;
+		}else
+		{
+			if (![self.pwdField.text isEqualToString:uerName]) {
+				
+				[SVProgressTool hr_showErrorWithStatus:@"密码不正确,请输入密码!"];
+			}
 		}
 	}
+	
 	
 	//在这里发送添加家人账号的socket请求
 	NSArray *permit = @[self.remoteOnLock,self.recordQuery,@"none",@"none"];
@@ -996,19 +1169,25 @@ static BOOL isShowOverMenu = NO;
 	
 	NSString *psw = [kUserDefault objectForKey:kDefaultsPassWord];
 	NSString *userName = [kUserDefault objectForKey:kDefaultsUserName];
+	//qq用户
+	NSString *qqName = [kUserDefault objectForKey:kNSUserDefaultsNickname];
 	
-	if (self.pwdField.text.length < 0.5) {
-		[SVProgressTool hr_showErrorWithStatus:@"密码不能为空,请输入密码!"];
-		[customAlertView.layer shake];
-		return;
+	if (qqName && qqName.length > 0) {
 	}else
 	{
-		if (![self.pwdField.text isEqualToString:psw]) {
-			
-			[SVProgressTool hr_showErrorWithStatus:@"密码不正确,请输入密码!"];
+		if (self.pwdField.text.length < 0.5) {
+			[SVProgressTool hr_showErrorWithStatus:@"密码不能为空,请输入密码!"];
 			[customAlertView.layer shake];
-			
 			return;
+		}else
+		{
+			if (![self.pwdField.text isEqualToString:psw]) {
+				
+				[SVProgressTool hr_showErrorWithStatus:@"密码不正确,请输入密码!"];
+				[customAlertView.layer shake];
+				
+				return;
+			}
 		}
 	}
 	
@@ -1078,12 +1257,12 @@ static BOOL isShowOverMenu = NO;
 		
 		NSMutableDictionary *dict = [NSMutableDictionary dictionary];
 		dict[@"user"] = user;
-		dict[@"dev"] = self.listModel.uuid;
+		dict[@"dev"] = self.currentUuid;
 		
 		NSString *authorizedUser = self.AddPswNumberField.text;
 		NSArray *person = @[@"none", authorizedUser];
 		NSString *user = [kUserDefault objectForKey:kDefaultsUserName];
-		NSString *str = [NSString stringWithSocketAddFamilyLockWithDst:dict lockUUID:self.listModel.uuid admin:user person:person permit:permit];
+		NSString *str = [NSString stringWithSocketAddFamilyLockWithDst:dict lockUUID:self.currentUuid admin:user person:person permit:permit];
 		
 		[self.appDelegate sendMessageWithString:str];
 		
@@ -1208,7 +1387,13 @@ static BOOL isShowOverMenu = NO;
         //在这里写入头部视图的信息
 		DeviceAutherModel *listModel = self.deviceAutherArray[section];
 		NSString *autherName = listModel.person.lastObject;
-		NSString *time = listModel.time;
+		NSString *time;
+		if ([listModel.time isEqualToString:@"none"]) {
+			time = @"永久";
+		}else
+		{
+			time = listModel.time;
+		}
         [view initWithImgName:@"邮箱" userNameLabel:autherName timeLabel:time section:section delegate:self];
         
         
@@ -1269,12 +1454,23 @@ static NSInteger selectIndexPath = 0;
 	selectIndexPath = indexPath.section;
 	DeviceAutherModel *mode = self.deviceAutherArray[indexPath.section];
 	NSString *name = mode.person.lastObject;
-	
-    [SRActionSheet sr_showActionSheetViewWithTitle:name
-                              cancelButtonTitle:@"取消"
-                         destructiveButtonTitle:@""
-                              otherButtonTitles:@[@"取消该授权", @"修改授权信息"]
-                                       delegate:self];
+	if ([mode.time isEqualToString:@"none"]) {
+		//判断是否是家人授权, 如果是就不让查看门锁密码, 如果不是就查看门锁密码
+		[SRActionSheet sr_showActionSheetViewWithTitle:name
+									 cancelButtonTitle:@"取消"
+								destructiveButtonTitle:@""
+									 otherButtonTitles:@[@"取消该授权", @"修改授权信息"]
+											  delegate:self];
+	}else
+	{
+		
+		//如果是临时授权, 就让查看门锁密码,并且不如修改授权信息
+		[SRActionSheet sr_showActionSheetViewWithTitle:name
+									 cancelButtonTitle:@"取消"
+								destructiveButtonTitle:@""
+									 otherButtonTitles:@[@"取消该授权", RecordeLockPassword]
+											  delegate:self];
+	}
 }
 
 
@@ -1291,11 +1487,22 @@ static NSInteger selectIndexPath = 0;
 		
 	}else if (index == 1) {//修改授权信息
 		
-		NSString *name = self.deviceAutherArray[selectIndexPath].person.lastObject;
-		NSString *remoteSwich = self.deviceAutherArray[selectIndexPath].permit.firstObject;
-		NSString *recordeSwich = self.deviceAutherArray[selectIndexPath].permit[1];
 		
-		[self makeModifyFamilyAlerViewWithTitle:@"修改授权信息" userInteractionEnabled:NO text:name tag : 12 remoteSwich:remoteSwich recordeSwich:recordeSwich];
+		DeviceAutherModel *model = self.deviceAutherArray[selectIndexPath];
+		if ([model.time isEqualToString:@"none"]) {
+			
+			NSString *name = self.deviceAutherArray[selectIndexPath].person.lastObject;
+			NSString *remoteSwich = self.deviceAutherArray[selectIndexPath].permit.firstObject;
+			NSString *recordeSwich = self.deviceAutherArray[selectIndexPath].permit[1];
+			
+			[self makeModifyFamilyAlerViewWithTitle:@"修改授权信息" userInteractionEnabled:NO text:name tag : 12 remoteSwich:remoteSwich recordeSwich:recordeSwich];
+			
+		}else
+		{
+			//查看门锁密码 弹框
+			[self makeDelegateAlerViewWithTitle:RecordeLockPassword tag:14];
+		}
+		
 		
 		
 	}
@@ -1376,6 +1583,86 @@ static NSInteger selectIndexPath = 0;
 	self.minute = minute;
 	self.TimeTfield.text = [NSString stringWithFormat:@"%@ : %@", hour,minute];
 }
-
+//解码
+//const char base[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
+//char *base64_encode(const char* data, int data_len,char* out)
+//{
+//	//int data_len = strlen(data);
+//	int prepare = 0;
+//	int ret_len;
+//	int temp = 0;
+//	char *ret = NULL;
+//	char *f = NULL;
+//	int tmp = 0;
+//	char changed[4];
+//	int i = 0;
+//	ret_len = data_len / 3;
+//	temp = data_len % 3;
+//	if (temp > 0)
+//	{
+//		ret_len += 1;
+//	}
+//	ret_len = ret_len*4 + 1;
+//	ret = (char *)malloc(ret_len);
+//	
+//	if ( ret == NULL)
+//	{
+//		printf("No enough memory.\n");
+//		exit(0);
+//	}
+//	memset(ret, 0, ret_len);
+//	f = ret;
+//	while (tmp < data_len)
+//	{
+//		temp = 0;
+//		prepare = 0;
+//		memset(changed, '\0', 4);
+//		while (temp < 3)
+//		{
+//			if (tmp >= data_len)
+//			{
+//				break;
+//			}
+//			prepare = ((prepare << 8) | (data[tmp] & 0xFF));
+//			tmp++;
+//			temp++;
+//		}
+//		prepare = (prepare<<((3-temp)*8));
+//		for (i = 0; i < 4 ;i++ )
+//		{
+//			if (temp < i)
+//			{
+//				
+//				printf("test...\n")	;
+//				changed[i] = 0x40;
+//			}
+//			else
+//			{
+//				changed[i] = (prepare>>((3-i)*6)) & 0x3F;
+//			}
+//			*f = base[changed[i]];
+//			f++;
+//		}
+//	}
+//	*f = '\0';
+//	strcpy(out,ret);
+//	free(ret);
+//	return ret;
+//	
+//}
+//int hrdecode(char *result,char *src)
+//{
+//	char ret[250];
+//	int ret_len= base64_decode(src,ret,strlen(src));
+//	int i=0;
+//	for (i=0; i < ret_len; i++) {
+//		char temp = (char)ret[i]^enlic2[i];
+//		result[i]=temp;
+//		
+//	}
+//	result[i] = '\0';
+//	int len= strlen(result);
+//	return len;
+//}
 
 @end

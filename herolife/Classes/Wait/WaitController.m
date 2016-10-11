@@ -8,7 +8,7 @@
 
 #import "WaitController.h"
 #import "AddLockController.h"
-#import "herolife-Swift.h"
+//#import "herolife-Swift.h"
 
 @interface WaitController ()
 /** 头像 */

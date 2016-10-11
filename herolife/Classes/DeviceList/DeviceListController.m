@@ -37,6 +37,7 @@
 #import "YXCustomAlertView.h"
 #import "HRRefreshHeader.h"
 #import "MJRefresh.h"
+#import "DoorLockModel.h"
 
 
 
@@ -129,7 +130,8 @@
 @property(nonatomic, strong) DeviceListModel *showLockModel;
 /** 下拉刷新的UITableView */
 @property(nonatomic, weak) UITableView *eptTable;
-
+/** 保存门锁记录查询 page = 0 的数组 */
+@property(nonatomic, strong) NSMutableArray *queryArray;
 
 
 @end
@@ -160,6 +162,13 @@ NSInteger const timerDuration = 60.0;
 	}
 	return _onLineLabel;
 }
+- (NSMutableArray *)queryArray
+{
+	if (!_queryArray) {
+		_queryArray = [NSMutableArray array];
+	}
+	return _queryArray;
+}
 - (NSMutableArray *)homeArray
 {
 	if (!_homeArray) {
@@ -167,6 +176,7 @@ NSInteger const timerDuration = 60.0;
 	}
 	return _homeArray;
 }
+
 - (NSMutableArray *)autherArray
 {
 	if (!_autherArray) {
@@ -266,7 +276,18 @@ static NSString *cellID = @"cellID";
 	//监听删除授权
 	[kNotification addObserver:self selector:@selector(receiveDeleteAutherDevice:) name:kNotificationReceiveDeleteAutherInformation object:nil];
 	
+	//监听通知 刷新数据
+	[kNotification addObserver:self selector:@selector(receivePostRefresh:) name:kNotificationPostRefresh object:nil];
+	
+	
 }
+
+- (void)receivePostRefresh:(NSNotification *)note
+{
+	//重新获取数据
+	[self getHttpRequset];
+}
+
 static BOOL isOvertime = NO;
 - (void)receiveDeleteAutherDevice:(NSNotification *)note
 {
@@ -731,8 +752,20 @@ static BOOL isShowOverMenu = NO;
 				cell.rightLabel.text = self.lastOptionTime;
 			}else
 			{
-				
-				cell.rightLabel.text = @"2016-09-25 09:35:28";
+				if (self.queryArray.count > 0) {
+					for (DoorLockModel *model in self.queryArray) {
+						if ([model.title containsString:@"开锁操作"]) {
+							
+							NSString *title = model.title;
+							NSRange range = [title rangeOfString:@"|"];
+							
+							NSString *time = [title substringToIndex:range.location];
+							
+							cell.rightLabel.text = time;
+							break;
+						}
+					}
+				}
 				cell.minLabel.text = [NSString stringWithFormat:@"剩余电量%@", self.currentStateModel.level];
 				
 			}
@@ -750,9 +783,18 @@ static BOOL isShowOverMenu = NO;
 			}else
 			{
 				
-				cell.rightLabel.text = @"2016-09-25 09:35:28";
+				if (self.queryArray.count > 0) {
+					DoorLockModel *model = self.queryArray.firstObject;
+					
+					NSString *title = model.title;
+					NSRange range = [title rangeOfString:@"|"];
+					
+					NSString *time = [title substringToIndex:range.location];
+					
+					cell.rightLabel.text = time;
 				
 			}
+		}
 		}
 			break;
   case 2:
@@ -778,13 +820,14 @@ static BOOL isShowOverMenu = NO;
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+	
 	DDLogInfo(@"%ld", (long)indexPath.row);
-    
-    switch (indexPath.row) {
-        case  0:
-            
-        {
-            OpenLockController * OLC = [OpenLockController new];
+	
+	switch (indexPath.row) {
+		case  0:
+			
+		{
+			OpenLockController * OLC = [OpenLockController new];
 			
 			// 直接
 			for (DeviceAutherModel *auther in self.autherPersonArray) {
@@ -804,18 +847,18 @@ static BOOL isShowOverMenu = NO;
 					return ;
 				}
 			}
-            
-            OLC.listModel = self.currentStateModel;
-            [self.navigationController pushViewController:OLC animated:YES];
-    
-        }
-            
-            break;
-            
-        case 1:
-        {
-            
-            DoorLockRecordConroller *  DLC = [DoorLockRecordConroller new];
+			
+			OLC.listModel = self.currentStateModel;
+			[self.navigationController pushViewController:OLC animated:YES];
+			
+		}
+			
+			break;
+			
+		case 1:
+		{
+			
+			DoorLockRecordConroller *  DLC = [DoorLockRecordConroller new];
 			
 			// 直接
 			for (DeviceAutherModel *auther in self.autherPersonArray) {
@@ -839,14 +882,14 @@ static BOOL isShowOverMenu = NO;
 			DLC.listModel = self.currentStateModel;
 			[self.navigationController pushViewController:DLC animated:YES];
 			
-        }
-            break;
-            
-            
-        case 2:
-        {
-            
-            APPPSWController * PSWC = [APPPSWController new];
+		}
+			break;
+			
+			
+		case 2:
+		{
+			
+			APPPSWController * PSWC = [APPPSWController new];
 			
 			// 直接
 			for (DeviceAutherModel *auther in self.autherPersonArray) {
@@ -867,18 +910,18 @@ static BOOL isShowOverMenu = NO;
 			}
 			
 			
-             PSWC.listModel = self.currentStateModel;
-            
-            
-            
-            [self.navigationController pushViewController:PSWC animated:YES];
-            
-        }
-            
-            break;
-            
-        case 3:
-        {
+			PSWC.listModel = self.currentStateModel;
+			
+			
+			
+			[self.navigationController pushViewController:PSWC animated:YES];
+			
+		}
+			
+			break;
+			
+		case 3:
+		{
 			ShouQuanManagerController *SQC = [ShouQuanManagerController new];
 			// 别人授权给我的数据和当前点击的数据里的UUID进行比较,看是否有有权限跳转
 			for (DeviceAutherModel *auther in self.autherPersonArray) {
@@ -898,25 +941,21 @@ static BOOL isShowOverMenu = NO;
 			}
 			
 			
-			AppDelegate *app = (AppDelegate *)[UIApplication sharedApplication].delegate;
-			
-			DDLogWarn(@"获得我授权给别人的授权表app%@count-%lu", app.autherArray, (unsigned long)app.autherArray.count);
 			SQC.listModel = self.currentStateModel;
 			
 			[self.navigationController pushViewController:SQC animated:YES];
 			
 			
-        }
-            
-            break;
-            
-        default:
-            break;
-    }
-
-    
+		}
+			
+			break;
+			
+		default:
+			break;
+	}
+	
+	
 }
-
 
 #pragma mark - UICollectionViewDelegate/Datasource
 
@@ -2038,6 +2077,8 @@ static BOOL isShowOverMenu = NO;
 	dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
 		
 		DeviceListModel *testModel = self.currentStateModel;
+		//获取page = 0的门锁记录
+		[self getHttpRequsetWithLockRecord];
 		
 		for (DeviceAutherModel *model in self.autherPersonArray) {//目标设备的名字要填,别人授权给我的管理员名字
 			if ([model.uuid isEqualToString:testModel.uuid]) {
@@ -2079,5 +2120,50 @@ static BOOL isShowOverMenu = NO;
 	[self.appDelegate sendMessageWithString:str];
 	
 }
+
+
+#pragma mark - 获取设备信息  发送HTTP请求
+- (void)getHttpRequsetWithLockRecord
+{
+	/// 从偏好设置里加载数据
+	NSString *uuid = self.currentStateModel.uuid;
+	//NSString *url = [NSString stringWithFormat:@"http://www.gzhuarui.cn/?q=huaruiapi/herolife-dev-hrsc-ml&uuid=%@&sy=(unlock|batlow|ltnolock|errlimt)&page=%d", uuid, indexCount];
+	NSString *url = [NSString stringWithFormat:@"%@%@&sy=(unlock|batlow|ltnolock|errlimt)&page=%d",HRAPI_RecordeLock_URL,uuid,0];
+	url = [url stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
+	
+	HRWeakSelf
+	[HRHTTPTool hr_getHttpWithURL:url parameters:nil responseDict:^(id responseObject, NSError *error) {
+		[self.tableView.mj_header endRefreshing];
+		if (error) {
+			[ErrorCodeManager showError:error];
+			return ;
+		}
+		
+		DDLogWarn(@"记录查询HTTP请求%@", responseObject);
+		//如果responseObject不是数组类型就不是我们想要的数据，应该过滤掉
+		if (![responseObject isKindOfClass:[NSArray class]]) {
+			//			[weakSelf.queryArray removeAllObjects];
+			DDLogDebug(@"responseObject不是NSArray");
+			return;
+		}
+		//去除服务器发过来的数据里没有值的情况
+		if (((NSArray*)responseObject).count < 1 ) {
+			DDLogDebug(@"responseObject count == 0");
+			return;
+		}
+		
+		[weakSelf.queryArray removeAllObjects];
+		NSArray *responseArr = (NSArray*)responseObject;
+		
+		for (NSDictionary *dict in responseArr) {
+			DoorLockModel *lockModel = [DoorLockModel mj_objectWithKeyValues:dict];
+			[weakSelf.queryArray addObject:lockModel];
+		}
+		
+		[self.tableView reloadData];
+	}];
+}
+
+
 
 @end

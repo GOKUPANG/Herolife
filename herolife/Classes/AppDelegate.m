@@ -12,7 +12,8 @@
 
 #define QQSDKAppId @"101350673"
 #define QQSDKAppKey @"1aad5325072a03bb9a70033c0ca70cb8"
-
+//友盟KEY
+#define UMENG_APP_KEY @"57faf95be0f55a66910032ab"
 //#define QQSDKAppId @"1105687414"
 //#define QQSDKAppKey @"PsuNc7Du8MrvTW9H"
 
@@ -45,6 +46,7 @@
 #import "GestureViewController.h"
 #import "NewFeatureController.h"
 
+#import "UMMobClick/MobClick.h"
 
 @interface AppDelegate ()<AsyncSocketDelegate>
 /** time */
@@ -75,6 +77,8 @@ static int const HRTimeDuration = 3;
 /// 记录失败 连接次数
 static NSInteger disconnectCount = 0;
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+	//友盟统计
+	[self addUmeng];
 	//显示界面
 	[self setupWindow];
 	
@@ -136,6 +140,20 @@ static NSInteger disconnectCount = 0;
 	
 	
 	return YES;
+}
+- (void)addUmeng
+{
+	
+	UMConfigInstance.appKey = UMENG_APP_KEY;
+	UMConfigInstance.channelId = nil;
+	UMConfigInstance.eSType = E_UM_GAME; //仅适用于游戏场景，应用统计不用设置
+	
+	[MobClick startWithConfigure:UMConfigInstance];//配置以上参数后调用此方法初始化SDK！
+	
+//		[MobClick startWithAppkey:UMENG_APP_KEY reportPolicy:BATCH channelId:nil];
+//	[MobClick startWithConfigure:<#(UMAnalyticsConfig *)#>]
+//		[MobClick setAppVersion:[NSBundle mainBundle].infoDictionary[@"CFBundleShortVersionString"]];
+//		[MobClick setCrashReportEnabled:YES];
 }
 - (void)applicationDidFinishLaunching:(UIApplication *)application
 {
@@ -962,16 +980,15 @@ static NSUInteger lengthInteger = 0;
 		return;
 	}
 	
-	// 临时授权数据
+	// 创建临时授权数据
 	if ([jsonDict[@"hrpush"][@"type"] isEqualToString:@"set"] && [jsonDict[@"msg"][@"types"] isEqualToString:@"common"]) {
 		
-		DDLogInfo(@"临时授权数据%@", jsonDict);
-		
-		[self addModifyAutherDict:jsonDict];
+		DDLogInfo(@"创建临时授权数据%@", jsonDict);
+		//用同样的方法,因为那个数组保存的都是授权信息
+		[self addCreateAutherDict:jsonDict];
 		[[NSNotificationCenter defaultCenter] postNotificationName:kNotificationReceiveTempAutherInformation object:nil userInfo:jsonDict];
 		return;
 	}
-	
 	
 	// 推送设置界面
 	if ([jsonDict[@"hrpush"][@"type"] isEqualToString:@"update"] && [jsonDict[@"msg"][@"types"] isEqualToString:@"hrsc"]) {
@@ -998,6 +1015,11 @@ static NSUInteger lengthInteger = 0;
 	}
 	self.homeArray = muArr;
 	
+}
+
+#pragma mark - 创建临时授权
+- (void)addCreateTempDict:(NSDictionary *)dict
+{
 }
 #pragma mark - 授权管理
 - (void)addModifyAutherDict:(NSDictionary *)dict
@@ -1033,15 +1055,14 @@ static NSUInteger lengthInteger = 0;
 	}
 	DDLogWarn(@"autherArray%@count-%lu", self.autherArray, (unsigned long)self.autherArray.count);
 }
+//创建
 - (void)addCreateAutherDict:(NSDictionary *)dict
 {
 	
 	DeviceAutherModel *data = [DeviceAutherModel mj_objectWithKeyValues:dict[@"msg"]];
-	
 	[self.autherArray addObject:data];
 	DDLogWarn(@"NSMutableArray%@count-%lu", self.autherArray, (unsigned long)self.autherArray.count);
 }
-
 #pragma mark - 空调
 //创建空调 帧
 - (void)addCreateIracDict:(NSDictionary *)dict

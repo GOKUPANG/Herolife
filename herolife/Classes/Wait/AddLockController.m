@@ -216,6 +216,8 @@
 		}
 	}
 	self.tabBarController.selectedIndex = 1;
+	// 从AddLockController 界面发一个通知让首页去刷新数据 通知
+	[kNotification postNotificationName:kNotificationPostRefresh object:nil];
 	[self.navigationController popToRootViewControllerAnimated:YES];
 }
 #pragma mark - UITextFieldDelegate
@@ -225,7 +227,10 @@
 	return YES;
 }
 
-
+- (void)dealloc
+{
+	[kNotification removeObserver:self];
+}
 
 
 

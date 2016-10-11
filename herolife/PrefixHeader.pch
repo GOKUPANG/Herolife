@@ -262,25 +262,27 @@
 /********************************************** 通知 key *******************/
 /// 发送通知
 #define kNotification [NSNotificationCenter defaultCenter]
-// 用户注册传值 通知
+/// 用户注册传值 通知
 #define kNotificationRegister @"kNotificationRegister"
-// 创建锁 通知
+/// 创建锁 通知
 #define kNotificationQRCodeCreateLock @"kNotificationQRCodeCreateLock"
-// 创建本地消息 通知
+/// 创建本地消息 通知
 #define kNotificationLocal @"kNotificationLocal"
-// 接收到wifi列表 UDP 通知
+/// 接收到wifi列表 UDP 通知
 #define kNotificationReceiveWiFiList @"kNotificationReceiveWiFiList"
-// 接收到"开始添加 返回的UDP 通知
+/// 接收到"开始添加 返回的UDP 通知
 #define kNotificationReceiveStratAddWiFiLink @"kNotificationReceiveStratAddWiFiLink"
 
-// 接收到"授权信息"HTTP请求完毕时的数据 通知
+/// 接收到"授权信息"HTTP请求完毕时的数据 通知
 #define kNotificationReceiveDeviceAutherInformation @"kNotificationReceiveDeviceAutherInformation"
-// 接收到临时授权数据数据 通知
+/// 接收到临时授权数据数据 通知
 #define kNotificationReceiveTempAutherInformation @"kNotificationReceiveTempAutherInformation"
-// 接收到取消授权数据数据 通知
+/// 接收到取消授权数据数据 通知
 #define kNotificationReceiveDeleteAutherInformation @"kNotificationReceiveDeleteAutherInformation"
-// 接收到推送设置界面服务器返回的数据数据 通知
+/// 接收到推送设置界面服务器返回的数据数据 通知
 #define kNotificationReceivePushDeviceInformation @"kNotificationReceivePushDeviceInformation"
+/// 从AddLockController 界面发一个通知让首页去刷新数据 通知
+#define kNotificationPostRefresh @"kNotificationPostRefresh"
 
 
 
