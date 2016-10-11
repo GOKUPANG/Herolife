@@ -31,4 +31,9 @@
                                      key:(NSString *)key
                                     auth:(NSString *)auth;
 
+
++(NSString *)hr_CheckLock_base64String:(NSString*)baseString;
+
+
+
 @end

@@ -9,13 +9,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "herolife/&#x658c;/&#x63a7;&#x5236;&#x5668;/TableView&#x4e0b;&#x62c9;&#x83dc;&#x5355;/ShouQuanManagerController.m"
-            timestampString = "497791070.758901"
+            filePath = "herolife/Classes/Wait/WaitController.m"
+            timestampString = "497871174.963966"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "309"
-            endingLineNumber = "309"
-            landmarkName = "-receiveTempAutherInformation"
+            startingLineNumber = "169"
+            endingLineNumber = "169"
+            landmarkName = "-viewWillAppear:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

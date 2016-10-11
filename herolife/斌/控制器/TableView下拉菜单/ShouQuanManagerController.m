@@ -15,6 +15,7 @@
 #import "DeviceListModel.h"
 #import "DeviceAutherModel.h"
 #import "AutherTimePickView.h"
+#import "NSString+DoorLock.h"
 
 #define MENU_HEADER_VIEW_KEY    @"headerview"
 #define MENU_OPENED_KEY         @"open"
@@ -26,7 +27,7 @@
 #define RecordeLockPassword @"查看开锁密码"
 static NSString *ViewOfCustomerTableViewCellIdentifier = @"ViewOfCustomerTableViewCellIdentifier";
 
-@interface ShouQuanManagerController ()<UITableViewDataSource,UITableViewDelegate,CustomerInfoSectionViewDelegate,SRActionSheetDelegate, AutherTimePickViewDelegate>
+@interface ShouQuanManagerController ()<UITableViewDataSource,UITableViewDelegate,CustomerInfoSectionViewDelegate,SRActionSheetDelegate, AutherTimePickViewDelegate,YXCustomAlertViewDelegate>
 
 @property(nonatomic,strong)UITableView *listTableView;
 
@@ -311,6 +312,12 @@ static BOOL isOvertime = NO;
 	AppDelegate *app = (AppDelegate *)[UIApplication sharedApplication].delegate;
 	
 	DDLogWarn(@"获得我授权给别人的授权表setListModel%@count-%lu", app.autherArray, (unsigned long)app.autherArray.count);
+    
+    NSLog(@"-----------------收到临时授权返回的东西-------------------");
+    
+    
+    
+    
 	NSMutableArray *mu = [NSMutableArray array];
 	for (DeviceAutherModel *model in app.autherArray) {
 		if ([model.uuid isEqualToString: _listModel.uuid]) {
@@ -356,6 +363,8 @@ static BOOL isOvertime = NO;
 	
 	isOvertime = YES;
 	[SVProgressTool hr_showSuccessWithStatus:@"临时授权成功!"];
+    
+    
 }
 - (void)receiveAutherInformation
 {
@@ -1032,6 +1041,12 @@ static BOOL isShowOverMenu = NO;
 	NSArray *person = @[base64pswd, self.PhoneTfield.text];
 	
 	NSString *str = [NSString stringWithSocketAddTemporaryAutherLockWithlockUUID:self.currentUuid person:person permit:permit autherTime:[NSString stringWithFormat:@"%@:%@", self.hour,self.minute]];
+    
+    
+    
+    
+    
+    
 	[self.appDelegate sendMessageWithString:str];
 	
 	DDLogWarn(@"发送临时授权%@", str);
@@ -1104,13 +1119,30 @@ static BOOL isShowOverMenu = NO;
 		[SVProgressTool hr_showWithStatus:@"正在查看开锁密码..."];
 		dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
 			[SVProgressTool hr_dismiss];
-			self.paswdLabel.text = @"门锁密码";
+            self.paswdLabel.text = @"门锁密码";
+            self.paswdLabel.hidden = NO;
 			
 			DeviceAutherModel *mode = self.deviceAutherArray[selectIndexPath];
 			
 			self.pwdAutherField.secureTextEntry = NO;
-			self.pwdAutherField.userInteractionEnabled = NO;
-			self.pwdAutherField.text = mode.person.firstObject;
+            self.pwdAutherField.userInteractionEnabled = NO;
+            self.pwdAutherField.hidden = NO;
+            
+            
+            
+            NSString * jiemiStr = [NSString hr_CheckLock_base64String:mode.person.firstObject ];
+            
+            
+            
+            
+            self.pwdAutherField.text = jiemiStr;
+            
+            
+            
+            
+            NSLog(@"临时授权的密码是%@",self.pwdAutherField.text);
+            
+            
 		});
 		
 	
@@ -1583,86 +1615,7 @@ static NSInteger selectIndexPath = 0;
 	self.minute = minute;
 	self.TimeTfield.text = [NSString stringWithFormat:@"%@ : %@", hour,minute];
 }
-//解码
-//const char base[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
-//char *base64_encode(const char* data, int data_len,char* out)
-//{
-//	//int data_len = strlen(data);
-//	int prepare = 0;
-//	int ret_len;
-//	int temp = 0;
-//	char *ret = NULL;
-//	char *f = NULL;
-//	int tmp = 0;
-//	char changed[4];
-//	int i = 0;
-//	ret_len = data_len / 3;
-//	temp = data_len % 3;
-//	if (temp > 0)
-//	{
-//		ret_len += 1;
-//	}
-//	ret_len = ret_len*4 + 1;
-//	ret = (char *)malloc(ret_len);
-//	
-//	if ( ret == NULL)
-//	{
-//		printf("No enough memory.\n");
-//		exit(0);
-//	}
-//	memset(ret, 0, ret_len);
-//	f = ret;
-//	while (tmp < data_len)
-//	{
-//		temp = 0;
-//		prepare = 0;
-//		memset(changed, '\0', 4);
-//		while (temp < 3)
-//		{
-//			if (tmp >= data_len)
-//			{
-//				break;
-//			}
-//			prepare = ((prepare << 8) | (data[tmp] & 0xFF));
-//			tmp++;
-//			temp++;
-//		}
-//		prepare = (prepare<<((3-temp)*8));
-//		for (i = 0; i < 4 ;i++ )
-//		{
-//			if (temp < i)
-//			{
-//				
-//				printf("test...\n")	;
-//				changed[i] = 0x40;
-//			}
-//			else
-//			{
-//				changed[i] = (prepare>>((3-i)*6)) & 0x3F;
-//			}
-//			*f = base[changed[i]];
-//			f++;
-//		}
-//	}
-//	*f = '\0';
-//	strcpy(out,ret);
-//	free(ret);
-//	return ret;
-//	
-//}
-//int hrdecode(char *result,char *src)
-//{
-//	char ret[250];
-//	int ret_len= base64_decode(src,ret,strlen(src));
-//	int i=0;
-//	for (i=0; i < ret_len; i++) {
-//		char temp = (char)ret[i]^enlic2[i];
-//		result[i]=temp;
-//		
-//	}
-//	result[i] = '\0';
-//	int len= strlen(result);
-//	return len;
-//}
+
+
 
 @end

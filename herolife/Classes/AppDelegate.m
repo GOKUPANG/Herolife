@@ -85,6 +85,12 @@ static NSInteger disconnectCount = 0;
 	//集成ShareSDK
 	[self addShareSDK];
 	
+    //获取手机UUID保存下来
+    if (![kUserDefault objectForKey:kUserDefaultUUID]) {
+        NSString *UUID = [NSString stringWithUUID];
+        [kUserDefault setObject:UUID forKey:kUserDefaultUUID];
+        [kUserDefault synchronize];
+    }
 	/******* 日志 ********/
 #ifdef DEBUG
 	[self setLogger];
@@ -227,6 +233,7 @@ static NSInteger disconnectCount = 0;
 	[EBForeNotification handleRemoteNotification:userInfo soundID:1312 isIos10:NO];
 	
 }
+
 -(void)dddd:(NSNotification*)noti{
 	NSLog(@"ddd,%@",noti);
 }
@@ -546,7 +553,9 @@ static BOOL isOverTime = NO;
 		bodyDict[@"user"] = userName;
 		bodyDict[@"pass"] = passWold;
 		//登入认证  组帧
-		NSString *str = [NSString stringWithPostTCPJsonVersion:@"0.0.1" status:@"200" token:@"ios" msgType:@"login" msgExplain:@"login" fromUserName:userName destUserName:@"huaruicloud" destDevName:@"huaruiPushServer" msgBodyStringDict:bodyDict];
+        NSString *UUID = [kUserDefault objectForKey:kUserDefaultUUID];
+        NSString *token = [NSString stringWithFormat:@"ios@%@", UUID];
+		NSString *str = [NSString stringWithPostTCPJsonVersion:@"0.0.1" status:@"200" token:token msgType:@"login" msgExplain:@"login" fromUserName:userName destUserName:@"huaruicloud" destDevName:@"huaruiPushServer" msgBodyStringDict:bodyDict];
 		DDLogWarn(@"onSocket登入认证%@", str);
 		NSData *data = [str dataUsingEncoding:NSUTF8StringEncoding];
 		

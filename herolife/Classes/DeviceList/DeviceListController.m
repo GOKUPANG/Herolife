@@ -519,8 +519,9 @@ static BOOL isShowOverMenu = NO;
 	self.tableView = tableView;
 }
 
+
 - (void)viewDidAppear:(BOOL)animated {
-	[super viewDidAppear:animated];
+    [super viewDidAppear:animated];
 	dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
 		[_collectionView reloadData];
 	});
@@ -1080,8 +1081,10 @@ static BOOL isShowOverMenu = NO;
 	// 设备令牌可能还没有,需要延时 一下
 	dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
 		
-		//登入认证  组登入认证
-		NSString *str = [NSString stringWithPostTCPJsonVersion:@"0.0.1" status:@"200" token:@"ios" msgType:@"login" msgExplain:@"login" fromUserName:userName destUserName:@"huaruicloud" destDevName:@"huaruiPushServer" msgBodyStringDict:bodyDict];
+        //登入认证  组登入认证
+        NSString *UUID = [kUserDefault objectForKey:kUserDefaultUUID];
+        NSString *token = [NSString stringWithFormat:@"ios@%@", UUID];
+        NSString *str = [NSString stringWithPostTCPJsonVersion:@"0.0.1" status:@"200" token:token msgType:@"login" msgExplain:@"login" fromUserName:userName destUserName:@"huaruicloud" destDevName:@"huaruiPushServer" msgBodyStringDict:bodyDict];
 		DDLogWarn(@"登入认证登入认证--%@", str);
 		[self.appDelegate sendMessageWithString:str];
 		
@@ -1925,7 +1928,6 @@ static BOOL isShowOverMenu = NO;
 
 
 #pragma mark -删除门锁弹窗   第三方demo代理方法
-
 
 - (void) customAlertView:(YXCustomAlertView *) customAlertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {

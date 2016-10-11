@@ -259,11 +259,28 @@ static int const HRTimeDuration = 601;
 -(void)nextStep:(UIButton *)btn
 {
 	//跳转到系统wifi界面
-	NSURL *url = [NSURL URLWithString:@"prefs:root=WIFI"];
-	if ([[UIApplication sharedApplication] canOpenURL:url])
-	{
-		[[UIApplication sharedApplication] openURL:url];
-	}
+    if ([[UIDevice currentDevice] systemVersion].floatValue < 10.0) {
+        
+        NSURL *url = [NSURL URLWithString:@"prefs:root=WIFI"];
+        if ([[UIApplication sharedApplication] canOpenURL:url])
+        {
+            [[UIApplication sharedApplication] openURL:url];
+            
+        }
+    }else
+    {
+        NSURL *url =[NSURL URLWithString:UIApplicationOpenSettingsURLString];
+        
+        
+        if ([[UIApplication sharedApplication] canOpenURL:url]) {
+            
+            [[UIApplication sharedApplication] openURL:url];
+            
+            
+        }
+    }
+    
+   
     NSLog(@"点击了下一步按钮");
 	
 	//三秒跳转下个界面-----------------海波代码start-------------------------------

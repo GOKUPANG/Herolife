@@ -44,6 +44,7 @@
 	ManualCreateXiaoRui *manua = [ManualCreateXiaoRui shareManualCreateXiaoRui];
 	self.view = manua;
 }
+
 - (void)viewDidAppear:(BOOL)animated
 {
 	[super viewDidAppear:animated];
@@ -97,7 +98,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {
 	[super viewWillAppear:animated];
-	
+    
 	[self IsTabBarHidden:NO];
 	
 }
@@ -108,8 +109,6 @@
 	NSDictionary *dict = note.userInfo;
 	NSString *qrData = dict[@"result"];
 	
-//	[kUserDefault setObject:qrData forKey:kUserDefaultQrData];
-//	[kUserDefault synchronize];
 	NSString *data = qrData;
 
 	//过滤

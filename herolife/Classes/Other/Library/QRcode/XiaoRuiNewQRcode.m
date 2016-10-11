@@ -62,7 +62,10 @@
 	self.navView = navView;
 	[self addSubview:navView];
 	
-	
+    
+    UIView *view = [[UIView alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    view.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.2];
+    [self addSubview:view];
 	/// 自己添加的按钮
 	//二维码按钮
 	HRQrButton *leftButton= [HRQrButton buttonWithType:UIButtonTypeCustom];

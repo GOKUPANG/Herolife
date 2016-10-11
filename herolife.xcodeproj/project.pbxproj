@@ -36,7 +36,6 @@
 		AA2C52781D91578D00D0BD3D /* PushSettingController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA2C52771D91578D00D0BD3D /* PushSettingController.m */; };
 		AA510E571D9BD94300D9FD67 /* OpenLockController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA510E561D9BD94300D9FD67 /* OpenLockController.m */; };
 		AA510E5E1D9CB4B700D9FD67 /* NSString+Util.m in Sources */ = {isa = PBXBuildFile; fileRef = AA510E5D1D9CB4B700D9FD67 /* NSString+Util.m */; };
-		AAA49AE81D9D0B5A00D4D248 /* EnterPSWController.m in Sources */ = {isa = PBXBuildFile; fileRef = AAA49AE71D9D0B5A00D4D248 /* EnterPSWController.m */; };
 		AAA49AEA1D9D0BBD00D4D248 /* SettingController.m in Sources */ = {isa = PBXBuildFile; fileRef = AAA49AE91D9D0BBD00D4D248 /* SettingController.m */; };
 		AAA49AED1D9D0BFE00D4D248 /* MissWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AAA49AEC1D9D0BFE00D4D248 /* MissWebViewController.m */; };
 		AAA49AEF1D9D0C0700D4D248 /* MissWebViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AAA49AEE1D9D0C0600D4D248 /* MissWebViewController.xib */; };
@@ -54,7 +53,6 @@
 		AAA8A9DB1D8CEB4100ABA020 /* 未选择@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = AAA8A9D31D8CEB4100ABA020 /* 未选择@2x.png */; };
 		AAA8A9DC1D8CEB4100ABA020 /* 未选择@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = AAA8A9D41D8CEB4100ABA020 /* 未选择@3x.png */; };
 		AAFFDDF31D800EFC005669BA /* SRActionSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = AAFFDDF21D800EFC005669BA /* SRActionSheet.m */; };
-		AAFFDE431D82CBA0005669BA /* NSString+DoorLock.m in Sources */ = {isa = PBXBuildFile; fileRef = AAFFDE421D82CBA0005669BA /* NSString+DoorLock.m */; };
 		D1007CE01D8694280079D3DD /* DeviceAutherModel.m in Sources */ = {isa = PBXBuildFile; fileRef = D1007CDF1D8694280079D3DD /* DeviceAutherModel.m */; };
 		D1352D641D9E0ECB003A83AB /* AddNewDeviceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1352D4A1D9E0ECB003A83AB /* AddNewDeviceViewController.m */; };
 		D1352D651D9E0ECB003A83AB /* backWhite@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D1352D4B1D9E0ECB003A83AB /* backWhite@2x.png */; };
@@ -217,9 +215,11 @@
 		D1BDCAAC1D929A6A0022BDE2 /* APPPSWController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1BDCAAB1D929A6A0022BDE2 /* APPPSWController.m */; };
 		D1BDCAB01D929B520022BDE2 /* GestureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1BDCAAF1D929B520022BDE2 /* GestureViewController.m */; };
 		D1C144241D8E2FD800FDDFA0 /* ShouAddFamilyModel.m in Sources */ = {isa = PBXBuildFile; fileRef = D1C144231D8E2FD800FDDFA0 /* ShouAddFamilyModel.m */; };
+		D1C3AFDE1DACF50C008E3426 /* NSString+DoorLock.m in Sources */ = {isa = PBXBuildFile; fileRef = D1C3AFDD1DACF50C008E3426 /* NSString+DoorLock.m */; };
+		D1C3AFE01DACF529008E3426 /* EnterPSWController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1C3AFDF1DACF529008E3426 /* EnterPSWController.m */; };
+		D1C3AFE21DACF547008E3426 /* ShouQuanManagerController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1C3AFE11DACF547008E3426 /* ShouQuanManagerController.m */; };
 		D1D23DEF1D7570A100FCB5C9 /* AddDeivcecell.m in Sources */ = {isa = PBXBuildFile; fileRef = D1D23DEC1D7570A100FCB5C9 /* AddDeivcecell.m */; };
 		D1E35D871D90DE89002A766C /* AutherTimePickView.m in Sources */ = {isa = PBXBuildFile; fileRef = D1E35D861D90DE89002A766C /* AutherTimePickView.m */; };
-		D1E35D8A1D916BCB002A766C /* ShouQuanManagerController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1E35D891D916BCB002A766C /* ShouQuanManagerController.m */; };
 		D1EFCAC31D88EDD20045A0C0 /* DoorLockModel.m in Sources */ = {isa = PBXBuildFile; fileRef = D1EFCAC21D88EDD20045A0C0 /* DoorLockModel.m */; };
 		DAE2A790C81C0FDB9C617E84 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DC40F28764523F49428DB0CE /* libPods.a */; };
 /* End PBXBuildFile section */
@@ -294,7 +294,6 @@
 		AA510E561D9BD94300D9FD67 /* OpenLockController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OpenLockController.m; sourceTree = "<group>"; };
 		AA510E5C1D9CB4AA00D9FD67 /* NSString+Util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Util.h"; sourceTree = "<group>"; };
 		AA510E5D1D9CB4B700D9FD67 /* NSString+Util.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Util.m"; sourceTree = "<group>"; };
-		AAA49AE71D9D0B5A00D4D248 /* EnterPSWController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EnterPSWController.m; sourceTree = "<group>"; };
 		AAA49AE91D9D0BBD00D4D248 /* SettingController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingController.m; sourceTree = "<group>"; };
 		AAA49AEB1D9D0BFE00D4D248 /* MissWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MissWebViewController.h; sourceTree = "<group>"; };
 		AAA49AEC1D9D0BFE00D4D248 /* MissWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MissWebViewController.m; sourceTree = "<group>"; };
@@ -319,8 +318,6 @@
 		AAA8A9D41D8CEB4100ABA020 /* 未选择@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "未选择@3x.png"; sourceTree = "<group>"; };
 		AAFFDDF11D800EFC005669BA /* SRActionSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SRActionSheet.h; sourceTree = "<group>"; };
 		AAFFDDF21D800EFC005669BA /* SRActionSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SRActionSheet.m; sourceTree = "<group>"; };
-		AAFFDE411D82CBA0005669BA /* NSString+DoorLock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+DoorLock.h"; sourceTree = "<group>"; };
-		AAFFDE421D82CBA0005669BA /* NSString+DoorLock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+DoorLock.m"; sourceTree = "<group>"; };
 		B1A28F2C2DAB37DA40A8D5EB /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		D1007CDE1D8694280079D3DD /* DeviceAutherModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeviceAutherModel.h; sourceTree = "<group>"; };
 		D1007CDF1D8694280079D3DD /* DeviceAutherModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeviceAutherModel.m; sourceTree = "<group>"; };
@@ -621,12 +618,16 @@
 		D1BDCAAF1D929B520022BDE2 /* GestureViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GestureViewController.m; sourceTree = "<group>"; };
 		D1C144221D8E2FD800FDDFA0 /* ShouAddFamilyModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShouAddFamilyModel.h; sourceTree = "<group>"; };
 		D1C144231D8E2FD800FDDFA0 /* ShouAddFamilyModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShouAddFamilyModel.m; sourceTree = "<group>"; };
+		D1C3AFB81DAC9AC0008E3426 /* HEROLIFE.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = HEROLIFE.entitlements; sourceTree = "<group>"; };
+		D1C3AFDC1DACF505008E3426 /* NSString+DoorLock.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSString+DoorLock.h"; sourceTree = "<group>"; };
+		D1C3AFDD1DACF50C008E3426 /* NSString+DoorLock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+DoorLock.m"; sourceTree = "<group>"; };
+		D1C3AFDF1DACF529008E3426 /* EnterPSWController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EnterPSWController.m; sourceTree = "<group>"; };
+		D1C3AFE11DACF547008E3426 /* ShouQuanManagerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShouQuanManagerController.m; sourceTree = "<group>"; };
 		D1D23DEB1D7570A100FCB5C9 /* AddDeivcecell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AddDeivcecell.h; path = ../AddDeivcecell.h; sourceTree = "<group>"; };
 		D1D23DEC1D7570A100FCB5C9 /* AddDeivcecell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AddDeivcecell.m; path = ../AddDeivcecell.m; sourceTree = "<group>"; };
 		D1E35D851D90DE89002A766C /* AutherTimePickView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AutherTimePickView.h; path = ../AutherTimePickView.h; sourceTree = "<group>"; };
 		D1E35D861D90DE89002A766C /* AutherTimePickView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AutherTimePickView.m; path = ../AutherTimePickView.m; sourceTree = "<group>"; };
 		D1E35D881D916BCB002A766C /* ShouQuanManagerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShouQuanManagerController.h; sourceTree = "<group>"; };
-		D1E35D891D916BCB002A766C /* ShouQuanManagerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShouQuanManagerController.m; sourceTree = "<group>"; };
 		D1EFCAC11D88EDD20045A0C0 /* DoorLockModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DoorLockModel.h; sourceTree = "<group>"; };
 		D1EFCAC21D88EDD20045A0C0 /* DoorLockModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DoorLockModel.m; sourceTree = "<group>"; };
 		DC40F28764523F49428DB0CE /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -689,7 +690,7 @@
 			isa = PBXGroup;
 			children = (
 				D1A7DDBE1D81181600D051B0 /* EnterPSWController.h */,
-				AAA49AE71D9D0B5A00D4D248 /* EnterPSWController.m */,
+				D1C3AFDF1DACF529008E3426 /* EnterPSWController.m */,
 				D1A7DDC01D81181600D051B0 /* GoToSetUpController.h */,
 				D1A7DDC11D81181600D051B0 /* GoToSetUpController.m */,
 				18C6975F1D7462B9004DA2B1 /* cell */,
@@ -860,7 +861,7 @@
 			isa = PBXGroup;
 			children = (
 				D1E35D881D916BCB002A766C /* ShouQuanManagerController.h */,
-				D1E35D891D916BCB002A766C /* ShouQuanManagerController.m */,
+				D1C3AFE11DACF547008E3426 /* ShouQuanManagerController.m */,
 				D1C144221D8E2FD800FDDFA0 /* ShouAddFamilyModel.h */,
 				D1C144231D8E2FD800FDDFA0 /* ShouAddFamilyModel.m */,
 				AAA8A9B01D8CE9D900ABA020 /* arrow_down@2x.png */,
@@ -946,8 +947,8 @@
 			children = (
 				AA2C52731D91574100D0BD3D /* NSString+PushSet.h */,
 				AA2C52741D91574100D0BD3D /* NSString+PushSet.m */,
-				AAFFDE411D82CBA0005669BA /* NSString+DoorLock.h */,
-				AAFFDE421D82CBA0005669BA /* NSString+DoorLock.m */,
+				D1C3AFDC1DACF505008E3426 /* NSString+DoorLock.h */,
+				D1C3AFDD1DACF50C008E3426 /* NSString+DoorLock.m */,
 			);
 			path = "分类";
 			sourceTree = "<group>";
@@ -977,6 +978,7 @@
 		D17CF0EE1D6567E7007C95DD /* herolife */ = {
 			isa = PBXGroup;
 			children = (
+				D1C3AFB81DAC9AC0008E3426 /* HEROLIFE.entitlements */,
 				D1A7DBE91D8117DD00D051B0 /* Classes */,
 				18C6975E1D7462B9004DA2B1 /* 斌 */,
 				D17CF0EF1D6567E7007C95DD /* Supporting Files */,
@@ -1667,6 +1669,11 @@
 					D17CF0EB1D6567E7007C95DD = {
 						CreatedOnToolsVersion = 7.3;
 						DevelopmentTeam = K3Y96N97ET;
+						SystemCapabilities = {
+							com.apple.Push = {
+								enabled = 0;
+							};
+						};
 					};
 					D17CF1041D6567E7007C95DD = {
 						CreatedOnToolsVersion = 7.3;
@@ -1836,6 +1843,7 @@
 				D1A7DD401D8117DD00D051B0 /* FMDatabasePool.m in Sources */,
 				D1A7DD8F1D8117DD00D051B0 /* UIBarButtonItem+XMGExtension.m in Sources */,
 				D1A7DDAB1D8117DD00D051B0 /* HRServicesManager.m in Sources */,
+				D1C3AFDE1DACF50C008E3426 /* NSString+DoorLock.m in Sources */,
 				D1352D641D9E0ECB003A83AB /* AddNewDeviceViewController.m in Sources */,
 				AAA49AEA1D9D0BBD00D4D248 /* SettingController.m in Sources */,
 				AAA8A9B81D8CE9D900ABA020 /* CustomerInfoSectionView.m in Sources */,
@@ -1870,10 +1878,10 @@
 				D1A7DD8C1D8117DD00D051B0 /* CALayer+Anim.m in Sources */,
 				D1A7DD8B1D8117DD00D051B0 /* AFNJSONResponseSerializerWithData.m in Sources */,
 				D1352D751D9E0ECB003A83AB /* XiaoRuiNewQRcode.m in Sources */,
+				D1C3AFE01DACF529008E3426 /* EnterPSWController.m in Sources */,
 				D1A7DD421D8117DD00D051B0 /* FMResultSet.m in Sources */,
 				D1A7DD2E1D8117DD00D051B0 /* MJRefreshAutoNormalFooter.m in Sources */,
 				18C697A61D7462B9004DA2B1 /* CALayer+Anim.m in Sources */,
-				AAFFDE431D82CBA0005669BA /* NSString+DoorLock.m in Sources */,
 				D1A7DD971D8117DD00D051B0 /* HRTabBarButton.m in Sources */,
 				D1A7DD721D8117DD00D051B0 /* NSData+ImageContentType.m in Sources */,
 				D1A7DDB01D8117DD00D051B0 /* HRButton.m in Sources */,
@@ -1904,6 +1912,7 @@
 				1868B9131D79200200D19386 /* ChooseBackPicCtl.m in Sources */,
 				D1A7DD211D8117DD00D051B0 /* ForgetController.m in Sources */,
 				D1A7DD241D8117DD00D051B0 /* UIView+XD.m in Sources */,
+				D1C3AFE21DACF547008E3426 /* ShouQuanManagerController.m in Sources */,
 				D1352D6E1D9E0ECB003A83AB /* QRCodeController.m in Sources */,
 				D1A7DD9F1D8117DD00D051B0 /* HRTempHumid.m in Sources */,
 				D1A7DDA61D8117DD00D051B0 /* Push.m in Sources */,
@@ -1926,7 +1935,6 @@
 				D1A7DD281D8117DD00D051B0 /* MJRefreshAutoFooter.m in Sources */,
 				18C697A51D7462B9004DA2B1 /* PCCircleViewConst.m in Sources */,
 				D1A7DD2A1D8117DD00D051B0 /* MJRefreshComponent.m in Sources */,
-				AAA49AE81D9D0B5A00D4D248 /* EnterPSWController.m in Sources */,
 				D1A7DD8D1D8117DD00D051B0 /* NSObject+Util.m in Sources */,
 				D1A7DD321D8117DD00D051B0 /* MJRefreshBackStateFooter.m in Sources */,
 				D1A7DDAD1D8117DD00D051B0 /* HRUDPSocketTool.m in Sources */,
@@ -1944,7 +1952,6 @@
 				D1A7DD391D8117DD00D051B0 /* UIScrollView+MJExtension.m in Sources */,
 				D1A7DD2F1D8117DD00D051B0 /* MJRefreshAutoStateFooter.m in Sources */,
 				D1A7DD2D1D8117DD00D051B0 /* MJRefreshAutoGifFooter.m in Sources */,
-				D1E35D8A1D916BCB002A766C /* ShouQuanManagerController.m in Sources */,
 				D1A7DD731D8117DD00D051B0 /* SDImageCache.m in Sources */,
 				D1A7DD291D8117DD00D051B0 /* MJRefreshBackFooter.m in Sources */,
 				18C697A91D7462B9004DA2B1 /* MyButton.m in Sources */,
@@ -2120,6 +2127,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = K3Y96N97ET;
 				ENABLE_BITCODE = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2399,6 +2407,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = K3Y96N97ET;
 				ENABLE_BITCODE = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",

@@ -326,7 +326,7 @@ static BOOL ispush = YES;
     WIFITextField.sd_layout
     .bottomSpaceToView(_lineView2,10)
     .leftSpaceToView(self.view,25)
-    .widthIs(250)
+    .widthIs(HRUIScreenW - 70)
     .heightIs(22);
     
     WIFITextField.textColor = [UIColor whiteColor];
@@ -340,30 +340,75 @@ static BOOL ispush = YES;
     
     WIFITextField.clearButtonMode =    UITextFieldViewModeAlways;
 	WIFITextField.text = @"";
+    
+  
+    
 	self.WIFITextField = WIFITextField;
+    
+    self.WIFITextField.secureTextEntry = YES;
+
+    
+    
     
     
     /** WIFI密码输入框最右边的图片 */
     
-    UIImageView *EyeimageView = [[UIImageView alloc]init];
-    [self.view addSubview:EyeimageView];
+//    UIImageView *EyeimageView = [[UIImageView alloc]init];
+//    [self.view addSubview:EyeimageView];
     
     
-    EyeimageView.sd_layout
+    UIButton * eyeBtn = [[UIButton alloc]init];
+    
+    [self.view addSubview:eyeBtn];
+    
+    
+    
+    eyeBtn.sd_layout
     .bottomSpaceToView(_lineView2,10)
     .rightSpaceToView(self.view,25)
     .widthIs(18)
     .heightIs(13);
     
-    EyeimageView.image = [UIImage imageNamed:@"睁眼"];
+   // EyeimageView.image = [UIImage imageNamed:@"睁眼"];
     
     
+    [eyeBtn setImage:[UIImage imageNamed:@"闭眼"] forState:UIControlStateNormal];
+    
+    [eyeBtn setImage:[UIImage imageNamed:@"睁眼"] forState:UIControlStateSelected];
+    
+    eyeBtn.selected = NO ;
     
     
-    
-
+    [eyeBtn addTarget:self action:@selector(openEye:) forControlEvents:UIControlEventTouchUpInside];
     
 }
+
+
+-(void)openEye:(UIButton *)btn
+{
+    if (btn.selected == YES) {
+        
+        [btn setSelected:NO];
+        self.WIFITextField.secureTextEntry = YES;
+
+        
+        
+        
+    }
+    
+    else{
+        
+        [btn setSelected:YES];
+        
+        self.WIFITextField.secureTextEntry = NO;
+        
+
+        
+    }
+}
+
+
+
 #pragma mark - UI事件  -haibo
 - (void)leftButtonClick:(UIButton *)btn
 {
