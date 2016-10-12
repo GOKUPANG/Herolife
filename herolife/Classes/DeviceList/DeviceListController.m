@@ -1082,10 +1082,10 @@ static BOOL isShowOverMenu = NO;
 	dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
 		
         //登入认证  组登入认证
-        NSString *UUID = [kUserDefault objectForKey:kUserDefaultUUID];
-        NSString *token = [NSString stringWithFormat:@"ios@%@", UUID];
+        NSString *UUID = [kUserDefault objectForKey:kUserDefaultDeviceUUID];
+        NSString *token = [NSString stringWithFormat:@"ios+@+%@", UUID];
         NSString *str = [NSString stringWithPostTCPJsonVersion:@"0.0.1" status:@"200" token:token msgType:@"login" msgExplain:@"login" fromUserName:userName destUserName:@"huaruicloud" destDevName:@"huaruiPushServer" msgBodyStringDict:bodyDict];
-		DDLogWarn(@"登入认证登入认证--%@", str);
+        DDLogWarn(@"onSocket登入认证%@", str);
 		[self.appDelegate sendMessageWithString:str];
 		
 		

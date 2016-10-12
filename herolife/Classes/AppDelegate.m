@@ -47,8 +47,8 @@
 #import "NewFeatureController.h"
 
 #import "UMMobClick/MobClick.h"
-
-@interface AppDelegate ()<AsyncSocketDelegate>
+#import <UserNotifications/UserNotifications.h>
+@interface AppDelegate ()<AsyncSocketDelegate, UNUserNotificationCenterDelegate>
 /** time */
 @property(nonatomic, strong) NSTimer *heartTimer;
 
@@ -86,9 +86,9 @@ static NSInteger disconnectCount = 0;
 	[self addShareSDK];
 	
     //获取手机UUID保存下来
-    if (![kUserDefault objectForKey:kUserDefaultUUID]) {
+    if (![kUserDefault objectForKey:kUserDefaultDeviceUUID]) {
         NSString *UUID = [NSString stringWithUUID];
-        [kUserDefault setObject:UUID forKey:kUserDefaultUUID];
+        [kUserDefault setObject:UUID forKey:kUserDefaultDeviceUUID];
         [kUserDefault synchronize];
     }
 	/******* 日志 ********/
@@ -121,7 +121,7 @@ static NSInteger disconnectCount = 0;
 	//远程推送相关
 	//监听点击事件
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(dddd:) name:EBBannerViewDidClick object:nil];
-	if([[[UIDevice currentDevice]systemVersion]floatValue] >=8.0)
+	if([[[UIDevice currentDevice]systemVersion]floatValue] >= 8.0 && [[[UIDevice currentDevice]systemVersion]floatValue] < 10.0)
 		
 	{
 		
@@ -131,9 +131,29 @@ static NSInteger disconnectCount = 0;
 																			
 																			categories:nil]];
 		
-		[[UIApplication sharedApplication]registerForRemoteNotifications];
 		
-	}else{
+    }else if([[[UIDevice currentDevice]systemVersion]floatValue] >= 10.0)
+        
+    {
+        UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
+        
+        center.delegate = self;
+        
+        [center requestAuthorizationWithOptions:(UNAuthorizationOptionBadge | UNAuthorizationOptionSound | UNAuthorizationOptionAlert) completionHandler:^(BOOL granted, NSError * _Nullable error) {
+            
+            if (granted) {
+                // 点击允许
+                NSLog(@"注册成功");
+                [center getNotificationSettingsWithCompletionHandler:^(UNNotificationSettings * _Nonnull settings) {
+                    NSLog(@"%@", settings);
+                }];
+            } else {
+                // 点击不允许
+                NSLog(@"注册失败");
+            }
+        }];
+        
+    }else{
 		
 		//注册启用push
 		
@@ -142,10 +162,27 @@ static NSInteger disconnectCount = 0;
 		 (UIRemoteNotificationTypeAlert|UIRemoteNotificationTypeSound|UIRemoteNotificationTypeBadge)];
 		
 	}
-
+    
+    // 注册获得device Token
+    [[UIApplication sharedApplication] registerForRemoteNotifications];
 	
 	
 	return YES;
+}
+#pragma mark - UNUserNotificationCenterDelegate - ios10 远程通知代理
+- (void)userNotificationCenter:(UNUserNotificationCenter *)center willPresentNotification:(UNNotification *)notification withCompletionHandler:(void (^)(UNNotificationPresentationOptions))completionHandler//App在前台的时候收到推送执行的回调方法
+{
+    //获取通知数据
+    NSDictionary *userInfo = notification.request.content.userInfo;
+    
+    [EBForeNotification handleRemoteNotification:userInfo soundID:1312 isIos10:NO];
+}
+- (void)userNotificationCenter:(UNUserNotificationCenter *)center didReceiveNotificationResponse:(UNNotificationResponse *)response withCompletionHandler:(void (^)())completionHandler
+{
+    //App在后台的时候，点击推送信息，进入App后执行的 回调方法
+    //获取通知数据
+    NSDictionary *userInfo = response.notification.request.content.userInfo;
+    
 }
 - (void)addUmeng
 {
@@ -196,7 +233,7 @@ static NSInteger disconnectCount = 0;
 	
 	[kUserDefault setObject:deToken forKey:kUserDefaultUUID];
 	[kUserDefault synchronize];
-     NSLog(@".......token:%@", deToken);
+     NSLog(@"................token:%@", deToken);
    
     
     
@@ -553,8 +590,8 @@ static BOOL isOverTime = NO;
 		bodyDict[@"user"] = userName;
 		bodyDict[@"pass"] = passWold;
 		//登入认证  组帧
-        NSString *UUID = [kUserDefault objectForKey:kUserDefaultUUID];
-        NSString *token = [NSString stringWithFormat:@"ios@%@", UUID];
+        NSString *UUID = [kUserDefault objectForKey:kUserDefaultDeviceUUID];
+        NSString *token = [NSString stringWithFormat:@"ios+@+%@", UUID];
 		NSString *str = [NSString stringWithPostTCPJsonVersion:@"0.0.1" status:@"200" token:token msgType:@"login" msgExplain:@"login" fromUserName:userName destUserName:@"huaruicloud" destDevName:@"huaruiPushServer" msgBodyStringDict:bodyDict];
 		DDLogWarn(@"onSocket登入认证%@", str);
 		NSData *data = [str dataUsingEncoding:NSUTF8StringEncoding];
