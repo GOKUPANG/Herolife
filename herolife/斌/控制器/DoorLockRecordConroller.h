@@ -18,5 +18,4 @@
 /** 授权用户用户名 */
 @property(nonatomic,copy)NSString * AuthorUserName ;
 
-
 @end

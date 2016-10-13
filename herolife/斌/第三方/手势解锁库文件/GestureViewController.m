@@ -82,6 +82,14 @@
 {
     [super viewWillAppear:animated];
     
+    for (UIView *view in self.tabBarController.view.subviews) {
+        if ([NSStringFromClass([view class]) isEqualToString:@"HRTabBar"]) {
+            
+            view.hidden = YES;
+        }
+    }
+
+    
     if (self.type == GestureViewControllerTypeLogin) {
         [self.navigationController setNavigationBarHidden:YES animated:animated];
     }

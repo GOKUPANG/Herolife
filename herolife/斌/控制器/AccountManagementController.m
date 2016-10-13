@@ -505,12 +505,8 @@
 -(void)test
 {
     
-   /* [JCAlertView showMultipleButtonsWithTitle:@"更换头像" Message:@"" Click:^(NSInteger index) {
-        NSLog(@"click%zi", index);
-    } Buttons:@{@(JCAlertViewButtonTypeDefault):@"拍照"},@{@(JCAlertViewButtonTypeCancel):@"从手机相册获取"},@{@(JCAlertViewButtonTypeWarn):@"取消"}, nil];
-    */
-    
-    
+   
+   /*
      [SRActionSheet sr_showActionSheetViewWithTitle:@""
                                             cancelButtonTitle:@"取消"
                                        destructiveButtonTitle:@""
@@ -518,7 +514,7 @@
                                                      delegate:self];
     
     
-    
+    */
 
     
     

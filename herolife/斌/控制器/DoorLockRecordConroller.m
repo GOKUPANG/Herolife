@@ -94,6 +94,27 @@ static int indexCount = 0;
         
         self.backImgView.image =[UIImage imageNamed:imgName];
     }
+    
+    
+    if (self.AuthorUserName.length >0) {
+        
+        self.pushView.userInteractionEnabled = NO ;
+        UIImageView * img = [self.view viewWithTag:100];
+        
+        img.hidden = YES;
+    }
+    
+    else
+    {
+        self.pushView.userInteractionEnabled = YES ;
+        UIImageView * img = [self.view viewWithTag:100];
+        
+        img.hidden = NO;
+    }
+    
+    
+    
+    
 
 }
 
@@ -228,11 +249,24 @@ static int indexCount = 0;
 
 -(void)ViewClick
 {
+    NSLog(@"授权列表的名字%@",self.AuthorUserName);
     
     
     if (self.AuthorUserName.length > 0) {
         
         [SVProgressTool hr_showErrorWithStatus:@"授权用户无法设置推送"];
+       
+        
+        
+        return;
+        
+    }
+    
+    if (self.listModel == nil ) {
+        
+      
+        [SVProgressTool hr_showErrorWithStatus:@"尚未添加门锁"];
+
         return;
         
     }
@@ -308,6 +342,9 @@ static int indexCount = 0;
     .heightIs(18)
     .widthIs(9);
     infoImg.image = [UIImage imageNamed:@"进入"];
+    
+    infoImg.tag = 100;
+    
     
     
     

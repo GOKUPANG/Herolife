@@ -81,7 +81,6 @@
 		D158E5AF1DAB36EA000DB8C9 /* UMMobClick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D158E5AE1DAB36EA000DB8C9 /* UMMobClick.framework */; };
 		D158E5B11DAB37FA000DB8C9 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D158E5B01DAB37FA000DB8C9 /* CoreTelephony.framework */; };
 		D17076761D94D6BB0027C46B /* LoginController.m in Sources */ = {isa = PBXBuildFile; fileRef = D17076751D94D6BB0027C46B /* LoginController.m */; };
-		D17076781D95180B0027C46B /* AccountManagementController.m in Sources */ = {isa = PBXBuildFile; fileRef = D17076771D95180B0027C46B /* AccountManagementController.m */; };
 		D17CF0F11D6567E7007C95DD /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D17CF0F01D6567E7007C95DD /* main.m */; };
 		D17CF0FA1D6567E7007C95DD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D17CF0F81D6567E7007C95DD /* Main.storyboard */; };
 		D17CF0FC1D6567E7007C95DD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D17CF0FB1D6567E7007C95DD /* Assets.xcassets */; };
@@ -194,10 +193,12 @@
 		D1AA2E651D83F48600D1AEC9 /* DeviceListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = D1AA2E601D83F48600D1AEC9 /* DeviceListModel.m */; };
 		D1AA2E661D83F48600D1AEC9 /* DeviceListTcpModel.m in Sources */ = {isa = PBXBuildFile; fileRef = D1AA2E621D83F48600D1AEC9 /* DeviceListTcpModel.m */; };
 		D1AA2E6C1D83F50500D1AEC9 /* AddLockController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1AA2E6B1D83F50500D1AEC9 /* AddLockController.m */; };
+		D1AE5E4D1DAF24410051D7D9 /* GestureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1AE5E4C1DAF24410051D7D9 /* GestureViewController.m */; };
+		D1AE5E4F1DAF2ECB0051D7D9 /* DoorLockRecordConroller.m in Sources */ = {isa = PBXBuildFile; fileRef = D1AE5E4E1DAF2ECB0051D7D9 /* DoorLockRecordConroller.m */; };
+		D1AE5E511DAF2EF20051D7D9 /* DeviceListController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1AE5E501DAF2EF20051D7D9 /* DeviceListController.m */; };
+		D1AE5E531DAF2F690051D7D9 /* AccountManagementController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1AE5E521DAF2F690051D7D9 /* AccountManagementController.m */; };
 		D1B088E51DAA475000072214 /* NewFeatureController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1B088E41DAA475000072214 /* NewFeatureController.m */; };
 		D1B088E81DAA484200072214 /* NewFeatureCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D1B088E71DAA484200072214 /* NewFeatureCell.m */; };
-		D1B088EA1DAA5BB500072214 /* DoorLockRecordConroller.m in Sources */ = {isa = PBXBuildFile; fileRef = D1B088E91DAA5BB500072214 /* DoorLockRecordConroller.m */; };
-		D1B088EC1DAA5BD100072214 /* DeviceListController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1B088EB1DAA5BD100072214 /* DeviceListController.m */; };
 		D1B3CB351D966D6D009F96D2 /* HerolifeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1B3CB331D966D6D009F96D2 /* HerolifeViewController.m */; };
 		D1B3CB361D966D6D009F96D2 /* HerolifeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D1B3CB341D966D6D009F96D2 /* HerolifeViewController.xib */; };
 		D1B3CB3A1D966DB5009F96D2 /* HerolifeImageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D1B3CB381D966DB4009F96D2 /* HerolifeImageCell.m */; };
@@ -213,7 +214,6 @@
 		D1B7924D1D8BF78C00DDA4DD /* UILabel+ContentSize.m in Sources */ = {isa = PBXBuildFile; fileRef = D1B792451D8BF78C00DDA4DD /* UILabel+ContentSize.m */; };
 		D1BDCAA81D926F530022BDE2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D1BDCAA71D926F530022BDE2 /* LaunchScreen.storyboard */; };
 		D1BDCAAC1D929A6A0022BDE2 /* APPPSWController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1BDCAAB1D929A6A0022BDE2 /* APPPSWController.m */; };
-		D1BDCAB01D929B520022BDE2 /* GestureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1BDCAAF1D929B520022BDE2 /* GestureViewController.m */; };
 		D1C144241D8E2FD800FDDFA0 /* ShouAddFamilyModel.m in Sources */ = {isa = PBXBuildFile; fileRef = D1C144231D8E2FD800FDDFA0 /* ShouAddFamilyModel.m */; };
 		D1C3AFDE1DACF50C008E3426 /* NSString+DoorLock.m in Sources */ = {isa = PBXBuildFile; fileRef = D1C3AFDD1DACF50C008E3426 /* NSString+DoorLock.m */; };
 		D1C3AFE01DACF529008E3426 /* EnterPSWController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1C3AFDF1DACF529008E3426 /* EnterPSWController.m */; };
@@ -357,7 +357,6 @@
 		D158E5AE1DAB36EA000DB8C9 /* UMMobClick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = UMMobClick.framework; sourceTree = "<group>"; };
 		D158E5B01DAB37FA000DB8C9 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		D17076751D94D6BB0027C46B /* LoginController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginController.m; sourceTree = "<group>"; };
-		D17076771D95180B0027C46B /* AccountManagementController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccountManagementController.m; sourceTree = "<group>"; };
 		D17CF0EC1D6567E7007C95DD /* HEROLIFE.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HEROLIFE.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D17CF0F01D6567E7007C95DD /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		D17CF0F91D6567E7007C95DD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -586,12 +585,14 @@
 		D1AA2E621D83F48600D1AEC9 /* DeviceListTcpModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeviceListTcpModel.m; sourceTree = "<group>"; };
 		D1AA2E6A1D83F50500D1AEC9 /* AddLockController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AddLockController.h; path = herolife/Classes/Wait/AddLockController.h; sourceTree = SOURCE_ROOT; };
 		D1AA2E6B1D83F50500D1AEC9 /* AddLockController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AddLockController.m; path = herolife/Classes/Wait/AddLockController.m; sourceTree = SOURCE_ROOT; };
+		D1AE5E4C1DAF24410051D7D9 /* GestureViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GestureViewController.m; sourceTree = "<group>"; };
+		D1AE5E4E1DAF2ECB0051D7D9 /* DoorLockRecordConroller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DoorLockRecordConroller.m; sourceTree = "<group>"; };
+		D1AE5E501DAF2EF20051D7D9 /* DeviceListController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeviceListController.m; sourceTree = "<group>"; };
+		D1AE5E521DAF2F690051D7D9 /* AccountManagementController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccountManagementController.m; sourceTree = "<group>"; };
 		D1B088E31DAA475000072214 /* NewFeatureController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewFeatureController.h; sourceTree = "<group>"; };
 		D1B088E41DAA475000072214 /* NewFeatureController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewFeatureController.m; sourceTree = "<group>"; };
 		D1B088E61DAA484200072214 /* NewFeatureCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewFeatureCell.h; sourceTree = "<group>"; };
 		D1B088E71DAA484200072214 /* NewFeatureCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewFeatureCell.m; sourceTree = "<group>"; };
-		D1B088E91DAA5BB500072214 /* DoorLockRecordConroller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DoorLockRecordConroller.m; sourceTree = "<group>"; };
-		D1B088EB1DAA5BD100072214 /* DeviceListController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeviceListController.m; sourceTree = "<group>"; };
 		D1B3CB321D966D6D009F96D2 /* HerolifeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HerolifeViewController.h; sourceTree = "<group>"; };
 		D1B3CB331D966D6D009F96D2 /* HerolifeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HerolifeViewController.m; sourceTree = "<group>"; };
 		D1B3CB341D966D6D009F96D2 /* HerolifeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HerolifeViewController.xib; sourceTree = "<group>"; };
@@ -615,7 +616,6 @@
 		D1B792461D8BF78C00DDA4DD /* EBForeNotification.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EBForeNotification.h; sourceTree = "<group>"; };
 		D1BDCAA71D926F530022BDE2 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D1BDCAAB1D929A6A0022BDE2 /* APPPSWController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APPPSWController.m; sourceTree = "<group>"; };
-		D1BDCAAF1D929B520022BDE2 /* GestureViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GestureViewController.m; sourceTree = "<group>"; };
 		D1C144221D8E2FD800FDDFA0 /* ShouAddFamilyModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShouAddFamilyModel.h; sourceTree = "<group>"; };
 		D1C144231D8E2FD800FDDFA0 /* ShouAddFamilyModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShouAddFamilyModel.m; sourceTree = "<group>"; };
 		D1C3AFB81DAC9AC0008E3426 /* HEROLIFE.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = HEROLIFE.entitlements; sourceTree = "<group>"; };
@@ -738,13 +738,13 @@
 				1868B8F51D76DDD400D19386 /* BackPicSetController.h */,
 				1868B8F61D76DDD400D19386 /* BackPicSetController.m */,
 				18C697661D7462B9004DA2B1 /* AccountManagementController.h */,
-				D17076771D95180B0027C46B /* AccountManagementController.m */,
+				D1AE5E521DAF2F690051D7D9 /* AccountManagementController.m */,
 				AAA8A9C71D8CEABF00ABA020 /* APPPSWController.h */,
 				D1BDCAAB1D929A6A0022BDE2 /* APPPSWController.m */,
 				AA510E551D9BD94300D9FD67 /* OpenLockController.h */,
 				AA510E561D9BD94300D9FD67 /* OpenLockController.m */,
 				18C6976A1D7462B9004DA2B1 /* DoorLockRecordConroller.h */,
-				D1B088E91DAA5BB500072214 /* DoorLockRecordConroller.m */,
+				D1AE5E4E1DAF2ECB0051D7D9 /* DoorLockRecordConroller.m */,
 				D1EFCAC11D88EDD20045A0C0 /* DoorLockModel.h */,
 				D1EFCAC21D88EDD20045A0C0 /* DoorLockModel.m */,
 			);
@@ -843,7 +843,7 @@
 			isa = PBXGroup;
 			children = (
 				18C697961D7462B9004DA2B1 /* GestureViewController.h */,
-				D1BDCAAF1D929B520022BDE2 /* GestureViewController.m */,
+				D1AE5E4C1DAF24410051D7D9 /* GestureViewController.m */,
 			);
 			path = "手势解锁库文件";
 			sourceTree = "<group>";
@@ -1057,7 +1057,7 @@
 				D1AA2E5F1D83F48600D1AEC9 /* DeviceListModel.h */,
 				D1AA2E601D83F48600D1AEC9 /* DeviceListModel.m */,
 				AA2C527D1D9159CA00D0BD3D /* DeviceListController.h */,
-				D1B088EB1DAA5BD100072214 /* DeviceListController.m */,
+				D1AE5E501DAF2EF20051D7D9 /* DeviceListController.m */,
 				D1AA2E611D83F48600D1AEC9 /* DeviceListTcpModel.h */,
 				D1AA2E621D83F48600D1AEC9 /* DeviceListTcpModel.m */,
 				D1007CDE1D8694280079D3DD /* DeviceAutherModel.h */,
@@ -1826,7 +1826,6 @@
 			files = (
 				D1A7DD331D8117DD00D051B0 /* MJRefreshGifHeader.m in Sources */,
 				D1A7DD7F1D8117DD00D051B0 /* UIImageView+WebCache.m in Sources */,
-				D17076781D95180B0027C46B /* AccountManagementController.m in Sources */,
 				D1B7924B1D8BF78C00DDA4DD /* EBMuteDetector.m in Sources */,
 				D1A7DDA11D8117DD00D051B0 /* HRUser.m in Sources */,
 				D1A7DD791D8117DD00D051B0 /* SDWebImagePrefetcher.m in Sources */,
@@ -1834,7 +1833,6 @@
 				D1A7DD3C1D8117DD00D051B0 /* PhotoModel.m in Sources */,
 				D1B792471D8BF78C00DDA4DD /* EBBannerView.m in Sources */,
 				D1EFCAC31D88EDD20045A0C0 /* DoorLockModel.m in Sources */,
-				D1BDCAB01D929B520022BDE2 /* GestureViewController.m in Sources */,
 				D1A7DD701D8117DD00D051B0 /* AsyncUdpSocket.m in Sources */,
 				D1C144241D8E2FD800FDDFA0 /* ShouAddFamilyModel.m in Sources */,
 				D1A7DDA51D8117DD00D051B0 /* Login.m in Sources */,
@@ -1843,6 +1841,7 @@
 				D1A7DD401D8117DD00D051B0 /* FMDatabasePool.m in Sources */,
 				D1A7DD8F1D8117DD00D051B0 /* UIBarButtonItem+XMGExtension.m in Sources */,
 				D1A7DDAB1D8117DD00D051B0 /* HRServicesManager.m in Sources */,
+				D1AE5E531DAF2F690051D7D9 /* AccountManagementController.m in Sources */,
 				D1C3AFDE1DACF50C008E3426 /* NSString+DoorLock.m in Sources */,
 				D1352D641D9E0ECB003A83AB /* AddNewDeviceViewController.m in Sources */,
 				AAA49AEA1D9D0BBD00D4D248 /* SettingController.m in Sources */,
@@ -1869,10 +1868,8 @@
 				D1A7DDBD1D8117DD00D051B0 /* WIFIListModel.m in Sources */,
 				D1A7DD711D8117DD00D051B0 /* MKAnnotationView+WebCache.m in Sources */,
 				D1A7DDA81D8117DD00D051B0 /* ErrorCodeManager.m in Sources */,
-				D1B088EC1DAA5BD100072214 /* DeviceListController.m in Sources */,
 				1868B8F71D76DDD400D19386 /* BackPicSetController.m in Sources */,
 				AAA8A9BA1D8CE9D900ABA020 /* ViewOfCustomerTableViewCell.m in Sources */,
-				D1B088EA1DAA5BB500072214 /* DoorLockRecordConroller.m in Sources */,
 				D1A7DD221D8117DD00D051B0 /* InputText.m in Sources */,
 				D1A7DDAC1D8117DD00D051B0 /* HRSqlite.m in Sources */,
 				D1A7DD3B1D8117DD00D051B0 /* UIView+MJExtension.m in Sources */,
@@ -1893,6 +1890,7 @@
 				AAA49AED1D9D0BFE00D4D248 /* MissWebViewController.m in Sources */,
 				D1A7DD7B1D8117DD00D051B0 /* UIImage+GIF.m in Sources */,
 				18C697AD1D7462B9004DA2B1 /* PCLockLabel.m in Sources */,
+				D1AE5E511DAF2EF20051D7D9 /* DeviceListController.m in Sources */,
 				D1E35D871D90DE89002A766C /* AutherTimePickView.m in Sources */,
 				D1A7DDBB1D8117DD00D051B0 /* WiFiListCell.m in Sources */,
 				AA510E571D9BD94300D9FD67 /* OpenLockController.m in Sources */,
@@ -1942,6 +1940,7 @@
 				D1A7DD2B1D8117DD00D051B0 /* MJRefreshFooter.m in Sources */,
 				AAFFDDF31D800EFC005669BA /* SRActionSheet.m in Sources */,
 				D1A7DD751D8117DD00D051B0 /* SDWebImageDecoder.m in Sources */,
+				D1AE5E4F1DAF2ECB0051D7D9 /* DoorLockRecordConroller.m in Sources */,
 				D1A7DD6F1D8117DD00D051B0 /* AsyncSocket.m in Sources */,
 				D1B7924D1D8BF78C00DDA4DD /* UILabel+ContentSize.m in Sources */,
 				D1A7DD341D8117DD00D051B0 /* MJRefreshNormalHeader.m in Sources */,
@@ -1986,6 +1985,7 @@
 				D1AA2E661D83F48600D1AEC9 /* DeviceListTcpModel.m in Sources */,
 				D1A7DD961D8117DD00D051B0 /* HRTabBar.m in Sources */,
 				AAA8A9BE1D8CEA0E00ABA020 /* YXCustomAlertView.m in Sources */,
+				D1AE5E4D1DAF24410051D7D9 /* GestureViewController.m in Sources */,
 				D1352D661D9E0ECB003A83AB /* CreateXiaoRui.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

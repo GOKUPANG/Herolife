@@ -594,16 +594,19 @@ static BOOL isShowOverMenu = NO;
 	//列表按钮里的文本
 	[self.listLabel mas_makeConstraints:^(MASConstraintMaker *make) {
 		make.center.equalTo(self.listButton);
+        
+
 		make.left.equalTo(self.listImageView.mas_right).offset(4);
-//		make.width.mas_equalTo(HRCommonScreenW * 146);
 		
-		make.width.mas_equalTo(HRCommonScreenW * 226);
+		//make.width.mas_equalTo(HRCommonScreenW * 226);
 	}];
+    
+       
 	//列表按钮里的右边图片
 	[self.rightImageView mas_makeConstraints:^(MASConstraintMaker *make) {
 		make.right.equalTo(self.listButton).offset(- 10);
 		make.centerY.equalTo(self.listButton);
-		make.width.mas_equalTo(25);
+		make.height.mas_equalTo(10);
 		make.left.equalTo(self.listLabel.mas_right).offset(8);
 	}];
 	
@@ -873,6 +876,8 @@ static BOOL isShowOverMenu = NO;
 					if ([arr[1] isEqualToString:@"1"]) {
 						
 						DLC.listModel = self.currentStateModel;
+                        DLC.AuthorUserName = auther.admin ;
+                        
 						[self.navigationController pushViewController:DLC animated:YES];
 						
 					}else
@@ -1185,12 +1190,19 @@ static BOOL isShowOverMenu = NO;
 			weakSelf.currentStateModel = weakSelf.homeArray.firstObject;
 		}else
 		{
+            int index = 0;
 			for (DeviceListModel *model in weakSelf.homeArray) {
 				if ([model.uuid isEqualToString:weakSelf.currentStateModel.uuid]) {//取出和当前的UUID一样的这条数据覆盖掉,currentStateModel数据
 					weakSelf.currentStateModel = model;
-					
+                    index++;
 				}
 			}
+            if (index) {
+                
+            }else
+            {
+                weakSelf.currentStateModel = weakSelf.homeArray.firstObject;
+            }
 		}
 		
         
@@ -1579,7 +1591,6 @@ static BOOL isShowOverMenu = NO;
                         self.listImageView.image = [UIImage imageNamed:@""];
                     }
                 }
-                
                 
                 [weakSelf.tableView reloadData];
                 [weakSelf.collectionView reloadData];

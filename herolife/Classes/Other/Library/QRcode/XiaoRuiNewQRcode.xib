@@ -13,6 +13,9 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="76p-jq-qcj"/>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CME-gs-Rwx">
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                </view>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="32t-Wg-eeO">
                     <constraints>
                         <constraint firstAttribute="height" constant="200" id="MOA-9w-Hvh"/>
@@ -37,17 +40,21 @@
             <constraints>
                 <constraint firstItem="76p-jq-qcj" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="2T8-EZ-UfG"/>
                 <constraint firstAttribute="trailing" secondItem="76p-jq-qcj" secondAttribute="trailing" id="3C1-2y-sSj"/>
+                <constraint firstAttribute="trailing" secondItem="CME-gs-Rwx" secondAttribute="trailing" id="3rJ-MF-JZH"/>
                 <constraint firstItem="bIk-II-Z9C" firstAttribute="top" secondItem="32t-Wg-eeO" secondAttribute="bottom" constant="30" id="7se-Zn-UmW"/>
                 <constraint firstItem="76p-jq-qcj" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="BSO-J9-Zwv"/>
                 <constraint firstAttribute="bottom" secondItem="76p-jq-qcj" secondAttribute="bottom" id="HjL-Py-wrj"/>
+                <constraint firstItem="CME-gs-Rwx" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="Jwz-se-NF0"/>
+                <constraint firstAttribute="bottom" secondItem="CME-gs-Rwx" secondAttribute="bottom" id="Kie-en-FEI"/>
                 <constraint firstItem="32t-Wg-eeO" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="PH5-Pq-21i"/>
                 <constraint firstItem="32t-Wg-eeO" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="120" id="RtG-VA-WHz"/>
                 <constraint firstItem="bIk-II-Z9C" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="hvg-dR-7J3"/>
+                <constraint firstItem="CME-gs-Rwx" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="zQF-kW-7bd"/>
             </constraints>
             <connections>
                 <outlet property="backImageView" destination="76p-jq-qcj" id="CVo-VJ-x8G"/>
             </connections>
-            <point key="canvasLocation" x="-54" y="239"/>
+            <point key="canvasLocation" x="-78" y="23"/>
         </view>
     </objects>
     <resources>

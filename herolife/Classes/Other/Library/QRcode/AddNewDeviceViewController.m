@@ -26,14 +26,13 @@
 
 - (void)loadView
 {
-	self.view = [XiaoRuiNewQRcode shareXiaoRuiNewQRcode];
+    self.view = [XiaoRuiNewQRcode shareXiaoRuiNewQRcode];
 }
 - (void)viewDidLoad {
 	[super viewDidLoad];
-	
+    
 	self.navigationController.navigationBar.hidden = YES;
 	self.title = NSLocalizedString(@"addDevice_title", @"addDevice_title");
-	self.view.backgroundColor = [UIColor whiteColor];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveCreateXiaoRui:) name:kNotificationQRCodeCreateXiaoRui object:nil];
 	[kNotification addObserver:self selector:@selector(receiveManualCreateXiaoRui) name:kNotificationQRCodeManualCreateXiaoRui object:nil];
 }
@@ -63,36 +62,6 @@
 		}
 	}
 	
-	for (UIView *view in self.view.subviews) {
-		
-		if ([NSStringFromClass([view class]) isEqualToString:@"UIImageView"]) {
-			UIImageView *imageView = (UIImageView *)view;
-			NSInteger  PicNum =   [[NSUserDefaults standardUserDefaults] integerForKey:@"PicNum"];
-			
-			if (!PicNum) {
-				
-				imageView.image = [UIImage imageNamed:@"1.jpg"];
-			}
-			
-			
-			else if (PicNum == -1)
-			{
-				NSString *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES).lastObject;
-				path = [path stringByAppendingPathComponent:@"image.png"];
-				
-				imageView.image =[UIImage imageWithContentsOfFile:path];
-			}
-			
-			else{
-				
-				NSString * imgName = [NSString stringWithFormat:@"%ld.jpg",PicNum];
-				
-				imageView.image =[UIImage imageNamed:imgName];
-			}
-			
-		}
-	}
-
 	
 }
 - (void)viewWillAppear:(BOOL)animated
@@ -100,6 +69,41 @@
 	[super viewWillAppear:animated];
     
 	[self IsTabBarHidden:NO];
+    
+    for (UIView *view in self.view.subviews) {
+        NSLog(@"NSStringFromCGRect-%@%@", NSStringFromClass([view class]), NSStringFromCGRect(view.frame));
+        if ([NSStringFromClass([view class]) isEqualToString:@"UIView"]) {
+            
+            view.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.2];
+        }
+        if ([NSStringFromClass([view class]) isEqualToString:@"UIImageView"]) {
+            UIImageView *imageView = (UIImageView *)view;
+            NSInteger  PicNum =   [[NSUserDefaults standardUserDefaults] integerForKey:@"PicNum"];
+            
+            if (!PicNum) {
+                
+                imageView.image = [UIImage imageNamed:@"1.jpg"];
+            }
+            
+            
+            else if (PicNum == -1)
+            {
+                NSString *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES).lastObject;
+                path = [path stringByAppendingPathComponent:@"image.png"];
+                
+                imageView.image =[UIImage imageWithContentsOfFile:path];
+            }
+            
+            else{
+                
+                NSString * imgName = [NSString stringWithFormat:@"%ld.jpg",PicNum];
+                
+                imageView.image =[UIImage imageNamed:imgName];
+            }
+            
+        }
+    }
+
 	
 }
 // 扫描创建小睿
