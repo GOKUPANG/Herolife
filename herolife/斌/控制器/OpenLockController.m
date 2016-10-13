@@ -611,7 +611,7 @@ static BOOL isOvertime = NO;
         
         [_timer invalidate];
         
-        
+        isOvertime = NO;
     }
     
     

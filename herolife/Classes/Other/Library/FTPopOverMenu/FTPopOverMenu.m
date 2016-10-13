@@ -82,7 +82,13 @@ typedef NS_ENUM(NSUInteger, FTPopOverMenuArrowDirection) {
 		UILabel *listLabel = [[UILabel alloc] init];
 		listLabel.text = menuName;
 		listLabel.textColor = [UIColor whiteColor];
-		listLabel.font = [UIFont systemFontOfSize:17];
+        if (HRUIScreenH < 667) {
+            listLabel.font = [UIFont systemFontOfSize:12];
+        }else
+        {
+            listLabel.font = [UIFont systemFontOfSize:17];
+            
+        }
 		listLabel.textAlignment = NSTextAlignmentCenter;
 		listLabel.lineBreakMode = NSLineBreakByTruncatingTail;
 		[bottomLabel addSubview:listLabel];

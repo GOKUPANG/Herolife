@@ -611,7 +611,7 @@ static BOOL isShowOverMenu = NO;
 	}];
 	
 	[self.alphaView mas_makeConstraints:^(MASConstraintMaker *make) {
-		make.top.equalTo(self.listButton.mas_bottom).offset(HRCommonScreenH *170);
+		make.top.equalTo(self.listButton.mas_bottom).offset(HRCommonScreenH *140);
 		make.left.equalTo(self.view).offset(HRCommonScreenW * 10);
 		make.right.equalTo(self.view).offset(- HRCommonScreenW * 10);
 		make.height.mas_equalTo(HRCommonScreenH * 446);
@@ -1617,6 +1617,13 @@ static BOOL isShowOverMenu = NO;
 	
 	[HRHTTPTool hr_PutHttpWithURL:url parameters:parameters responseDict:^(id array, NSError *error) {
 		//这里array 是字典nid = 474601;uri = "http://183.63.118.58:9885/hrctest/?q=huaruiapi/node/474601";
+        if (error) {
+            [ErrorCodeManager showError:error];
+            return ;
+        }
+        if (array) {
+            [self getHttpRequset];
+        }
 		DDLogInfo(@"更新门锁信息-%@error%@", array, error);
 	}];
 	
