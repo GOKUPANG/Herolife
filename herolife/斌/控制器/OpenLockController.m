@@ -251,7 +251,7 @@ static BOOL isOvertime = NO;
     
     
     
-    isOvertime = YES ;
+  //  isOvertime = YES ;
     
     NSDictionary *dict = notification.userInfo;
     

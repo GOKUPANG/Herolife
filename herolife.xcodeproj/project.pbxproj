@@ -87,6 +87,7 @@
 		D17CF0FC1D6567E7007C95DD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D17CF0FB1D6567E7007C95DD /* Assets.xcassets */; };
 		D17CF10A1D6567E7007C95DD /* herolifeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D17CF1091D6567E7007C95DD /* herolifeTests.m */; };
 		D17CF1151D6567E7007C95DD /* herolifeUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = D17CF1141D6567E7007C95DD /* herolifeUITests.m */; };
+		D18EF1D21DAE44C200A069D6 /* FTPopOverMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = D18EF1D11DAE44C200A069D6 /* FTPopOverMenu.m */; };
 		D1940DCF1D6AF72400A262EC /* libicucore.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D1940DCE1D6AF72400A262EC /* libicucore.tbd */; };
 		D1940DD11D6AF73300A262EC /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D1940DD01D6AF73300A262EC /* libz.tbd */; };
 		D1940DD31D6AF73C00A262EC /* libstdc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D1940DD21D6AF73C00A262EC /* libstdc++.tbd */; };
@@ -123,7 +124,6 @@
 		D1A7DD401D8117DD00D051B0 /* FMDatabasePool.m in Sources */ = {isa = PBXBuildFile; fileRef = D1A7DC3D1D8117DD00D051B0 /* FMDatabasePool.m */; };
 		D1A7DD411D8117DD00D051B0 /* FMDatabaseQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = D1A7DC3F1D8117DD00D051B0 /* FMDatabaseQueue.m */; };
 		D1A7DD421D8117DD00D051B0 /* FMResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = D1A7DC421D8117DD00D051B0 /* FMResultSet.m */; };
-		D1A7DD431D8117DD00D051B0 /* FTPopOverMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = D1A7DC451D8117DD00D051B0 /* FTPopOverMenu.m */; };
 		D1A7DD6F1D8117DD00D051B0 /* AsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = D1A7DC781D8117DD00D051B0 /* AsyncSocket.m */; };
 		D1A7DD701D8117DD00D051B0 /* AsyncUdpSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = D1A7DC7A1D8117DD00D051B0 /* AsyncUdpSocket.m */; };
 		D1A7DD711D8117DD00D051B0 /* MKAnnotationView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = D1A7DC7D1D8117DD00D051B0 /* MKAnnotationView+WebCache.m */; };
@@ -368,6 +368,7 @@
 		D17CF1101D6567E7007C95DD /* herolifeUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = herolifeUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D17CF1141D6567E7007C95DD /* herolifeUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = herolifeUITests.m; sourceTree = "<group>"; };
 		D17CF1161D6567E7007C95DD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D18EF1D11DAE44C200A069D6 /* FTPopOverMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FTPopOverMenu.m; sourceTree = "<group>"; };
 		D1940DCE1D6AF72400A262EC /* libicucore.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libicucore.tbd; path = usr/lib/libicucore.tbd; sourceTree = SDKROOT; };
 		D1940DD01D6AF73300A262EC /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		D1940DD21D6AF73C00A262EC /* libstdc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libstdc++.tbd"; path = "usr/lib/libstdc++.tbd"; sourceTree = SDKROOT; };
@@ -439,7 +440,6 @@
 		D1A7DC411D8117DD00D051B0 /* FMResultSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMResultSet.h; sourceTree = "<group>"; };
 		D1A7DC421D8117DD00D051B0 /* FMResultSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMResultSet.m; sourceTree = "<group>"; };
 		D1A7DC441D8117DD00D051B0 /* FTPopOverMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FTPopOverMenu.h; sourceTree = "<group>"; };
-		D1A7DC451D8117DD00D051B0 /* FTPopOverMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FTPopOverMenu.m; sourceTree = "<group>"; };
 		D1A7DC771D8117DD00D051B0 /* AsyncSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AsyncSocket.h; sourceTree = "<group>"; };
 		D1A7DC781D8117DD00D051B0 /* AsyncSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AsyncSocket.m; sourceTree = "<group>"; };
 		D1A7DC791D8117DD00D051B0 /* AsyncUdpSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AsyncUdpSocket.h; sourceTree = "<group>"; };
@@ -1252,7 +1252,7 @@
 			isa = PBXGroup;
 			children = (
 				D1A7DC441D8117DD00D051B0 /* FTPopOverMenu.h */,
-				D1A7DC451D8117DD00D051B0 /* FTPopOverMenu.m */,
+				D18EF1D11DAE44C200A069D6 /* FTPopOverMenu.m */,
 			);
 			path = FTPopOverMenu;
 			sourceTree = "<group>";
@@ -1855,6 +1855,7 @@
 				D1AA2E651D83F48600D1AEC9 /* DeviceListModel.m in Sources */,
 				D1A7DD941D8117DD00D051B0 /* HRNavigationBar.m in Sources */,
 				18C697AB1D7462B9004DA2B1 /* UIView+SDAutoLayout.m in Sources */,
+				D18EF1D21DAE44C200A069D6 /* FTPopOverMenu.m in Sources */,
 				D1AA2E6C1D83F50500D1AEC9 /* AddLockController.m in Sources */,
 				18C697A41D7462B9004DA2B1 /* PCCircleView.m in Sources */,
 				D1A7DD311D8117DD00D051B0 /* MJRefreshBackNormalFooter.m in Sources */,
@@ -1967,7 +1968,6 @@
 				D1352D801D9E1180003A83AB /* WaitController.m in Sources */,
 				D1B792491D8BF78C00DDA4DD /* EBForeNotification.m in Sources */,
 				D1A7DDCF1D811ED100D051B0 /* SettingCell.m in Sources */,
-				D1A7DD431D8117DD00D051B0 /* FTPopOverMenu.m in Sources */,
 				D1A7DD931D8117DD00D051B0 /* UIView+HRExtension.m in Sources */,
 				D1BDCAAC1D929A6A0022BDE2 /* APPPSWController.m in Sources */,
 				D1B088E81DAA484200072214 /* NewFeatureCell.m in Sources */,

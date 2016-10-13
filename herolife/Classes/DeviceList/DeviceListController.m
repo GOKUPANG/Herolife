@@ -66,7 +66,7 @@
     
     
     CGFloat tfLength;
-    
+    NSConditionLock *lock;
 }
 /** 顶部条 */
 @property(nonatomic, weak) HRNavigationBar *navView;
@@ -353,12 +353,16 @@ static BOOL isShowOverMenu = NO;
 			self.homeArray = homeMu;
 		}
 	
-			
-		self.listLabel.text = self.currentStateModel.title;
-			
-		//修改921
-		//按钮图片
-		self.listImageView.image = [UIImage imageNamed:@"空心离线"];
+    
+    //重新设置列表按钮的图片和文字
+    if (self.homeArray.count > 0) {
+        self.listLabel.text = self.currentStateModel.title;
+        self.listImageView.image = [UIImage imageNamed:@"空心离线"];
+    }else
+    {
+        self.listLabel.text = @"";
+        self.listImageView.image = [UIImage imageNamed:@""];
+    }
 		[self.tableView reloadData];
 		[self.collectionView reloadData];
 	
@@ -408,9 +412,6 @@ static BOOL isShowOverMenu = NO;
 			}
 		}
 		
-//		self.currentStateModel.state = tcpModel.state;
-//		self.currentStateModel.online = tcpModel.online;
-//		self.currentStateModel.level = tcpModel.level;;
 		[self.tableView reloadData];
 		[self.collectionView reloadData];
 	}
@@ -476,7 +477,7 @@ static BOOL isShowOverMenu = NO;
 	
 	UILabel *listLabel = [[UILabel alloc] init];
 	listLabel.text = @"  ";
-	listLabel.textAlignment = NSTextAlignmentLeft;
+	listLabel.textAlignment = NSTextAlignmentCenter;
 	listLabel.lineBreakMode = NSLineBreakByTruncatingTail;
 	listLabel.textColor = [UIColor whiteColor];
 	if (HRUIScreenH < 667) {
@@ -749,26 +750,29 @@ static BOOL isShowOverMenu = NO;
 			}
 			cell.leftLabel.text = @"手机开锁";
 			if (self.currentStateModel.level.length < 0.5) {
-				cell.minLabel.text =  @"";
-				cell.rightLabel.text = self.lastOptionTime;
+//				cell.minLabel.text =  @"";
+//				cell.rightLabel.text = self.lastOptionTime;
+                
+                cell.rightLabel.text = @"";
 			}else
 			{
-				if (self.queryArray.count > 0) {
-					for (DoorLockModel *model in self.queryArray) {
-						if ([model.title containsString:@"开锁操作"]) {
-							
-							NSString *title = model.title;
-							NSRange range = [title rangeOfString:@"|"];
-							
-							NSString *time = [title substringToIndex:range.location];
-							
-							cell.rightLabel.text = time;
-							break;
-						}
-					}
-				}
-				cell.minLabel.text = [NSString stringWithFormat:@"剩余电量%@", self.currentStateModel.level];
-				
+//				if (self.queryArray.count > 0) {
+//					for (DoorLockModel *model in self.queryArray) {
+//						if ([model.title containsString:@"开锁操作"]) {
+//							
+//							NSString *title = model.title;
+//							NSRange range = [title rangeOfString:@"|"];
+//							
+//							NSString *time = [title substringToIndex:range.location];
+//							
+//							cell.rightLabel.text = time;
+//							break;
+//						}
+//					}
+//				}
+//				cell.minLabel.text = [NSString stringWithFormat:@"剩余电量%@", self.currentStateModel.level];
+                
+                cell.rightLabel.text = [NSString stringWithFormat:@"剩余电量%@", self.currentStateModel.level];;
 			}
 		}
 			break;
@@ -778,24 +782,24 @@ static BOOL isShowOverMenu = NO;
 			cell.leftImage.image = [UIImage imageNamed:@"记录"];
 			cell.leftLabel.text = @"记录查询";
 //			cell.rightLabel.text = self.lastOptionTime;
-			if (self.currentStateModel.level.length < 0.5) {
-				cell.minLabel.text =  @"";
-				cell.rightLabel.text = self.lastOptionTime;
-			}else
-			{
-				
-				if (self.queryArray.count > 0) {
-					DoorLockModel *model = self.queryArray.firstObject;
-					
-					NSString *title = model.title;
-					NSRange range = [title rangeOfString:@"|"];
-					
-					NSString *time = [title substringToIndex:range.location];
-					
-					cell.rightLabel.text = time;
-				
-			}
-		}
+//			if (self.currentStateModel.level.length < 0.5) {
+//				cell.minLabel.text =  @"";
+//				cell.rightLabel.text = self.lastOptionTime;
+//			}else
+//			{
+//				
+//				if (self.queryArray.count > 0) {
+//					DoorLockModel *model = self.queryArray.firstObject;
+//					
+//					NSString *title = model.title;
+//					NSRange range = [title rangeOfString:@"|"];
+//					
+//					NSString *time = [title substringToIndex:range.location];
+//					
+//					cell.rightLabel.text = time;
+//				
+//			}
+//		}
 		}
 			break;
   case 2:
@@ -1050,15 +1054,24 @@ static BOOL isShowOverMenu = NO;
 
 - (void)setUpListButtonContent
 {
-	self.listLabel.text = self.currentStateModel.title;
-	//按钮图片
-	if ([self.currentStateModel.state isEqualToString:@"1"]) {
-		self.listImageView.image = [UIImage imageNamed:@"空心在线"];
-	}else
-	{
-		
-		self.listImageView.image = [UIImage imageNamed:@"空心离线"];
-	}
+    
+    //重新设置列表按钮的图片和文字
+    if (self.homeArray.count > 0) {
+        
+        self.listLabel.text = self.currentStateModel.title;
+        if ([self.currentStateModel.state isEqualToString:@"1"]) {
+        self.listImageView.image = [UIImage imageNamed:@"空心在线"];
+    }else
+    {
+        
+        self.listImageView.image = [UIImage imageNamed:@"空心离线"];
+    }
+        
+    }else
+    {
+        self.listLabel.text = @"";
+        self.listImageView.image = [UIImage imageNamed:@""];
+    }
 	
 }
 #pragma mark - 建立socket连接 并组帧 发送请求数据
@@ -1180,18 +1193,25 @@ static BOOL isShowOverMenu = NO;
 			}
 		}
 		
-		weakSelf.listLabel.text = weakSelf.currentStateModel.title;
-		//修改921
-		//按钮图片
-		if ([self.currentStateModel.state isEqualToString:@"1"]) {
-			self.listImageView.image = [UIImage imageNamed:@"空心在线"];
-		}else
-		{
-			
-			self.listImageView.image = [UIImage imageNamed:@"空心离线"];
-		}
-		
-		
+        
+        //重新设置列表按钮的图片和文字
+        if (weakSelf.homeArray.count > 0) {
+            
+            weakSelf.listLabel.text = weakSelf.currentStateModel.title;
+            if ([weakSelf.currentStateModel.state isEqualToString:@"1"]) {
+                weakSelf.listImageView.image = [UIImage imageNamed:@"空心在线"];
+            }else
+            {
+                
+                weakSelf.listImageView.image = [UIImage imageNamed:@"空心离线"];
+            }
+            
+        }else
+        {
+            weakSelf.listLabel.text = @"";
+            weakSelf.listImageView.image = [UIImage imageNamed:@""];
+        }
+        
 		[self.tableView reloadData];
 		
 		//定时60s查询设备状态
@@ -1206,7 +1226,22 @@ static BOOL isShowOverMenu = NO;
 #pragma mark - 就显示3D效果占位图片
 - (void)setUp3DEptPictureWithHomeArray:(NSArray *)homeArray
 {
-	if (homeArray.count == 1) {//如果只有一个设备 就显示两张占位图片
+    [self.photoModelArray removeAllObjects];
+    if (homeArray.count == 0) {//如果只有一个设备 就显示两张占位图片
+        
+        [self.photoModelArray addObject:
+         [PhotoModel modelWithImageNamed:@"锁-透明"
+                             description:@""]];
+        [self.photoModelArray addObject:
+         [PhotoModel modelWithImageNamed:@"锁-透明"
+                             description:@""]];
+        [self.photoModelArray addObject:
+         [PhotoModel modelWithImageNamed:@"锁-透明"
+                             description:@""]];
+        [self.collectionView setContentOffset:CGPointMake(1 * HRCommonScreenW *345 *2, 0) animated:NO];
+        self.collectionView.userInteractionEnabled = NO;
+        
+    }else if (homeArray.count == 1) {//如果只有一个设备 就显示两张占位图片
 		
 		[self.photoModelArray addObject:
 		 [PhotoModel modelWithImageNamed:@"锁-透明"
@@ -1217,7 +1252,8 @@ static BOOL isShowOverMenu = NO;
 		[self.photoModelArray addObject:
 		 [PhotoModel modelWithImageNamed:@"锁-透明"
 							 description:@""]];
-		[self.collectionView setContentOffset:CGPointMake(1 * HRCommonScreenW *345 *2, 0) animated:NO];
+        [self.collectionView setContentOffset:CGPointMake(1 * HRCommonScreenW *345 *2, 0) animated:NO];
+        self.collectionView.userInteractionEnabled = YES;
 	}else if (homeArray.count == 2) {//如果只有两个设备 就显示1张占位图片
 		
 		[self.photoModelArray addObject:
@@ -1230,7 +1266,8 @@ static BOOL isShowOverMenu = NO;
 		 [PhotoModel modelWithImageNamed:@"锁虚线"
 							 description:@""]];
 		
-		[self.collectionView setContentOffset:CGPointMake(1 * HRCommonScreenW *345 *2, 0) animated:NO];
+        [self.collectionView setContentOffset:CGPointMake(1 * HRCommonScreenW *345 *2, 0) animated:NO];
+        self.collectionView.userInteractionEnabled = YES;
 	}else
 	{
 		for (DeviceListModel *home in homeArray) {
@@ -1238,8 +1275,10 @@ static BOOL isShowOverMenu = NO;
 			 [PhotoModel modelWithImageNamed:@"锁虚线"
 								 description:@""]];
 			
-		}
+        }
+        self.collectionView.userInteractionEnabled = YES;
 	}
+    [self.collectionView reloadData];
 }
 #pragma mark - 获得设备授权表 HTTP
 - (void)addAutherList
@@ -1385,15 +1424,6 @@ static BOOL isShowOverMenu = NO;
 		
 		[self.photoModelArray removeAllObjects];
 		
-		for (DeviceListModel *model  in weakSelf.homeArray) {
-			
-			// 重新给锁添加 数组图片
-			if ([model.types isEqualToString:@"hrsc"]) {
-				//修改921
-				
-			}
-		}
-		
 		//判断当前的mode是否为空, 如果为空就让他等于数组的第一个值, 如果不为空就让他等于当前值, 刷新是刷新的当前的数组个数和状态
 		if (self.currentStateModel.uuid.length < 1) {
 			
@@ -1407,19 +1437,25 @@ static BOOL isShowOverMenu = NO;
 				}
 			}
 		}
-		weakSelf.listLabel.text = weakSelf.currentStateModel.title;
-		//修改921
-		//按钮图片
-		if ([self.currentStateModel.state isEqualToString:@"1"]) {
-			self.listImageView.image = [UIImage imageNamed:@"空心在线"];
-		}else
-		{
-			
-			self.listImageView.image = [UIImage imageNamed:@"空心离线"];
-		}
-		
+        
+        //重新设置列表按钮的图片和文字
+        if (weakSelf.homeArray.count > 0) {
+            
+            weakSelf.listLabel.text = weakSelf.currentStateModel.title;
+            if ([weakSelf.currentStateModel.state isEqualToString:@"1"]) {
+                weakSelf.listImageView.image = [UIImage imageNamed:@"空心在线"];
+            }else
+            {
+                
+                weakSelf.listImageView.image = [UIImage imageNamed:@"空心离线"];
+            }
+            
+        }else
+        {
+            weakSelf.listLabel.text = @"";
+            weakSelf.listImageView.image = [UIImage imageNamed:@""];
+        }
 		//显示占位图片
-//		NSArray *arr = @[@"22", @"22"];
 		[self setUp3DEptPictureWithHomeArray:weakSelf.homeArray];
 		
 		[weakSelf.tableView reloadData];
@@ -1449,22 +1485,113 @@ static BOOL isShowOverMenu = NO;
 		
 	}
 	
-	
-	NSString *did = self.showLockModel.did;
-	NSString *url = [NSString stringWithFormat:@"%@%@", HRAPI_UpdateDoorPsw_URL, did];
-	[HRHTTPTool hr_DeleteHttpWithURL:url parameters:nil responseDict:^(id array, NSError *error) {
-		if (error != nil) {
-			
-			[ErrorCodeManager showError:error];
-			return ;
-		}
-		
-		DDLogInfo(@"删除门锁%@error%@", array,error);
-		[SVProgressHUD showSuccessWithStatus:@"删除成功!"];
-		
-	}];
-	
-	
+    
+    //删除授权信息
+    AppDelegate *app = (AppDelegate *)[UIApplication sharedApplication].delegate;
+    
+    NSMutableArray *mu = [NSMutableArray array];
+    for (DeviceAutherModel *model in app.autherArray) {
+        if ([model.uuid isEqualToString: self.showLockModel.uuid]) {
+            
+            [mu addObject:model];
+            
+        }
+        
+    }
+    
+    dispatch_group_t serviceGroup = dispatch_group_create();
+    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+        
+        for (int i = 0; i < mu.count; i++) {
+            dispatch_group_enter(serviceGroup);
+            DeviceAutherModel *model = mu[i];
+            
+            NSString *url = [NSString stringWithFormat:@"%@%@", HRAPI_UpdateDoorPsw_URL, model.did];
+            
+            [HRHTTPTool hr_DeleteHttpWithURL:url parameters:nil responseDict:^(id array, NSError *error) {
+                NSLog(@"删除授权记录arr%@err%@", array, error);
+                if (error) {
+                    [SVProgressTool hr_showErrorWithStatus:@"删除设备失败,请重试!"];
+                    dispatch_group_leave(serviceGroup);
+                    return ;
+                }
+                
+                dispatch_group_leave(serviceGroup);
+            }];
+
+            dispatch_group_wait(serviceGroup, DISPATCH_TIME_FOREVER);
+            NSLog(@"第%d次", i);
+        }
+        dispatch_group_notify(serviceGroup, dispatch_get_global_queue(0, 0), ^{
+            
+            
+            NSString *did = self.showLockModel.did;
+            NSString *url = [NSString stringWithFormat:@"%@%@", HRAPI_UpdateDoorPsw_URL, did];
+            HRWeakSelf
+            [HRHTTPTool hr_DeleteHttpWithURL:url parameters:nil responseDict:^(id array, NSError *error) {
+                
+                NSLog(@"删除设备arr%@err%@", array, error);
+                if (error != nil) {
+                    
+                    [ErrorCodeManager showError:error];
+                    return ;
+                }
+                
+                //请求成功
+                NSMutableArray *mb = [NSMutableArray array];
+                for (DeviceListModel *model in weakSelf.homeArray) {
+                    if ([model.uuid isEqualToString:weakSelf.showLockModel.uuid] && [model.did isEqualToString:weakSelf.showLockModel.did]) {
+                        continue;
+                    }
+                    [mb addObject:model];
+                }
+                //homearray里的数据重新赋值
+                weakSelf.homeArray = mb;
+                
+                //重新设置3D图片
+                [self setUp3DEptPictureWithHomeArray: weakSelf.homeArray];
+                
+                //重新设置列表按钮的图片和文字
+                if (weakSelf.homeArray.count > 0) {
+                    
+                    weakSelf.currentStateModel = weakSelf.homeArray.firstObject;
+                    weakSelf.listLabel.text = weakSelf.currentStateModel.title;
+                    //修改921
+                    //按钮图片
+                    if ([self.currentStateModel.state isEqualToString:@"1"]) {
+                        self.listImageView.image = [UIImage imageNamed:@"空心在线"];
+                    }else
+                    {
+                        
+                        self.listImageView.image = [UIImage imageNamed:@"空心离线"];
+                    }
+                }else
+                {
+                    weakSelf.currentStateModel = nil;
+                    weakSelf.listLabel.text = @"";
+                    //修改921
+                    //按钮图片
+                    if ([self.currentStateModel.state isEqualToString:@"1"]) {
+                        self.listImageView.image = [UIImage imageNamed:@""];
+                    }else
+                    {
+                        
+                        self.listImageView.image = [UIImage imageNamed:@""];
+                    }
+                }
+                
+                
+                [weakSelf.tableView reloadData];
+                [weakSelf.collectionView reloadData];
+                
+                DDLogInfo(@"删除门锁%@error%@", array,error);
+                [SVProgressHUD showSuccessWithStatus:@"删除成功!"];
+                
+                
+            }];
+        });
+    });
+
 }
 
 #pragma mark - 更新门锁信息 HTTP

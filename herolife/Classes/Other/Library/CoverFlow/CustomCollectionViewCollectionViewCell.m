@@ -55,7 +55,7 @@ NSString *const kCustomCellIdentifier = @"CustomCell";
 		make.left.equalTo(self).offset(HRCommonScreenW *12);
 		make.right.equalTo(self).offset(- HRCommonScreenW *12);
 		make.top.equalTo(self).offset(HRCommonScreenH *12);
-		make.right.equalTo(self).offset(- HRCommonScreenH *12);
+		make.bottom.equalTo(self).offset(- HRCommonScreenH *12);
 	}];
 	
 //	

@@ -125,6 +125,7 @@ static NSString *ViewOfCustomerTableViewCellIdentifier = @"ViewOfCustomerTableVi
 		}
 		
 	}
+    
 	self.deviceAutherArray = mu;
 	[self.listTableView reloadData];
 	
@@ -926,8 +927,48 @@ static BOOL isShowOverMenu = NO;
 		 
 		 if (buttonIndex == 1) {
 			 
-			//删除授权信息
-			[self sendDataDeleteAuthor];
+             
+             DeviceAutherModel *listModel = self.deviceAutherArray[selectIndexPath];
+             if ([listModel.time isEqualToString:@"none"] || [listModel.time isEqualToString:@"99:59"]) {//家人分享的删除
+                 
+                 //删除授权信息
+                 [self sendDataDeleteAuthor];
+                 
+             }else
+             {
+                 //临时授权的删除
+                 NSString *url = [NSString stringWithFormat:@"%@%@", HRAPI_UpdateDoorPsw_URL, listModel.did];
+                 [HRHTTPTool hr_DeleteHttpWithURL:url parameters:nil responseDict:^(id array, NSError *error) {
+                     if (error) {
+                         [ErrorCodeManager showError:error];
+                         return;
+                     }
+                     
+                     if (array) {
+                         [self.deviceAutherArray removeObject:listModel];
+                         AppDelegate *app = (AppDelegate *)[UIApplication sharedApplication].delegate;
+                         
+                         NSMutableArray *mu = [NSMutableArray array];
+                         for (DeviceAutherModel *model in app.autherArray) {
+                             if ([model.uuid isEqualToString: self.listModel.uuid] && [model.did isEqualToString: listModel.did]) {
+                                 
+                                 continue;
+                             }
+                             
+                             [mu addObject:model];
+                         }
+                         app.autherArray = mu;
+                         [self.listTableView reloadData];
+                     }
+                     
+                     //让弹框消失
+                     
+                     [self dismissCustomAlertView];
+                     [SVProgressTool hr_showSuccessWithStatus:@"成功删除临时授权记录!"];
+                     
+                 }];
+             }
+             
 		 }
 		 
 	 }else if (customAlertView.tag == 14) {//查询门锁密码
@@ -1258,6 +1299,7 @@ static BOOL isShowOverMenu = NO;
 		
 		if (error) {
 			
+            [ErrorCodeManager showError:error];
 			[SVProgressTool hr_showErrorWithStatus:@"该用户名不存在,请重新输入!"];
 			return ;
 		}
@@ -1420,7 +1462,7 @@ static BOOL isShowOverMenu = NO;
 		DeviceAutherModel *listModel = self.deviceAutherArray[section];
 		NSString *autherName = listModel.person.lastObject;
 		NSString *time;
-		if ([listModel.time isEqualToString:@"none"]) {
+		if ([listModel.time isEqualToString:@"none"] || [listModel.time isEqualToString:@"99:59"]) {
 			time = @"永久";
 		}else
 		{
@@ -1486,7 +1528,7 @@ static NSInteger selectIndexPath = 0;
 	selectIndexPath = indexPath.section;
 	DeviceAutherModel *mode = self.deviceAutherArray[indexPath.section];
 	NSString *name = mode.person.lastObject;
-	if ([mode.time isEqualToString:@"none"]) {
+	if ([mode.time isEqualToString:@"none"]  || [mode.time isEqualToString:@"99:59"] || [mode.time isEqualToString:@""] || mode.time.length < 1) {
 		//判断是否是家人授权, 如果是就不让查看门锁密码, 如果不是就查看门锁密码
 		[SRActionSheet sr_showActionSheetViewWithTitle:name
 									 cancelButtonTitle:@"取消"
@@ -1521,7 +1563,7 @@ static NSInteger selectIndexPath = 0;
 		
 		
 		DeviceAutherModel *model = self.deviceAutherArray[selectIndexPath];
-		if ([model.time isEqualToString:@"none"]) {
+		if ([model.time isEqualToString:@"none"] || [model.time isEqualToString:@"99:59"]) {
 			
 			NSString *name = self.deviceAutherArray[selectIndexPath].person.lastObject;
 			NSString *remoteSwich = self.deviceAutherArray[selectIndexPath].permit.firstObject;

@@ -203,7 +203,8 @@ static int const HRTimeDuration = 30;
 	//背景图片
 	UIImageView *backgroundImage = [[UIImageView alloc] initWithFrame:[UIScreen mainScreen].bounds];
 	backgroundImage.image = [UIImage imageNamed:@"icon_bg.jpg"];
-	[self.view addSubview:backgroundImage];
+    self.backImgView = backgroundImage;
+	[self.view addSubview:self.backImgView];
 	
 	UIView *view = [[UIView alloc] initWithFrame:[UIScreen mainScreen].bounds];
 	view.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.2];

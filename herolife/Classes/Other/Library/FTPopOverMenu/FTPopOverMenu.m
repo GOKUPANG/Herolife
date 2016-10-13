@@ -15,7 +15,7 @@
 #define FTDefaultTextColor          [UIColor whiteColor]
 #define FTDefaultMenuFont           [UIFont systemFontOfSize:34]
 #define FTDefaultMenuWidth_MIN      50.0
-#define FTDefaultMenuWidth          200.0
+#define FTDefaultMenuWidth          HRCommonScreenW * 350
 #define FTDefaultMenuIconWidth      20.0
 #define FTDefaultMenuRowHeight      40.0
 #define FTDefaultMenuArrowHeight    10.0
@@ -83,7 +83,7 @@ typedef NS_ENUM(NSUInteger, FTPopOverMenuArrowDirection) {
 		listLabel.text = menuName;
 		listLabel.textColor = [UIColor whiteColor];
 		listLabel.font = [UIFont systemFontOfSize:17];
-		listLabel.textAlignment = NSTextAlignmentLeft;
+		listLabel.textAlignment = NSTextAlignmentCenter;
 		listLabel.lineBreakMode = NSLineBreakByTruncatingTail;
 		[bottomLabel addSubview:listLabel];
 		self.listLabel = listLabel;
@@ -100,7 +100,8 @@ typedef NS_ENUM(NSUInteger, FTPopOverMenuArrowDirection) {
 	[self.bottomLabel mas_makeConstraints:^(MASConstraintMaker *make) {
 		make.top.equalTo(self).offset(HRCommonScreenH *25);
 		make.centerX.equalTo(self);
-		make.width.mas_equalTo(HRCommonScreenW * 350);
+	//	make.width.mas_equalTo(HRCommonScreenW * 350);
+        make.width.mas_equalTo(FTDefaultMenuWidth);
 		make.height.mas_equalTo(30);
 	}];
 	
