@@ -8,6 +8,8 @@
 
 #import "AddLockController.h"
 #import "HRTabBarViewController.h"
+#import <objc/message.h>
+#import "HRTabBar.h"
 
 @interface AddLockController ()<UITextFieldDelegate>
 /**  */
@@ -202,19 +204,25 @@
 - (void)goToHomeList
 {
 	for (UIView *view  in self.tabBarController.view.subviews) {
-		if ([NSStringFromClass([view class]) isEqualToString:@"HRTabBar"]) {
-			view.hidden = NO;
-			for (UIButton *btn in view.subviews) {
-				if (btn.tag == 1) {
-					btn.selected = NO;
-				}
-				
-				if (btn.tag == 2) {
-					btn.selected = YES;
-				}
-			}
-		}
-	}
+        if ([NSStringFromClass([view class]) isEqualToString:@"HRTabBar"]) {
+//            HRTabBar *tabBar = (HRTabBar *)view;
+            view.hidden = NO;
+            for (UIButton *btn in view.subviews) {
+                if (btn.tag == 1) {
+                    btn.selected = NO;
+                }
+                
+                if (btn.tag == 2) {
+                    btn.selected = YES;
+                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                        
+                        [kNotification postNotificationName:kNotificationInitializationSelecteButton object:nil];
+//                        objc_msgSend(tabBar, @selector(btnClick:), btn);
+                    });
+                }
+            }
+        }
+    }
 	self.tabBarController.selectedIndex = 1;
 	// 从AddLockController 界面发一个通知让首页去刷新数据 通知
 	[kNotification postNotificationName:kNotificationPostRefresh object:nil];

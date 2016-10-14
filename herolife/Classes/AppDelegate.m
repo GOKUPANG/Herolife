@@ -78,7 +78,7 @@ static int const HRTimeDuration = 3;
 static NSInteger disconnectCount = 0;
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
 	//友盟统计
-	[self addUmeng];
+//	[self addUmeng];
 	//显示界面
 	[self setupWindow];
 	

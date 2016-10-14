@@ -503,6 +503,11 @@
 			_userNameField.text = user.name;
 			_passwdField.text = user.password;
 		}
+        
+        if (user.name.length > 25) {
+            _userNameField.text = @"";
+            _passwdField.text = @"";
+        }
 	}
 	
 	
@@ -710,7 +715,7 @@
 			 [kNSUserDefaults setObject:urlStr forKey:kDefaultsQQIconURL];
 			 DDLogWarn(@"QQ头像%@",urlStr);
 			 [kNSUserDefaults synchronize];
-//			 openid = @"07E3BE2774B2801CC12505E121DCEE28";
+//			 openid = @"07E3BE2774B2801CC12505E121DC1110";
 			 [self loginSSDKWithOpenID: openid];
 			 
 			 
@@ -821,8 +826,6 @@
 											  } else {
 												  [SVProgressTool hr_dismiss];
 												  HRTabBarViewController *tabBarVC = [[HRTabBarViewController alloc] init];
-//												  [self.navigationController pushViewController:tabBarVC animated:YES];
-//												  [self presentViewController:tabBarVC animated:NO completion:nil];
                                                   
                                                   [UIApplication sharedApplication].keyWindow.rootViewController = tabBarVC;
 											  }
@@ -955,8 +958,7 @@
 										  } else {
 											  [SVProgressTool hr_dismiss];
 											  HRTabBarViewController *tabBarVC = [[HRTabBarViewController alloc] init];
-											  //												  [self.navigationController pushViewController:tabBarVC animated:YES];
-											  [self presentViewController:tabBarVC animated:NO completion:nil];
+                                              [UIApplication sharedApplication].keyWindow.rootViewController = tabBarVC;
 										  }
 									  }];
 		

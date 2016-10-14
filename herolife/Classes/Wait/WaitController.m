@@ -8,7 +8,8 @@
 
 #import "WaitController.h"
 #import "AddLockController.h"
-//#import "herolife-Swift.h"
+#import "HRTabBar.h"
+#import <objc/message.h>
 
 @interface WaitController ()
 /** 头像 */
@@ -382,18 +383,21 @@ static int const HRTimeDuration = 30;
 - (void)cancelButtonClick:(UIButton *)btn
 {
 	for (UIView *view  in self.tabBarController.view.subviews) {
-		if ([NSStringFromClass([view class]) isEqualToString:@"HRTabBar"]) {
-			view.hidden = NO;
-			for (UIButton *btn in view.subviews) {
-    
-				if (btn.tag == 1) {
-					btn.selected = NO;
-				}
-				if (btn.tag == 2) {
-					btn.selected = YES;
-				}
-			}
-		}
+        if ([NSStringFromClass([view class]) isEqualToString:@"HRTabBar"]) {
+//            HRTabBar *tabBar = (HRTabBar *)view;
+            view.hidden = NO;
+            for (UIButton *btn in view.subviews) {
+                if (btn.tag == 1) {
+                    btn.selected = NO;
+                }
+                
+                if (btn.tag == 2) {
+                    btn.selected = YES;
+                    [kNotification postNotificationName:kNotificationInitializationSelecteButton object:nil];
+                }
+            }
+        }
+
 	}
 	self.tabBarController.selectedIndex = 1;
 	[self.navigationController popToRootViewControllerAnimated:YES];

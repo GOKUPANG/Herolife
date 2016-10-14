@@ -27,8 +27,20 @@
 		self.homeButton = [self setupButtonWithImage:@"首页白" selectImage:@"首页蓝" tag:2 title:@"首页"];
 		self.qrButton = [self setupButtonWithImage:@"设置白" selectImage:@"设置蓝" tag:3 title:@"设置"];
 		[self btnClick:self.homeButton];
+        
+        //通知
+        [kNotification addObserver:self selector:@selector(initializationSelecteButton) name:kNotificationInitializationSelecteButton object:nil];
 	}
 	return self;
+}
+- (void)initializationSelecteButton
+{
+    [self btnClick:self.homeButton];
+}
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    
 }
 - (HRTabBarButton *)setupButtonWithImage:(NSString *)image selectImage:(NSString *)selectImage tag:(NSInteger)tag title:(NSString *)title
 {

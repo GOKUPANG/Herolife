@@ -264,6 +264,8 @@
 /********************************************** 通知 key *******************/
 /// 发送通知
 #define kNotification [NSNotificationCenter defaultCenter]
+/// 让tabbar按钮设置初始值 通知
+#define kNotificationInitializationSelecteButton @"kNotificationInitializationSelecteButton"
 /// 用户注册传值 通知
 #define kNotificationRegister @"kNotificationRegister"
 /// 创建锁 通知

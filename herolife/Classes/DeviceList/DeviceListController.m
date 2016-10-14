@@ -12,6 +12,7 @@
 #define HRMyScreenH (HRUIScreenH / 667.0)
 #define HRMyScreenW (HRUIScreenW / 375.0 )
 
+#define HRAPI_UpdateDoorMess_URL @"http://183.63.118.58:9885/hrctest/?q=huaruiapi/node/%@"
 
 
 #import "DeviceListController.h"
@@ -39,6 +40,14 @@
 #import "MJRefresh.h"
 #import "DoorLockModel.h"
 #import "TipsLabel.h"
+#import "GTMBase64.h"
+
+//加入系统自带密码库
+
+//引入IOS自带密码库
+#import <CommonCrypto/CommonCryptor.h>
+
+
 
 
 #define HRNavigationBarFrame self.navigationController.navigationBar.bounds
@@ -1753,7 +1762,7 @@ static BOOL isShowOverMenu = NO;
 	}
 	
 	//自己创建的设备
-	[SRActionSheet sr_showActionSheetViewWithTitle:self.showLockModel.title cancelButtonTitle:@"取消" destructiveButtonTitle:@"" otherButtonTitles:@[@"删除设备", @"修改设备信息"] selectSheetBlock:^(SRActionSheet *actionSheetView, NSInteger index) {
+	[SRActionSheet sr_showActionSheetViewWithTitle:self.showLockModel.title cancelButtonTitle:@"取消" destructiveButtonTitle:@"" otherButtonTitles:@[@"删除设备", @"修改设备别名",@"更新设备信息"] selectSheetBlock:^(SRActionSheet *actionSheetView, NSInteger index) {
 		
 		if (index == 0) {
 			NSString *iconString;
@@ -1814,9 +1823,103 @@ static BOOL isShowOverMenu = NO;
 			[self beginANimation];
 			
 		}
+        
+        else
+        {
+            UIAlertController * alertController = [UIAlertController alertControllerWithTitle:@"确定更新" message:@"" preferredStyle:UIAlertControllerStyleAlert];
+            
+            UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                
+            }];
+            
+            
+            UIAlertAction *confirmAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                
+                
+                
+                [self httpWithUpdataDoor];
+                
+                
+            }];
+            
+            
+            [alertController addAction:confirmAction];
+            
+            
+            [alertController addAction:cancelAction];
+            [self presentViewController:alertController animated:YES completion:nil];        }
 		
 	}];
 }
+
+#pragma mark - 更新设备信息相关方法
+
+#pragma mark - 用户名和密码的加密
+- (NSString *)encryptionWithPassWorldAndUserName
+{
+    NSString *userName = [kUserDefault objectForKey:kDefaultsUserName];
+    NSString *passwold = [kUserDefault objectForKey:kDefaultsPassWord];
+    //组帧
+    NSString *str = [NSString stringWithFormat:@"{\"user\":\"%@\",\"pass\":\"%@\"}", userName,passwold];
+    NSString *hrkey = @"437frhsRE5TW4Gfgki56y54yh64T5tHY65YRHTT45y45ygtaR4W64YUHE54YGR54Y45rfhy6u57hger8567ygvf43tftg44regft547get4345TGREY7587EGTDA5tg5";
+    //	NSMutableArray *stringArray = [[NSMutableArray alloc] init];
+    NSMutableString *muString =[NSMutableString string];
+    for (int i = 0; i < str.length; i++) {
+        
+        char tempChar = [str characterAtIndex:i];
+        char hrkeyChar = [hrkey characterAtIndex:i];
+        char temp = (char)tempChar^hrkeyChar;
+        
+        NSString *charStr = [NSString stringWithFormat:@"%c", temp];
+        [muString appendString:charStr];
+        //		[stringArray addObject:charStr];
+    }
+    
+    DDLogWarn(@"%@",[GTMBase64 encodeBase64String:muString]);
+    return [GTMBase64 encodeBase64String:muString];
+    //	return [AddDeviceView base64StringFromText:str];
+    //	return muString;
+}
+
+
+#pragma mark - HTTP
+- (void)httpWithUpdataDoor
+{
+    
+    
+    DeviceListModel * model  = self.currentStateModel ;
+    
+    //组帧
+    NSString *muString = [self encryptionWithPassWorldAndUserName];
+    
+    NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
+    parameters[@"type"] = @"hrsc";
+    parameters[@"field_licence[und][0][value]"] = muString;
+    
+    NSLog(@"model的types是%@",model.types);
+    
+    
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager hrManager];
+    [manager PUT:[NSString stringWithFormat:HRAPI_UpdateDoorMess_URL, model.did] parameters:parameters success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationUpdataXiaoRui object:nil];
+        
+        
+        
+        [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
+        [SVProgressHUD showSuccessWithStatus:@"更新门锁设备信息成功!" ];
+        
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        DDLogDebug(@"%@", error);
+        [ErrorCodeManager showError:error];
+    }];
+    
+}
+
+
+
+
+
 #pragma mark - 自定义弹框 activityView
 - (void)addHudWith:(NSString *)text
 {
@@ -2169,7 +2272,7 @@ static BOOL isShowOverMenu = NO;
 			
 			//   [self addHudWith:@"hahahah"];
 			
-			[self removeHudWith:@"密码不正确"];
+			//   [self removeHudWith:@"密码不正确"];
 			
 			
 			return;
