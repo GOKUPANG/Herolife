@@ -71,7 +71,6 @@
 	[self IsTabBarHidden:NO];
     
     for (UIView *view in self.view.subviews) {
-        NSLog(@"NSStringFromCGRect-%@%@", NSStringFromClass([view class]), NSStringFromCGRect(view.frame));
         if ([NSStringFromClass([view class]) isEqualToString:@"UIView"]) {
             
             view.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.2];

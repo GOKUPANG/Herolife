@@ -785,8 +785,7 @@
 										  
 										  [SVProgressTool hr_dismiss];
 										  HRTabBarViewController *tabBarVC = [[HRTabBarViewController alloc] init];
-										  [self presentViewController:tabBarVC animated:NO completion:nil];
-//										  [self.navigationController pushViewController:tabBarVC animated:YES];
+                                          [UIApplication sharedApplication].keyWindow.rootViewController = tabBarVC;
 										  
 									  }
 								  }];
@@ -804,10 +803,6 @@
 	parameters[@"pass2"] = muString;
 	parameters[@"field_phone[und][0][value]"] = @"18000000000";
 	DDLogWarn(@"-----测试-----parameters-000-----%@",parameters);
-//	parameters[@"name"] = @"4EB2618888E358E8B777B0C03CC54BDE";
-//	parameters[@"mail"] = @"4EB2618888E358E8B777B0C03CC54BDE@gzhuarui.cn";
-//	parameters[@"pass"] =@"AHZ1VERZS2p9DRFkAX8jXyleAgE7BXdJW3V3YQE2DBw=";
-//	parameters[@"pass2"] = @"AHZ1VERZS2p9DRFkAX8jXyleAgE7BXdJW3V3YQE2DBw=";
 
 	
 	[HRHTTPTool hr_postHttpWithURL:HRHTTP_UserRegister_URL parameters:parameters responseDict:^(id array, NSError *error) {
@@ -827,7 +822,9 @@
 												  [SVProgressTool hr_dismiss];
 												  HRTabBarViewController *tabBarVC = [[HRTabBarViewController alloc] init];
 //												  [self.navigationController pushViewController:tabBarVC animated:YES];
-												  [self presentViewController:tabBarVC animated:NO completion:nil];
+//												  [self presentViewController:tabBarVC animated:NO completion:nil];
+                                                  
+                                                  [UIApplication sharedApplication].keyWindow.rootViewController = tabBarVC;
 											  }
 										  }];
 			

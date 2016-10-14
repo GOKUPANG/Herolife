@@ -389,6 +389,12 @@ static BOOL isOvertime = NO;
     
     NSString * userName  = [kUserDefault objectForKey:kDefaultsUserName];
     
+    NSString *qqName;
+    //QQ头像
+    qqName = [kUserDefault objectForKey:kNSUserDefaultsNickname];
+    if (qqName.length > 0) {
+        userName = @"当前用户为QQ用户";
+    }
     
     headLabel.text = userName ;
     

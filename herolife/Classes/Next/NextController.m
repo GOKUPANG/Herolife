@@ -138,7 +138,14 @@
 	UILabel *promptLabel = [[UILabel alloc] init];
 	promptLabel.text = @"接通电源，长按WiFi盒子set键5秒，直到指示灯闪烁";
 	promptLabel.textColor = [UIColor whiteColor];
-	promptLabel.font = [UIFont systemFontOfSize:14];
+    if (HRUIScreenH < 667) {
+        
+        promptLabel.font = [UIFont systemFontOfSize:12];
+    }else
+    {
+        
+        promptLabel.font = [UIFont systemFontOfSize:14];
+    }
 	[self.view addSubview:promptLabel];
 	self.promptLabel = promptLabel;
 	

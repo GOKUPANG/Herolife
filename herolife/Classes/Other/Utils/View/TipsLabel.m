@@ -22,9 +22,14 @@
 		self.opaque = false;
 		self.hidden = true;
 		self.textColor = [UIColor whiteColor];
-		self.font = [UIFont systemFontOfSize:15];
+		self.font = [UIFont systemFontOfSize:17];
 		self.textAlignment = NSTextAlignmentCenter;
-		self.backgroundColor = [UIColor colorWithRed:244/255.0 green:162/255.0 blue:0/255.0 alpha:1];
+        
+        self.layer.cornerRadius = 5;
+        self.layer.masksToBounds = YES;
+        
+        self.backgroundColor = [UIColor blackColor];
+        
 		self.hr_height = frame.size.height;
 	}
 	return self;

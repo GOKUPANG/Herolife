@@ -186,6 +186,9 @@ static int const HRTimeDuration = 601;
 //	lineImage.frame = rectLine;
 	lineImage.frame = CGRectMake(0, CGRectGetMaxY(phoneImage.frame) + 25 , self.view.hr_width , 400);
 //	[lineImage sizeToFit];
+    
+   // lineImage . backgroundColor = [UIColor greenColor];
+    
 	
 	[self.view addSubview:lineImage];
 	
@@ -225,7 +228,7 @@ static int const HRTimeDuration = 601;
     [self.view addSubview:infoLabel];
     
     infoLabel.sd_layout
-    .topSpaceToView(circleView,60.0 *HRCommonScreenH)
+    .heightIs(80)
     .leftSpaceToView(self.view,46.0 *HRCommonScreenW )
     .rightSpaceToView(self.view , 40.0 *HRCommonScreenW)
     .bottomSpaceToView(ConfirmBtn,20.0 *HRCommonScreenH);

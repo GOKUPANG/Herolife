@@ -404,7 +404,12 @@ static BOOL isShowOverMenu = NO;
 - (void)receviedWithNotOnline
 {
 	isShowOverMenu = YES;
-	[SVProgressTool hr_showErrorWithStatus:@"目标设备不在线!"];
+    NSLog(@"目标设备不在线!");
+    [SVProgressTool hr_dismiss];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        
+        [SVProgressTool hr_showErrorWithStatus:@"目标设备不在线!"];
+    });
 }
 
 #pragma mark - 添加和修改授权弹窗UI设置
@@ -938,6 +943,8 @@ static BOOL isShowOverMenu = NO;
              {
                  //临时授权的删除
                  NSString *url = [NSString stringWithFormat:@"%@%@", HRAPI_UpdateDoorPsw_URL, listModel.did];
+                 
+                 [SVProgressTool hr_showWithStatus:@"正在删除授权..."];
                  [HRHTTPTool hr_DeleteHttpWithURL:url parameters:nil responseDict:^(id array, NSError *error) {
                      if (error) {
                          [ErrorCodeManager showError:error];
@@ -958,9 +965,21 @@ static BOOL isShowOverMenu = NO;
                              [mu addObject:model];
                          }
                          app.autherArray = mu;
-                         [self.listTableView reloadData];
                      }
                      
+                     
+                     [_dataArray removeAllObjects];
+                     for (int i = 0; i < self.deviceAutherArray.count; i++)
+                     {
+                         NSMutableDictionary *dic = [[NSMutableDictionary alloc]init];
+                         [dic setValue:@"55555" forKey:@"detail"];
+                         [_dataArray addObject:dic];
+                         
+                     }
+                     
+                     //删除之后让openedSection重新为空
+                     self.openedSection = NSNotFound;
+                     [self.listTableView reloadData];
                      //让弹框消失
                      
                      [self dismissCustomAlertView];
@@ -1123,8 +1142,6 @@ static BOOL isShowOverMenu = NO;
 		DeviceAutherModel *mode = self.deviceAutherArray[selectIndexPath];
 		NSString *dstUUId = mode.uuid;
 		NSString *did = mode.did;
-//		NSString *dstUUId = self.listModel.uuid;
-//		NSString *did = self.listModel.did;
 		
 		
 		NSString *str = [NSString stringWithSocketDelegateFamilyLockWithDstUuid:dstUUId lockUUID:dstUUId did:did];
@@ -1195,7 +1212,7 @@ static BOOL isShowOverMenu = NO;
 	
 	[self.appDelegate connectToHost];
 	
-	NSString *uerName = [kUserDefault objectForKey:kDefaultsUserName];
+	NSString *uerName = [kUserDefault objectForKey:kDefaultsPassWord];
 	
 	//qq用户
 	NSString *qqName = [kUserDefault objectForKey:kNSUserDefaultsNickname];
@@ -1215,7 +1232,8 @@ static BOOL isShowOverMenu = NO;
 		}
 	}
 	
-	
+    
+    [SVProgressTool hr_showWithStatus:@"正在修改授权用户..."];
 	//在这里发送添加家人账号的socket请求
 	NSArray *permit = @[self.remoteOnLock,self.recordQuery,@"none",@"none"];
 	DeviceAutherModel *model = self.deviceAutherArray[selectIndexPath];
@@ -1223,10 +1241,11 @@ static BOOL isShowOverMenu = NO;
 	NSString *authorizedUser = self.AddPswNumberField.text;
 	NSArray *person = @[@"none", authorizedUser];
 	NSString *str = [NSString stringWithSocketModifyFamilyLockWithlockUUID:self.listModel.uuid did:model.did person:person permit:permit];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        
+        [self.appDelegate sendMessageWithString:str];
+    });
 	
-	[self.appDelegate sendMessageWithString:str];
-	
-	[SVProgressTool hr_showWithStatus:@"正在修改授权用户..."];
 	// 设置超时
 	isOvertime = NO;
 	isShowOverMenu = NO;

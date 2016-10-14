@@ -38,7 +38,7 @@
 #import "HRRefreshHeader.h"
 #import "MJRefresh.h"
 #import "DoorLockModel.h"
-
+#import "TipsLabel.h"
 
 
 #define HRNavigationBarFrame self.navigationController.navigationBar.bounds
@@ -134,6 +134,8 @@
 @property(nonatomic, strong) NSMutableArray *queryArray;
 
 
+@property(nonatomic, strong) TipsLabel *tipsLabel;
+
 @end
 
 @implementation DeviceListController
@@ -146,13 +148,12 @@ NSInteger const timerDuration = 60.0;
 	if (!_onLineLabel) {
 		
 		UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(UIScreenW *0.28, UIScreenH * 0.8, UIScreenW - UIScreenW *0.56, 32)];
-		label.text = @"目标设备不在线!";
+		label.text = @"";
 		label.textAlignment = NSTextAlignmentCenter;
 		label.font = [UIFont systemFontOfSize:17];
 		label.textColor = [UIColor whiteColor];
 		label.layer.cornerRadius = 5;
 		label.layer.masksToBounds = YES;
-//		label.backgroundColor = [UIColor themeColor];
 		
 		label.backgroundColor = [UIColor blackColor];
 		_onLineLabel = label;
@@ -161,6 +162,15 @@ NSInteger const timerDuration = 60.0;
 		[[UIApplication sharedApplication].keyWindow addSubview:label];
 	}
 	return _onLineLabel;
+}
+- (TipsLabel *)tipsLabel
+{
+    if (!_tipsLabel) {
+        _tipsLabel = [[TipsLabel alloc] initWithFrame:CGRectMake(UIScreenW *0.28, UIScreenH * 0.8, UIScreenW - UIScreenW *0.56, 32)];
+        
+        [[UIApplication sharedApplication].keyWindow addSubview:_tipsLabel];
+    }
+    return _tipsLabel;
 }
 - (NSMutableArray *)queryArray
 {
@@ -314,24 +324,9 @@ static BOOL isShowOverMenu = NO;
 {
 	isShowOverMenu = YES;
 	[SVProgressTool hr_dismiss];
-//	[SVProgressTool hr_showErrorWithStatus:@"目标设备不在线!"];
-	self.onLineLabel.backgroundColor = [UIColor blackColor];
-	[UIView animateWithDuration:0.01 animations:^{
-		self.onLineLabel.alpha = 0.0;
-	} completion:^(BOOL finished) {
-		[UIView animateWithDuration:0.5 animations:^{
-			self.onLineLabel.alpha = 1.0;
-		} completion:^(BOOL finished) {
-			[UIView animateWithDuration:0.5 delay:1.5 options:UIViewAnimationOptionAllowUserInteraction animations:^{
-				self.onLineLabel.alpha = 0.0;
-				
-			} completion:^(BOOL finished) {
-				
-				[self.onLineLabel removeFromSuperview];
-			}];
-		}];
-	}];
-	
+    
+//    [self showOnLineLabelWithTitle:@"目标设备不在线!"];
+    [self.tipsLabel showText:@"目标设备不在线!" duration:2];
 	self.lastOptionTime = @"";
 		NSString *uuid = self.currentStateModel.uuid;
 		
@@ -366,6 +361,32 @@ static BOOL isShowOverMenu = NO;
 		[self.tableView reloadData];
 		[self.collectionView reloadData];
 	
+}
+#pragma mark - 目标不在线弹框Label
+- (void)showOnLineLabelWithTitle:(NSString *)title
+{
+    self.onLineLabel.text = title;
+    self.onLineLabel.hidden = YES;
+    [UIView animateWithDuration:0.01 animations:^{
+        self.onLineLabel.alpha = 0.0;
+//        [self.onLineLabel removeFromSuperview];
+    } completion:^(BOOL finished) {
+        
+        self.onLineLabel.hidden = NO;
+        [UIView animateWithDuration:0.5 animations:^{
+            self.onLineLabel.alpha = 1.0;
+        } completion:^(BOOL finished) {
+            [UIView animateWithDuration:0.5 delay:1.5 options:UIViewAnimationOptionAllowUserInteraction animations:^{
+                self.onLineLabel.alpha = 0.0;
+                
+            } completion:^(BOOL finished) {
+                
+                self.onLineLabel.hidden = YES;
+                [self.onLineLabel removeFromSuperview];
+            }];
+        }];
+    }];
+    
 }
 // 921修改
 - (void)receiveDeviceState:(NSNotification *)note
@@ -606,7 +627,7 @@ static BOOL isShowOverMenu = NO;
 	[self.rightImageView mas_makeConstraints:^(MASConstraintMaker *make) {
 		make.right.equalTo(self.listButton).offset(- 10);
 		make.centerY.equalTo(self.listButton);
-		make.height.mas_equalTo(10);
+		make.height.mas_equalTo(8);
 		make.left.equalTo(self.listLabel.mas_right).offset(8);
 	}];
 	
@@ -855,7 +876,12 @@ static BOOL isShowOverMenu = NO;
 					return ;
 				}
 			}
-			
+            if (!self.currentStateModel) {
+                
+//                [self showOnLineLabelWithTitle:@"未添加门锁"];
+                [self.tipsLabel showText:@"未添加门锁" duration:2.0];
+                return;
+            }
 			OLC.listModel = self.currentStateModel;
 			[self.navigationController pushViewController:OLC animated:YES];
 			
@@ -888,7 +914,11 @@ static BOOL isShowOverMenu = NO;
 				}
 			}
 			
-			
+            if (!self.currentStateModel) {
+                
+                [self.tipsLabel showText:@"未添加门锁" duration:2.0];
+                return;
+            }
 			DLC.listModel = self.currentStateModel;
 			[self.navigationController pushViewController:DLC animated:YES];
 			
@@ -919,7 +949,11 @@ static BOOL isShowOverMenu = NO;
 				}
 			}
 			
-			
+            if (!self.currentStateModel) {
+                
+                [self.tipsLabel showText:@"未添加门锁" duration:2.0];
+                return;
+            }
 			PSWC.listModel = self.currentStateModel;
 			
 			
@@ -950,7 +984,11 @@ static BOOL isShowOverMenu = NO;
 				}
 			}
 			
-			
+            if (!self.currentStateModel) {
+                
+                [self.tipsLabel showText:@"未添加门锁" duration:2.0];
+                return;
+            }
 			SQC.listModel = self.currentStateModel;
 			
 			[self.navigationController pushViewController:SQC animated:YES];
@@ -1535,7 +1573,6 @@ static BOOL isShowOverMenu = NO;
             NSLog(@"第%d次", i);
         }
         dispatch_group_notify(serviceGroup, dispatch_get_global_queue(0, 0), ^{
-            
             
             NSString *did = self.showLockModel.did;
             NSString *url = [NSString stringWithFormat:@"%@%@", HRAPI_UpdateDoorPsw_URL, did];

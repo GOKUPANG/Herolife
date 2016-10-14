@@ -154,23 +154,26 @@
 	self.qrButton.selected = NO;
 	self.manualButton.selected = YES;
 	UINavigationController *nav = (UINavigationController *)[NSObject activityViewController];
-//	UIViewController *VC = nav.childViewControllers.lastObject;
-	
 	for (UIViewController *VC in nav.childViewControllers) {
 		
 		DDLogInfo(@"NSStringFromClass%@", NSStringFromClass([VC class]));
 		
 		if ([NSStringFromClass([VC class]) isEqualToString:@"HRNavigationViewController"]) {
 			UINavigationController *navi = (UINavigationController *)VC;
-			UIViewController *fistVC = navi.childViewControllers.lastObject;
+            for (UIViewController *fistVC in navi.childViewControllers) {
+            
 			
-			DDLogInfo(@"NSStringFromClass%@", NSStringFromClass([fistVC class]));
+			DDLogInfo(@"HRNavigationViewController.subviews%@", NSStringFromClass([fistVC class]));
 			if ([NSStringFromClass([fistVC class]) isEqualToString:@"AddNewDeviceViewController"]) {
-				
+                
+                AddNewDeviceViewController *addNew = (AddNewDeviceViewController *)fistVC;
 				ManualController *manulVC = [[ManualController alloc] init];
 				
-				[fistVC.navigationController pushViewController:manulVC animated:NO];
+				[addNew.navigationController pushViewController:manulVC animated:NO];
+                return;
 			}
+            
+            }
 		}
 	}
 	
