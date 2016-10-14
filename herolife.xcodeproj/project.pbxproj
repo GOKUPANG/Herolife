@@ -57,6 +57,7 @@
 		D1147BCC1DB0B6C500ADEECC /* DeviceListController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1147BCB1DB0B6C500ADEECC /* DeviceListController.m */; };
 		D1147BDA1DB0B80200ADEECC /* GTMBase64.m in Sources */ = {isa = PBXBuildFile; fileRef = D1147BD71DB0B80200ADEECC /* GTMBase64.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		D1147BDB1DB0B80200ADEECC /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = D1147BD91DB0B80200ADEECC /* README.md */; };
+		D1147BDF1DB0E46400ADEECC /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D1147BDE1DB0E46400ADEECC /* AppDelegate.m */; };
 		D1352D641D9E0ECB003A83AB /* AddNewDeviceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1352D4A1D9E0ECB003A83AB /* AddNewDeviceViewController.m */; };
 		D1352D651D9E0ECB003A83AB /* backWhite@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D1352D4B1D9E0ECB003A83AB /* backWhite@2x.png */; };
 		D1352D661D9E0ECB003A83AB /* CreateXiaoRui.m in Sources */ = {isa = PBXBuildFile; fileRef = D1352D4D1D9E0ECB003A83AB /* CreateXiaoRui.m */; };
@@ -80,7 +81,6 @@
 		D1352D7A1D9E0F5A003A83AB /* QRTools.m in Sources */ = {isa = PBXBuildFile; fileRef = D1352D791D9E0F5A003A83AB /* QRTools.m */; };
 		D1352D7E1D9E1065003A83AB /* NextController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1352D7D1D9E1065003A83AB /* NextController.m */; };
 		D1352D801D9E1180003A83AB /* WaitController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1352D7F1D9E1180003A83AB /* WaitController.m */; };
-		D1352D831D9E194C003A83AB /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D1352D821D9E194C003A83AB /* AppDelegate.m */; };
 		D158E5AF1DAB36EA000DB8C9 /* UMMobClick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D158E5AE1DAB36EA000DB8C9 /* UMMobClick.framework */; };
 		D158E5B11DAB37FA000DB8C9 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D158E5B01DAB37FA000DB8C9 /* CoreTelephony.framework */; };
 		D17076761D94D6BB0027C46B /* LoginController.m in Sources */ = {isa = PBXBuildFile; fileRef = D17076751D94D6BB0027C46B /* LoginController.m */; };
@@ -328,6 +328,7 @@
 		D1147BD71DB0B80200ADEECC /* GTMBase64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTMBase64.m; sourceTree = "<group>"; };
 		D1147BD81DB0B80200ADEECC /* GTMDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMDefines.h; sourceTree = "<group>"; };
 		D1147BD91DB0B80200ADEECC /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		D1147BDE1DB0E46400ADEECC /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		D1352D491D9E0ECB003A83AB /* AddNewDeviceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddNewDeviceViewController.h; sourceTree = "<group>"; };
 		D1352D4A1D9E0ECB003A83AB /* AddNewDeviceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddNewDeviceViewController.m; sourceTree = "<group>"; };
 		D1352D4B1D9E0ECB003A83AB /* backWhite@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "backWhite@2x.png"; sourceTree = "<group>"; };
@@ -360,7 +361,6 @@
 		D1352D7D1D9E1065003A83AB /* NextController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NextController.m; sourceTree = "<group>"; };
 		D1352D7F1D9E1180003A83AB /* WaitController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WaitController.m; sourceTree = "<group>"; };
 		D1352D811D9E194C003A83AB /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		D1352D821D9E194C003A83AB /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		D158E5AE1DAB36EA000DB8C9 /* UMMobClick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = UMMobClick.framework; sourceTree = "<group>"; };
 		D158E5B01DAB37FA000DB8C9 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		D17076751D94D6BB0027C46B /* LoginController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginController.m; sourceTree = "<group>"; };
@@ -1038,7 +1038,7 @@
 			isa = PBXGroup;
 			children = (
 				D1352D811D9E194C003A83AB /* AppDelegate.h */,
-				D1352D821D9E194C003A83AB /* AppDelegate.m */,
+				D1147BDE1DB0E46400ADEECC /* AppDelegate.m */,
 				D1A7DDC81D811BB900D051B0 /* HRConst.h */,
 				D1A7DDC91D811BB900D051B0 /* HRConst.m */,
 				D1A7DBFD1D8117DD00D051B0 /* Other */,
@@ -1687,6 +1687,7 @@
 					D17CF0EB1D6567E7007C95DD = {
 						CreatedOnToolsVersion = 7.3;
 						DevelopmentTeam = K3Y96N97ET;
+						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.Push = {
 								enabled = 1;
@@ -1886,6 +1887,7 @@
 				D1A7DDBD1D8117DD00D051B0 /* WIFIListModel.m in Sources */,
 				D1147BDB1DB0B80200ADEECC /* README.md in Sources */,
 				D1A7DD711D8117DD00D051B0 /* MKAnnotationView+WebCache.m in Sources */,
+				D1147BDF1DB0E46400ADEECC /* AppDelegate.m in Sources */,
 				D1A7DDA81D8117DD00D051B0 /* ErrorCodeManager.m in Sources */,
 				1868B8F71D76DDD400D19386 /* BackPicSetController.m in Sources */,
 				AAA8A9BA1D8CE9D900ABA020 /* ViewOfCustomerTableViewCell.m in Sources */,
@@ -1932,7 +1934,6 @@
 				D1352D6E1D9E0ECB003A83AB /* QRCodeController.m in Sources */,
 				D1A7DD9F1D8117DD00D051B0 /* HRTempHumid.m in Sources */,
 				D1A7DDA61D8117DD00D051B0 /* Push.m in Sources */,
-				D1352D831D9E194C003A83AB /* AppDelegate.m in Sources */,
 				D1A7DD7D1D8117DD00D051B0 /* UIImage+WebP.m in Sources */,
 				D1A7DD7E1D8117DD00D051B0 /* UIImageView+HighlightedWebCache.m in Sources */,
 				18C697981D7462B9004DA2B1 /* DoorRecordCell.m in Sources */,
@@ -2414,6 +2415,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.huarui.herolife;
 				PRODUCT_NAME = HEROLIFE;
 				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				USER_HEADER_SEARCH_PATHS = ./ShareSDK/ShareSDK.framework/Headers/ShareSDK.h;
 				USE_HEADERMAP = YES;
 			};
@@ -2696,6 +2698,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.huarui.herolife;
 				PRODUCT_NAME = HEROLIFE;
 				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				USER_HEADER_SEARCH_PATHS = ./ShareSDK/ShareSDK.framework/Headers/ShareSDK.h;
 				USE_HEADERMAP = YES;
 			};

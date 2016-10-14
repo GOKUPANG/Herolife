@@ -235,7 +235,7 @@
     
     NSString * pass = [kUserDefault objectForKey:kDefaultsPassWord];
     
-    NSLog(@"原来的密码是%@",pass);
+   
     
     
     
@@ -315,7 +315,7 @@
     }];
     
     
-    NSLog(@"已经修改了密码，么么哒");
+   // NSLog(@"已经修改了密码，么么哒");
     
 }
 

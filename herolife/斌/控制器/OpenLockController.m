@@ -586,6 +586,7 @@ static BOOL isOvertime = NO;
      [SVProgressTool hr_showWithStatus:@"正在开锁"];
     
     
+   // isOvertime = NO;
     _timer = [NSTimer scheduledTimerWithTimeInterval:6.0 target:self selector:@selector(startTimer) userInfo:nil repeats:NO];
     
     
@@ -611,9 +612,9 @@ static BOOL isOvertime = NO;
         
         [_timer invalidate];
         
-        isOvertime = NO;
     }
     
+    isOvertime = NO ;
     
     
    

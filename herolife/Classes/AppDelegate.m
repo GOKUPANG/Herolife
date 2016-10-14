@@ -78,7 +78,7 @@ static int const HRTimeDuration = 3;
 static NSInteger disconnectCount = 0;
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
 	//友盟统计
-//	[self addUmeng];
+	[self addUmeng];
 	//显示界面
 	[self setupWindow];
 	
@@ -181,8 +181,38 @@ static NSInteger disconnectCount = 0;
 {
     //App在后台的时候，点击推送信息，进入App后执行的 回调方法
     //获取通知数据
-    NSDictionary *userInfo = response.notification.request.content.userInfo;
+   // NSDictionary *userInfo = response.notification.request.content.userInfo;
     
+    //建立UDP连接
+    [self setupUDPSocket];
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [SVProgressTool hr_showWithStatus:@"正在加载数据, 请稍后..."];
+        
+        // 启动定时器
+        isOverTime = NO;
+        [_overTimer invalidate];
+        //十秒之后如果没有数据就提示超时
+        _overTimer = [NSTimer scheduledTimerWithTimeInterval:30.0 target:self selector:@selector(startTimer) userInfo:nil repeats:NO];
+    });
+    
+    if([response.notification.request.trigger isKindOfClass:[UNPushNotificationTrigger class]]) {
+        
+        
+        // NSLog(@"收到远程通知");
+        
+    }
+    
+    else
+    {
+        //  NSLog(@"收到本地通知");
+        
+    }
+
+    
+
+    completionHandler();
+
 }
 - (void)addUmeng
 {

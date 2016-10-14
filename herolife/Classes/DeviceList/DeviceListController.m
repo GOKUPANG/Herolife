@@ -1228,13 +1228,13 @@ static BOOL isShowOverMenu = NO;
 		}
 		weakSelf.appDelegate.homeArray = weakSelf.homeArray;
 		DDLogWarn(@"---------weakSelf.appDelegate.homeArray%@count%lu--------", weakSelf.appDelegate.homeArray, (unsigned long)weakSelf.appDelegate.homeArray.count);
-		//显示占位图片
-		[self setUp3DEptPictureWithHomeArray:weakSelf.homeArray];
 		
 		//判断当前的mode是否为空, 如果为空就让他等于数组的第一个值, 如果不为空就让他等于当前值, 刷新是刷新的当前的数组个数和状态
 		if (self.currentStateModel.uuid.length < 1) {
 			
-			weakSelf.currentStateModel = weakSelf.homeArray.firstObject;
+            weakSelf.currentStateModel = weakSelf.homeArray.firstObject;
+            //显示占位图片
+            [self setUp3DEptPictureWithHomeArray:weakSelf.homeArray];
 		}else
 		{
             int index = 0;
@@ -1249,6 +1249,8 @@ static BOOL isShowOverMenu = NO;
             }else
             {
                 weakSelf.currentStateModel = weakSelf.homeArray.firstObject;
+                //显示占位图片
+                [self setUp3DEptPictureWithHomeArray:weakSelf.homeArray];
             }
 		}
 		
@@ -1487,14 +1489,28 @@ static BOOL isShowOverMenu = NO;
 		if (self.currentStateModel.uuid.length < 1) {
 			
 			weakSelf.currentStateModel = weakSelf.homeArray.firstObject;
+            
+            //显示占位图片
+            [self setUp3DEptPictureWithHomeArray:weakSelf.homeArray];
 		}else
 		{
+            int index = 0;
 			for (DeviceListModel *model in weakSelf.homeArray) {
 				if ([model.uuid isEqualToString:weakSelf.currentStateModel.uuid]) {//取出和当前的UUID一样的这条数据覆盖掉,currentStateModel数据
 					weakSelf.currentStateModel = model;
+                    index++;
 					
 				}
 			}
+            
+            if (index) {
+                
+            }else
+            {
+                weakSelf.currentStateModel = weakSelf.homeArray.firstObject;
+                //显示占位图片
+                [self setUp3DEptPictureWithHomeArray:weakSelf.homeArray];
+            }
 		}
         
         //重新设置列表按钮的图片和文字
@@ -1514,8 +1530,6 @@ static BOOL isShowOverMenu = NO;
             weakSelf.listLabel.text = @"";
             weakSelf.listImageView.image = [UIImage imageNamed:@""];
         }
-		//显示占位图片
-		[self setUp3DEptPictureWithHomeArray:weakSelf.homeArray];
 		
 		[weakSelf.tableView reloadData];
 		[weakSelf.collectionView reloadData];
