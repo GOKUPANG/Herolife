@@ -36,7 +36,8 @@
 
 /// 定时60s查询设备状态
 + (NSString *)stringWithSocketQuaryDeviceOnLineWithDst:(NSMutableDictionary *)dst;
-
+//设备令牌可能没有的情况
++ (NSString *)stringWithSocketQuaryDeviceOnLineWithDst:(NSMutableDictionary *)dst ramStr:(NSString *)ramStr;
 /// 添加授权给家人 的锁
 + (NSString *)stringWithSocketAddFamilyLockWithDst:(NSMutableDictionary *)dst lockUUID:(NSString *)lockUUID admin:(NSString *)admin person:(NSArray *)person permit:(NSArray *)permit;
 #pragma mark - 取消别人授权给我的

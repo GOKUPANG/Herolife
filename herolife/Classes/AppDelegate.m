@@ -91,6 +91,11 @@ static NSInteger disconnectCount = 0;
         [kUserDefault setObject:UUID forKey:kUserDefaultDeviceUUID];
         [kUserDefault synchronize];
     }
+    
+    //初始化设备令牌值
+    [kUserDefault setObject:@"" forKey:kUserDefaultUUID];
+    [kUserDefault synchronize];
+    
 	/******* 日志 ********/
 #ifdef DEBUG
 	[self setLogger];

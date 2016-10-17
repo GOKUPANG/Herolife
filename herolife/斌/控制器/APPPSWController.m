@@ -11,7 +11,7 @@
 /** 获取门锁密码编号请求网址*/
 //#define HRAPI_GetDoorPsw_URL @"http://www.gzhuarui.cn/?q=huaruiapi/herolife-dev-hrsc-ul&uuid=%@"
 
-#define HRAPI_GetDoorPsw_URL @"http://183.63.118.58:9885/hrctest/?q=huaruiapi/herolife-dev-hrsc-ul&uuid=%@"
+#define HRAPI_GetDoorPsw_URL @"http://183.63.118.58:9885/hrctest/?q=huaruiapi/herolife-dev-hrsc-ul&uuid=%@&user=%@"
 
 //#define HRAPI_DeleteDoorPsw_URL @"http://www.gzhuarui.cn/?q=huaruiapi/node/%@"
 
@@ -31,6 +31,8 @@
 #import "DoorPswModel.h"
 #import <AFNetworking.h>
 #import "DoorPswModel.h"
+#import "HRRefreshHeader.h"
+
 
 
 
@@ -185,7 +187,6 @@
     
     
     
-    NSLog(@"sb");
     
     
     
@@ -227,16 +228,85 @@
     NSLog(@"数据源的长度%ld",_dataArray.count);
     
     /** 获取门锁密码信息*/
-    [self GetDoorMessageWithHttp];
+  //  [self GetDoorMessageWithHttp];
     
     
     [self maketableViewUI];
     
     
-    
+   	//集成刷新
+    [self setupRefresh];
+
   
    }
 
+
+
+#pragma mark - 下拉刷新功能  
+
+-(void)setupRefresh
+{
+    // header - 下拉刷新
+    self.tableView.mj_header = [HRRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(getHttpRequset)];
+    // 进入刷新状态
+    [self.tableView.mj_header beginRefreshing];
+}
+
+
+#pragma mark - 下拉刷新门锁
+-(void)getHttpRequset
+{
+    NSString *  DoorUUID  = self.listModel.uuid;
+    
+    NSString * userName = [kUserDefault objectForKey:kDefaultsUserName];
+    
+    NSLog(@"用户名%@",userName);
+    
+    
+    
+    NSString *urlStr=[NSString stringWithFormat:HRAPI_GetDoorPsw_URL,DoorUUID,userName];
+    
+    HRWeakSelf
+    [HRHTTPTool hr_getHttpWithURL:urlStr parameters:nil responseDict:^(id responseObject, NSError *error) {
+        [self.tableView.mj_header endRefreshing];
+        if (error) {
+            [ErrorCodeManager showError:error];
+            return ;
+        }
+        
+        DDLogWarn(@"记录查询HTTP请求%@", responseObject);
+        //如果responseObject不是数组类型就不是我们想要的数据，应该过滤掉
+        if (![responseObject isKindOfClass:[NSArray class]]) {
+            //			[weakSelf.queryArray removeAllObjects];
+            DDLogDebug(@"responseObject不是NSArray");
+            return;
+        }
+        //去除服务器发过来的数据里没有值的情况
+        if (((NSArray*)responseObject).count < 1 ) {
+            DDLogDebug(@"responseObject count == 0");
+            return;
+        }
+        
+        		[weakSelf.dataArray removeAllObjects];
+        NSArray *responseArr = (NSArray*)responseObject;
+        
+        for (NSDictionary *Doordict in responseArr) {
+            DoorPswModel *model = [DoorPswModel new];
+            NSArray *PersonArray = Doordict[@"person"];
+            
+            model.PswName = PersonArray[0];
+            model.PswNumber = PersonArray[1];
+            model.did = Doordict[@"did"];
+            
+            
+            
+            [weakSelf.dataArray addObject:model];
+        }
+        
+        [self.tableView reloadData];
+    }];
+
+}
 
 
 #pragma mark -添加密码编号信息弹窗  
@@ -839,6 +909,7 @@
 
 
 
+#pragma mark - 删除密码
 -(void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
@@ -863,6 +934,12 @@
            
            NSLog(@"删除成功");
            
+           [self.dataArray removeObjectAtIndex:indexPath.row];
+           [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationMiddle];
+           [SVProgressTool hr_showSuccessWithStatus:@"删除成功"];
+           
+
+           
             
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
             
@@ -870,18 +947,13 @@
          
             NSLog(@"%@",error);
             
+            [SVProgressTool hr_showErrorWithStatus:@"删除失败"];
+            
+            
             NSLog(@"删除失败");
             
             
         }];
-        
-
-        
-        
-        
-        [self.dataArray removeObjectAtIndex:indexPath.row];
-         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationMiddle];
-
         
     }
 }

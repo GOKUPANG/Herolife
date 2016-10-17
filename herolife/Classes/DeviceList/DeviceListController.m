@@ -109,6 +109,8 @@
 @property(nonatomic, strong) NSMutableArray *homeArray;
 /**  */
 @property(nonatomic, strong) NSTimer *timer;
+/**获取设备令牌的定时器  */
+@property(nonatomic, strong) NSTimer *tokenTimer;
 /** <#name#> */
 @property(nonatomic, strong) DeviceListModel *currentStateModel;
 
@@ -144,6 +146,8 @@
 
 
 @property(nonatomic, strong) TipsLabel *tipsLabel;
+/** 电量 */
+@property(nonatomic, copy) NSString *level;
 
 @end
 
@@ -333,6 +337,8 @@ static BOOL isOvertime = NO;
 static BOOL isShowOverMenu = NO;
 - (void)receviedWithNotOnline
 {
+    
+    self.level = @"";
 	isShowOverMenu = YES;
 	[SVProgressTool hr_dismiss];
     
@@ -418,6 +424,7 @@ static BOOL isShowOverMenu = NO;
 				model.state = tcpModel.state;
 				model.online = tcpModel.online;
 				model.level = tcpModel.level;
+                self.level = tcpModel.level;
 				
 			}
 			// 重新给锁添加 数组图片
@@ -784,6 +791,33 @@ static BOOL isShowOverMenu = NO;
 				
 			}
 			cell.leftLabel.text = @"手机开锁";
+            
+            
+            if (!httpRequsetCount) {
+                
+                
+                if (self.currentStateModel.level.length < 0.5) {
+                    
+                    cell.rightLabel.text = @"";
+                }else
+                {
+                    
+                    cell.rightLabel.text = [NSString stringWithFormat:@"剩余电量%@", self.currentStateModel.level];;
+                }
+                
+                }else
+                {
+                    if (self.level.length < 0.5) {
+                        
+                        cell.rightLabel.text = @"";
+                    }else
+                    {
+                        
+                        cell.rightLabel.text = [NSString stringWithFormat:@"剩余电量%@", self.currentStateModel.level];;
+                    }
+                }
+            
+            
 			if (self.currentStateModel.level.length < 0.5) {
 //				cell.minLabel.text =  @"";
 //				cell.rightLabel.text = self.lastOptionTime;
@@ -870,6 +904,11 @@ static BOOL isShowOverMenu = NO;
 			OpenLockController * OLC = [OpenLockController new];
 			
 			// 直接
+//            if ([self.currentStateModel.state isEqualToString:@"5"]) {
+//                [SVProgressTool hr_showErrorWithStatus:@"该锁已关闭远程开锁功能, 请在wifi盒子上打开远程开锁开关后重试!"];
+//                return;
+//                
+//            }
 			for (DeviceAutherModel *auther in self.autherPersonArray) {
     
 				if ([auther.uuid isEqualToString: self.currentStateModel.uuid]) {
@@ -1033,7 +1072,7 @@ static BOOL isShowOverMenu = NO;
 #pragma mark - scrollView delegate
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-	DDLogInfo(@"%f", scrollView.contentOffset.x);
+//	DDLogInfo(@"%f", scrollView.contentOffset.x);
 	
 }
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
@@ -1137,28 +1176,64 @@ static BOOL isShowOverMenu = NO;
 	
 	[appDelegate connectToHost];
 	self.appDelegate = appDelegate;
-	
-	NSString *passWold = [[NSUserDefaults standardUserDefaults] objectForKey:kDefaultsPassWord];
-	NSString *userName = [[NSUserDefaults standardUserDefaults] objectForKey:kDefaultsUserName];
-	DDLogWarn(@"%@", userName);
-	NSMutableDictionary *bodyDict = [NSMutableDictionary dictionary];
-	bodyDict[@"user"] = userName;
-	bodyDict[@"pass"] = passWold;
-	
-	// 设备令牌可能还没有,需要延时 一下
-	dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-		
+    
+    
+    NSString *passWold = [[NSUserDefaults standardUserDefaults] objectForKey:kDefaultsPassWord];
+    NSString *userName = [[NSUserDefaults standardUserDefaults] objectForKey:kDefaultsUserName];
+    NSMutableDictionary *bodyDict = [NSMutableDictionary dictionary];
+    bodyDict[@"user"] = userName;
+    bodyDict[@"pass"] = passWold;
+    
+    
+    // 设备令牌可能还没有,需要延时 一下
+    
+    [self addTokenTimer];
+}
+#pragma mark - token定时器相关
+- (void)addTokenTimer
+{
+    [self.tokenTimer invalidate];
+    
+    self.tokenTimer = [NSTimer scheduledTimerWithTimeInterval:0.01 target:self selector:@selector(updateTokenTimer) userInfo:nil repeats:YES];
+}
+
+
+static int tokenTimerCount = 300;
+- (void)updateTokenTimer
+{
+    tokenTimerCount--;
+    NSString *UUID = [kUserDefault objectForKey:kUserDefaultUUID];
+    if (UUID.length < 1) {
+        UUID = [kUserDefault objectForKey:kUserDefaultUUID];
+    }else
+    {
+        
+        UUID = [kUserDefault objectForKey:kUserDefaultDeviceUUID];
+        NSString *passWold = [[NSUserDefaults standardUserDefaults] objectForKey:kDefaultsPassWord];
+        NSString *userName = [[NSUserDefaults standardUserDefaults] objectForKey:kDefaultsUserName];
+        NSMutableDictionary *bodyDict = [NSMutableDictionary dictionary];
+        bodyDict[@"user"] = userName;
+        bodyDict[@"pass"] = passWold;
+        
+        
+        // 设备令牌可能还没有,需要延时 一下
         //登入认证  组登入认证
-        NSString *UUID = [kUserDefault objectForKey:kUserDefaultDeviceUUID];
         NSString *token = [NSString stringWithFormat:@"ios+@+%@", UUID];
         NSString *str = [NSString stringWithPostTCPJsonVersion:@"0.0.1" status:@"200" token:token msgType:@"login" msgExplain:@"login" fromUserName:userName destUserName:@"huaruicloud" destDevName:@"huaruiPushServer" msgBodyStringDict:bodyDict];
-        DDLogWarn(@"onSocket登入认证%@", str);
-		[self.appDelegate sendMessageWithString:str];
-		
-		
-	});
-	
+        DDLogWarn(@"onSocket登入认证%@ --%d", str,tokenTimerCount);
+        [self.appDelegate sendMessageWithString:str];
+        [self.tokenTimer invalidate];
+        self.tokenTimer = nil;
+        return;
+    }
+   
+    if (tokenTimerCount == 0) {
+        
+        [self.tokenTimer invalidate];
+    }
 }
+
+
 #pragma mark - 下拉刷新
 - (void)addRefresh
 {
@@ -1253,8 +1328,6 @@ static BOOL isShowOverMenu = NO;
         
         [self.tableView reloadData];
         
-        //定时60s查询设备状态
-        [self addTimer];
         
         //获得设备授权表
         [self addAutherList];
@@ -1263,6 +1336,8 @@ static BOOL isShowOverMenu = NO;
     
 }
 #pragma mark - 获取设备信息  发送HTTP请求
+
+static int httpRequsetCount = 0;
 - (void)getHttpRequset
 {
 	/// 从偏好设置里加载数据
@@ -1305,57 +1380,6 @@ static BOOL isShowOverMenu = NO;
 		}
 		weakSelf.appDelegate.homeArray = weakSelf.homeArray;
 		DDLogWarn(@"---------weakSelf.appDelegate.homeArray%@count%lu--------", weakSelf.appDelegate.homeArray, (unsigned long)weakSelf.appDelegate.homeArray.count);
-		
-		//判断当前的mode是否为空, 如果为空就让他等于数组的第一个值, 如果不为空就让他等于当前值, 刷新是刷新的当前的数组个数和状态
-		if (self.currentStateModel.uuid.length < 1) {
-			
-            weakSelf.currentStateModel = weakSelf.homeArray.firstObject;
-            //显示占位图片
-            [self setUp3DEptPictureWithHomeArray:weakSelf.homeArray];
-		}else
-		{
-            int index = 0;
-			for (DeviceListModel *model in weakSelf.homeArray) {
-				if ([model.uuid isEqualToString:weakSelf.currentStateModel.uuid]) {//取出和当前的UUID一样的这条数据覆盖掉,currentStateModel数据- 代表刷新的是当前cell和当前列表的数据, 不让文字换成其他的, cell也不让他滚动
-					weakSelf.currentStateModel = model;
-                    index++;
-				}
-			}
-            if (index) {//更新当前currentStateModel数据
-                
-                [self setUp3DEptPictureWithHomeArray:weakSelf.homeArray];
-                
-            }else//如果为0就代表是用户删除设备的操作,就让重新赋值
-            {
-                weakSelf.currentStateModel = weakSelf.homeArray.firstObject;
-                //显示占位图片
-                [self setUp3DEptPictureWithHomeArray:weakSelf.homeArray];
-            }
-		}
-		
-        
-        //重新设置列表按钮的图片和文字
-        if (weakSelf.homeArray.count > 0) {
-            
-            weakSelf.listLabel.text = weakSelf.currentStateModel.title;
-            if ([weakSelf.currentStateModel.state isEqualToString:@"1"]) {
-                weakSelf.listImageView.image = [UIImage imageNamed:@"空心在线"];
-            }else
-            {
-                
-                weakSelf.listImageView.image = [UIImage imageNamed:@"空心离线"];
-            }
-            
-        }else
-        {
-            weakSelf.listLabel.text = @"";
-            weakSelf.listImageView.image = [UIImage imageNamed:@""];
-        }
-        
-		[self.tableView reloadData];
-		
-		//定时60s查询设备状态
-		[self addTimer];
 		
 		//获得设备授权表
 		[self addAutherList];
@@ -1585,6 +1609,8 @@ static BOOL isShowOverMenu = NO;
             
             if (index) {
                 
+                //显示占位图片
+                [self setUp3DEptPictureWithHomeArray:weakSelf.homeArray];
             }else
             {
                 weakSelf.currentStateModel = weakSelf.homeArray.firstObject;
@@ -1594,28 +1620,45 @@ static BOOL isShowOverMenu = NO;
 		}
         
         //重新设置列表按钮的图片和文字
-        if (weakSelf.homeArray.count > 0) {
-            
-            weakSelf.listLabel.text = weakSelf.currentStateModel.title;
-            if ([weakSelf.currentStateModel.state isEqualToString:@"1"]) {
-                weakSelf.listImageView.image = [UIImage imageNamed:@"空心在线"];
+        if (!httpRequsetCount) {
+            if (weakSelf.homeArray.count > 0) {
+                
+                weakSelf.listLabel.text = weakSelf.currentStateModel.title;
+                if ([weakSelf.currentStateModel.state isEqualToString:@"1"]) {
+                    weakSelf.listImageView.image = [UIImage imageNamed:@"空心在线"];
+                }else
+                {
+                    
+                    weakSelf.listImageView.image = [UIImage imageNamed:@"空心离线"];
+                }
+                
             }else
             {
-                
-                weakSelf.listImageView.image = [UIImage imageNamed:@"空心离线"];
+                weakSelf.listLabel.text = @"";
+                weakSelf.listImageView.image = [UIImage imageNamed:@""];
             }
-            
+ 
         }else
         {
-            weakSelf.listLabel.text = @"";
-            weakSelf.listImageView.image = [UIImage imageNamed:@""];
+            if (weakSelf.homeArray.count > 0) {
+                
+                weakSelf.listLabel.text = weakSelf.currentStateModel.title;
+                
+            }else
+            {
+                weakSelf.listLabel.text = @"";
+            }
         }
-		
-		[weakSelf.tableView reloadData];
+        
+//		[weakSelf.tableView reloadData];
 		[weakSelf.collectionView reloadData];
-		
+        
+        //定时60s查询设备状态
+        [self addTimer];
 		
 	}];
+    
+    httpRequsetCount++;
 }
 
 
@@ -2549,22 +2592,26 @@ static BOOL isShowOverMenu = NO;
 {
 	[self.timer invalidate];
 	
-	dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-		
-		DeviceListModel *testModel = self.currentStateModel;
-		//获取page = 0的门锁记录
-		[self getHttpRequsetWithLockRecord];
-		
-		for (DeviceAutherModel *model in self.autherPersonArray) {//目标设备的名字要填,别人授权给我的管理员名字
-			if ([model.uuid isEqualToString:testModel.uuid]) {
-				
-				
-				[self sendSocketQuaryDeviceOnLineWithUser:model.admin dev:testModel.uuid];
-			}
-		}
-		
-	});
-	self.timer = [NSTimer scheduledTimerWithTimeInterval:timerDuration target:self selector:@selector(updateTimer) userInfo:nil repeats:YES];
+    DeviceListModel *testModel = self.currentStateModel;
+    //获取page = 0的门锁记录
+//		[self getHttpRequsetWithLockRecord];
+   
+    
+    for (DeviceAutherModel *model in self.autherPersonArray) {//目标设备的名字要填,别人授权给我的管理员名字
+        if ([model.uuid isEqualToString:testModel.uuid]) {
+            
+            
+            [self sendSocketQuaryDeviceOnLineWithUser:model.admin dev:testModel.uuid];
+            
+            self.timer = [NSTimer scheduledTimerWithTimeInterval:timerDuration target:self selector:@selector(updateTimer) userInfo:nil repeats:YES];
+            return;
+        }
+    }
+    
+    NSString *userName = [kUserDefault objectForKey:kDefaultsUserName];
+    [self sendSocketQuaryDeviceOnLineWithUser:userName dev:testModel.uuid];
+    
+    self.timer = [NSTimer scheduledTimerWithTimeInterval:timerDuration target:self selector:@selector(updateTimer) userInfo:nil repeats:YES];
 }
 
 
@@ -2572,31 +2619,34 @@ static BOOL isShowOverMenu = NO;
 {
 	DeviceListModel *testModel = self.currentStateModel;
 	
-	for (DeviceAutherModel *model in self.autherPersonArray) {//目标设备的名字要填,别人授权给我的管理员名字
-		if ([model.uuid isEqualToString:testModel.uuid]) {
-			
-			
-			[self sendSocketQuaryDeviceOnLineWithUser:model.admin dev:testModel.uuid];
-		}
-	}
-	
-	
+    for (DeviceAutherModel *model in self.autherPersonArray) {//目标设备的名字要填,别人授权给我的管理员名字
+        if ([model.uuid isEqualToString:testModel.uuid]) {
+            
+            
+            [self sendSocketQuaryDeviceOnLineWithUser:model.admin dev:testModel.uuid];
+            break;
+        }
+    }
+    
+    //我授权给别人的设备的 设备在线情况
+    NSString *userName = [kUserDefault objectForKey:kDefaultsUserName];
+    [self sendSocketQuaryDeviceOnLineWithUser:userName dev:testModel.uuid];
 }
 
 #pragma mark - 定时60s查询设备状态
 - (void)sendSocketQuaryDeviceOnLineWithUser:(NSString *)user dev:(NSString *)dev
 {
 	[self.appDelegate connectToHost];
-	NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-	dict[@"user"] = user;
-	dict[@"dev"] = dev;
-	NSString *str = [NSString stringWithSocketQuaryDeviceOnLineWithDst:dict];
-	DDLogWarn(@"sendSocketQuaryDeviceOnLine-%@", str);
-	[self.appDelegate sendMessageWithString:str];
-	
+
+    // 设备令牌可能还没有,需要延时 一下
+    
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    dict[@"user"] = user;
+    dict[@"dev"] = dev;
+    NSString *str = [NSString stringWithSocketQuaryDeviceOnLineWithDst:dict];
+    DDLogWarn(@"sendSocketQuaryDeviceOnLine-%@", str);
+    [self.appDelegate sendMessageWithString:str];
 }
-
-
 #pragma mark - 获取设备信息  发送HTTP请求
 - (void)getHttpRequsetWithLockRecord
 {
