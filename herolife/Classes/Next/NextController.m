@@ -283,6 +283,8 @@
 }
 - (void)viewWillDisappear:(BOOL)animated
 {
+    [super viewWillDisappear:animated];
+    
 	[self IsTabBarHidden:YES];
 }
 #pragma mark - 隐藏底部条

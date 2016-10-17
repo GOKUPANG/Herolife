@@ -49,6 +49,9 @@ static NSTimeInterval const dimissTimer = 2;
 
 -(void)viewWillAppear:(BOOL)animated
 {
+    
+    [super viewWillAppear:animated];
+    
     NSInteger  PicNum =   [[NSUserDefaults standardUserDefaults] integerForKey:@"PicNum"];
     
     if (!PicNum) {

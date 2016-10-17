@@ -218,6 +218,9 @@
 
 -(void)viewDidAppear:(BOOL)animated
 {
+    
+    [super viewDidAppear:animated];
+    
     if (_OldPswTF.text.length > 0&& _NewPswTF.text.length>0 &&_confirmTF.text.length > 0) {
          _comfirmFixView.alpha = 0.7;
     }

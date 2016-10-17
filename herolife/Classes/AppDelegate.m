@@ -163,7 +163,7 @@ static NSInteger disconnectCount = 0;
 		
 	}
     
-    // 注册获得device Token
+    // 注册获得device Token - 没这句代码获取不到token
     [[UIApplication sharedApplication] registerForRemoteNotifications];
 	
 	
@@ -183,19 +183,6 @@ static NSInteger disconnectCount = 0;
     //获取通知数据
    // NSDictionary *userInfo = response.notification.request.content.userInfo;
     
-    //建立UDP连接
-    [self setupUDPSocket];
-    
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [SVProgressTool hr_showWithStatus:@"正在加载数据, 请稍后..."];
-        
-        // 启动定时器
-        isOverTime = NO;
-        [_overTimer invalidate];
-        //十秒之后如果没有数据就提示超时
-        _overTimer = [NSTimer scheduledTimerWithTimeInterval:30.0 target:self selector:@selector(startTimer) userInfo:nil repeats:NO];
-    });
-    
     if([response.notification.request.trigger isKindOfClass:[UNPushNotificationTrigger class]]) {
         
         
@@ -205,7 +192,21 @@ static NSInteger disconnectCount = 0;
     
     else
     {
-        //  NSLog(@"收到本地通知");
+          NSLog(@"收到本地通知");
+        
+        //建立UDP连接
+        [self setupUDPSocket];
+        
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [SVProgressTool hr_showWithStatus:@"正在加载数据, 请稍后..."];
+            
+            // 启动定时器
+            isOverTime = NO;
+            [_overTimer invalidate];
+            //十秒之后如果没有数据就提示超时
+            _overTimer = [NSTimer scheduledTimerWithTimeInterval:30.0 target:self selector:@selector(startTimer) userInfo:nil repeats:NO];
+        });
+
         
     }
 

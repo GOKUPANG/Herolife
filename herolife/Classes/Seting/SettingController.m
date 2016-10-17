@@ -41,6 +41,10 @@ static NSString *cellID = @"cellID";
 
 -(void)viewWillAppear:(BOOL)animated
 {
+    
+    
+    [super viewWillAppear:animated];
+    
     NSInteger  PicNum =   [[NSUserDefaults standardUserDefaults] integerForKey:@"PicNum"];
     
     if (!PicNum) {

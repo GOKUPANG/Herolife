@@ -64,6 +64,9 @@ static int const HRTimeDuration = 120;
 
 -(void)viewWillAppear:(BOOL)animated
 {
+    
+    [super viewWillAppear:animated];
+    
     NSInteger  PicNum =   [[NSUserDefaults standardUserDefaults] integerForKey:@"PicNum"];
     
     if (!PicNum) {
@@ -643,6 +646,9 @@ static NSString *wift;
 #pragma mark  - 海波代码
 - (void)viewWillDisappear:(BOOL)animated
 {
+    
+    [super viewWillDisappear:animated];
+    
 	[self IsTabBarHidden:YES];
 	[SVProgressTool hr_dismiss];
 }

@@ -43,6 +43,9 @@ static int const HRTimeDuration = 601;
 
 -(void)viewWillAppear:(BOOL)animated
 {
+    
+    [super viewWillAppear:animated];
+    
     [self SetMyBackPic];
 
 }
@@ -314,7 +317,7 @@ static int const HRTimeDuration = 601;
 	notification.repeatInterval = 0;
 	
 	// 通知内容
-	notification.alertBody =  @"连接成功,点我返回!";
+	notification.alertBody =  @"连接成功,点我返回😄";
 	notification.applicationIconBadgeNumber = 0;
 	// 通知被触发时播放的声音
 	notification.soundName = UILocalNotificationDefaultSoundName;
@@ -335,6 +338,7 @@ static int const HRTimeDuration = 601;
 		notification.repeatInterval = 0;
 	}
 	
+    
 	// 执行通知注册
 	[[UIApplication sharedApplication] scheduleLocalNotification:notification];
 }
@@ -355,7 +359,7 @@ static NSString *wift;
 	if ([wift isEqualToString:@"HEROLIFE_SC_AP"]) {
 		
 		
-		[self registerLocalNotification:0.5];
+		[self registerLocalNotification:1.0];
 		
 		[self.timer invalidate];
 		self.timer = nil;
@@ -381,6 +385,8 @@ static NSString *wift;
 #pragma mark  - 海波代码
 - (void)viewWillDisappear:(BOOL)animated
 {
+    [super viewWillDisappear:animated];
+    
 	[self IsTabBarHidden:YES];
 }
 #pragma mark - 隐藏底部条 - 海波代码

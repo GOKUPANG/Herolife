@@ -226,6 +226,8 @@ NSInteger const timerDuration = 60.0;
 }
 -(void)viewWillAppear:(BOOL)animated
 {
+    [super viewWillAppear:animated];
+    
 	for (UINavigationController *nav in self.tabBarController.childViewControllers) {
 		UIViewController *VC = nav.childViewControllers.firstObject;
 		NSLog(@"viewVC--%@", NSStringFromClass([VC class]));

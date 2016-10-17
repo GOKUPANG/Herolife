@@ -1088,7 +1088,9 @@ char *hrencode(char *pass)
 		
 	}
 	ret[i]='\0';
-	char result[64];
+    char *result=(char *)malloc(64);
+
+	//char result[64];
 	base64_encode(ret,i,result);
 	return result;
 }
