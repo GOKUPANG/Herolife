@@ -26,6 +26,8 @@
 @property(nonatomic, weak) UIView *lineView;
 /** 保存按钮 */
 @property(nonatomic, weak) HRButton *saveButton;
+/** <#name#> */
+@property(nonatomic, weak) UIImageView *backgroundImage ;
 
 @end
 
@@ -42,6 +44,38 @@
 	[super viewDidAppear:animated];
 	DDLogWarn(@"AddLockController--------viewDidAppear");
 }
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    
+    NSInteger  PicNum =   [[NSUserDefaults standardUserDefaults] integerForKey:@"PicNum"];
+    
+    if (!PicNum) {
+        
+        
+        
+        self.backgroundImage.image = [UIImage imageNamed:@"1.jpg"];
+    }
+    
+    
+    else if (PicNum == -1)
+    {
+        NSString *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES).lastObject;
+        path = [path stringByAppendingPathComponent:@"image.png"];
+        
+        self.backgroundImage.image =[UIImage imageWithContentsOfFile:path];
+    }
+    
+    else{
+        
+        NSString * imgName = [NSString stringWithFormat:@"%ld.jpg",PicNum];
+        
+        self.backgroundImage.image =[UIImage imageNamed:imgName];
+    }
+    
+    
+}
 - (void)setupViews
 {
 	
@@ -49,6 +83,7 @@
 	UIImageView *backgroundImage = [[UIImageView alloc] initWithFrame:[UIScreen mainScreen].bounds];
 	backgroundImage.image = [UIImage imageNamed:Defalt_BackPic];
 	[self.view addSubview:backgroundImage];
+    self.backgroundImage = backgroundImage;
 	
 	
 	UIView *view = [[UIView alloc] initWithFrame:[UIScreen mainScreen].bounds];

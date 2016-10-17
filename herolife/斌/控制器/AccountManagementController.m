@@ -158,7 +158,7 @@
     [super viewDidLoad];
     
     
-    [self setUI];
+   // [self setUI];
     
     //背景图片
     UIImageView *backgroundImage = [[UIImageView alloc] initWithFrame:[UIScreen mainScreen].bounds];
@@ -282,12 +282,12 @@
         }
      else
      {
-         //NSString * str = [[NSString alloc]initWithData:(NSData *)responseObject encoding:NSUTF8StringEncoding];
+         
          
          dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableLeaves error:nil];
          
      }
-       // [SVProgressHUD showSuccessWithStatus:@"修改密码成功"];
+
         [SVProgressTool hr_showSuccessWithStatus:@"修改密码成功"];
         
         [self.navigationController popViewControllerAnimated:YES];
@@ -595,9 +595,8 @@
     
     [self.view addSubview:headImgView];
     
-    headImgView.backgroundColor = [UIColor blueColor];
     
-   // headImgView.image = [UIImage imageNamed:@"头像占位图片.jpg"];
+ 
     
     NSString *iconString = [kUserDefault objectForKey:kDefaultsIconURL];
     if (iconString.length > 0) {
@@ -762,7 +761,6 @@
     _OldPswTF = [[UITextField alloc]init];
     _OldPswTF.textColor =[UIColor whiteColor];
     _OldPswTF.secureTextEntry = YES;
-//    _OldPswTF.clearsOnBeginEditing  = YES;
     _OldPswTF.clearButtonMode = UITextFieldViewModeWhileEditing;
     _OldPswTF.delegate = self;
     

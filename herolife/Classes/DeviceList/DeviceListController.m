@@ -304,7 +304,7 @@ static NSString *cellID = @"cellID";
 - (void)receivePostRefresh:(NSNotification *)note
 {
 	//重新获取数据
-	[self getHttpRequset];
+	[self getRefreshHttpRequset];
 }
 
 static BOOL isOvertime = NO;
@@ -1185,6 +1185,81 @@ static BOOL isShowOverMenu = NO;
 	[self.eptTable.mj_header beginRefreshing];
 }
 
+- (void)getRefreshHttpRequset
+{
+    /// 从偏好设置里加载数据
+    NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
+    NSString *user = [userDefault objectForKey:kDefaultsUserName];
+    
+    NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
+    parameters[@"user"] = user;
+    HRWeakSelf
+    [HRHTTPTool hr_getHttpWithURL:HRAPI_LockInFo_URL parameters:parameters responseDict:^(id responseObject, NSError *error) {
+        [self.eptTable.mj_header endRefreshing];
+        if (error) {
+            [ErrorCodeManager showError:error];
+            NSLog(@"HRAPI_LockInFo_URL-error--%@", error);
+            return ;
+        }
+        
+        DDLogWarn(@"获取设备信息HTTP请求%@", responseObject);
+        //如果responseObject不是数组类型就不是我们想要的数据，应该过滤掉
+        if (![responseObject isKindOfClass:[NSArray class]]) {
+            [weakSelf.homeArray removeAllObjects];
+            DDLogDebug(@"responseObject不是NSArray");
+            return;
+        }
+        //去除服务器发过来的数据里没有值的情况
+        if (((NSArray*)responseObject).count < 1 ) {
+            DDLogDebug(@"responseObject count == 0");
+        }
+        
+        [weakSelf.homeArray removeAllObjects];
+        NSArray *responseArr = (NSArray*)responseObject;
+        
+        for (NSDictionary *dict in responseArr) {
+            
+            DeviceListModel *home = [DeviceListModel mj_objectWithKeyValues:dict];
+            if ([home.types isEqualToString:@"hrsc"]) {
+                //修改921
+                [weakSelf.homeArray addObject:home];
+            }
+        }
+        weakSelf.appDelegate.homeArray = weakSelf.homeArray;
+        
+        //判断当前的mode是否为空, 如果为空就让他等于数组的第一个值, 如果不为空就让他等于当前值, 刷新是刷新的当前的数组个数和状态
+            
+        weakSelf.currentStateModel = weakSelf.homeArray.firstObject;
+        if (weakSelf.homeArray.count >= 3) {
+            
+            
+            [self.collectionView setContentOffset:CGPointMake(0, 0) animated:NO];
+            
+            self.collectionView.userInteractionEnabled = YES;
+        }
+        //显示占位图片
+        [self setUp3DEptPictureWithHomeArray:weakSelf.homeArray];
+        
+        weakSelf.listLabel.text = weakSelf.currentStateModel.title;
+        if ([weakSelf.currentStateModel.state isEqualToString:@"1"]) {
+            weakSelf.listImageView.image = [UIImage imageNamed:@"空心在线"];
+        }else
+        {
+            
+            weakSelf.listImageView.image = [UIImage imageNamed:@"空心离线"];
+        }
+        
+        [self.tableView reloadData];
+        
+        //定时60s查询设备状态
+        [self addTimer];
+        
+        //获得设备授权表
+        [self addAutherList];
+        
+    }];
+    
+}
 #pragma mark - 获取设备信息  发送HTTP请求
 - (void)getHttpRequset
 {
@@ -1239,14 +1314,16 @@ static BOOL isShowOverMenu = NO;
 		{
             int index = 0;
 			for (DeviceListModel *model in weakSelf.homeArray) {
-				if ([model.uuid isEqualToString:weakSelf.currentStateModel.uuid]) {//取出和当前的UUID一样的这条数据覆盖掉,currentStateModel数据
+				if ([model.uuid isEqualToString:weakSelf.currentStateModel.uuid]) {//取出和当前的UUID一样的这条数据覆盖掉,currentStateModel数据- 代表刷新的是当前cell和当前列表的数据, 不让文字换成其他的, cell也不让他滚动
 					weakSelf.currentStateModel = model;
                     index++;
 				}
 			}
-            if (index) {
+            if (index) {//更新当前currentStateModel数据
                 
-            }else
+                [self setUp3DEptPictureWithHomeArray:weakSelf.homeArray];
+                
+            }else//如果为0就代表是用户删除设备的操作,就让重新赋值
             {
                 weakSelf.currentStateModel = weakSelf.homeArray.firstObject;
                 //显示占位图片
@@ -1337,6 +1414,7 @@ static BOOL isShowOverMenu = NO;
 								 description:@""]];
 			
         }
+        
         self.collectionView.userInteractionEnabled = YES;
 	}
     [self.collectionView reloadData];
@@ -1754,10 +1832,11 @@ static BOOL isShowOverMenu = NO;
 	for (DeviceAutherModel *auther in self.autherPersonArray) {
 		
 		//别人授权的设备
-		if ([auther.uuid isEqualToString: self.showLockModel.uuid]) {
-			NSString *title = [NSString stringWithFormat:@"%@(授权设备)", self.showLockModel.title];
+		if ([auther.uuid isEqualToString: self.currentStateModel.uuid]) {
+			NSString *title = [NSString stringWithFormat:@"%@(授权设备)", self.currentStateModel.title];
+            
 			[SRActionSheet sr_showActionSheetViewWithTitle:title cancelButtonTitle:@"取消" destructiveButtonTitle:@"" otherButtonTitles:@[@"删除设备"] selectSheetBlock:^(SRActionSheet *actionSheetView, NSInteger index) {
-				
+                
 				if (index == 0) {
 					
 					//删除设备
@@ -1778,92 +1857,41 @@ static BOOL isShowOverMenu = NO;
 	//自己创建的设备
 	[SRActionSheet sr_showActionSheetViewWithTitle:self.showLockModel.title cancelButtonTitle:@"取消" destructiveButtonTitle:@"" otherButtonTitles:@[@"删除设备", @"修改设备别名",@"更新设备信息"] selectSheetBlock:^(SRActionSheet *actionSheetView, NSInteger index) {
 		
-		if (index == 0) {
+		if (index == 0) {//删除按钮
 			NSString *iconString;
             //qq头像
             
             iconString = [kUserDefault objectForKey:kDefaultsQQIconURL];
             
             if (iconString.length > 0) {
-                
-                 //这里是qq登陆
-                
-                NSLog(@"我是qq登陆的");
-                
-                UIAlertController * alertController = [UIAlertController alertControllerWithTitle:@"确定删除" message:@"" preferredStyle:UIAlertControllerStyleAlert];
-                
-                UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-                    
-                }];
-                
-                
-                UIAlertAction *confirmAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-                    
-                    [self deleteDoor];
-                    
-                    
-                }];
-                
-                
-                [alertController addAction:confirmAction];
-                
-                
-                [alertController addAction:cancelAction];
-                [self presentViewController:alertController animated:YES completion:nil];
-                
-
-                
-                
-            }
- 
-            
-            else
+                [self deleteQQDoorUI];
+            } else
             {
                
             //删除设备
              [self deleteDoorUI];
-
-                
-                NSLog(@"我不是qq登陆的我要删除设备了");
-                
                 
             }
             
 			
-		}
-		
-		else if (index == 1){
+		}else if (index == 1){//修改设备名称
 			
 			[self beginANimation];
 			
-		}
-        
-        else
+		}else//更新设备信息
         {
-            UIAlertController * alertController = [UIAlertController alertControllerWithTitle:@"确定更新" message:@"" preferredStyle:UIAlertControllerStyleAlert];
-            
-            UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            //更新设备信息UI
+            NSString *qqName = [kUserDefault objectForKey:kNSUserDefaultsNickname];
+            if (qqName.length > 0) {
+                [self updateQQDeviceInformationUI];
+            }else
+            {
+                [self updateDeviceInformationUI];
                 
-            }];
+            }
             
-            
-            UIAlertAction *confirmAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-                
-                
-                
-                [self httpWithUpdataDoor];
-                
-                
-            }];
-            
-            
-            [alertController addAction:confirmAction];
-            
-            
-            [alertController addAction:cancelAction];
-            [self presentViewController:alertController animated:YES completion:nil];        }
-		
-	}];
+        }
+    }];
 }
 
 #pragma mark - 更新设备信息相关方法
@@ -2024,6 +2052,154 @@ static BOOL isShowOverMenu = NO;
 	}];
 	
 }
+#pragma mark -删除门锁 QQ用户 UI设置
+-(void)deleteQQDoorUI
+{
+    
+    CGFloat dilX = 25;
+    CGFloat dilH = 150;
+    YXCustomAlertView *alertV = [[YXCustomAlertView alloc] initAlertViewWithFrame:CGRectMake(dilX, 0, HRUIScreenW - 40, dilH) andSuperView:self.navigationController.view];
+    
+    
+    alertV.delegate = self;
+    alertV.titleStr = @"删除设备";
+    
+    
+    [alertV addSubview:self.pswTF];
+    
+    
+    
+    self.FamilyAlertView = alertV;
+    
+    
+    [UIView animateWithDuration:0.5 animations:^{
+        
+        self.FamilyAlertView.center = CGPointMake(HRUIScreenW/2, HRUIScreenH/2-100);
+        
+        self.FamilyAlertView.alpha=1;
+        
+    } completion:^(BOOL finished) {
+        
+        
+    }];
+    
+}
+
+
+#pragma mark -更新设备信息UI设置
+-(void)updateDeviceInformationUI
+{
+    
+    CGFloat dilX = 25;
+    CGFloat dilH = 150;
+    YXCustomAlertView *alertV = [[YXCustomAlertView alloc] initAlertViewWithFrame:CGRectMake(dilX, 0, HRUIScreenW - 40, dilH) andSuperView:self.navigationController.view];
+    
+    
+     alertV.tag = 20;
+    alertV.delegate = self;
+    alertV.titleStr = @"更新设备信息";
+    
+    
+    CGFloat loginX = 200 *HRCommonScreenH;
+    
+    
+    //密码相关view
+    UILabel * paswdLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 55, loginX, 32)];
+    
+    [alertV addSubview:paswdLabel];
+    paswdLabel.text = @"用户密码";
+    paswdLabel.textColor = [UIColor whiteColor];
+    
+    paswdLabel.textAlignment = NSTextAlignmentCenter;
+    
+    UITextField *pwdField = [[UITextField alloc] initWithFrame:CGRectMake(loginX, 55, alertV.frame.size.width -  loginX*1.2, 32)];
+    pwdField.layer.borderColor = [[UIColor colorWithWhite:0.9 alpha:1] CGColor];
+    pwdField.secureTextEntry = YES;
+    UIView *leftpPwdView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 8, 32)];
+    
+    
+    pwdField.leftViewMode = UITextFieldViewModeAlways;
+    pwdField.leftView = leftpPwdView;
+    
+    
+    pwdField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
+    pwdField.layer.borderWidth = 1;
+    pwdField.layer.cornerRadius = 4;
+    
+    pwdField.placeholder = @"请输入用户登陆密码";
+    
+    
+    [pwdField setValue:[UIColor colorWithWhite:1.0 alpha:0.7] forKeyPath:@"_placeholderLabel.textColor"];
+    
+    pwdField.clearButtonMode = UITextFieldViewModeWhileEditing;
+    
+    
+    pwdField.textColor = [UIColor whiteColor];
+    
+    /** 标记这个输入框*/
+    pwdField.tag = 7;
+    
+    
+    
+    self.pswTF = pwdField;
+    
+    
+    [alertV addSubview:self.pswTF];
+    
+    
+    
+    self.FamilyAlertView = alertV;
+    
+    
+    [UIView animateWithDuration:0.5 animations:^{
+        
+        self.FamilyAlertView.center = CGPointMake(HRUIScreenW/2, HRUIScreenH/2-100);
+        
+        self.FamilyAlertView.alpha=1;
+        
+    } completion:^(BOOL finished) {
+        
+        
+        
+        
+    }];
+    
+}
+
+#pragma mark -更新设备信息 QQ用户UI设置
+-(void)updateQQDeviceInformationUI
+{
+    
+    CGFloat dilX = 25;
+    CGFloat dilH = 150;
+    YXCustomAlertView *alertV = [[YXCustomAlertView alloc] initAlertViewWithFrame:CGRectMake(dilX, 0, HRUIScreenW - 40, dilH) andSuperView:self.navigationController.view];
+    
+    
+    alertV.tag = 20;
+    alertV.delegate = self;
+    alertV.titleStr = @"更新设备信息";
+    
+    
+    
+    
+    self.FamilyAlertView = alertV;
+    
+    
+    [UIView animateWithDuration:0.5 animations:^{
+        
+        self.FamilyAlertView.center = CGPointMake(HRUIScreenW/2, HRUIScreenH/2-100);
+        
+        self.FamilyAlertView.alpha=1;
+        
+    } completion:^(BOOL finished) {
+        
+        
+        
+        
+    }];
+    
+}
+
 
 
 -(void)beginANimation
@@ -2253,48 +2429,48 @@ static BOOL isShowOverMenu = NO;
 			
 			
 		}];
-	}
-	
-	
-	
-	else{
+	}else{
 		
 		
+        
 		//处理删除门锁事件
 		
-		
-		// UITextField * pwTF = (UITextField *)[self.view viewWithTag:7];
-		
 		NSLog(@"输入框的字符串是%@",self.pswTF.text);
-		
-		
-		if (self.pswTF.text.length == 0 ) {
-			[customAlertView.layer shake];
-			return;
-			
-		}
-		
-		
-		
-		NSString * passWord = [kUserDefault objectForKey:kDefaultsPassWord];
-		
-		
-		if (![self.pswTF.text isEqualToString:passWord]) {
-			
-			[customAlertView.layer shake];
-			NSLog(@"密码不正确");
-			
-			//   [self addHudWith:@"hahahah"];
-			
-			//   [self removeHudWith:@"密码不正确"];
-			
-			
-			return;
-			
-		}
-		
-		
-		[self deleteDoor];
+        NSString *qqName = [kUserDefault objectForKey:kNSUserDefaultsNickname];
+        if (qqName.length > 0) {
+            
+        }else
+        {
+            if (self.pswTF.text.length == 0 ) {
+                [customAlertView.layer shake];
+                return;
+                
+            }
+            
+            NSString * passWord = [kUserDefault objectForKey:kDefaultsPassWord];
+            
+            
+            if (![self.pswTF.text isEqualToString:passWord]) {
+                
+                [customAlertView.layer shake];
+                NSLog(@"密码不正确");
+                
+                
+                return;
+                
+            }
+
+            
+        }
+				
+        if (customAlertView.tag == 20) {
+            [self httpWithUpdataDoor];
+        }else
+        {
+            
+            [self deleteDoor];
+        }
+        
 		
 		
 		[UIView animateWithDuration:0.8 animations:^{
@@ -2308,10 +2484,6 @@ static BOOL isShowOverMenu = NO;
 			customAlertView.frame = AlertViewFrame;
 			
 			customAlertView.alpha = 0;
-			
-			
-			
-			
 			
 			
 		} completion:^(BOOL finished) {

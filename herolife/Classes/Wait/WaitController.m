@@ -399,6 +399,8 @@ static int const HRTimeDuration = 30;
         }
 
 	}
+    
+    [kNotification postNotificationName:kNotificationPostRefresh object:nil];
 	self.tabBarController.selectedIndex = 1;
 	[self.navigationController popToRootViewControllerAnimated:YES];
 }

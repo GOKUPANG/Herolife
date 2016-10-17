@@ -321,7 +321,7 @@ static BOOL isOvertime = NO;
     
 	NSMutableArray *mu = [NSMutableArray array];
 	for (DeviceAutherModel *model in app.autherArray) {
-		if ([model.uuid isEqualToString: _listModel.uuid]) {
+		if ([model.uuid isEqualToString: self.currentUuid]) {
 			
 			[mu addObject:model];
 			
