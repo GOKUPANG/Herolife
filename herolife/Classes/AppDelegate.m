@@ -48,6 +48,8 @@
 
 #import "UMMobClick/MobClick.h"
 #import <UserNotifications/UserNotifications.h>
+
+#import "AppUntils.h"
 @interface AppDelegate ()<AsyncSocketDelegate, UNUserNotificationCenterDelegate>
 /** time */
 @property(nonatomic, strong) NSTimer *heartTimer;
@@ -86,9 +88,17 @@ static NSInteger disconnectCount = 0;
 	[self addShareSDK];
 	
     //获取手机UUID保存下来
+    
+    [AppUntils saveUUIDToKeyChain];
+//    if (![kUserDefault objectForKey:kUserDefaultDeviceUUID]) {
+//        NSString *UUID = [NSString stringWithUUID];
+//        [kUserDefault setObject:UUID forKey:kUserDefaultDeviceUUID];
+//        [kUserDefault synchronize];
+//    }
     if (![kUserDefault objectForKey:kUserDefaultDeviceUUID]) {
-        NSString *UUID = [NSString stringWithUUID];
-        [kUserDefault setObject:UUID forKey:kUserDefaultDeviceUUID];
+        NSString *uuid = [AppUntils readUUIDFromKeyChain];
+        NSLog(@"--------------手机uuid%@", uuid);
+        [kUserDefault setObject:uuid forKey:kUserDefaultDeviceUUID];
         [kUserDefault synchronize];
     }
     

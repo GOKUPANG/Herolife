@@ -86,6 +86,8 @@
 		D158E5AF1DAB36EA000DB8C9 /* UMMobClick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D158E5AE1DAB36EA000DB8C9 /* UMMobClick.framework */; };
 		D158E5B11DAB37FA000DB8C9 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D158E5B01DAB37FA000DB8C9 /* CoreTelephony.framework */; };
 		D15F3BEE1DB4BC6F00EC2390 /* APPPSWController.m in Sources */ = {isa = PBXBuildFile; fileRef = D15F3BED1DB4BC6F00EC2390 /* APPPSWController.m */; };
+		D15F3BF41DB4F5FE00EC2390 /* AppUntils.m in Sources */ = {isa = PBXBuildFile; fileRef = D15F3BF11DB4F5FE00EC2390 /* AppUntils.m */; };
+		D15F3BF51DB4F5FE00EC2390 /* KeychainItemWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = D15F3BF31DB4F5FE00EC2390 /* KeychainItemWrapper.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		D17076761D94D6BB0027C46B /* LoginController.m in Sources */ = {isa = PBXBuildFile; fileRef = D17076751D94D6BB0027C46B /* LoginController.m */; };
 		D17CF0F11D6567E7007C95DD /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D17CF0F01D6567E7007C95DD /* main.m */; };
 		D17CF0FA1D6567E7007C95DD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D17CF0F81D6567E7007C95DD /* Main.storyboard */; };
@@ -366,6 +368,10 @@
 		D158E5AE1DAB36EA000DB8C9 /* UMMobClick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = UMMobClick.framework; sourceTree = "<group>"; };
 		D158E5B01DAB37FA000DB8C9 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		D15F3BED1DB4BC6F00EC2390 /* APPPSWController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APPPSWController.m; sourceTree = "<group>"; };
+		D15F3BF01DB4F5FE00EC2390 /* AppUntils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppUntils.h; sourceTree = "<group>"; };
+		D15F3BF11DB4F5FE00EC2390 /* AppUntils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppUntils.m; sourceTree = "<group>"; };
+		D15F3BF21DB4F5FE00EC2390 /* KeychainItemWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeychainItemWrapper.h; sourceTree = "<group>"; };
+		D15F3BF31DB4F5FE00EC2390 /* KeychainItemWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeychainItemWrapper.m; sourceTree = "<group>"; };
 		D17076751D94D6BB0027C46B /* LoginController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginController.m; sourceTree = "<group>"; };
 		D17CF0EC1D6567E7007C95DD /* HEROLIFE.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HEROLIFE.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D17CF0F01D6567E7007C95DD /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -970,6 +976,17 @@
 			path = base64;
 			sourceTree = "<group>";
 		};
+		D15F3BEF1DB4F5CE00EC2390 /* UUID */ = {
+			isa = PBXGroup;
+			children = (
+				D15F3BF01DB4F5FE00EC2390 /* AppUntils.h */,
+				D15F3BF11DB4F5FE00EC2390 /* AppUntils.m */,
+				D15F3BF21DB4F5FE00EC2390 /* KeychainItemWrapper.h */,
+				D15F3BF31DB4F5FE00EC2390 /* KeychainItemWrapper.m */,
+			);
+			path = UUID;
+			sourceTree = "<group>";
+		};
 		D17CF0E31D6567E7007C95DD = {
 			isa = PBXGroup;
 			children = (
@@ -1329,6 +1346,7 @@
 		D1A7DCAC1D8117DD00D051B0 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				D15F3BEF1DB4F5CE00EC2390 /* UUID */,
 				D1A7DCAD1D8117DD00D051B0 /* Category */,
 				D1A7DCC21D8117DD00D051B0 /* Controller */,
 				D1A7DCCF1D8117DD00D051B0 /* Models */,
@@ -1889,6 +1907,7 @@
 				D1A7DDA81D8117DD00D051B0 /* ErrorCodeManager.m in Sources */,
 				AA929A4D1DB47B3B009D64E6 /* AppDelegate.m in Sources */,
 				1868B8F71D76DDD400D19386 /* BackPicSetController.m in Sources */,
+				D15F3BF41DB4F5FE00EC2390 /* AppUntils.m in Sources */,
 				AAA8A9BA1D8CE9D900ABA020 /* ViewOfCustomerTableViewCell.m in Sources */,
 				D1A7DD221D8117DD00D051B0 /* InputText.m in Sources */,
 				D1A7DDAC1D8117DD00D051B0 /* HRSqlite.m in Sources */,
@@ -1935,6 +1954,7 @@
 				D1A7DD9F1D8117DD00D051B0 /* HRTempHumid.m in Sources */,
 				D1A7DDA61D8117DD00D051B0 /* Push.m in Sources */,
 				D1A7DD7D1D8117DD00D051B0 /* UIImage+WebP.m in Sources */,
+				D15F3BF51DB4F5FE00EC2390 /* KeychainItemWrapper.m in Sources */,
 				D1A7DD7E1D8117DD00D051B0 /* UIImageView+HighlightedWebCache.m in Sources */,
 				18C697981D7462B9004DA2B1 /* DoorRecordCell.m in Sources */,
 				D1A7DD3A1D8117DD00D051B0 /* UIScrollView+MJRefresh.m in Sources */,
