@@ -164,9 +164,12 @@
     
    
     
-    UIImageView *backgroundImage = [[UIImageView alloc] initWithFrame:[UIScreen mainScreen].bounds];
-    backgroundImage.image = [UIImage imageNamed:@"Snip20160825_3"];
-    [self.view addSubview:backgroundImage];
+//    UIImageView *backgroundImage = [[UIImageView alloc] initWithFrame:[UIScreen mainScreen].bounds];
+//    backgroundImage.image = [UIImage imageNamed:@"Snip20160825_3"];
+//    [self.view addSubview:backgroundImage];
+    
+    self.view.backgroundColor = [UIColor blackColor];
+    
     
     
     

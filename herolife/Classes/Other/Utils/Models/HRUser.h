@@ -14,7 +14,7 @@
 ///用户ID
 @property (nonatomic, assign) NSInteger userID;
 ///名字
-@property (nonatomic, copy)  NSString *name;
+@property (nonatomic, copy)  NSString * name;
 ///密码
 @property (nonatomic, copy) NSString *password;
 ///邮箱

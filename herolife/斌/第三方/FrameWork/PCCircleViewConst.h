@@ -25,7 +25,7 @@
 /**
  *  选中状态下外空心圆颜色
  */
-#define CircleStateSelectedOutsideColor rgba(34,178,246,1)
+#define CircleStateSelectedOutsideColor rgba(198,240,255,1)
 
 /**
  *  错误状态下外空心圆颜色
@@ -40,7 +40,7 @@
 /**
  *  选中状态下内实心圆颜色
  */
-#define CircleStateSelectedInsideColor rgba(34,178,246,1)
+#define CircleStateSelectedInsideColor rgba(198,240,255,1)
 
 //#define CircleStateSelectedInsideColor rgba(178,169,125,1)
 
@@ -58,7 +58,9 @@
 /**
  *  选中状态下三角形颜色
  */
-#define CircleStateSelectedTrangleColor rgba(34,178,246,1)
+//#define CircleStateSelectedTrangleColor rgba(34,178,246,1)
+#define CircleStateSelectedTrangleColor rgba(198,240,255,1)
+
 
 /**
  *  错误状态三角形颜色
@@ -73,7 +75,7 @@
 /**
  *  普通时连线颜色
  */
-#define CircleConnectLineNormalColor rgba(34,178,246,1)
+#define CircleConnectLineNormalColor rgba(198,240,255,1)
 
 //#define CircleConnectLineNormalColor rgba(178,169,125,1)
 

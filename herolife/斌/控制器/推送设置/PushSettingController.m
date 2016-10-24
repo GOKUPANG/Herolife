@@ -966,7 +966,7 @@ static BOOL isOvertime = NO;
     
     [alertV addSubview:numberLabel];
     numberLabel.text = @"手机号码";
-    numberLabel.textColor = [UIColor whiteColor];
+    numberLabel.textColor = [UIColor blackColor];
     
     numberLabel.textAlignment = NSTextAlignmentCenter;
     
@@ -975,7 +975,7 @@ static BOOL isOvertime = NO;
     
     
     UITextField *loginPwdField = [[UITextField alloc] initWithFrame:CGRectMake(loginX, 55, alertV.frame.size.width -  loginX*1.2, 32)];
-    loginPwdField.layer.borderColor = [[UIColor colorWithWhite:0.9 alpha:1] CGColor];
+    loginPwdField.layer.borderColor = [[UIColor blackColor] CGColor];
     UIView *leftView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 8, 32)];
     
     
@@ -989,16 +989,16 @@ static BOOL isOvertime = NO;
     
     loginPwdField.placeholder = @"对方常用手机";
     
-    [loginPwdField setValue:[UIColor colorWithWhite:1.0 alpha:0.7] forKeyPath:@"_placeholderLabel.textColor"];
     
-    loginPwdField.textColor = [UIColor whiteColor];
+    
+    loginPwdField.textColor = [UIColor blackColor];
     
     
     
     
     UITextField * PSWNameField = [[UITextField alloc]initWithFrame:CGRectMake(loginX, 100, alertV.frame.size.width -  loginX*1.2, 32)];
     
-    PSWNameField.layer.borderColor = [[UIColor colorWithWhite:0.9 alpha:1] CGColor];
+    PSWNameField.layer.borderColor = [[UIColor blackColor] CGColor];
     
     
     
@@ -1014,9 +1014,8 @@ static BOOL isOvertime = NO;
     PSWNameField.layer.cornerRadius = 4;
     
     PSWNameField.placeholder = @"对方称呼";
-    [PSWNameField setValue:[UIColor colorWithWhite:1.0 alpha:0.7] forKeyPath:@"_placeholderLabel.textColor"];
     
-    PSWNameField.textColor = [UIColor whiteColor];
+    PSWNameField.textColor = [UIColor blackColor];
     
     
     
@@ -1027,7 +1026,7 @@ static BOOL isOvertime = NO;
     
     [alertV addSubview:PswLabel];
     PswLabel.text = @"对方称呼";
-    PswLabel.textColor = [UIColor whiteColor];
+    PswLabel.textColor = [UIColor blackColor];
     
     PswLabel.textAlignment = NSTextAlignmentCenter;
     
@@ -1035,7 +1034,7 @@ static BOOL isOvertime = NO;
     
     UITextField * MyNameField = [[UITextField alloc]initWithFrame:CGRectMake(loginX, 150, alertV.frame.size.width -  loginX*1.2, 32)];
     
-    MyNameField.layer.borderColor = [[UIColor colorWithWhite:0.9 alpha:1] CGColor];
+    MyNameField.layer.borderColor = [[UIColor blackColor] CGColor];
     
     
     
@@ -1052,9 +1051,9 @@ static BOOL isOvertime = NO;
     
     MyNameField.placeholder = @"您的称呼";
     
-    [MyNameField setValue:[UIColor colorWithWhite:1.0 alpha:0.7] forKeyPath:@"_placeholderLabel.textColor"];
     
-    MyNameField.textColor = [UIColor whiteColor];
+    
+    MyNameField.textColor = [UIColor blackColor];
     
     
     
@@ -1065,7 +1064,7 @@ static BOOL isOvertime = NO;
     
     [alertV addSubview:MyNameLabel];
     MyNameLabel.text = @"您的称呼";
-    MyNameLabel.textColor = [UIColor whiteColor];
+    MyNameLabel.textColor = [UIColor blackColor];
     
     MyNameLabel.textAlignment = NSTextAlignmentCenter;
     
@@ -1074,7 +1073,7 @@ static BOOL isOvertime = NO;
     
     UITextField * DoorAdressField = [[UITextField alloc]initWithFrame:CGRectMake(loginX, 200, alertV.frame.size.width -  loginX*1.2, 32)];
     
-    DoorAdressField.layer.borderColor = [[UIColor colorWithWhite:0.9 alpha:1] CGColor];
+    DoorAdressField.layer.borderColor = [[UIColor blackColor] CGColor];
     
     
     
@@ -1090,9 +1089,9 @@ static BOOL isOvertime = NO;
     DoorAdressField.layer.cornerRadius = 4;
     
     DoorAdressField.placeholder = @"门锁所在地";
-    [DoorAdressField setValue:[UIColor colorWithWhite:1.0 alpha:0.7] forKeyPath:@"_placeholderLabel.textColor"];
+   
     
-    DoorAdressField.textColor = [UIColor whiteColor];
+    DoorAdressField.textColor = [UIColor blackColor];
     
     
     
@@ -1103,7 +1102,7 @@ static BOOL isOvertime = NO;
     
     [alertV addSubview:DoorAdressLabel];
     DoorAdressLabel.text = @"门锁地点";
-    DoorAdressLabel.textColor = [UIColor whiteColor];
+    DoorAdressLabel.textColor = [UIColor blackColor];
     
     DoorAdressLabel.textAlignment = NSTextAlignmentCenter;
 
@@ -1176,7 +1175,7 @@ static BOOL isOvertime = NO;
     
     [alertV addSubview:numberLabel];
     numberLabel.text = @"手机号码";
-    numberLabel.textColor = [UIColor whiteColor];
+    numberLabel.textColor = [UIColor blackColor];
     
     numberLabel.textAlignment = NSTextAlignmentCenter;
     
@@ -1185,7 +1184,7 @@ static BOOL isOvertime = NO;
     
     
     UITextField *loginPwdField = [[UITextField alloc] initWithFrame:CGRectMake(loginX, 55, alertV.frame.size.width -  loginX*1.2, 32)];
-    loginPwdField.layer.borderColor = [[UIColor colorWithWhite:0.9 alpha:1] CGColor];
+    loginPwdField.layer.borderColor = [[UIColor blackColor] CGColor];
     UIView *leftView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 8, 32)];
     
     
@@ -1199,16 +1198,16 @@ static BOOL isOvertime = NO;
     
     loginPwdField.placeholder = @"提醒人的手机";
     
-    [loginPwdField setValue:[UIColor colorWithWhite:1.0 alpha:0.7] forKeyPath:@"_placeholderLabel.textColor"];
     
-    loginPwdField.textColor = [UIColor whiteColor];
+    
+    loginPwdField.textColor = [UIColor blackColor];
     
     
     
     
     UITextField * PSWNameField = [[UITextField alloc]initWithFrame:CGRectMake(loginX, 100, alertV.frame.size.width -  loginX*1.2, 32)];
     
-    PSWNameField.layer.borderColor = [[UIColor colorWithWhite:0.9 alpha:1] CGColor];
+    PSWNameField.layer.borderColor = [[UIColor blackColor] CGColor];
     
     
     
@@ -1224,16 +1223,16 @@ static BOOL isOvertime = NO;
     PSWNameField.layer.cornerRadius = 4;
     
     PSWNameField.placeholder = @"防撬提醒人姓名";
-    [PSWNameField setValue:[UIColor colorWithWhite:1.0 alpha:0.7] forKeyPath:@"_placeholderLabel.textColor"];
+
     
-    PSWNameField.textColor = [UIColor whiteColor];
+    PSWNameField.textColor = [UIColor blackColor];
     
     
     UILabel * PswLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 100, loginX, 32)];
     
     [alertV addSubview:PswLabel];
     PswLabel.text = @"防撬提醒人";
-    PswLabel.textColor = [UIColor whiteColor];
+    PswLabel.textColor = [UIColor blackColor];
     
     PswLabel.textAlignment = NSTextAlignmentCenter;
     

@@ -448,12 +448,12 @@ static BOOL isShowOverMenu = NO;
 	}
 	[alertV addSubview:paswdLabel];
 	paswdLabel.text = @"用户密码";
-	paswdLabel.textColor = [UIColor whiteColor];
+	paswdLabel.textColor = [UIColor blackColor];
 	
 	paswdLabel.textAlignment = NSTextAlignmentCenter;
 	
 	UITextField *pwdField = [[UITextField alloc] initWithFrame:CGRectMake(loginX, 55, alertV.frame.size.width -  loginX*1.2, 32)];
-	pwdField.layer.borderColor = [[UIColor colorWithWhite:0.9 alpha:1] CGColor];
+	pwdField.layer.borderColor = [[UIColor blackColor] CGColor];
 	pwdField.secureTextEntry = YES;
 	UIView *leftpPwdView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 8, 32)];
 	
@@ -467,7 +467,7 @@ static BOOL isShowOverMenu = NO;
 	pwdField.layer.cornerRadius = 4;
 	
 	pwdField.placeholder = @"请输入用户登陆密码";
-    [pwdField setValue:[UIColor colorWithWhite:1.0 alpha:0.7] forKeyPath:@"_placeholderLabel.textColor"];
+   
 	pwdField.clearButtonMode = UITextFieldViewModeWhileEditing;
 	
 	if (qqName && qqName.length > 0) {
@@ -476,7 +476,7 @@ static BOOL isShowOverMenu = NO;
 	{
 		pwdField.hidden = NO;
 	}
-	pwdField.textColor = [UIColor whiteColor];
+	pwdField.textColor = [UIColor blackColor];
 	self.pwdField = pwdField;
 	
 	[alertV addSubview:pwdField];
@@ -487,7 +487,7 @@ static BOOL isShowOverMenu = NO;
 	
 	[alertV addSubview:numberLabel];
 	numberLabel.text = @"用户名";
-	numberLabel.textColor = [UIColor whiteColor];
+	numberLabel.textColor = [UIColor blackColor];
 	
 	numberLabel.textAlignment = NSTextAlignmentCenter;
 	
@@ -496,7 +496,7 @@ static BOOL isShowOverMenu = NO;
 	
 	
 	UITextField *loginPwdField = [[UITextField alloc] initWithFrame:CGRectMake(loginX, 100, alertV.frame.size.width -  loginX*1.2, 32)];
-	loginPwdField.layer.borderColor = [[UIColor colorWithWhite:0.9 alpha:1] CGColor];
+	loginPwdField.layer.borderColor = [[UIColor blackColor] CGColor];
 	UIView *leftView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 8, 32)];
 	
 	
@@ -509,11 +509,11 @@ static BOOL isShowOverMenu = NO;
 	loginPwdField.layer.cornerRadius = 4;
 	
 	loginPwdField.placeholder = @"想要授权的用户";
-    [loginPwdField setValue:[UIColor colorWithWhite:1.0 alpha:0.7] forKeyPath:@"_placeholderLabel.textColor"];
+  //  [loginPwdField setValue:[UIColor colorWithWhite:1.0 alpha:0.7] forKeyPath:@"_placeholderLabel.textColor"];
 	loginPwdField.clearButtonMode = UITextFieldViewModeWhileEditing;
 	
 	
-	loginPwdField.textColor = [UIColor whiteColor];
+	loginPwdField.textColor = [UIColor blackColor];
 	
 	
 	
@@ -545,7 +545,7 @@ static BOOL isShowOverMenu = NO;
 	
 	[alertV addSubview:PswLabel];
 	PswLabel.text = @"远程开锁";
-	PswLabel.textColor = [UIColor whiteColor];
+	PswLabel.textColor = [UIColor blackColor];
 	
 	PswLabel.textAlignment = NSTextAlignmentCenter;
 	
@@ -555,7 +555,7 @@ static BOOL isShowOverMenu = NO;
 	
 	[alertV addSubview:recordLabel];
 	recordLabel.text = @"记录查询";
-	recordLabel.textColor = [UIColor whiteColor];
+	recordLabel.textColor = [UIColor blackColor];
 	
 	recordLabel.textAlignment = NSTextAlignmentCenter;
 	
@@ -650,13 +650,13 @@ static BOOL isShowOverMenu = NO;
 		paswdLabel.hidden = NO;
 	}
 	paswdLabel.text = @"用户密码";
-	paswdLabel.textColor = [UIColor whiteColor];
+	paswdLabel.textColor = [UIColor blackColor];
 	
 	paswdLabel.textAlignment = NSTextAlignmentCenter;
 	self.paswdLabel = paswdLabel;
 	
 	UITextField *pwdField = [[UITextField alloc] initWithFrame:CGRectMake(loginX, 55, alertV.frame.size.width -  loginX*1.2, 32)];
-	pwdField.layer.borderColor = [[UIColor colorWithWhite:0.9 alpha:1] CGColor];
+	pwdField.layer.borderColor = [[UIColor blackColor] CGColor];
 	pwdField.secureTextEntry = YES;
 	UIView *leftpPwdView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 8, 32)];
 	
@@ -677,11 +677,11 @@ static BOOL isShowOverMenu = NO;
 	}
 	pwdField.placeholder = @"请输入用户登陆密码";
     
-    [pwdField setValue:[UIColor colorWithWhite:1.0 alpha:0.7] forKeyPath:@"_placeholderLabel.textColor"];
+  //  [pwdField setValue:[UIColor colorWithWhite:1.0 alpha:0.7] forKeyPath:@"_placeholderLabel.textColor"];
 	pwdField.clearButtonMode = UITextFieldViewModeWhileEditing;
 	
 	
-	pwdField.textColor = [UIColor whiteColor];
+	pwdField.textColor = [UIColor blackColor];
 	self.pwdAutherField = pwdField;
 	
 	[alertV addSubview:pwdField];
@@ -742,7 +742,7 @@ static BOOL isShowOverMenu = NO;
 	
 	[alertV addSubview:paswdLabel];
 	paswdLabel.text = @"用户密码";
-	paswdLabel.textColor = [UIColor whiteColor];
+	paswdLabel.textColor = [UIColor blackColor];
 	
 	paswdLabel.textAlignment = NSTextAlignmentCenter;
 	if (qqName && qqName.length > 0) {
@@ -753,7 +753,7 @@ static BOOL isShowOverMenu = NO;
 	}
 	
 	UITextField *pwdField = [[UITextField alloc] initWithFrame:CGRectMake(loginX, 55, alertV.frame.size.width -  loginX*1.2, 32)];
-	pwdField.layer.borderColor = [[UIColor colorWithWhite:0.9 alpha:1] CGColor];
+	pwdField.layer.borderColor = [[UIColor blackColor] CGColor];
 	pwdField.secureTextEntry = YES;
 	UIView *leftpPwdView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 8, 32)];
 	
@@ -772,9 +772,9 @@ static BOOL isShowOverMenu = NO;
 	pwdField.layer.cornerRadius = 4;
 	pwdField.clearButtonMode = UITextFieldViewModeWhileEditing;
 	pwdField.placeholder = @"请输入用户App登陆密码";
-    [pwdField setValue:[UIColor colorWithWhite:1.0 alpha:0.7] forKeyPath:@"_placeholderLabel.textColor"];
+   // [pwdField setValue:[UIColor colorWithWhite:1.0 alpha:0.7] forKeyPath:@"_placeholderLabel.textColor"];
 	
-	pwdField.textColor = [UIColor whiteColor];
+	pwdField.textColor = [UIColor blackColor];
 	self.pwdField = pwdField;
 	
 	[alertV addSubview:pwdField];
@@ -785,13 +785,13 @@ static BOOL isShowOverMenu = NO;
 	
 	[alertV addSubview:manageLabel];
 	manageLabel.text = @"管理员密码";
-	manageLabel.textColor = [UIColor whiteColor];
+	manageLabel.textColor = [UIColor blackColor];
 	
 	manageLabel.textAlignment = NSTextAlignmentCenter;
 	
 	
 	UITextField *manageField = [[UITextField alloc] initWithFrame:CGRectMake(loginX, 100, alertV.frame.size.width -  loginX*1.2, 32)];
-	manageField.layer.borderColor = [[UIColor colorWithWhite:0.9 alpha:1] CGColor];
+	manageField.layer.borderColor = [[UIColor blackColor] CGColor];
 	manageField.secureTextEntry = YES;
 	UIView *manageView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 8, 32)];
 	
@@ -805,9 +805,9 @@ static BOOL isShowOverMenu = NO;
 	manageField.layer.cornerRadius = 4;
 	manageField.clearButtonMode = UITextFieldViewModeWhileEditing;
 	manageField.placeholder = @"请输入用户管理员密码";
-    [manageField setValue:[UIColor colorWithWhite:1.0 alpha:0.7] forKeyPath:@"_placeholderLabel.textColor"];
+   // [manageField setValue:[UIColor colorWithWhite:1.0 alpha:0.7] forKeyPath:@"_placeholderLabel.textColor"];
 	
-	manageField.textColor = [UIColor whiteColor];
+	manageField.textColor = [UIColor blackColor];
 	self.manageField = manageField;
 	
 	[alertV addSubview:manageField];
@@ -817,13 +817,13 @@ static BOOL isShowOverMenu = NO;
     
     [alertV addSubview:numberLabel];
     numberLabel.text = @"手机号码";
-    numberLabel.textColor = [UIColor whiteColor];
+    numberLabel.textColor = [UIColor blackColor];
     
     numberLabel.textAlignment = NSTextAlignmentCenter;
     
 	
     UITextField *loginPwdField = [[UITextField alloc] initWithFrame:CGRectMake(loginX, 150, alertV.frame.size.width -  loginX*1.2, 32)];
-    loginPwdField.layer.borderColor = [[UIColor colorWithWhite:0.9 alpha:1] CGColor];
+    loginPwdField.layer.borderColor = [[UIColor blackColor] CGColor];
     UIView *leftView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 8, 32)];
     
 	
@@ -837,14 +837,14 @@ static BOOL isShowOverMenu = NO;
     loginPwdField.layer.cornerRadius = 4;
     
     loginPwdField.placeholder = @"授权对象的手机号码";
-    [loginPwdField setValue:[UIColor colorWithWhite:1.0 alpha:0.7] forKeyPath:@"_placeholderLabel.textColor"];
+  //  [loginPwdField setValue:[UIColor colorWithWhite:1.0 alpha:0.7] forKeyPath:@"_placeholderLabel.textColor"];
     
-    loginPwdField.textColor = [UIColor whiteColor];
+    loginPwdField.textColor = [UIColor blackColor];
 	
 	
     AutherTimePickView *timeFiled = [[AutherTimePickView alloc] initWithFrame:CGRectMake(loginX, 200, alertV.frame.size.width -  loginX*1.2, 32)];
 	
-	timeFiled.layer.borderColor = [[UIColor colorWithWhite:0.9 alpha:1] CGColor];
+	timeFiled.layer.borderColor = [[UIColor blackColor] CGColor];
 	
 	
 	timeFiled.delegate = self;
@@ -860,15 +860,15 @@ static BOOL isShowOverMenu = NO;
 	timeFiled.layer.cornerRadius = 4;
 	
 	timeFiled.placeholder = @"授权时长";
-    [timeFiled setValue:[UIColor colorWithWhite:1.0 alpha:0.7] forKeyPath:@"_placeholderLabel.textColor"];
+   // [timeFiled setValue:[UIColor colorWithWhite:1.0 alpha:0.7] forKeyPath:@"_placeholderLabel.textColor"];
 	
-	timeFiled.textColor = [UIColor whiteColor];
+	timeFiled.textColor = [UIColor blackColor];
 	
     UILabel * PswLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 200, loginX, 32)];
     
     [alertV addSubview:PswLabel];
     PswLabel.text = @"时间";
-    PswLabel.textColor = [UIColor whiteColor];
+    PswLabel.textColor = [UIColor blackColor];
     
     PswLabel.textAlignment = NSTextAlignmentCenter;
     

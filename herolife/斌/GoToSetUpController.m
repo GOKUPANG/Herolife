@@ -47,7 +47,7 @@ static int const HRTimeDuration = 601;
     [super viewWillAppear:animated];
     
     [self SetMyBackPic];
-
+    
 }
 
 - (void)viewDidLoad {
@@ -59,9 +59,10 @@ static int const HRTimeDuration = 601;
 	
 
     [self makeUI];
+    
 	//haibo 全屏放回
 	[self goBack];
-	
+    
 	//haibo 隐藏底部条
 	[self IsTabBarHidden:YES];
 }

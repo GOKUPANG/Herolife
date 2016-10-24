@@ -671,6 +671,7 @@ static BOOL isOverTime = NO;
 	
 	// 根据服务器要求发送固定格式的数据，假设为指令@"longConnect"，但是一般不会是这么简单的指令
 	NSString *longConnect = @"hrhb\r\n\0";
+    NSLog(@"心跳连接%@",@"hrhb\r\n\0");
 	NSData  *dataStream  = [longConnect dataUsingEncoding:NSUTF8StringEncoding];
 	[_socket writeData:dataStream withTimeout:-1 tag:1];
 	
@@ -732,7 +733,7 @@ static NSUInteger lengthInteger = 0;
 	// DDLogWarn(@"didReadData strData没截取  收到的数据%@", strData);
 	 //如果是心跳包就不往下传值
 	 if ([strData containsString:@"hrhb\r\n\0"]) {
-		 //		 DDLogWarn(@"didReadData strData没截取  收到的数据%@", strData);
+         DDLogWarn(@"didReadData strData接收到心跳包-%@", strData);
 		 return;
 	 }
 	 
@@ -1072,6 +1073,20 @@ static NSUInteger lengthInteger = 0;
 		return;
 	}
 	
+    // 添加门锁回复的set = 30的那条数据 代表成功
+    if ([jsonDict[@"hrpush"][@"type"] isEqualToString:@"set"] && [jsonDict[@"msg"][@"types"] isEqualToString:@"common"] && [jsonDict[@"msg"][@"state"] isEqualToString:@"30"]) {
+        
+        DDLogInfo(@"添加门锁回复的set = 30的那条数据%@", jsonDict);
+        [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationReceiveStratAddWiFiLink object:nil userInfo:jsonDict];
+        return;
+    }
+    // 添加门锁回复的set = 31的那条数据 代表该设备在其他地方添加过
+    if ([jsonDict[@"hrpush"][@"type"] isEqualToString:@"set"] && [jsonDict[@"msg"][@"types"] isEqualToString:@"common"] && [jsonDict[@"msg"][@"state"] isEqualToString:@"31"]) {
+        
+        DDLogInfo(@"添加门锁回复的set = 31的那条数据%@", jsonDict);
+        [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationReceiveStratFailAddWiFiLink object:nil userInfo:jsonDict];
+        return;
+    }
 	// 创建临时授权数据
 	if ([jsonDict[@"hrpush"][@"type"] isEqualToString:@"set"] && [jsonDict[@"msg"][@"types"] isEqualToString:@"common"]) {
 		

@@ -36,6 +36,8 @@
 /** 背景图片*/
 
 @property(nonatomic,strong)UIImageView *backImgView;
+/** 保存接收到的did */
+@property(nonatomic, weak) NSString *did;
 
 
 
@@ -51,116 +53,139 @@ static int const HRTimeDuration = 30;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-	
+	self.leftTime = 30;
+    Wifidid = @"";
 	DDLogWarn(@"wifi----------WaitController-------%@", [NSString stringWithGetWifiName]);
 	[self setupViews];
+    
+    
+    NSString *userName = [kUserDefault objectForKey:kDefaultsUserName];
+    [self sendSocketQuaryDeviceOnLineWithUser:userName dev:@"fsfdsafdsadf"];
+//
+//    //登陆认证
+//    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//        
+//        [self sendLoginSocket];
+//        
+//    });
 	//添加定时器
 	[self addTimer];
-	[self sendHTTPData];
 	
+    
+    //通知
+    [self addObserverNotification];
+    
+}
+
+#pragma mark - 定时60s查询设备状态
+- (void)sendSocketQuaryDeviceOnLineWithUser:(NSString *)user dev:(NSString *)dev
+{
+    
+    
+    AppDelegate *app = (AppDelegate *)[UIApplication sharedApplication].delegate;
+    [app disconnectionToHost];
+//    [app connectToHost];
+//    [self.appDelegate connectToHost];
+//
+//    // 设备令牌可能还没有,需要延时 一下
+    
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    dict[@"user"] = user;
+    dict[@"dev"] = dev;
+    NSString *str = [NSString stringWithSocketQuaryDeviceOnLineWithDst:dict];
+    DDLogWarn(@"sendSocketQuaryDeviceOnLine-%@", str);
+    [app sendMessageWithString:str];
+}
+
+//登陆认证
+- (void)sendLoginSocket
+{
+    
+    AppDelegate *app = (AppDelegate *)[UIApplication sharedApplication].delegate;
+    [app connectToHost];
+    
+    
+    
+    NSString *passWold = [[NSUserDefaults standardUserDefaults] objectForKey:kDefaultsPassWord];
+    NSString *userName = [[NSUserDefaults standardUserDefaults] objectForKey:kDefaultsUserName];
+    NSMutableDictionary *bodyDict = [NSMutableDictionary dictionary];
+    bodyDict[@"user"] = userName;
+    bodyDict[@"pass"] = passWold;
+    //登入认证  组帧
+    NSString *UUID = [kUserDefault objectForKey:kUserDefaultDeviceUUID];
+    NSString *token = [NSString stringWithFormat:@"ios+@+%@", UUID];
+    NSString *str = [NSString stringWithPostTCPJsonVersion:@"0.0.1" status:@"200" token:token msgType:@"login" msgExplain:@"login" fromUserName:userName destUserName:@"huaruicloud" destDevName:@"huaruiPushServer" msgBodyStringDict:bodyDict];
+    
+    DDLogWarn(@"发送登入认证---%@", str);
+    [app sendMessageWithString:str];
+    
+}
+- (void)addObserverNotification
+{
+    //set = 30
+    [kNotification addObserver:self selector:@selector(receiveStratAddWiFiLink:) name:kNotificationReceiveStratAddWiFiLink object:nil];
+    //set = 31
+    [kNotification addObserver:self selector:@selector(receiveStratFailAddWiFiLink:) name:kNotificationReceiveStratFailAddWiFiLink object:nil];
+    
+}
+- (void)dealloc
+{
+    [kNotification removeObserver:self];
+    [self.timer invalidate];
+}
+- (void)receiveStratFailAddWiFiLink:(NSNotification *)note
+{
+    
+    NSDictionary *dict = note.userInfo;
+    [self sendSocketWithSetWithUUID:[dict valueForKeyPath:@"uuid"]];
+    [SVProgressTool hr_showErrorWithStatus:@"该锁已在其他帐号上添加,请在其他帐号上删除后重试!"];
+   
+}
+static NSString *Wifidid = @"";
+- (void)receiveStratAddWiFiLink:(NSNotification *)note
+{
+    
+    NSDictionary *dict = note.userInfo;
+    NSString *did = dict[@"msg"][@"did"];
+    if ([Wifidid isEqualToString:did ]) {
+        return;
+    }
+    Wifidid = did;
+    NSString *uuid = dict[@"msg"][@"uuid"];
+    [self sendSocketWithSetWithUUID:uuid];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        AddLockController *addLockVC = [[AddLockController alloc] init];
+        addLockVC.did = did;
+        [self.navigationController pushViewController:addLockVC animated:YES];
+        
+    });
+    
+    [self.timer invalidate];
+}
+- (void)sendSocketWithSetWithUUID:(NSString *)uuid
+{
+    
+    AppDelegate *app = (AppDelegate *)[UIApplication sharedApplication].delegate;
+    //    NSString *set = dic[@"msg"][@"did"];
+    
+    [app connectToHost];
+    NSArray *person = [NSArray array];
+    NSArray *permit = [NSArray array];
+    NSString *time = @"none";
+    NSString *str = [NSString stringWithSocketAddLockWithlockUUID:uuid person:person permit:permit autherTime:time];
+    
+    [app sendMessageWithString:str];
+    DDLogWarn(@"WaitController--------set = 32 %@", str);
+}
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    Wifidid = @"";
 }
 - (void)viewDidAppear:(BOOL)animated
 {
 	[super viewDidAppear:animated];
-	DDLogWarn(@"WaitController--------viewDidAppear");
 }
-#pragma mark - HTTP
-- (void)sendHTTPData
-{
-	//先去查询, HTTP查询如果有数据就去更新, 如果没有就创建&uid=uid&type=hrsc&uuid=uuid
-	AppDelegate *app = (AppDelegate *)[UIApplication sharedApplication].delegate;
-	NSDictionary *msg = app.msgDictionary;
-	NSString *ssid = msg[@"uuid"];
-	NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-//	NSString *user = [kUserDefault objectForKey:kDefaultsUserName];  这里去掉user这个字段
-//	dict[@"user"] = user;
-	dict[@"types"] = @"hrsc";
-	dict[@"uuid"] = ssid;
-	[HRHTTPTool hr_getHttpWithURL:HRAPI_QueryLock_URL parameters:dict responseDict:^(id dictionary, NSError *error) {
-		DDLogWarn(@"array--%@---error---%@", dictionary,error);
-		DDLogWarn(@"class--%@", [dictionary class]);
-		
-		if (error) {
-			[ErrorCodeManager showError:error];
-			
-			return ;
-		}
-		if ([[dictionary class] isSubclassOfClass:[NSArray class]]) {
-			NSArray *arr = (NSArray *)dictionary;
-			if (arr.count > 0) {
-				
-				for (NSDictionary *dict in arr) {
-					NSString *uuid = [dict valueForKeyPath:@"uuid"];
-					NSString *uid = [dict valueForKeyPath:@"uid"];
-					NSString *defaultUid = [kUserDefault objectForKey:kDefaultsUid];
-					if ([uuid isEqualToString:ssid]) {
-						AddLockController *addLockVC = [[AddLockController alloc] init];
-						if ([defaultUid isEqualToString:uid]) {
-							
-							addLockVC.did = [dict valueForKeyPath:@"did"];
-							[self.navigationController pushViewController:addLockVC animated:YES];
-						}else
-						{
-							[SVProgressTool hr_showErrorWithStatus:@"该门锁在其他帐号上已经添加,请在其他帐号上删除该门锁,再重试!"];
-							dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-								
-								[self.navigationController popViewControllerAnimated:YES];
-							});
-						}
-					}
-				}
-			}else
-			{
-				//创建门锁HTTP
-				[self createLockHTTPWithUUID:ssid];
-				
-			}
-		}
-
-	}];
-	
-}
-#pragma mark - 创建门锁HTTP
-- (void)createLockHTTPWithUUID:(NSString *)uuid
-{
-	NSString *licence = [NSString hr_stringWithBase64];
-	
-	NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-	dict[@"type"] = @"hrsc";
-	dict[@"field_uuid[und][0][value]"] = uuid;
-	dict[@"field_version[und][0][value]"] = @"dev version";
-	dict[@"title"] = @"智能门锁";
-	dict[@"field_brand[und][0][value]"] = @"dev brand";
-	dict[@"field_licence[und][0][value]"] = licence;
-	dict[@"field_level[und][0][value]"] = @"90%";
-	dict[@"field_state[und][0][value]"] = @"0";
-	dict[@"field_online[und][0][value]"] = @"off";
-	dict[@"field_op[und][0][value]"] = @"1";
-	dict[@"field_op[und][1][value]"] = @"1";
-	dict[@"field_op[und][2][value]"] = @"1";
-	dict[@"field_op[und][3][value]"] = @"1";
-	dict[@"field_op[und][4][value]"] = @"none";
-	dict[@"field_op[und][5][value]"] = @"none";
-	dict[@"field_op[und][6][value]"] = @"none";
-	dict[@"field_op[und][7][value]"] = @"none";
-	dict[@"field_op[und][8][value]"] = @"none";
-	dict[@"field_op[und][9][value]"] = @"none";
-	
-	[HRHTTPTool hr_postHttpWithURL:HRAPI_AddLock_URL parameters:dict responseDict:^(id dictionary, NSError *error) {
-		
-		if (error) {
-			[ErrorCodeManager showError:error];
-			return ;
-		}
-		NSDictionary *dict = (NSDictionary *)dictionary;
-		AddLockController *addLockVC = [[AddLockController alloc] init];
-		addLockVC.did = [dict valueForKeyPath:@"nid"];
-		[self.navigationController pushViewController:addLockVC animated:YES];
-		DDLogWarn(@"createLockHTTP--%@---error---%@", dictionary,error);
-		
-	}];
-}
-
 
 - (void)viewWillAppear:(BOOL)animated
 {
@@ -187,7 +212,7 @@ static int const HRTimeDuration = 30;
 	
 	else{
 		
-		NSString * imgName = [NSString stringWithFormat:@"%ld.jpg",PicNum];
+		NSString * imgName = [NSString stringWithFormat:@"%ld.jpg",(long)PicNum];
 		
 		self.backImgView.image =[UIImage imageNamed:imgName];
 	}
@@ -267,13 +292,13 @@ static int const HRTimeDuration = 30;
 	
 	//提示  label
 	HRLabel *promptLabel = [[HRLabel alloc] init];
-	promptLabel.text = @"正在添加智能门锁,请稍后...";
+	promptLabel.text = @"网络连接成功，正在将设备添加至云系统...";
 	[self.view addSubview:promptLabel];
 	self.promptLabel = promptLabel;
 	
 	//倒计时  label
 	HRLabel *timeLabel = [[HRLabel alloc] init];
-	NSString *title = [NSString stringWithFormat:@"%zd秒", self.leftTime];
+	NSString *title = [NSString stringWithFormat:@"%@秒", @"30"];
 	timeLabel.text = title;
 	[self.view addSubview:timeLabel];
 	self.timeLabel = timeLabel;
@@ -363,7 +388,7 @@ static int const HRTimeDuration = 30;
 {
 	self.leftTime--;
 	// 更新文字
-	NSString *title = [NSString stringWithFormat:@"%zd秒", self.leftTime];
+	NSString *title = [NSString stringWithFormat:@"%d秒", self.leftTime];
 	self.timeLabel.text = title;
 	if (self.leftTime == 0) {
 		
@@ -375,10 +400,6 @@ static int const HRTimeDuration = 30;
 	
 }
 
-- (void)dealloc
-{
-	[self.timer invalidate];
-}
 
 - (void)cancelButtonClick:(UIButton *)btn
 {

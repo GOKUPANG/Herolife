@@ -732,7 +732,13 @@ static BOOL isOvertime = NO;
     [self.view addSubview:ConfirmBtn];
     
     
-    ConfirmBtn.backgroundColor =[UIColor colorWithRed:198.0/255.0 green:240.0/255.0 blue:255.0/255.0 alpha:0.3];
+   // ConfirmBtn.backgroundColor =[UIColor colorWithRed:198.0/255.0 green:240.0/255.0 blue:255.0/255.0 alpha:0.3];
+    
+    [ConfirmBtn setBackgroundImage:[self imageWithColor:[UIColor colorWithWhite:1 alpha:0.3]] forState:UIControlStateNormal];
+    [ConfirmBtn setBackgroundImage:[self imageWithColor:[UIColor colorWithRed:198.0/255.0 green:240.0/255.0 blue:255.0/255.0 alpha:0.3]] forState:UIControlStateHighlighted];
+    
+    
+    
     ConfirmBtn.sd_layout
     .topSpaceToView(imageView1,17.5/667.0 * SCREEN_H)
     .bottomSpaceToView(self.view,17.5/667.0 * SCREEN_H)
@@ -788,6 +794,21 @@ static BOOL isOvertime = NO;
     [backBtn addGestureRecognizer:LPGR];
     
     
+}
+
+#pragma mark - 颜色转换为图片
+- (UIImage *)imageWithColor:(UIColor *)color {
+    CGRect rect = CGRectMake(0.0f, 0.0f, 1.0f, 1.0f);
+    UIGraphicsBeginImageContext(rect.size);
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    
+    CGContextSetFillColorWithColor(context, [color CGColor]);
+    CGContextFillRect(context, rect);
+    
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    return image;
 }
 
 #pragma mark - 长按删除全部

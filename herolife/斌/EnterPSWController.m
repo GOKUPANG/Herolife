@@ -59,7 +59,7 @@
 
 
 /** 停留时间 */
-static int const HRTimeDuration = 120;
+static int const HRTimeDuration = 300;
 
 
 -(void)viewWillAppear:(BOOL)animated
@@ -85,7 +85,7 @@ static int const HRTimeDuration = 120;
     
     else{
         
-        NSString * imgName = [NSString stringWithFormat:@"%ld.jpg",PicNum];
+        NSString * imgName = [NSString stringWithFormat:@"%ld.jpg",(long)PicNum];
         
         self.backImgView.image =[UIImage imageNamed:imgName];
     }
@@ -124,56 +124,10 @@ static int const HRTimeDuration = 120;
 	
 	//haibo 隐藏底部条
 	[self IsTabBarHidden:YES];
-	
-	//通知
-	[self addObserverNotification];
-	
-}
-- (void)addObserverNotification
-{
-	[kNotification addObserver:self selector:@selector(receiveStratAddWiFiLink) name:kNotificationReceiveStratAddWiFiLink object:nil];
-}
-static BOOL isOvertime = NO;
-static BOOL ispush = YES;
-- (void)receiveStratAddWiFiLink
-{
-	isOvertime = YES;
-	AppDelegate *app = (AppDelegate *)[UIApplication sharedApplication].delegate;
-	NSDictionary *dic = app.msgDictionary;
-	NSString *set = dic[@"set"];
-	if ([set isEqualToString:@"5"]) {
-		
-		//发送set = 7的帧, 目的是为了让服务器确认我已经收到服务器发给我的set = 5的帧
-		[self.udpSocket connectWithUDPSocket];
-		
-		NSInteger index = 0;
-		NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-		dict[@"set"] = @"7";
-		dict[@"ssid"] = self.WIFILabel.text;
-		AppDelegate *app = (AppDelegate *)[UIApplication sharedApplication].delegate;
-		for (int i = 0; i < app.wifiNameArray.count -1; i++) {
-			if ([app.wifiNameArray[i] isEqualToString:self.WIFILabel.text]) {
-				index = i;
-			}
-		}
-		dict[@"pass"] = self.WIFITextField.text;
-		dict[@"auth"] = app.authlistArray[index];
-		
-		NSString *sendString = [NSString stringWithUDPMsgDict:dict];
-		
-		[_udpSocket sendUDPSockeWithString:sendString];
-		
-		DDLogWarn(@"--------------------------------sendUDPSockeWithString");
-		[self addTimer];//wifi搜索需要时间, 这时我需要检测当前的wifi是否是wifi盒子的wifi, 如果切换到了用户的wifi才让跳转
-		
-	}else if ([set isEqualToString:@"6"]) {
-		[SVProgressTool hr_showErrorWithStatus:@"添加wifi失败, 请重试!"];
-	}
 }
 - (void)viewDidAppear:(BOOL)animated
 {
 	[super viewDidAppear:animated];
-	ispush = YES;
 	[SVProgressTool hr_dismiss];
 	if (self.name.length > 0) {
 		self.WIFILabel.text = self.name;
@@ -342,7 +296,7 @@ static BOOL ispush = YES;
     [WIFITextField setValue:[UIColor colorWithRed:153.0/255.0 green:153.0/255.0 blue:153.0/255.0 alpha:1] forKeyPath:@"_placeholderLabel.textColor"];
     
     WIFITextField.clearButtonMode =    UITextFieldViewModeAlways;
-	WIFITextField.text = @"";
+	WIFITextField.text = @"HRKJJISHUBU";
     
   
     
@@ -506,6 +460,8 @@ static BOOL ispush = YES;
 	}else
 	{
 		[self setupUDPSocket];
+        
+        [self addTimer];//wifi搜索需要时间, 这时我需要检测当前的wifi是否是wifi盒子的wifi, 如果切换到了用户的wifi才让跳转
 		
 	}
 }
@@ -513,7 +469,7 @@ static BOOL ispush = YES;
 #pragma mark - haibo 建立UDP连接
 - (void)setupUDPSocket
 {
-	[SVProgressTool hr_showWithStatus:@"正在添加..."];
+	[SVProgressTool hr_showWithStatus:@"等待手机自动连接网络..."];
 	NSInteger index = 0;
 	self.udpSocket = [HRUDPSocketTool shareHRUDPSocketTool];
 	[self.udpSocket connectWithUDPSocket];
@@ -528,19 +484,18 @@ static BOOL ispush = YES;
 		}
 	}
 	dict[@"pass"] = self.WIFITextField.text;
-	dict[@"auth"] = app.authlistArray[index];
+    dict[@"auth"] = app.authlistArray[index];
+    NSString *userName = [kUserDefault objectForKey:kDefaultsUserName];
+    NSString *pass = [kUserDefault objectForKey:kDefaultsPassWord];
+    
+    dict[@"username"] = userName;
+    dict[@"password"] = pass;
 	
 	NSString *sendString = [NSString stringWithUDPMsgDict:dict];
 	
 	[_udpSocket sendUDPSockeWithString:sendString];
 	
-	DDLogWarn(@"------sendUDPSockeWithSet = 4--%@", sendString);
-	isOvertime = NO;
-	dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(30.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-		if (!isOvertime) {
-			[SVProgressTool hr_showErrorWithStatus:@"请求超时!"];
-		}
-	});
+    NSLog(@"set = 4%@", sendString);
 	
 }
 
@@ -601,7 +556,7 @@ static BOOL ispush = YES;
 - (void)addTimer
 {
 	self.leftTime = HRTimeDuration;
-	self.timer = [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(updateTimeLabel) userInfo:nil repeats:YES];
+	self.timer = [NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(updateTimeLabel) userInfo:nil repeats:YES];
 	
 }
 static NSString *wift;
@@ -616,22 +571,17 @@ static NSString *wift;
 		
 	}else
 	{
-		//延时2秒跳转
-		dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
 			
-			[SVProgressTool hr_dismiss];
-			if (ispush) {
-				WaitController *waitVC = [[WaitController alloc] init];
-				[self.navigationController pushViewController:waitVC animated:YES];
-				ispush = NO;
-			}
-		});
-		
+        [SVProgressTool hr_dismiss];
+        WaitController *waitVC = [[WaitController alloc] init];
+        [self.navigationController pushViewController:waitVC animated:YES];
+      
 		[self.timer invalidate];
 		self.timer = nil;
 	}
 	if (self.leftTime == 0) {
 		
+        [SVProgressTool hr_showErrorWithStatus:@"请求超时!"];
 		[self.timer invalidate];
 		self.timer = nil;
 	}

@@ -1923,7 +1923,8 @@ static int httpRequsetCount = 0;
 			
 			[self beginANimation];
 			
-		}else//更新设备信息
+		}else if (index == 2)
+        //更新设备信息
         {
             //更新设备信息UI
             NSString *qqName = [kUserDefault objectForKey:kNSUserDefaultsNickname];
@@ -2040,12 +2041,12 @@ static int httpRequsetCount = 0;
 	
 	[alertV addSubview:paswdLabel];
 	paswdLabel.text = @"用户密码";
-	paswdLabel.textColor = [UIColor whiteColor];
+	paswdLabel.textColor = [UIColor blackColor];
 	
 	paswdLabel.textAlignment = NSTextAlignmentCenter;
 	
 	UITextField *pwdField = [[UITextField alloc] initWithFrame:CGRectMake(loginX, 55, alertV.frame.size.width -  loginX*1.2, 32)];
-	pwdField.layer.borderColor = [[UIColor colorWithWhite:0.9 alpha:1] CGColor];
+	pwdField.layer.borderColor = [[UIColor blackColor] CGColor];
 	pwdField.secureTextEntry = YES;
 	UIView *leftpPwdView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 8, 32)];
 	
@@ -2061,12 +2062,12 @@ static int httpRequsetCount = 0;
 	pwdField.placeholder = @"请输入用户登陆密码";
     
     
-    [pwdField setValue:[UIColor colorWithWhite:1.0 alpha:0.7] forKeyPath:@"_placeholderLabel.textColor"];
+  //  [pwdField setValue:[UIColor colorWithWhite:1.0 alpha:0.7] forKeyPath:@"_placeholderLabel.textColor"];
     
 	pwdField.clearButtonMode = UITextFieldViewModeWhileEditing;
 	
 	
-	pwdField.textColor = [UIColor whiteColor];
+	pwdField.textColor = [UIColor blackColor];
 	
 	/** 标记这个输入框*/
 	pwdField.tag = 7;
@@ -2153,12 +2154,12 @@ static int httpRequsetCount = 0;
     
     [alertV addSubview:paswdLabel];
     paswdLabel.text = @"用户密码";
-    paswdLabel.textColor = [UIColor whiteColor];
+    paswdLabel.textColor = [UIColor blackColor];
     
     paswdLabel.textAlignment = NSTextAlignmentCenter;
     
     UITextField *pwdField = [[UITextField alloc] initWithFrame:CGRectMake(loginX, 55, alertV.frame.size.width -  loginX*1.2, 32)];
-    pwdField.layer.borderColor = [[UIColor colorWithWhite:0.9 alpha:1] CGColor];
+    pwdField.layer.borderColor = [[UIColor blackColor] CGColor];
     pwdField.secureTextEntry = YES;
     UIView *leftpPwdView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 8, 32)];
     
@@ -2174,12 +2175,12 @@ static int httpRequsetCount = 0;
     pwdField.placeholder = @"请输入用户登陆密码";
     
     
-    [pwdField setValue:[UIColor colorWithWhite:1.0 alpha:0.7] forKeyPath:@"_placeholderLabel.textColor"];
+   // [pwdField setValue:[UIColor colorWithWhite:1.0 alpha:0.7] forKeyPath:@"_placeholderLabel.textColor"];
     
     pwdField.clearButtonMode = UITextFieldViewModeWhileEditing;
     
     
-    pwdField.textColor = [UIColor whiteColor];
+    pwdField.textColor = [UIColor blackColor];
     
     /** 标记这个输入框*/
     pwdField.tag = 7;

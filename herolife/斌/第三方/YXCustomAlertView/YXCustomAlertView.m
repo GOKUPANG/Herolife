@@ -31,7 +31,15 @@
         [superView addSubview:_middleView];
         
         
-        self.backgroundColor = [[UIColor whiteColor]colorWithAlphaComponent:0.3];
+
+        self.backgroundColor =  [UIColor colorWithRed:245.0f/255.0f green:245.0f/255.0f blue:245.0f/255.0f alpha:1.0f]
+        
+
+       // self.backgroundColor =  [UIColor colorWithRed:200.0f/255.0f green:200.0f/255.0f blue:200.0f/255.0f alpha:1.0f]
+
+        
+        
+        
         ;
         self.layer.cornerRadius = 8;
         self.center = CGPointMake([UIScreen mainScreen].bounds.size.width/2, _centerY);
@@ -40,7 +48,7 @@
         
         self.titleLabel.frame = CGRectMake(0, 15, frame.size.width, 20);
         
-        self.titleLabel.textColor = [UIColor whiteColor];
+        self.titleLabel.textColor = [UIColor blackColor];
         
        [self addSubview:_titleLabel];
         
@@ -50,13 +58,13 @@
         [self addSubview:cancelBtn];
         [cancelBtn addTarget:self action:@selector(leftCancelClick) forControlEvents:UIControlEventTouchUpInside];
         
-        [cancelBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [cancelBtn setTitleColor:[UIColor colorWithR:21 G:126 B:251 alpha:1] forState:UIControlStateNormal];
 
         
         CGRect confirmF = CGRectMake(frame.size.width/2, cancelBtn.frame.origin.y, cancelBtn.frame.size.width, cancelBtn.frame.size.height);
         UIButton *confirmBtn = [self creatButtonWithFrame:confirmF title:@"确定"];
         
-        [confirmBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [confirmBtn setTitleColor:[UIColor colorWithR:21 G:126 B:251 alpha:1] forState:UIControlStateNormal];
         
         
         [self addSubview:confirmBtn];

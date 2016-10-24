@@ -334,7 +334,7 @@
     
     [alertV addSubview:numberLabel];
     numberLabel.text = @"密码编号";
-    numberLabel.textColor = [UIColor whiteColor];
+    numberLabel.textColor = [UIColor blackColor];
     
     numberLabel.textAlignment = NSTextAlignmentCenter;
     
@@ -343,7 +343,7 @@
     
     
     UITextField *loginPwdField = [[UITextField alloc] initWithFrame:CGRectMake(loginX, 55, alertV.frame.size.width -  loginX*1.2, 32)];
-    loginPwdField.layer.borderColor = [[UIColor colorWithWhite:0.9 alpha:1] CGColor];
+    loginPwdField.layer.borderColor = [[UIColor blackColor] CGColor];
     UIView *leftView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 8, 32)];
     
     
@@ -357,16 +357,16 @@
     
     loginPwdField.placeholder = @"请输入密码编号";
     
-    loginPwdField.textColor = [UIColor whiteColor];
+    loginPwdField.textColor = [UIColor blackColor];
     
-     [loginPwdField setValue:[UIColor colorWithWhite:1.0 alpha:0.7] forKeyPath:@"_placeholderLabel.textColor"];
+   //  [loginPwdField setValue:[UIColor colorWithWhite:1.0 alpha:0.7] forKeyPath:@"_placeholderLabel.textColor"];
     
     
     
     
     UITextField * PSWNameField = [[UITextField alloc]initWithFrame:CGRectMake(loginX, 100, alertV.frame.size.width -  loginX*1.2, 32)];
     
-    PSWNameField.layer.borderColor = [[UIColor colorWithWhite:0.9 alpha:1] CGColor];
+    PSWNameField.layer.borderColor = [[UIColor blackColor] CGColor];
 
     
     
@@ -383,10 +383,10 @@
     
     PSWNameField.placeholder = @"请给密码命名";
     
-    [PSWNameField setValue:[UIColor colorWithWhite:1.0 alpha:0.7] forKeyPath:@"_placeholderLabel.textColor"];
+   // [PSWNameField setValue:[UIColor colorWithWhite:1.0 alpha:0.7] forKeyPath:@"_placeholderLabel.textColor"];
 
     
-    PSWNameField.textColor = [UIColor whiteColor];
+    PSWNameField.textColor = [UIColor blackColor];
     
     
     
@@ -397,7 +397,7 @@
     
     [alertV addSubview:PswLabel];
     PswLabel.text = @"密码命名";
-    PswLabel.textColor = [UIColor whiteColor];
+    PswLabel.textColor = [UIColor blackColor];
     
     PswLabel.textAlignment = NSTextAlignmentCenter;
     
@@ -518,9 +518,12 @@
     _tableView.backgroundColor = [UIColor clearColor];
     self.automaticallyAdjustsScrollViewInsets = NO;
     
-    UIView *footView = [UIView new];
+    UIView * footView = [[UIView alloc]init];
     
-    _tableView.tableFooterView = footView   ;
+    _tableView.tableFooterView = footView;
+    
+    
+    ;
     
     
   
@@ -602,7 +605,7 @@
     [alertV addSubview:numberLabel];
     numberLabel.text = model.PswNumber;
     
-    numberLabel.textColor = [UIColor whiteColor];
+    numberLabel.textColor = [UIColor blackColor];
     
     numberLabel.textAlignment = NSTextAlignmentCenter;
     
@@ -611,7 +614,7 @@
     
     
     UITextField *loginPwdField = [[UITextField alloc] initWithFrame:CGRectMake(loginX, 55, alertV.frame.size.width -  loginX*1.2, 32)];
-    loginPwdField.layer.borderColor = [[UIColor colorWithWhite:0.9 alpha:1] CGColor];
+    loginPwdField.layer.borderColor = [[UIColor blackColor] CGColor];
     UIView *leftView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 8, 32)];
     
     //   UILabel *leftLabel = [[UILabel alloc ]initWithFrame:CGRectMake(0, 0, 8, 32)];
@@ -626,11 +629,11 @@
     loginPwdField.layer.borderWidth = 1;
     loginPwdField.layer.cornerRadius = 4;
     
-    loginPwdField.textColor = [UIColor whiteColor];
+    loginPwdField.textColor = [UIColor blackColor];
     
     loginPwdField.placeholder = model.PswName;
     
-     [loginPwdField setValue:[UIColor colorWithWhite:1.0 alpha:0.7] forKeyPath:@"_placeholderLabel.textColor"];
+    // [loginPwdField setValue:[UIColor colorWithWhite:1.0 alpha:0.7] forKeyPath:@"_placeholderLabel.textColor"];
     
     
     

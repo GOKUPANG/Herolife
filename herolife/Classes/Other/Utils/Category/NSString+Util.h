@@ -47,6 +47,8 @@
 #pragma mark - 修改授权家人授权 的锁
 + (NSString *)stringWithSocketModifyFamilyLockWithlockUUID:(NSString *)lockUUID did:(NSString *)did person:(NSArray *)person permit:(NSArray *)permit;
 
+#pragma mark - 添加门锁之发送set = 7的帧
++ (NSString *)stringWithSocketAddLockWithlockUUID:(NSString *)lockUUID  person:(NSArray *)person permit:(NSArray *)permit autherTime:(NSString *)autherTime;
 #pragma mark - 临时授权 的锁
 + (NSString *)stringWithSocketAddTemporaryAutherLockWithlockUUID:(NSString *)lockUUID person:(NSArray *)person permit:(NSArray *)permit autherTime:(NSString *)autherTime;
 /// 获取当前时间
