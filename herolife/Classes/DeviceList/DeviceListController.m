@@ -317,22 +317,22 @@ static BOOL isOvertime = NO;
 - (void)receiveDeleteAutherDevice:(NSNotification *)note
 {
 	[SVProgressHUD showSuccessWithStatus:@"删除成功!"];
-	NSDictionary *dict = note.userInfo;
-	NSString *uuid = dict[@"msg"][@"uuid"];
-	NSMutableArray *mu = [NSMutableArray array];
-	for (DeviceListModel *model in self.homeArray) {
-		if ([model.uuid isEqualToString:uuid]) {//如果要删除的UUID 和设备列表数组里的UUID是一样的就删除
-			continue;
-		}
-		
-		[mu addObject:model];
-	}
-	//清空当前数据
+//	NSDictionary *dict = note.userInfo;
+//	NSString *uuid = dict[@"msg"][@"uuid"];
+//	NSMutableArray *mu = [NSMutableArray array];
+//	for (DeviceListModel *model in self.homeArray) {
+//		if ([model.uuid isEqualToString:uuid]) {//如果要删除的UUID 和设备列表数组里的UUID是一样的就删除
+//			continue;
+//		}
+//		
+//		[mu addObject:model];
+//	}
+//	//清空当前数据
 	self.currentStateModel.uuid = @"";
-	self.homeArray = mu;
+//	self.homeArray = mu;
 	//重新获取数据
 	[self getHttpRequset];
-	[self.collectionView reloadData];
+//	[self.collectionView reloadData];
 }
 static BOOL isShowOverMenu = NO;
 - (void)receviedWithNotOnline
@@ -1519,7 +1519,6 @@ static int httpRequsetCount = 0;
 		//去除服务器发过来的数据里没有值的情况
 		if (((NSArray*)responseObject).count < 1 ) {
 			DDLogDebug(@"responseObject count == 0");
-			return;
 		}
 		
 		[weakSelf.autherPersonArray removeAllObjects];
@@ -1546,8 +1545,9 @@ static int httpRequsetCount = 0;
 		
 		uuidAllString = [NSString stringWithFormat:@"%@%@|", uuidAllString, auther.uuid];
 	}
-	uuidAllString = [uuidAllString substringToIndex:uuidAllString.length - 1];
-	
+    if (uuidAllString.length > 1) {
+        uuidAllString = [uuidAllString substringToIndex:uuidAllString.length - 1];
+     
 	NSString *url = [NSString stringWithFormat:@"%@(%@)", HRAPI_LockAutherInformation_URL,uuidAllString];
 	
 	DDLogWarn(@"获得授权设备信息 url1%@", url);
@@ -1568,12 +1568,10 @@ static int httpRequsetCount = 0;
 		if (![responseObject isKindOfClass:[NSArray class]]) {
 			[weakSelf.personDeviceArray removeAllObjects];
 			DDLogDebug(@"responseObject不是NSArray");
-			return;
 		}
 		//去除服务器发过来的数据里没有值的情况
 		if (((NSArray*)responseObject).count < 1 ) {
 			DDLogDebug(@"responseObject count == 0");
-			return;
 		}
 		
 		[weakSelf.personDeviceArray removeAllObjects];
@@ -1647,6 +1645,7 @@ static int httpRequsetCount = 0;
             }else
             {
                 weakSelf.listLabel.text = @"";
+                weakSelf.listImageView.image = [UIImage imageNamed:@""];
             }
         }
         
@@ -1657,7 +1656,86 @@ static int httpRequsetCount = 0;
         [self addTimer];
 		
 	}];
-    
+    }else
+    {
+        
+        
+        //当没有授权设备时
+        
+        [self.photoModelArray removeAllObjects];
+        
+        //判断当前的mode是否为空, 如果为空就让他等于数组的第一个值, 如果不为空就让他等于当前值, 刷新是刷新的当前的数组个数和状态
+        if (self.currentStateModel.uuid.length < 1) {
+            
+            self.currentStateModel = self.homeArray.firstObject;
+            
+            //显示占位图片
+            [self setUp3DEptPictureWithHomeArray:self.homeArray];
+        }else
+        {
+            int index = 0;
+            for (DeviceListModel *model in self.homeArray) {
+                if ([model.uuid isEqualToString:self.currentStateModel.uuid]) {//取出和当前的UUID一样的这条数据覆盖掉,currentStateModel数据
+                    self.currentStateModel = model;
+                    index++;
+                    
+                }
+            }
+            
+            if (index) {
+                
+                //显示占位图片
+                [self setUp3DEptPictureWithHomeArray:self.homeArray];
+            }else
+            {
+                self.currentStateModel = self.homeArray.firstObject;
+                //显示占位图片
+                [self setUp3DEptPictureWithHomeArray:self.homeArray];
+            }
+        }
+        
+        //重新设置列表按钮的图片和文字
+        if (!httpRequsetCount) {
+            if (self.homeArray.count > 0) {
+                
+                self.listLabel.text = self.currentStateModel.title;
+                if ([self.currentStateModel.state isEqualToString:@"1"]) {
+                    self.listImageView.image = [UIImage imageNamed:@"空心在线"];
+                }else
+                {
+                    
+                    self.listImageView.image = [UIImage imageNamed:@"空心离线"];
+                }
+                
+            }else
+            {
+                self.listLabel.text = @"";
+                self.listImageView.image = [UIImage imageNamed:@""];
+            }
+            
+        }else
+        {
+            if (self.homeArray.count > 0) {
+                
+                self.listLabel.text = self.currentStateModel.title;
+                
+            }else
+            {
+                self.listLabel.text = @"";
+                
+                self.listImageView.image = [UIImage imageNamed:@""];
+            }
+        }
+        
+        //		[weakSelf.tableView reloadData];
+        [self.collectionView reloadData];
+        
+        //定时60s查询设备状态
+        [self addTimer];
+
+        
+        
+    }
     httpRequsetCount++;
 }
 
@@ -1681,7 +1759,7 @@ static int httpRequsetCount = 0;
 		
 	}
 	
-    
+    //自己的设备  进行删除操作
     //删除授权信息
     AppDelegate *app = (AppDelegate *)[UIApplication sharedApplication].delegate;
     

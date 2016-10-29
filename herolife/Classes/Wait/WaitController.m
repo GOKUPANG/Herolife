@@ -150,6 +150,7 @@ static NSString *Wifidid = @"";
     if ([Wifidid isEqualToString:did ]) {
         return;
     }
+    DDLogInfo(@"-----------receiveStratAddWiFiLink---------1----did%@Wifidid%@", did,Wifidid);
     Wifidid = did;
     NSString *uuid = dict[@"msg"][@"uuid"];
     [self sendSocketWithSetWithUUID:uuid];
@@ -180,7 +181,6 @@ static NSString *Wifidid = @"";
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-    Wifidid = @"";
 }
 - (void)viewDidAppear:(BOOL)animated
 {

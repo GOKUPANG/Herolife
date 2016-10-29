@@ -21,16 +21,16 @@ static NSTimeInterval const dimissTimer = 2;
 	NSString * code = [dict valueForKeyPath:@"statusCode"];
 	
 	if (str.length > 1) {
-		
+        
 		str = [str replaceUnicode:str];
-		str = [str substringFromIndex:2];
-		NSRange range = [str rangeOfString:@"\"]" options:NSBackwardsSearch];
-		str = [str substringToIndex:range.location];
+//		str = [str substringFromIndex:2];
+//		NSRange range = [str rangeOfString:@"\"]" options:NSBackwardsSearch];
+//		str = [str substringToIndex:range.location];
 		NSString *description = [NSString stringWithFormat:@"%@  %@", code,str];
 
 		[SVProgressTool hr_showErrorWithStatus:description];
+        
 
-		
 	}else
 	{
 		[SVProgressTool hr_showErrorWithStatus:@"未连接到服务器!"];

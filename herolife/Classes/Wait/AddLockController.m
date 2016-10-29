@@ -209,13 +209,13 @@
 }
 - (void)createModifyLock
 {
-	if (self.nameField.text.length < 1) {
-		[SVProgressTool hr_showErrorWithStatus:@"设备名不能为空!"];
-		return;
+    NSString *title = self.nameField.text;
+	if (title.length < 1) {
+        title = @"智能门锁";
 	}
 	NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
 	parameters[@"type"] = @"hrsc";
-	parameters[@"title"] = self.nameField.text;
+	parameters[@"title"] = title;
 	
 	DDLogWarn(@"parameters--%@---", parameters);
 	NSString *httplast = [NSString stringWithFormat:@"%@%@", HRAPI_ModifyLock_URL, self.did];

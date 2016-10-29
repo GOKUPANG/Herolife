@@ -566,7 +566,7 @@ static NSString *wift;
 	self.leftTime--;
 	DDLogWarn(@"--------连上了wifi--------%d", self.leftTime);
 	wift = [NSString stringWithGetWifiName];
-	if ([wift isEqualToString:@"HEROLIFE_SC_AP"] || wift.length < 1) {
+	if ([wift isEqualToString:@"小盾"] || wift.length < 1) {
 		
 		
 	}else

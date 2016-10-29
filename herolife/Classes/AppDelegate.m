@@ -671,7 +671,7 @@ static BOOL isOverTime = NO;
 	
 	// 根据服务器要求发送固定格式的数据，假设为指令@"longConnect"，但是一般不会是这么简单的指令
 	NSString *longConnect = @"hrhb\r\n\0";
-    NSLog(@"心跳连接%@",@"hrhb\r\n\0");
+//    NSLog(@"心跳连接%@",@"hrhb\r\n\0");
 	NSData  *dataStream  = [longConnect dataUsingEncoding:NSUTF8StringEncoding];
 	[_socket writeData:dataStream withTimeout:-1 tag:1];
 	
@@ -730,13 +730,13 @@ static NSUInteger lengthInteger = 0;
 		
 	 NSString *strData = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
 	 
-	// DDLogWarn(@"didReadData strData没截取  收到的数据%@", strData);
 	 //如果是心跳包就不往下传值
 	 if ([strData containsString:@"hrhb\r\n\0"]) {
-         DDLogWarn(@"didReadData strData接收到心跳包-%@", strData);
+//         DDLogWarn(@"didReadData strData接收到心跳包-%@", strData);
 		 return;
 	 }
-	 
+     
+     DDLogWarn(@"didReadData strData没截取  收到的数据%@", strData);
 	 //下次 就可能没有length的情况
 	 //截取  length字符串
 	 if ([strData containsString:@"length\r\n"]) {

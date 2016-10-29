@@ -34,7 +34,6 @@
 		AA029EA01D7D75B500EFF91C /* HWPopTool.m in Sources */ = {isa = PBXBuildFile; fileRef = AA029E9F1D7D75B500EFF91C /* HWPopTool.m */; };
 		AA2C52751D91574100D0BD3D /* NSString+PushSet.m in Sources */ = {isa = PBXBuildFile; fileRef = AA2C52741D91574100D0BD3D /* NSString+PushSet.m */; };
 		AA2C52781D91578D00D0BD3D /* PushSettingController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA2C52771D91578D00D0BD3D /* PushSettingController.m */; };
-		AA510E571D9BD94300D9FD67 /* OpenLockController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA510E561D9BD94300D9FD67 /* OpenLockController.m */; };
 		AA929A4F1DB47B5D009D64E6 /* GoToSetUpController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA929A4E1DB47B5D009D64E6 /* GoToSetUpController.m */; };
 		AAA49AEA1D9D0BBD00D4D248 /* SettingController.m in Sources */ = {isa = PBXBuildFile; fileRef = AAA49AE91D9D0BBD00D4D248 /* SettingController.m */; };
 		AAA49AED1D9D0BFE00D4D248 /* MissWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AAA49AEC1D9D0BFE00D4D248 /* MissWebViewController.m */; };
@@ -85,6 +84,7 @@
 		D1405BB11DBDA99700E19C5F /* WaitController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1405BB01DBDA99700E19C5F /* WaitController.m */; };
 		D1405BB31DBDA9BD00E19C5F /* EnterPSWController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1405BB21DBDA9BD00E19C5F /* EnterPSWController.m */; };
 		D1405BB51DBDAA0000E19C5F /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D1405BB41DBDAA0000E19C5F /* Info.plist */; };
+		D158809E1DC3255800EA3FA5 /* OpenLockController.m in Sources */ = {isa = PBXBuildFile; fileRef = D158809D1DC3255800EA3FA5 /* OpenLockController.m */; };
 		D158E5AF1DAB36EA000DB8C9 /* UMMobClick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D158E5AE1DAB36EA000DB8C9 /* UMMobClick.framework */; };
 		D158E5B11DAB37FA000DB8C9 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D158E5B01DAB37FA000DB8C9 /* CoreTelephony.framework */; };
 		D15F3BEE1DB4BC6F00EC2390 /* APPPSWController.m in Sources */ = {isa = PBXBuildFile; fileRef = D15F3BED1DB4BC6F00EC2390 /* APPPSWController.m */; };
@@ -295,7 +295,6 @@
 		AA2C52771D91578D00D0BD3D /* PushSettingController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PushSettingController.m; sourceTree = "<group>"; };
 		AA2C527D1D9159CA00D0BD3D /* DeviceListController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeviceListController.h; sourceTree = "<group>"; };
 		AA510E551D9BD94300D9FD67 /* OpenLockController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenLockController.h; sourceTree = "<group>"; };
-		AA510E561D9BD94300D9FD67 /* OpenLockController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OpenLockController.m; sourceTree = "<group>"; };
 		AA929A4E1DB47B5D009D64E6 /* GoToSetUpController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GoToSetUpController.m; sourceTree = "<group>"; };
 		AAA49AE91D9D0BBD00D4D248 /* SettingController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingController.m; sourceTree = "<group>"; };
 		AAA49AEB1D9D0BFE00D4D248 /* MissWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MissWebViewController.h; sourceTree = "<group>"; };
@@ -368,6 +367,7 @@
 		D1405BB21DBDA9BD00E19C5F /* EnterPSWController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EnterPSWController.m; sourceTree = "<group>"; };
 		D1405BB41DBDAA0000E19C5F /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D1405BB61DBDAA0B00E19C5F /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
+		D158809D1DC3255800EA3FA5 /* OpenLockController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OpenLockController.m; sourceTree = "<group>"; };
 		D158E5AE1DAB36EA000DB8C9 /* UMMobClick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = UMMobClick.framework; sourceTree = "<group>"; };
 		D158E5B01DAB37FA000DB8C9 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		D15F3BED1DB4BC6F00EC2390 /* APPPSWController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APPPSWController.m; sourceTree = "<group>"; };
@@ -754,7 +754,7 @@
 				AAA8A9C71D8CEABF00ABA020 /* APPPSWController.h */,
 				D15F3BED1DB4BC6F00EC2390 /* APPPSWController.m */,
 				AA510E551D9BD94300D9FD67 /* OpenLockController.h */,
-				AA510E561D9BD94300D9FD67 /* OpenLockController.m */,
+				D158809D1DC3255800EA3FA5 /* OpenLockController.m */,
 				18C6976A1D7462B9004DA2B1 /* DoorLockRecordConroller.h */,
 				D1AE5E4E1DAF2ECB0051D7D9 /* DoorLockRecordConroller.m */,
 				D1EFCAC11D88EDD20045A0C0 /* DoorLockModel.h */,
@@ -1707,6 +1707,9 @@
 						DevelopmentTeam = K3Y96N97ET;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 0;
+							};
 							com.apple.Push = {
 								enabled = 1;
 							};
@@ -1929,7 +1932,6 @@
 				18C697AD1D7462B9004DA2B1 /* PCLockLabel.m in Sources */,
 				D1E35D871D90DE89002A766C /* AutherTimePickView.m in Sources */,
 				D1A7DDBB1D8117DD00D051B0 /* WiFiListCell.m in Sources */,
-				AA510E571D9BD94300D9FD67 /* OpenLockController.m in Sources */,
 				D12BC7821DB1DA9E00D84B12 /* AccountManagementController.m in Sources */,
 				D1405BAF1DBDA96500E19C5F /* NSString+Util.m in Sources */,
 				D1A7DD3E1D8117DD00D051B0 /* FMDatabase.m in Sources */,
@@ -2000,6 +2002,7 @@
 				D1B3CB351D966D6D009F96D2 /* HerolifeViewController.m in Sources */,
 				D1352D691D9E0ECB003A83AB /* HRQrButton.m in Sources */,
 				D1405BB11DBDA99700E19C5F /* WaitController.m in Sources */,
+				D158809E1DC3255800EA3FA5 /* OpenLockController.m in Sources */,
 				18C697AA1D7462B9004DA2B1 /* UITableView+SDAutoTableViewCellHeight.m in Sources */,
 				D1A7DDAA1D8117DD00D051B0 /* HRRefreshHeader.m in Sources */,
 				D1A7DDB11D8117DD00D051B0 /* HRLabel.m in Sources */,
