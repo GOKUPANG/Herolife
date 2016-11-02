@@ -21,7 +21,7 @@
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, textField.height - 0.5, HRUIScreenW - 40, 0.5)];
     view.alpha = 0.5;
     view.backgroundColor = [UIColor grayColor];
-    [textField addSubview:view];
+//    [textField addSubview:view];
     textField.placeholder = point;
     textField.font = [UIFont systemFontOfSize:18];
     textField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;

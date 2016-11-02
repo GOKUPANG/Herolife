@@ -14,6 +14,7 @@
 #import "UIView+SDAutoLayout.h"
 
 #import "EnterPSWController.h"
+#import <UserNotifications/UserNotifications.h>
 
 
 @interface GoToSetUpController ()
@@ -107,6 +108,15 @@ static int const HRTimeDuration = 601;
     
     
     
+}
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    
+    [self IsTabBarHidden:YES];
+//    [self.timer setFireDate:[NSDate distantFuture]];
+    [self.timer invalidate];
+    self.timer = nil;
 }
 
 -(void)makeUI
@@ -273,6 +283,9 @@ static int const HRTimeDuration = 601;
         {
             [[UIApplication sharedApplication] openURL:url];
             
+            //保存一个跳转到系统的的记录跳转状态
+            [kUserDefault setObject:@"isPushToSystem" forKey:isPushToSystem];
+            [kUserDefault synchronize];
         }
     }else
     {
@@ -283,21 +296,16 @@ static int const HRTimeDuration = 601;
             
             [[UIApplication sharedApplication] openURL:url];
             
-            
+            //保存一个跳转到系统的的记录跳转状态
+            [kUserDefault setObject:@"isPushToSystem" forKey:isPushToSystem];
+            [kUserDefault synchronize];
         }
     }
     
    
     NSLog(@"点击了下一步按钮");
 	
-	//三秒跳转下个界面-----------------海波代码start-------------------------------
-	btn.enabled = NO;
-	dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-		btn.enabled = NO;
-		DDLogWarn(@"点击了下一步按钮");
-	});
-	
-	[kNotification postNotificationName:kNotificationLocal object:nil];
+	//-----------------海波代码start-------------------------------
 	
 	//添加定时器
 	[self addTimer];
@@ -306,6 +314,11 @@ static int const HRTimeDuration = 601;
 }
 // 设置本地通知
 - (void)registerLocalNotification:(NSInteger)alertTime {
+    if ([UIDevice currentDevice].systemVersion.floatValue >= 10.0) {
+        [self registerNotification:alertTime];
+        return;
+    }
+    
 	UILocalNotification *notification = [[UILocalNotification alloc] init];
 	// 设置触发通知的时间
 	NSDate *fireDate = [NSDate dateWithTimeIntervalSinceNow:alertTime];
@@ -343,9 +356,39 @@ static int const HRTimeDuration = 601;
 	// 执行通知注册
 	[[UIApplication sharedApplication] scheduleLocalNotification:notification];
 }
+
+-(void)registerNotification:(NSInteger )alerTime{
+    
+    // 使用 UNUserNotificationCenter 来管理通知
+    UNUserNotificationCenter* center = [UNUserNotificationCenter currentNotificationCenter];
+    
+    //需创建一个包含待通知内容的 UNMutableNotificationContent 对象，注意不是 UNNotificationContent ,此对象为不可变对象。
+    UNMutableNotificationContent* content = [[UNMutableNotificationContent alloc] init];
+    content.title = [NSString localizedUserNotificationStringForKey:@"" arguments:nil];
+    content.body = [NSString localizedUserNotificationStringForKey:@"连接成功,点我返回😄"
+                                                         arguments:nil];
+    content.sound = [UNNotificationSound defaultSound];
+    
+    // 在 alertTime 后推送本地推送
+    UNTimeIntervalNotificationTrigger* trigger = [UNTimeIntervalNotificationTrigger
+                                                  triggerWithTimeInterval:alerTime repeats:NO];
+    
+    UNNotificationRequest* request = [UNNotificationRequest requestWithIdentifier:@"FiveSecond"
+                                                                          content:content trigger:trigger];
+    
+    //添加推送成功后的处理！
+    [center addNotificationRequest:request withCompletionHandler:^(NSError * _Nullable error) {
+//        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"本地通知" message:@"成功添加推送" preferredStyle:UIAlertControllerStyleAlert];
+//        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
+//        [alert addAction:cancelAction];
+//        [[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:alert animated:YES completion:nil];
+    }];
+}
 #pragma mark - 添加定时器
 - (void)addTimer
 {
+    [self.timer invalidate];
+    self.timer = nil;
 	self.leftTime = HRTimeDuration;
 	self.timer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(updateTimeLabel) userInfo:nil repeats:YES];
 	
@@ -374,8 +417,9 @@ static NSString *wift;
 }
 - (void)dealloc
 {
-	[self.timer invalidate];
-	self.timer = nil;
+    NSLog(@"GoToSetUpController------------------------dealloc");
+    [self.timer invalidate];
+    self.timer = nil;
 }
 #pragma mark - UI事件  -haibo
 - (void)backButtonClick:(UIButton *)btn
@@ -383,13 +427,6 @@ static NSString *wift;
 	[self.navigationController popViewControllerAnimated:YES];
 }
 
-#pragma mark  - 海波代码
-- (void)viewWillDisappear:(BOOL)animated
-{
-    [super viewWillDisappear:animated];
-    
-	[self IsTabBarHidden:YES];
-}
 #pragma mark - 隐藏底部条 - 海波代码
 - (void)IsTabBarHidden:(BOOL)hidden
 {

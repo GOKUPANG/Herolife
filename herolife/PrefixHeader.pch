@@ -149,6 +149,9 @@
 /// 保存二维码扫描的数据
 #define kUserDefaultQrData @"kUserDefaultQrData"
 
+/// 保存跳转到系统的状态
+#define isPushToSystem @"isPushToSystem"
+
 
 
 /// 创建空调 通知
@@ -270,8 +273,6 @@
 #define kNotificationRegister @"kNotificationRegister"
 /// 创建锁 通知
 #define kNotificationQRCodeCreateLock @"kNotificationQRCodeCreateLock"
-/// 创建本地消息 通知
-#define kNotificationLocal @"kNotificationLocal"
 /// 接收到wifi列表 UDP 通知
 #define kNotificationReceiveWiFiList @"kNotificationReceiveWiFiList"
 /// 接收到set = 30 通知

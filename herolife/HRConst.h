@@ -28,13 +28,17 @@ UIKIT_EXTERN CGFloat const HRNavH;
 /// 超时时间
 #define HRTimeInterval 10.0
 
-#define SERVER_IP1		"192.168.0.8"
-//#define SERVER_IP		"120.24.183.44"
-#define SERVER_IP		"183.63.118.58"
-//#define SERVER_DOMAIN	@"http://www.gzhuarui.cn/?q="
-#define SERVER_DOMAIN	@"http://183.63.118.58:9885/hrctest/?q="
+//http协议头
+#define SERVER_DOMAIN	@"http://www.gzhuarui.cn/?q="
+//#define SERVER_DOMAIN	@"http://183.63.118.58:9885/hrctest/?q="
+
+
+//TCP IP和端口
+#define SERVER_IP		"120.24.183.44"
+//#define SERVER_IP		"183.63.118.58"
 #define SERVER_PORT		9888
 
+//UDP IP和端口
 #define SERVER_APIP		"192.168.5.1"
 #define SERVER_APPORT		1200
 
@@ -43,6 +47,14 @@ UIKIT_EXTERN CGFloat const HRNavH;
 #define HRAPI_LOGIN_URL		[NSString stringWithFormat:@"%@%@", SERVER_DOMAIN, HRAPI_LOGIN]
 #define HRAPI_CSRF_URL		[NSString stringWithFormat:@"%@%@", SERVER_DOMAIN, HRAPI_CSRF]
 #define HRAPI_LOGOUT_URL		[NSString stringWithFormat:@"%@%@", SERVER_DOMAIN, HRAPI_LOGOUT]
+
+/** 获取门锁密码编号请求网址*/
+#define HRAPI_GetDoorPsw_URL [NSString stringWithFormat:@"%@%@", SERVER_DOMAIN, @"huaruiapi/herolife-dev-hrsc-ul&uuid=%@&user=%@"]
+#define HRAPI_DeleteDoorPsw_URL [NSString stringWithFormat:@"%@%@", SERVER_DOMAIN, @"huaruiapi/node/%@"]
+#define HRAPI_AddDoorPsw_URL [NSString stringWithFormat:@"%@%@", SERVER_DOMAIN, @"huaruiapi/node"]
+#define HRAPI_UpdateDoorNum_URL [NSString stringWithFormat:@"%@%@", SERVER_DOMAIN, @"huaruiapi/node/%@"]
+#define HRAPI_UpdateDoorMess_URL [NSString stringWithFormat:@"%@%@", SERVER_DOMAIN, @"huaruiapi/node/%@"]
+
 
 /// 删除门锁HTTP请求
 #define HRAPI_UpdateDoorPsw_URL [NSString stringWithFormat:@"%@%@", SERVER_DOMAIN, @"huaruiapi/node/"]
@@ -57,19 +69,14 @@ UIKIT_EXTERN CGFloat const HRNavH;
 //#define HRAPI_Checkuser_URL		 @"http://183.63.118.58:9885/hrctest/?q=huaruiapi/checkuser&user="
 
 /// 获取锁信息数据的GET请求URL
+#define HRAPI_LockInFo_URL		[NSString stringWithFormat:@"%@%@", SERVER_DOMAIN, @"huaruiapi/herolife-dev"]
 
-//#define HRAPI_LockInFo_URL		[NSString stringWithFormat:@"%@%@", SERVER_DOMAIN, @"huaruiapi/herolife-dev"]
-
-#define HRAPI_LockInFo_URL @"http://183.63.118.58:9885/hrctest/?q=huaruiapi/herolife-dev"
 /// 我授权给别人的数据
-//#define HRAPI_LockAutherUserList_URL @"http://www.gzhuarui.cn/?q=huaruiapi/herolife-dev-hrsc-al&user="
 #define HRAPI_LockAutherUserList_URL		[NSString stringWithFormat:@"%@%@", SERVER_DOMAIN, @"huaruiapi/herolife-dev-hrsc-al&user="]
 /// 别人授权给我的数据
-//#define HRAPI_LockAutherPersonList_URL @"http://www.gzhuarui.cn/?q=huaruiapi/herolife-dev-hrsc-al&person="
 #define HRAPI_LockAutherPersonList_URL		[NSString stringWithFormat:@"%@%@", SERVER_DOMAIN, @"huaruiapi/herolife-dev-hrsc-al&person="]
 
 /// 获得授权设备信息 HTTP
-//#define HRAPI_LockAutherInformation_URL @"http://www.gzhuarui.cn/?q=huaruiapi/herolife-dev&uuid="
 #define HRAPI_LockAutherInformation_URL		[NSString stringWithFormat:@"%@%@", SERVER_DOMAIN, @"huaruiapi/herolife-dev&uuid="]
 
 /// 忘记密码POST请求URL
@@ -108,7 +115,8 @@ UIKIT_EXTERN CGFloat const HRNavH;
 
 
 //斌修改 正式发布时要把接口换回去
-#define HRAPI_XiaoRuiModifyPassword_URL @"http://183.63.118.58:9885/hrctest/?q=huaruiapi/user/"
+#define HRAPI_XiaoRuiModifyPassword_URL		[NSString stringWithFormat:@"%@%@", SERVER_DOMAIN, @"huaruiapi/user/"]
+
 
 /// 获取小睿红外空调信息GET请求URL
 #define HRAPI_XiaoRuiIRAC_URL @"http://www.gzhuarui.cn/?q=huaruiapi/xiaorui-irac"

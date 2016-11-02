@@ -12,7 +12,7 @@
 #define HRMyScreenH (HRUIScreenH / 667.0)
 #define HRMyScreenW (HRUIScreenW / 375.0 )
 
-#define HRAPI_UpdateDoorMess_URL @"http://183.63.118.58:9885/hrctest/?q=huaruiapi/node/%@"
+//#define HRAPI_UpdateDoorMess_URL @"http://183.63.118.58:9885/hrctest/?q=huaruiapi/node/%@"
 
 
 #import "DeviceListController.h"
@@ -148,6 +148,10 @@
 @property(nonatomic, strong) TipsLabel *tipsLabel;
 /** 电量 */
 @property(nonatomic, copy) NSString *level;
+/** 记录当前拖拽滚动的X */
+@property(nonatomic, assign) CGFloat draggingScrollX;
+/** 记录当前减速 滚动的X*/
+@property(nonatomic, assign) CGFloat deceleratingScrollX;
 
 @end
 
@@ -232,6 +236,8 @@ NSInteger const timerDuration = 60.0;
 {
     [super viewWillAppear:animated];
     
+    [self addTimer];
+    
 	for (UINavigationController *nav in self.tabBarController.childViewControllers) {
 		UIViewController *VC = nav.childViewControllers.firstObject;
 		NSLog(@"viewVC--%@", NSStringFromClass([VC class]));
@@ -256,9 +262,18 @@ NSInteger const timerDuration = 60.0;
         
         self.backImgView.image =[UIImage imageNamed:imgName];
     }
-	
+    [self setTipViewIsHidden];
 }
-
+- (void)setTipViewIsHidden
+{
+    for (UIView *allView in [UIApplication sharedApplication].keyWindow.subviews) {
+        NSLog(@"-----------setTipViewIsHidden%@", NSStringFromCGRect(allView.frame));
+        if (allView.hr_height == 30) {
+            allView.hidden = YES;
+        }
+        
+    }
+}
 - (NSMutableArray *)photoModelArray
 {
 	if (!_photoModelArray) {
@@ -288,6 +303,8 @@ static NSString *cellID = @"cellID";
     
     [self addLongGesture];
 	[self addSwipeGestureRecognizer];
+    
+    httpRequsetCount = 0;
 	
 }
 
@@ -490,10 +507,14 @@ static BOOL isShowOverMenu = NO;
 	collectionView.dataSource = self;
 	collectionView.delegate = self;
 	
-	layout.maxCoverDegree = -40.8;
-	layout.coverDensity = 0.02;
-	layout.minCoverOpacity = 1.0;
-	layout.minCoverScale = 0.89;
+//	layout.maxCoverDegree = -40.8;
+//	layout.coverDensity = 0.02;
+//	layout.minCoverOpacity = 1.0;
+//	layout.minCoverScale = 0.89;
+    layout.maxCoverDegree = -40.8;
+    layout.coverDensity = 0.02;
+    layout.minCoverOpacity = 1.0;
+    layout.minCoverScale = 0.89;
 	
 	[self.view addSubview:collectionView];
 	self.layout = layout;
@@ -568,12 +589,19 @@ static BOOL isShowOverMenu = NO;
 	
 	[self IsTabBarHidden:NO];
 }
+
 - (void)viewWillLayoutSubviews {
 	[super viewWillLayoutSubviews];
 	
 	[_layout invalidateLayout];
 }
 
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    
+    [self.timer invalidate];
+}
 #pragma mark - 隐藏底部条
 - (void)IsTabBarHidden:(BOOL)hidden
 {
@@ -1066,25 +1094,30 @@ static BOOL isShowOverMenu = NO;
 																							 forIndexPath:indexPath];
 		cell.photoModel = self.photoModelArray[indexPath.row];
 	
+    
 	return cell;
 }
 
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSLog(@"didSelectItemAtIndexPath%ld", (long)indexPath.row);
+}
 #pragma mark - scrollView delegate
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-//	DDLogInfo(@"%f", scrollView.contentOffset.x);
+	DDLogInfo(@"%f", scrollView.contentOffset.x);
 	
 }
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
-	[self setupContentOffsetWithScrollView:scrollView];
+    	[self setupContentOffsetWithEndDeceleratingScrollView:scrollView];
 	
 }
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
 {
-	[self setupContentOffsetWithScrollView:scrollView];
+	[self setupContentOffsetWithEndDraggingScrollView:scrollView];
 }
-- (void)setupContentOffsetWithScrollView:(UIScrollView *)scrollView
+- (void)setupContentOffsetWithEndDraggingScrollView:(UIScrollView *)scrollView
 {
 	
 	CGFloat totalconsizeW = HRCommonScreenW *345 *2 ;
@@ -1092,15 +1125,31 @@ static BOOL isShowOverMenu = NO;
 		return;
 	}
 	
-	int index = scrollView.contentOffset.x / totalconsizeW;
+	int index = (int)scrollView.contentOffset.x / (int)totalconsizeW;
+    
 	int yu = (int)scrollView.contentOffset.x % (int)totalconsizeW;
-	
-	if (yu >= HRCommonScreenW *345 *2 *0.5) {
-		index += 1;
-	}
+    
+    NSLog(@"----------------totalconsizeW%f-----------index%d---yu%dscrollView.contentOffset.x%f", totalconsizeW, index, yu,scrollView.contentOffset.x);
+    
+    if ( scrollView.contentOffset.x > self.draggingScrollX) {
+        
+        if (yu >= 0 ) {
+            if (self.homeArray.count == 2) {
+                index += 1;
+            }else
+            {
+                if (self.homeArray.count - 1 != index) {
+                    
+                    index += 1;
+                }
+            }
+            
+        }
+    }
+    
+    
 	DDLogInfo(@"index%d", index);
 	DDLogInfo(@"yu%d", yu);
-//	NSArray *arr = @[@"22", @"22"];
 	if (self.homeArray.count == 1) {
 		
 		DeviceListModel *home = self.homeArray.firstObject;
@@ -1136,13 +1185,94 @@ static BOOL isShowOverMenu = NO;
 		
 		self.currentStateModel = home;
 		[self setUpListButtonContent];
+        
 		[self.collectionView setContentOffset:CGPointMake(index * HRCommonScreenW *345 *2, 0) animated:YES];
-		
+        
 	}
-	
+    self.draggingScrollX = index * HRCommonScreenW *345 *2;
 	[self.tableView reloadData];
 	[self addTimer];
 	
+    
+}
+
+- (void)setupContentOffsetWithEndDeceleratingScrollView:(UIScrollView *)scrollView
+{
+    
+    CGFloat totalconsizeW = HRCommonScreenW *345 *2 ;
+    if (scrollView.contentOffset.x < 0.0) {
+        return;
+    }
+    
+    int index = (int)scrollView.contentOffset.x / (int)totalconsizeW;
+    
+    int yu = (int)scrollView.contentOffset.x % (int)totalconsizeW;
+    
+    NSLog(@"----------------totalconsizeW%f-----------index%d---yu%dscrollView.contentOffset.x%f", totalconsizeW, index, yu,scrollView.contentOffset.x);
+    
+    if ( scrollView.contentOffset.x > self.deceleratingScrollX) {
+        
+        if (yu >= 0 ) {
+            if (self.homeArray.count == 2) {
+                index += 1;
+            }else
+            {
+                if (self.homeArray.count - 1 != index) {
+                    
+                    index += 1;
+                }
+            }
+            
+        }
+    }
+    
+    
+    DDLogInfo(@"index%d", index);
+    DDLogInfo(@"yu%d", yu);
+    if (self.homeArray.count == 1) {
+        
+        DeviceListModel *home = self.homeArray.firstObject;
+        self.currentStateModel = home;
+        [self setUpListButtonContent];
+        [self.collectionView setContentOffset:CGPointMake(1 * HRCommonScreenW *345 *2, 0) animated:YES];
+    }else if (self.homeArray.count == 2) {
+        
+        if (index == 0) {
+            
+            DeviceListModel *home = self.homeArray.firstObject;
+            self.currentStateModel = home;
+            [self setUpListButtonContent];
+            [self.collectionView setContentOffset:CGPointMake((1) * HRCommonScreenW *345 *2, 0) animated:YES];
+        }else if (index == 1) {
+            
+            DeviceListModel *home = self.homeArray.firstObject;
+            self.currentStateModel = home;
+            [self setUpListButtonContent];
+            [self.collectionView setContentOffset:CGPointMake((1) * HRCommonScreenW *345 *2, 0) animated:YES];
+        }else if (index == 2) {
+            
+            DeviceListModel *home = self.homeArray.lastObject;
+            self.currentStateModel = home;
+            [self setUpListButtonContent];
+            [self.collectionView setContentOffset:CGPointMake((2) * HRCommonScreenW *345 *2, 0) animated:YES];
+        }
+        
+    }else
+    {
+        //显示选择的title
+        DeviceListModel *home = self.homeArray[index];
+        
+        self.currentStateModel = home;
+        [self setUpListButtonContent];
+        
+        [self.collectionView setContentOffset:CGPointMake(index * HRCommonScreenW *345 *2, 0) animated:YES];
+        
+    }
+    self.deceleratingScrollX = scrollView.contentOffset.x;
+    [self.tableView reloadData];
+    [self addTimer];
+    
+    
 }
 
 - (void)setUpListButtonContent
@@ -1391,7 +1521,7 @@ static int httpRequsetCount = 0;
 - (void)setUp3DEptPictureWithHomeArray:(NSArray *)homeArray
 {
     [self.photoModelArray removeAllObjects];
-    if (homeArray.count == 0) {//如果只有一个设备 就显示两张占位图片
+    if (homeArray.count == 0) {//如果只有0个设备 就显示三张占位图片
         
         [self.photoModelArray addObject:
          [PhotoModel modelWithImageNamed:@"锁-透明"
@@ -1416,6 +1546,7 @@ static int httpRequsetCount = 0;
 		[self.photoModelArray addObject:
 		 [PhotoModel modelWithImageNamed:@"锁-透明"
 							 description:@""]];
+        
         [self.collectionView setContentOffset:CGPointMake(1 * HRCommonScreenW *345 *2, 0) animated:NO];
         self.collectionView.userInteractionEnabled = YES;
 	}else if (homeArray.count == 2) {//如果只有两个设备 就显示1张占位图片
@@ -1429,8 +1560,9 @@ static int httpRequsetCount = 0;
 		[self.photoModelArray addObject:
 		 [PhotoModel modelWithImageNamed:@"锁虚线"
 							 description:@""]];
-		
-        [self.collectionView setContentOffset:CGPointMake(1 * HRCommonScreenW *345 *2, 0) animated:NO];
+        if (httpRequsetCount == 0) {
+            [self.collectionView setContentOffset:CGPointMake(1 * HRCommonScreenW *345 *2, 0) animated:NO];
+        }
         self.collectionView.userInteractionEnabled = YES;
 	}else
 	{
@@ -1900,9 +2032,9 @@ static int httpRequsetCount = 0;
 -(void)addLongGesture
 {
 	UILongPressGestureRecognizer * longPressGr = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressToDo:)];
-	longPressGr.minimumPressDuration = 0.7;
+//	longPressGr.minimumPressDuration = 0.7;
 	longPressGr.delegate = self;
-	longPressGr.delaysTouchesBegan = YES;
+//	longPressGr.delaysTouchesBegan = YES;
 	[self.collectionView addGestureRecognizer:longPressGr];
 }
 
@@ -1910,42 +2042,42 @@ static int httpRequsetCount = 0;
 -(void)longPressToDo:(UILongPressGestureRecognizer *)gestureRecognizer
 
 {
-	if (gestureRecognizer.state != UIGestureRecognizerStateEnded) {
-		return;
-	}
-	CGPoint p = [gestureRecognizer locationInView:self.collectionView];
+    if (gestureRecognizer.state == UIGestureRecognizerStateBegan) {
+        CGPoint p = [gestureRecognizer locationInView:self.collectionView];
+        
+        NSIndexPath *indexPath = [self.collectionView indexPathForItemAtPoint:p];
+        if (indexPath == nil){
+            NSLog(@"couldn't find index path");
+        } else {
+            
+            NSLog(@"couldn't find index path%ld", indexPath.row);
+            //判断数组的个数进行传值
+            if (self.homeArray.count == 1) {//当homeArray为1时
+                if (indexPath.row == 1) {
+                    self.showLockModel = self.homeArray.firstObject;
+                    [self showSheet];
+                }
+            }else if (self.homeArray.count == 2) {//当homeArray为2时
+                if (indexPath.row == 1) {
+                    
+                    self.showLockModel = self.homeArray.firstObject;
+                    [self showSheet];
+                }else if (indexPath.row == 2) {
+                    
+                    self.showLockModel = self.homeArray.lastObject;
+                    [self showSheet];
+                }
+            }else//当homeArray为>=3时
+            {
+                self.showLockModel = self.homeArray[indexPath.row];
+                [self showSheet];
+                
+            }
+            
+            
+        }
+    }
 	
-	NSIndexPath *indexPath = [self.collectionView indexPathForItemAtPoint:p];
-	if (indexPath == nil){
-		NSLog(@"couldn't find index path");
-	} else {
-		
-		NSLog(@"couldn't find index path%ld", indexPath.row);
-		//判断数组的个数进行传值
-		if (self.homeArray.count == 1) {//当homeArray为1时
-			if (indexPath.row == 1) {
-				self.showLockModel = self.homeArray.firstObject;
-				[self showSheet];
-			}
-		}else if (self.homeArray.count == 2) {//当homeArray为2时
-			if (indexPath.row == 1) {
-				
-				self.showLockModel = self.homeArray.firstObject;
-				[self showSheet];
-			}else if (indexPath.row == 2) {
-				
-				self.showLockModel = self.homeArray.lastObject;
-				[self showSheet];
-			}
-		}else//当homeArray为>=3时
-		{
-			self.showLockModel = self.homeArray[indexPath.row];
-			[self showSheet];
-			
-		}
-		
-		
-	}
 }
 
 #pragma mark - 长按时判断是否弹出Sheet
@@ -1978,7 +2110,8 @@ static int httpRequsetCount = 0;
 	}
 	
 	//自己创建的设备
-	[SRActionSheet sr_showActionSheetViewWithTitle:self.showLockModel.title cancelButtonTitle:@"取消" destructiveButtonTitle:@"" otherButtonTitles:@[@"删除设备", @"修改设备别名",@"更新设备信息"] selectSheetBlock:^(SRActionSheet *actionSheetView, NSInteger index) {
+    NSString *title = [NSString stringWithFormat:@"%@(固件版本: %@)", self.showLockModel.title, self.showLockModel.version];
+	[SRActionSheet sr_showActionSheetViewWithTitle:title cancelButtonTitle:@"取消" destructiveButtonTitle:@"" otherButtonTitles:@[@"删除设备", @"修改设备别名",@"更新设备信息"] selectSheetBlock:^(SRActionSheet *actionSheetView, NSInteger index) {
 		
 		if (index == 0) {//删除按钮
 			NSString *iconString;

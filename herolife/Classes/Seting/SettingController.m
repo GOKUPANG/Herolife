@@ -74,8 +74,6 @@ static NSString *cellID = @"cellID";
     NSLog(@"设置页面ViewWillappear");
     
 }
-
-
 - (void)viewDidLoad {
     [super viewDidLoad];
 	

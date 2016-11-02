@@ -8,6 +8,8 @@
 
 #import "ErrorCodeManager.h"
 #import <SVProgressHUD.h>
+#import "LoginController.h"
+#import "HRNavigationViewController.h"
 @implementation ErrorCodeManager
 
 static NSTimeInterval const dimissTimer = 2;
@@ -41,7 +43,12 @@ static NSTimeInterval const dimissTimer = 2;
 	if ([code isEqualToString:@"403"] || [code isEqualToString:@"406"]) {
 		
 //		[PushToLoginController pushToLoginController];
+        
+        LoginController *loginVC = [[LoginController alloc] init];
+        HRNavigationViewController *nav = [[HRNavigationViewController alloc] initWithRootViewController:loginVC];
+        [UIApplication sharedApplication].keyWindow.rootViewController = nav;
 	}
+    
 }
 
 + (void)showPostError:(NSError *)error
@@ -101,8 +108,10 @@ static NSTimeInterval const dimissTimer = 2;
 	code = [NSString stringWithFormat:@"%@", code];
 	
 	if ([code isEqualToString:@"403"] || [code isEqualToString:@"406"]) {
-		
-//		[PushToLoginController pushToLoginController];
+        
+        LoginController *loginVC = [[LoginController alloc] init];
+        HRNavigationViewController *nav = [[HRNavigationViewController alloc] initWithRootViewController:loginVC];
+        [UIApplication sharedApplication].keyWindow.rootViewController = nav;
 	}
 	
 }

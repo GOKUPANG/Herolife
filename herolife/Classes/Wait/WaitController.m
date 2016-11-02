@@ -45,7 +45,7 @@
 
 @implementation WaitController
 /** 停留时间 */
-static int const HRTimeDuration = 30;
+static int const HRTimeDuration = 60;
 
 
 
@@ -53,7 +53,7 @@ static int const HRTimeDuration = 30;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-	self.leftTime = 30;
+	self.leftTime = 60;
     Wifidid = @"";
 	DDLogWarn(@"wifi----------WaitController-------%@", [NSString stringWithGetWifiName]);
 	[self setupViews];
@@ -122,7 +122,7 @@ static int const HRTimeDuration = 30;
 }
 - (void)addObserverNotification
 {
-    //set = 30
+    //set = 60
     [kNotification addObserver:self selector:@selector(receiveStratAddWiFiLink:) name:kNotificationReceiveStratAddWiFiLink object:nil];
     //set = 31
     [kNotification addObserver:self selector:@selector(receiveStratFailAddWiFiLink:) name:kNotificationReceiveStratFailAddWiFiLink object:nil];
@@ -298,7 +298,7 @@ static NSString *Wifidid = @"";
 	
 	//倒计时  label
 	HRLabel *timeLabel = [[HRLabel alloc] init];
-	NSString *title = [NSString stringWithFormat:@"%@秒", @"30"];
+	NSString *title = [NSString stringWithFormat:@"%@秒", @"60"];
 	timeLabel.text = title;
 	[self.view addSubview:timeLabel];
 	self.timeLabel = timeLabel;

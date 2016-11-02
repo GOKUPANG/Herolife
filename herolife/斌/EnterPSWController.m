@@ -50,6 +50,11 @@
 @property (nonatomic, weak) NSTimer *timer;
 /** 停留时间 */
 @property(nonatomic, assign) int leftTime;
+/** 停留时间 */
+@property(nonatomic, assign) int wiftTime;
+
+/** 定时器 */
+@property (nonatomic, weak) NSTimer *wiftTimer;
 
 
 @end
@@ -124,6 +129,8 @@ static int const HRTimeDuration = 300;
 	
 	//haibo 隐藏底部条
 	[self IsTabBarHidden:YES];
+    
+    [self addWifiTimer];
 }
 - (void)viewDidAppear:(BOOL)animated
 {
@@ -132,18 +139,6 @@ static int const HRTimeDuration = 300;
 	if (self.name.length > 0) {
 		self.WIFILabel.text = self.name;
 		return;
-	}
-	//从单例中获取数据
-	AppDelegate *app = (AppDelegate *)[UIApplication sharedApplication].delegate;
-	NSString *fisterWifi = app.wifiNameArray.firstObject;
-	if (fisterWifi.length < 1) {
-		dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-			self.WIFILabel.text = app.wifiNameArray.firstObject;
-		});
-	}else
-	{
-		
-		self.WIFILabel.text = app.wifiNameArray.firstObject;
 	}
 	
 }
@@ -296,7 +291,7 @@ static int const HRTimeDuration = 300;
     [WIFITextField setValue:[UIColor colorWithRed:153.0/255.0 green:153.0/255.0 blue:153.0/255.0 alpha:1] forKeyPath:@"_placeholderLabel.textColor"];
     
     WIFITextField.clearButtonMode =    UITextFieldViewModeAlways;
-	WIFITextField.text = @"HRKJJISHUBU";
+	WIFITextField.text = @" ";
     
   
     
@@ -369,6 +364,12 @@ static int const HRTimeDuration = 300;
 #pragma mark - UI事件  -haibo
 - (void)leftButtonClick:(UIButton *)btn
 {
+    
+    //wifi数组清空
+    AppDelegate *app = (AppDelegate *)[UIApplication sharedApplication].delegate;
+    NSArray *arr = [NSArray array];
+    app.wifiNameArray = arr;
+    
 	[self.navigationController popViewControllerAnimated:YES];
 }
 #pragma mark -点击WiFiView 实现的方法
@@ -454,12 +455,19 @@ static int const HRTimeDuration = 300;
 
 -(void)StartViewClick
 {
+    
     NSLog(@"点击了开始添加");
 	if (self.WIFILabel.text.length < 0.5 || self.WIFITextField.text.length < 0.5) {
 		[SVProgressTool hr_showErrorWithStatus:@"wifi名或密码不能为空!"];
 	}else
 	{
 		[self setupUDPSocket];
+        
+        //wifi数组清空
+        AppDelegate *app = (AppDelegate *)[UIApplication sharedApplication].delegate;
+        NSArray *arr = [NSArray array];
+        app.wifiNameArray = arr;
+        
         
         [self addTimer];//wifi搜索需要时间, 这时我需要检测当前的wifi是否是wifi盒子的wifi, 如果切换到了用户的wifi才让跳转
 		
@@ -551,6 +559,41 @@ static int const HRTimeDuration = 300;
     return cell;
     
 }
+#pragma mark - 添加wiftTime定时器
+- (void)addWifiTimer
+{
+    self.wiftTime = HRTimeDuration;
+    self.wiftTimer = [NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(updateWifiTimeLabel) userInfo:nil repeats:YES];
+    
+}
+static NSString *wift;
+- (void)updateWifiTimeLabel
+{
+    
+    self.wiftTime--;
+    
+    //从单例中获取数据
+    AppDelegate *app = (AppDelegate *)[UIApplication sharedApplication].delegate;
+    NSString *fisterWifi = app.wifiNameArray.firstObject;
+    
+    DDLogWarn(@"--------连上了--------%d", self.wiftTime);
+    if (fisterWifi.length > 0) {
+        
+        [SVProgressTool hr_dismiss];
+        self.WIFILabel.text = fisterWifi;
+        
+        [self.wiftTimer invalidate];
+        self.wiftTimer = nil;
+        return;
+    }
+    if (self.wiftTime == 0) {
+        [SVProgressTool hr_showErrorWithStatus:@"请求超时,请重试!"];
+        [self.navigationController popViewControllerAnimated:YES];
+        [self.wiftTimer invalidate];
+        self.wiftTimer = nil;
+    }
+    
+}
 
 #pragma mark - 添加定时器
 - (void)addTimer
@@ -589,7 +632,9 @@ static NSString *wift;
 }
 - (void)dealloc
 {
+    [self.wiftTimer invalidate];
 	[self.timer invalidate];
+    self.wiftTimer = nil;
 	self.timer = nil;
 }
 
@@ -601,6 +646,7 @@ static NSString *wift;
     
 	[self IsTabBarHidden:YES];
 	[SVProgressTool hr_dismiss];
+    
 }
 #pragma mark - 隐藏底部条 - 海波代码
 - (void)IsTabBarHidden:(BOOL)hidden

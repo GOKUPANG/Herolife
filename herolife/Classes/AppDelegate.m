@@ -191,6 +191,27 @@ static NSInteger disconnectCount = 0;
     NSDictionary *userInfo = notification.request.content.userInfo;
     
     [EBForeNotification handleRemoteNotification:userInfo soundID:1312 isIos10:NO];
+    
+//    NSDictionary * userInfo = notification.request.content.userInfo;
+//    UNNotificationRequest *request = notification.request; // 收到推送的请求
+//    UNNotificationContent *content = request.content; // 收到推送的消息内容
+//    NSNumber *badge = content.badge; // 推送消息的角标
+//    NSString *body = content.body; // 推送消息体
+//    UNNotificationSound *sound = content.sound; // 推送消息的声音
+//    NSString *subtitle = content.subtitle; // 推送消息的副标题
+//    NSString *title = content.title; // 推送消息的标题
+//    
+//    if([notification.request.trigger isKindOfClass:[UNPushNotificationTrigger class]]) {
+////        NSLog(@"iOS10 前台收到远程通知:%@", [self logDic:userInfo]);
+//        
+//    }
+//    else {
+//        // 判断为本地通知
+//        NSLog(@"iOS10 前台收到本地通知:{\\\\nbody:%@，\\\\ntitle:%@,\\\\nsubtitle:%@,\\\\nbadge：%@，\\\\nsound：%@，\\\\nuserInfo：%@\\\\n}",body,title,subtitle,badge,sound,userInfo);
+//    }
+//    completionHandler(UNNotificationPresentationOptionBadge|UNNotificationPresentationOptionSound|UNNotificationPresentationOptionAlert); // 需要执行这个方法，选
+//    
+    
 }
 - (void)userNotificationCenter:(UNUserNotificationCenter *)center didReceiveNotificationResponse:(UNNotificationResponse *)response withCompletionHandler:(void (^)())completionHandler
 {
@@ -208,26 +229,32 @@ static NSInteger disconnectCount = 0;
     else
     {
           NSLog(@"收到本地通知");
-        
-        //建立UDP连接
-        [self setupUDPSocket];
-        
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            [SVProgressTool hr_showWithStatus:@"正在加载数据, 请稍后..."];
-            
-            // 启动定时器
-            isOverTime = NO;
-            [_overTimer invalidate];
-            //十秒之后如果没有数据就提示超时
-            _overTimer = [NSTimer scheduledTimerWithTimeInterval:30.0 target:self selector:@selector(startTimer) userInfo:nil repeats:NO];
-        });
-
+        //发送set=0 和set = 2的帧
+        [self sendUDPWithSet];
         
     }
 
     
 
     completionHandler();
+
+}
+//发送set=0 和set = 2的帧
+- (void)sendUDPWithSet
+{
+    
+    //建立UDP连接
+    [self setupUDPSocket];
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [SVProgressTool hr_showWithStatus:@"正在加载数据, 请稍后..."];
+        
+        // 启动定时器
+        isOverTime = NO;
+        [_overTimer invalidate];
+        //十秒之后如果没有数据就提示超时
+        _overTimer = [NSTimer scheduledTimerWithTimeInterval:30.0 target:self selector:@selector(startTimer) userInfo:nil repeats:NO];
+    });
 
 }
 - (void)addUmeng
@@ -324,7 +351,19 @@ static BOOL isOverTime = NO;
 - (void)receiveWiFiList
 {
 	isOverTime = YES;
-	[SVProgressTool hr_dismiss];
+    
+    
+    
+    //取出数据
+    NSString *pushString = [kUserDefault objectForKey:isPushToSystem];
+    if (pushString.length > 0) {
+        //清空
+        [kUserDefault setObject:@"" forKey:isPushToSystem];
+        [kUserDefault synchronize];
+        return;
+    }
+    
+    
 	UINavigationController *nav = (UINavigationController *)[NSObject activityViewController];
 	
 	for (UIViewController *topVC in nav.childViewControllers) {
@@ -339,6 +378,7 @@ static BOOL isOverTime = NO;
 				EnterPSWController *enterVC = [[EnterPSWController alloc] init];
 				GoToSetUpController *gto = (GoToSetUpController *)navVC;
 			[gto.navigationController pushViewController:enterVC animated:YES];
+                
 			}
 //			{
 //				//收到通知跳转到wifi 输入密码这个界面
@@ -351,7 +391,7 @@ static BOOL isOverTime = NO;
 
 		}
 	}
-	UIViewController *topController = nav.childViewControllers.lastObject;
+//	UIViewController *topController = nav.childViewControllers.lastObject;
 	
 //	UIViewController *topController = [AppDelegate currentViewController];
 	
@@ -501,7 +541,40 @@ static BOOL isOverTime = NO;
 	NSString *wifi = [NSString stringWithGetWifiName];
 	
 	[UIApplication sharedApplication].applicationIconBadgeNumber = 0;
-	DDLogInfo(@"wifi----------------%@",wifi);
+    
+    //取出数据
+    NSString *pushString = [kUserDefault objectForKey:isPushToSystem];
+    if (pushString.length > 0) {
+        
+        if ([wifi isEqualToString:@"小盾"]) {
+            
+            //发送set=0 和set = 2的帧
+            [self sendUDPWithSet];
+            
+            //跳转
+            UINavigationController *nav = (UINavigationController *)[NSObject activityViewController];
+            
+            for (UIViewController *topVC in nav.childViewControllers) {
+                HRNavigationViewController *hrNav = (HRNavigationViewController *)topVC;
+                for (id navVC in hrNav.childViewControllers) {
+                    
+                    NSLog(@"topVC%@", NSStringFromClass([navVC class]));
+                    if ([navVC isKindOfClass:[EnterPSWController class]]) {
+                        DDLogWarn(@"VC-%@",NSStringFromClass([navVC class]));
+                    }else if ([navVC isKindOfClass:[GoToSetUpController class]]) {
+                        DDLogWarn(@"VC-%@",NSStringFromClass([navVC class]));
+                        EnterPSWController *enterVC = [[EnterPSWController alloc] init];
+                        GoToSetUpController *gto = (GoToSetUpController *)navVC;
+                        [gto.navigationController pushViewController:enterVC animated:YES];
+                    }
+                    
+                }
+            }
+        }
+        DDLogInfo(@"wifi----------------%@",wifi);
+        
+    }
+        
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
@@ -613,7 +686,7 @@ static BOOL isOverTime = NO;
 
 - (void)onSocket:(AsyncSocket *)sock willDisconnectWithError:(NSError *)err
 {
-	DDLogError(@"将要断开连接onSocket:%p willDisconnectWithError:%@,code %ld", sock, err.description, (long)err.code);
+//	DDLogError(@"将要断开连接onSocket:%p willDisconnectWithError:%@,code %ld", sock, err.description, (long)err.code);
 }
 
 - (void)onSocketDidDisconnect:(AsyncSocket *)sock
@@ -621,7 +694,7 @@ static BOOL isOverTime = NO;
 	//	if (disconnectCount <= 3) {
 	
 	//断开连接了
-	DDLogInfo(@"断开连接了onSocketDidDisconnect:%p", sock);
+//	DDLogInfo(@"断开连接了onSocketDidDisconnect:%p", sock);
 	//    NSString *msg = @"Sorry this connect is failure";
 	_socket = nil;
 	_socket.delegate = nil;
@@ -645,7 +718,21 @@ static BOOL isOverTime = NO;
 		[self.socket writeData:data withTimeout:-1 tag:0];
 		if (disconnectCount >= 10) {
 			
-			[self.tipsLabel showText:@"未连接到服务器!" duration:666666666];
+            HRTabBarViewController *TabBar = (HRTabBarViewController *)[NSObject activityViewController];
+            HRNavigationViewController *nav = TabBar.childViewControllers.firstObject;
+            int index = 0;
+            UIViewController *vc = nav.childViewControllers.lastObject;
+            
+           
+            if ([NSStringFromClass([vc class]) isEqualToString:@"GoToSetUpController"] || [NSStringFromClass([vc class]) isEqualToString:@"EnterPSWController"]  || [NSStringFromClass([vc class]) isEqualToString:@"WiFiListController"]) {
+                
+                [self.tipsLabel dismiss];
+            }else
+            {
+                
+                [self.tipsLabel showText:@"未连接到服务器!" duration:666666666];
+            }
+            index= 0;
 		}
 		
 	});
@@ -736,7 +823,7 @@ static NSUInteger lengthInteger = 0;
 		 return;
 	 }
      
-     DDLogWarn(@"didReadData strData没截取  收到的数据%@", strData);
+//     DDLogWarn(@"didReadData strData没截取  收到的数据%@", strData);
 	 //下次 就可能没有length的情况
 	 //截取  length字符串
 	 if ([strData containsString:@"length\r\n"]) {
@@ -1076,7 +1163,7 @@ static NSUInteger lengthInteger = 0;
     // 添加门锁回复的set = 30的那条数据 代表成功
     if ([jsonDict[@"hrpush"][@"type"] isEqualToString:@"set"] && [jsonDict[@"msg"][@"types"] isEqualToString:@"common"] && [jsonDict[@"msg"][@"state"] isEqualToString:@"30"]) {
         
-        DDLogInfo(@"添加门锁回复的set = 30的那条数据%@", jsonDict);
+//        DDLogInfo(@"添加门锁回复的set = 30的那条数据%@", jsonDict);
         [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationReceiveStratAddWiFiLink object:nil userInfo:jsonDict];
         return;
     }
@@ -1655,7 +1742,7 @@ static NSString *wift;
 	NSMutableDictionary *dict = [NSMutableDictionary dictionary];
 	dict[@"set"] = string;
 	NSString *sendString = [NSString stringWithUDPMsgDict:dict];
-	
+    NSLog(@"发送UDPSocke数据set=0 %@", sendString);
 	[_udpSocket sendUDPSockeWithString:sendString];
 }
 

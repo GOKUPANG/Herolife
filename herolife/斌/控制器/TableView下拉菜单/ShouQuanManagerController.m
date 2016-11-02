@@ -103,6 +103,8 @@ static NSString *ViewOfCustomerTableViewCellIdentifier = @"ViewOfCustomerTableVi
 @property(nonatomic, weak) UILabel * paswdLabel;
 /** 当前锁的UUID */
 @property(nonatomic, copy) NSString *currentUuid;
+/** 是否显示目标设备不在线弹框 */
+@property(nonatomic, assign) BOOL isShowErrorWithStatus;
 @end
 
 @implementation ShouQuanManagerController
@@ -135,7 +137,7 @@ static NSString *ViewOfCustomerTableViewCellIdentifier = @"ViewOfCustomerTableVi
 {
     [super viewWillAppear:animated];
     //	self.tabBarController.view.hidden = YES;
-    
+    self.isShowErrorWithStatus = NO;
     for (UIView *view in self.tabBarController.view.subviews) {
         if ([NSStringFromClass([view class]) isEqualToString:@"HRTabBar"]) {
             
@@ -175,12 +177,15 @@ static NSString *ViewOfCustomerTableViewCellIdentifier = @"ViewOfCustomerTableVi
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
+    
+    self.isShowErrorWithStatus = NO;
     for (UIView *view in self.tabBarController.view.subviews) {
         if ([NSStringFromClass([view class]) isEqualToString:@"HRTabBar"]) {
             
             view.hidden = NO;
         }
     }
+    [SVProgressTool hr_dismiss];
 }
 
 #pragma mark - 导航条 设置
@@ -401,16 +406,22 @@ static BOOL isOvertime = NO;
 	[self.listTableView reloadData];
 }
 static BOOL isShowOverMenu = NO;
+//static BOOL isShowErrorWithStatus = NO;
 - (void)receviedWithNotOnline
 {
 	isShowOverMenu = YES;
     NSLog(@"目标设备不在线!");
     [SVProgressTool hr_dismiss];
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        
-        [SVProgressTool hr_showErrorWithStatus:@"目标设备不在线!"];
-    });
+    
+//    [self.navigationController popViewControllerAnimated:YES];
+    if (self.isShowErrorWithStatus) {
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            
+            [SVProgressTool hr_showErrorWithStatus:@"目标设备不在线!"];
+        });
+    }
 }
+
 
 #pragma mark - 添加和修改授权弹窗UI设置
 -(void)makeModifyFamilyAlerViewWithTitle:(NSString *)title userInteractionEnabled:(BOOL)userInteractionEnabled text:(NSString *)text tag:(NSInteger)tag remoteSwich:(NSString *)remoteSwich recordeSwich:(NSString *)recordeSwich
@@ -724,7 +735,7 @@ static BOOL isShowOverMenu = NO;
 -(void)makeTemporaryAlertView
 {
     CGFloat dilX = 25;
-    CGFloat dilH = 200 + 55 + 50;
+    CGFloat dilH = 200 + 55;
     YXCustomAlertView *alertV = [[YXCustomAlertView alloc] initAlertViewWithFrame:CGRectMake(dilX, 0, HRUIScreenW - 40, dilH) andSuperView:self.navigationController.view];
     
 	alertV.tag = 11;
@@ -734,54 +745,9 @@ static BOOL isShowOverMenu = NO;
     
     CGFloat loginX = 200 *HRCommonScreenH;
 	
-	//qq用户
-	NSString *qqName = [kUserDefault objectForKey:kNSUserDefaultsNickname];
 
-	//用户名密码相关
-	UILabel * paswdLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 55, loginX, 32)];
-	
-	[alertV addSubview:paswdLabel];
-	paswdLabel.text = @"用户密码";
-	paswdLabel.textColor = [UIColor blackColor];
-	
-	paswdLabel.textAlignment = NSTextAlignmentCenter;
-	if (qqName && qqName.length > 0) {
-		paswdLabel.hidden = YES;
-	}else
-	{
-		paswdLabel.hidden = NO;
-	}
-	
-	UITextField *pwdField = [[UITextField alloc] initWithFrame:CGRectMake(loginX, 55, alertV.frame.size.width -  loginX*1.2, 32)];
-	pwdField.layer.borderColor = [[UIColor blackColor] CGColor];
-	pwdField.secureTextEntry = YES;
-	UIView *leftpPwdView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 8, 32)];
-	
-	
-	pwdField.leftViewMode = UITextFieldViewModeAlways;
-	pwdField.leftView = leftpPwdView;
-	if (qqName && qqName.length > 0) {
-		pwdField.hidden = YES;
-	}else
-	{
-		pwdField.hidden = NO;
-	}
-	
-	pwdField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
-	pwdField.layer.borderWidth = 1;
-	pwdField.layer.cornerRadius = 4;
-	pwdField.clearButtonMode = UITextFieldViewModeWhileEditing;
-	pwdField.placeholder = @"请输入用户App登陆密码";
-   // [pwdField setValue:[UIColor colorWithWhite:1.0 alpha:0.7] forKeyPath:@"_placeholderLabel.textColor"];
-	
-	pwdField.textColor = [UIColor blackColor];
-	self.pwdField = pwdField;
-	
-	[alertV addSubview:pwdField];
-	
-	
 	//管理员密码相关
-	UILabel * manageLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 100, loginX, 32)];
+	UILabel * manageLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 55, loginX, 32)];
 	
 	[alertV addSubview:manageLabel];
 	manageLabel.text = @"管理员密码";
@@ -790,7 +756,7 @@ static BOOL isShowOverMenu = NO;
 	manageLabel.textAlignment = NSTextAlignmentCenter;
 	
 	
-	UITextField *manageField = [[UITextField alloc] initWithFrame:CGRectMake(loginX, 100, alertV.frame.size.width -  loginX*1.2, 32)];
+	UITextField *manageField = [[UITextField alloc] initWithFrame:CGRectMake(loginX, 55, alertV.frame.size.width -  loginX*1.2, 32)];
 	manageField.layer.borderColor = [[UIColor blackColor] CGColor];
 	manageField.secureTextEntry = YES;
 	UIView *manageView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 8, 32)];
@@ -813,7 +779,7 @@ static BOOL isShowOverMenu = NO;
 	[alertV addSubview:manageField];
 	
 	// 手机号码相关
-    UILabel * numberLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 150, loginX, 32)];
+    UILabel * numberLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 100, loginX, 32)];
     
     [alertV addSubview:numberLabel];
     numberLabel.text = @"手机号码";
@@ -822,7 +788,7 @@ static BOOL isShowOverMenu = NO;
     numberLabel.textAlignment = NSTextAlignmentCenter;
     
 	
-    UITextField *loginPwdField = [[UITextField alloc] initWithFrame:CGRectMake(loginX, 150, alertV.frame.size.width -  loginX*1.2, 32)];
+    UITextField *loginPwdField = [[UITextField alloc] initWithFrame:CGRectMake(loginX, 100, alertV.frame.size.width -  loginX*1.2, 32)];
     loginPwdField.layer.borderColor = [[UIColor blackColor] CGColor];
     UIView *leftView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 8, 32)];
     
@@ -842,7 +808,7 @@ static BOOL isShowOverMenu = NO;
     loginPwdField.textColor = [UIColor blackColor];
 	
 	
-    AutherTimePickView *timeFiled = [[AutherTimePickView alloc] initWithFrame:CGRectMake(loginX, 200, alertV.frame.size.width -  loginX*1.2, 32)];
+    AutherTimePickView *timeFiled = [[AutherTimePickView alloc] initWithFrame:CGRectMake(loginX, 150, alertV.frame.size.width -  loginX*1.2, 32)];
 	
 	timeFiled.layer.borderColor = [[UIColor blackColor] CGColor];
 	
@@ -864,7 +830,7 @@ static BOOL isShowOverMenu = NO;
 	
 	timeFiled.textColor = [UIColor blackColor];
 	
-    UILabel * PswLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 200, loginX, 32)];
+    UILabel * PswLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 150, loginX, 32)];
     
     [alertV addSubview:PswLabel];
     PswLabel.text = @"时间";
@@ -1049,49 +1015,20 @@ static BOOL isShowOverMenu = NO;
 - (void)addTemporaryAuther
 {
 	
-	//qq用户
-	NSString *qqName = [kUserDefault objectForKey:kNSUserDefaultsNickname];
-	if (qqName && qqName.length > 0) {
-		
-		if (self.PhoneTfield.text.length < 0.5 || self.TimeTfield.text.length < 0.5 || self.manageField.text.length < 0.5) {
-			
-			[SVProgressTool hr_showErrorWithStatus:@"管理员密码或手机号码或时间不能为空!"];
-			[self.FamilyAlertView.layer shake];
-			return;
-		}
-		if (self.PhoneTfield.text.length != 11 ) {
-			
-			[SVProgressTool hr_showErrorWithStatus:@"该手机号码格式错误,请重新输入!"];
-			[self.FamilyAlertView.layer shake];
-			return;
-		}
-	}else
-	{
-		
-		if (self.pwdField.text.length < 0.5 || self.PhoneTfield.text.length < 0.5 || self.TimeTfield.text.length < 0.5 || self.manageField.text.length < 0.5) {
-			
-			[SVProgressTool hr_showErrorWithStatus:@"用户或管理员密码或手机号码或时间不能为空!"];
-			[self.FamilyAlertView.layer shake];
-			return;
-		}
-		if (self.PhoneTfield.text.length != 11 ) {
-			
-			[SVProgressTool hr_showErrorWithStatus:@"该手机号码格式错误,请重新输入!"];
-			[self.FamilyAlertView.layer shake];
-			return;
-		}
-		
-		NSString *paswd = [kNSUserDefaults objectForKey:kDefaultsPassWord];
-		if (![self.pwdField.text isEqualToString:paswd]) {
-			
-			[SVProgressTool hr_showErrorWithStatus:@"密码错误, 请重新输入密码!"];
-			[self.FamilyAlertView.layer shake];
-			return;
-		}
-	}
-	
-	
-	
+    if (self.PhoneTfield.text.length < 0.5 || self.TimeTfield.text.length < 0.5 || self.manageField.text.length < 0.5) {
+        
+        [SVProgressTool hr_showErrorWithStatus:@"管理员密码或手机号码或时间不能为空!"];
+        [self.FamilyAlertView.layer shake];
+        return;
+    }
+    if (self.PhoneTfield.text.length != 11 ) {
+        
+        [SVProgressTool hr_showErrorWithStatus:@"该手机号码格式错误,请重新输入!"];
+        [self.FamilyAlertView.layer shake];
+        return;
+    }
+    
+    
 	[SVProgressTool hr_showWithStatus:@"正在临时授权..."];
 	
 	
@@ -1104,9 +1041,6 @@ static BOOL isShowOverMenu = NO;
     
     
     
-    
-    
-    
 	[self.appDelegate sendMessageWithString:str];
 	
 	DDLogWarn(@"发送临时授权%@", str);
@@ -1114,6 +1048,7 @@ static BOOL isShowOverMenu = NO;
 	[_timer invalidate];
 	isOvertime = NO;
 	isShowOverMenu = NO;
+    self.isShowErrorWithStatus = YES;
 	_timer = [NSTimer scheduledTimerWithTimeInterval:HRTimeInterval target:self selector:@selector(startTimer) userInfo:nil repeats:NO];
 }
 
@@ -1151,7 +1086,8 @@ static BOOL isShowOverMenu = NO;
 		// 启动定时器
 		[_timer invalidate];
 		isOvertime = NO;
-		isShowOverMenu = NO;
+    isShowOverMenu = NO;
+    self.isShowErrorWithStatus = YES;
 		_timer = [NSTimer scheduledTimerWithTimeInterval:HRTimeInterval target:self selector:@selector(startTimer) userInfo:nil repeats:NO];
 	
 }
@@ -1248,7 +1184,8 @@ static BOOL isShowOverMenu = NO;
 	
 	// 设置超时
 	isOvertime = NO;
-	isShowOverMenu = NO;
+    isShowOverMenu = NO;
+    self.isShowErrorWithStatus = YES;
 	// 启动定时器
 	[_timer invalidate];
 	_timer = [NSTimer scheduledTimerWithTimeInterval:HRTimeInterval target:self selector:@selector(startTimer) userInfo:nil repeats:NO];
@@ -1362,7 +1299,8 @@ static BOOL isShowOverMenu = NO;
 		[SVProgressTool hr_showWithStatus:@"正在添加授权用户..."];
 		// 设置超时
 		isOvertime = NO;
-		isShowOverMenu = NO;
+        isShowOverMenu = NO;
+        self.isShowErrorWithStatus = YES;
 		// 启动定时器
 		[_timer invalidate];
 		_timer = [NSTimer scheduledTimerWithTimeInterval:HRTimeInterval target:self selector:@selector(startTimer) userInfo:nil repeats:NO];
