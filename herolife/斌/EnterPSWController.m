@@ -463,12 +463,6 @@ static int const HRTimeDuration = 300;
 	{
 		[self setupUDPSocket];
         
-        //wifi数组清空
-        AppDelegate *app = (AppDelegate *)[UIApplication sharedApplication].delegate;
-        NSArray *arr = [NSArray array];
-        app.wifiNameArray = arr;
-        
-        
         [self addTimer];//wifi搜索需要时间, 这时我需要检测当前的wifi是否是wifi盒子的wifi, 如果切换到了用户的wifi才让跳转
 		
 	}
@@ -487,6 +481,7 @@ static int const HRTimeDuration = 300;
 	dict[@"ssid"] = self.WIFILabel.text;
 	AppDelegate *app = (AppDelegate *)[UIApplication sharedApplication].delegate;
 	for (int i = 0; i < app.wifiNameArray.count -1; i++) {
+        NSLog(@"wifiNameArray%lui%d",app.wifiNameArray.count -1,i);
 		if ([app.wifiNameArray[i] isEqualToString:self.WIFILabel.text]) {
 			index = i;
 		}
@@ -502,6 +497,27 @@ static int const HRTimeDuration = 300;
 	NSString *sendString = [NSString stringWithUDPMsgDict:dict];
 	
 	[_udpSocket sendUDPSockeWithString:sendString];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        
+        [_udpSocket sendUDPSockeWithString:sendString];
+    });
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        
+        [_udpSocket sendUDPSockeWithString:sendString];
+    });
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        
+        [_udpSocket sendUDPSockeWithString:sendString];
+    });
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        
+        [_udpSocket sendUDPSockeWithString:sendString];
+    });
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        
+        [_udpSocket sendUDPSockeWithString:sendString];
+    });
 	
     NSLog(@"set = 4%@", sendString);
 	
@@ -586,6 +602,7 @@ static NSString *wift;
         self.wiftTimer = nil;
         return;
     }
+    
     if (self.wiftTime == 0) {
         [SVProgressTool hr_showErrorWithStatus:@"请求超时,请重试!"];
         [self.navigationController popViewControllerAnimated:YES];
@@ -599,6 +616,7 @@ static NSString *wift;
 - (void)addTimer
 {
 	self.leftTime = HRTimeDuration;
+    [self.timer invalidate];
 	self.timer = [NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(updateTimeLabel) userInfo:nil repeats:YES];
 	
 }
@@ -609,7 +627,8 @@ static NSString *wift;
 	self.leftTime--;
 	DDLogWarn(@"--------连上了wifi--------%d", self.leftTime);
 	wift = [NSString stringWithGetWifiName];
-	if ([wift isEqualToString:@"小盾"] || wift.length < 1) {
+   
+	if ([wift isEqualToString:@"互联网智能门锁"] || wift.length < 1) {
 		
 		
 	}else

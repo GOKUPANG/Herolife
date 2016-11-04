@@ -32,6 +32,8 @@
 
 /** 定时器 */
 @property (nonatomic, weak) NSTimer *timer;
+/** 定时器 定时每秒发set = 32 连发五次 */
+@property (nonatomic, weak) NSTimer *set32Timer;
 
 /** 背景图片*/
 
@@ -55,6 +57,8 @@ static int const HRTimeDuration = 60;
     [super viewDidLoad];
 	self.leftTime = 60;
     Wifidid = @"";
+    WifiUUID = @"";
+    isReceiveSet31 = NO;
 	DDLogWarn(@"wifi----------WaitController-------%@", [NSString stringWithGetWifiName]);
 	[self setupViews];
     
@@ -133,15 +137,22 @@ static int const HRTimeDuration = 60;
     [kNotification removeObserver:self];
     [self.timer invalidate];
 }
+static BOOL isReceiveSet31 = NO;
 - (void)receiveStratFailAddWiFiLink:(NSNotification *)note
 {
-    
     NSDictionary *dict = note.userInfo;
     [self sendSocketWithSetWithUUID:[dict valueForKeyPath:@"uuid"]];
-    [SVProgressTool hr_showErrorWithStatus:@"该锁已在其他帐号上添加,请在其他帐号上删除后重试!"];
+    if (!isReceiveSet31) {
+        [SVProgressTool hr_showErrorWithStatus:@"该锁已在其他帐号上添加,请在其他帐号上删除后重试!"];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [self cancelButtonClick:self.cancelButton];
+        });
+    }
+    isReceiveSet31 = YES;
    
 }
 static NSString *Wifidid = @"";
+static NSString *WifiUUID = @"";
 - (void)receiveStratAddWiFiLink:(NSNotification *)note
 {
     
@@ -153,7 +164,9 @@ static NSString *Wifidid = @"";
     DDLogInfo(@"-----------receiveStratAddWiFiLink---------1----did%@Wifidid%@", did,Wifidid);
     Wifidid = did;
     NSString *uuid = dict[@"msg"][@"uuid"];
-    [self sendSocketWithSetWithUUID:uuid];
+    WifiUUID = uuid;
+    [self addTimerToRepeatSocketSet32WithUUID:uuid];
+//    [self sendSocketWithSetWithUUID: uuid];
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         AddLockController *addLockVC = [[AddLockController alloc] init];
         addLockVC.did = did;
@@ -376,6 +389,28 @@ static NSString *Wifidid = @"";
 }
 
 #pragma mark - 添加定时器
+- (void)addTimerToRepeatSocketSet32WithUUID:(NSString *)uuid
+{
+    self.set32Timer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(set32UpdateTimeLabel) userInfo:nil repeats:YES];
+    
+}
+
+static int set32Index = 0;
+- (void)set32UpdateTimeLabel
+{
+    set32Index++;
+    
+    [self sendSocketWithSetWithUUID: WifiUUID];
+    if (set32Index == 5) {
+        
+        [self.set32Timer invalidate];
+        self.set32Timer = nil;
+    }
+    
+    
+}
+
+
 - (void)addTimer
 {
 	self.leftTime = HRTimeDuration;

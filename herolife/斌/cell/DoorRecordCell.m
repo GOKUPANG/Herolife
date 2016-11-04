@@ -55,6 +55,13 @@
     
     _recordLabel = [[UILabel alloc]init];
     
+    //图片
+    UIImageView *selectImageView = [[UIImageView alloc] init];
+    selectImageView.image = [UIImage imageNamed:@"选中红点"];
+    [self.contentView addSubview:selectImageView];
+    self.selectImageView = selectImageView;
+    
+    
     [self.contentView addSubview:_timeLabel];
     [self.contentView addSubview:_userNameLabel];
     [self.contentView addSubview:_recordLabel];
@@ -67,10 +74,19 @@
    开锁记录  100
    */
     
+    
+    
+    self.selectImageView.sd_layout
+    .leftSpaceToView(self.contentView,15.0/375.0 *self.contentView.frame.size.width)
+    .widthIs(20.0/375.0 * self.contentView.frame.size.width)
+    .bottomSpaceToView(self.contentView,10.0)
+    .heightIs(20.0);
+    
+    
  
     //时间
  _timeLabel.sd_layout
-    .leftSpaceToView(self.contentView,15.0/375.0 *self.contentView.frame.size.width)
+    .leftSpaceToView(self.contentView,35.0/375.0 *self.contentView.frame.size.width)
     .widthIs(110.0/375.0 * self.contentView.frame.size.width)
     .bottomSpaceToView(self.contentView,10.0)
     .heightIs(20.0);

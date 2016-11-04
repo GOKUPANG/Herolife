@@ -147,7 +147,16 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    if (!self.timer ) {
+        NSLog(@"定时器不在");
+        
+    }
     
+    else
+    {
+        NSLog(@"定时器还在");
+        
+    }
     
     
     //背景图片
@@ -196,6 +205,7 @@
 
 static BOOL isOvertime = NO;
 
+static BOOL isShowOverMenu = NO;
 - (void)backButtonClick:(UIButton *)btn
 {
 	[self.navigationController popViewControllerAnimated:YES];
@@ -412,7 +422,7 @@ static BOOL isOvertime = NO;
 
     
     
-    isOvertime = YES;
+    isShowOverMenu = YES;
     
 
     NSDictionary *dict = notification.userInfo;
@@ -467,6 +477,13 @@ static BOOL isOvertime = NO;
             break;
             
             
+      case 9:
+        {
+            [SVProgressTool hr_showErrorWithStatus:@"未配对!"];
+
+        }
+            
+            
             
         default:
             break;
@@ -509,14 +526,6 @@ static BOOL isOvertime = NO;
         
         
     }
-    
-    
-    
-    
-    
-    
-
-    
     
     
     NSString *token = [[NSUserDefaults standardUserDefaults] objectForKey:@"PushToken"];
@@ -586,7 +595,10 @@ static BOOL isOvertime = NO;
      [SVProgressTool hr_showWithStatus:@"正在开锁"];
     
     
-   // isOvertime = NO;
+    isOvertime = NO;
+    isShowOverMenu = NO;
+    // 启动定时器
+    [_timer invalidate];
     _timer = [NSTimer scheduledTimerWithTimeInterval:6.0 target:self selector:@selector(startTimer) userInfo:nil repeats:NO];
     
     
@@ -599,12 +611,23 @@ static BOOL isOvertime = NO;
     
 }
 
+-(void)viewDidDisappear:(BOOL)animated
+{
+    [self.timer invalidate];
+    self.timer = nil;
+}
+
+-(void)dealloc
+{
+    [self.timer invalidate];
+    self.timer = nil;
+}
 
 #pragma mark - 定时器事件
 -(void)startTimer
 {
     
-    if (!isOvertime) {
+    if (!isOvertime && !isShowOverMenu) {
         
         
         [SVProgressTool hr_showErrorWithStatus:@"请求超时!"];
@@ -612,12 +635,12 @@ static BOOL isOvertime = NO;
         
         [_timer invalidate];
         
+        
     }
     
-    isOvertime = NO ;
     
+   // NSLog(@"我还在啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊");
     
-   
 }
 
 

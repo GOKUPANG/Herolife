@@ -24,6 +24,11 @@ static NSTimeInterval const dimissTimer = 2;
 	
 	if (str.length > 1) {
         
+        code = [NSString stringWithFormat:@"%@", code];
+        if ([code isEqualToString:@"200"]) {
+           [SVProgressTool hr_showErrorWithStatus:@"未连接到服务器!"];
+            return;
+        }
 		str = [str replaceUnicode:str];
 //		str = [str substringFromIndex:2];
 //		NSRange range = [str rangeOfString:@"\"]" options:NSBackwardsSearch];
@@ -35,11 +40,13 @@ static NSTimeInterval const dimissTimer = 2;
 
 	}else
 	{
-		[SVProgressTool hr_showErrorWithStatus:@"未连接到服务器!"];
+        NSString *error = [NSString stringWithFormat:@"%@未连接到服务器!", code];
+		[SVProgressTool hr_showErrorWithStatus:error];
 	}
 	
 	code = [NSString stringWithFormat:@"%@", code];
 	
+    
 	if ([code isEqualToString:@"403"] || [code isEqualToString:@"406"]) {
 		
 //		[PushToLoginController pushToLoginController];

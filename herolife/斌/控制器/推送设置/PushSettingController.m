@@ -1232,6 +1232,11 @@ static BOOL isOvertime = NO;
     
     [alertV addSubview:PswLabel];
     PswLabel.text = @"防撬提醒人";
+    if (UIScreenW < 375) {
+        
+        PswLabel.font = [UIFont systemFontOfSize:16];
+        
+    }
     PswLabel.textColor = [UIColor blackColor];
     
     PswLabel.textAlignment = NSTextAlignmentCenter;

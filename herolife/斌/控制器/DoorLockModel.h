@@ -25,5 +25,7 @@
 @property(nonatomic, copy) NSString *uuid;
 /** <#name#> */
 @property(nonatomic, copy) NSString *time;
+/** <#name#> */
+@property(nonatomic, copy) NSString *unread;
 
 @end

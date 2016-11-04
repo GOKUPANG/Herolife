@@ -307,68 +307,105 @@ static NSString *ViewOfCustomerTableViewCellIdentifier = @"ViewOfCustomerTableVi
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receviedWithNotOnline) name:kNotificationNotOnline object:nil];
 	
 	//临时授权
-	[kNotification addObserver:self selector:@selector(receiveTempAutherInformation) name:kNotificationReceiveTempAutherInformation object:nil];
+    [kNotification addObserver:self selector:@selector(receiveTempAutherInformation:) name:kNotificationReceiveTempAutherInformation object:nil];
 	
 }
 static BOOL isOvertime = NO;
-- (void)receiveTempAutherInformation
+- (void)receiveTempAutherInformation:(NSNotification *)note
 {
-	
-	// 更新数据
-	AppDelegate *app = (AppDelegate *)[UIApplication sharedApplication].delegate;
-	
-	DDLogWarn(@"获得我授权给别人的授权表setListModel%@count-%lu", app.autherArray, (unsigned long)app.autherArray.count);
+    NSDictionary *jsonDict = note.userInfo;
     
-    NSLog(@"-----------------收到临时授权返回的东西-------------------");
-    
-    
-    
-    
-	NSMutableArray *mu = [NSMutableArray array];
-	for (DeviceAutherModel *model in app.autherArray) {
-		if ([model.uuid isEqualToString: self.currentUuid]) {
-			
-			[mu addObject:model];
-			
-		}
-		
-	}
-	
-	self.deviceAutherArray = mu;
-	
-	// _listTableView要显示的section数目
-	for (int i = 0; i < self.deviceAutherArray.count; i++)
-	{
-		NSMutableDictionary *dic = [[NSMutableDictionary alloc]init];
-		[dic setValue:@"55555" forKey:@"detail"];
-		[_dataArray addObject:dic];
-		
-	}
-	
-	[self.listTableView reloadData];
-	
-	
-	[UIView animateWithDuration:0.5 animations:^{
-		
-		
-		CGRect AlertViewFrame = self.FamilyAlertView.frame;
-		
-		AlertViewFrame.origin.x = HRUIScreenW;
-		
-		
-		self.TemporaryAlertView.frame = AlertViewFrame;
-		
-		self.TemporaryAlertView.alpha = 0;
-		
-	} completion:^(BOOL finished) {
-		
-		
-		[self.TemporaryAlertView dissMiss];
-		
-	}];
-	
-	isOvertime = YES;
-	[SVProgressTool hr_showSuccessWithStatus:@"临时授权成功!"];
+    NSInteger state = [jsonDict[@"msg"][@"state"] integerValue];
+    switch (state) {
+        case 21:
+        {
+            
+            [SVProgressTool hr_showSuccessWithStatus:@"临时授权成功!"];
+            // 更新数据
+            AppDelegate *app = (AppDelegate *)[UIApplication sharedApplication].delegate;
+            
+            DDLogWarn(@"获得我授权给别人的授权表setListModel%@count-%lu", app.autherArray, (unsigned long)app.autherArray.count);
+            
+            NSLog(@"-----------------收到临时授权返回的东西-------------------");
+            
+            
+            
+            
+            NSMutableArray *mu = [NSMutableArray array];
+            for (DeviceAutherModel *model in app.autherArray) {
+                if ([model.uuid isEqualToString: self.currentUuid]) {
+                    
+                    [mu addObject:model];
+                    
+                }
+                
+            }
+            
+            self.deviceAutherArray = mu;
+            
+            // _listTableView要显示的section数目
+            for (int i = 0; i < self.deviceAutherArray.count; i++)
+            {
+                NSMutableDictionary *dic = [[NSMutableDictionary alloc]init];
+                [dic setValue:@"55555" forKey:@"detail"];
+                [_dataArray addObject:dic];
+                
+            }
+            
+            [self.listTableView reloadData];
+            
+            
+            [UIView animateWithDuration:0.5 animations:^{
+                
+                
+                CGRect AlertViewFrame = self.FamilyAlertView.frame;
+                
+                AlertViewFrame.origin.x = HRUIScreenW;
+                
+                
+                self.TemporaryAlertView.frame = AlertViewFrame;
+                
+                self.TemporaryAlertView.alpha = 0;
+                
+            } completion:^(BOOL finished) {
+                
+                
+                [self.TemporaryAlertView dissMiss];
+                
+            }];
+            
+
+        }
+            break;
+        case 22:
+        {
+            [SVProgressTool hr_showErrorWithStatus:@"设置成功，发送短信失败"];
+        }
+            break;
+        case 23:
+        {
+            
+            [SVProgressTool hr_showErrorWithStatus:@"设置失败，门锁管理员密码错误"];
+        }
+            break;
+        case 24:
+        {
+            
+            [SVProgressTool hr_showErrorWithStatus:@"设置失败，输入参数错误"];
+        }
+            break;
+        case 25:
+        {
+            
+            [SVProgressTool hr_showErrorWithStatus:@"当天临时授权次数已超过最大限制(20 次)"];
+        }
+            break;
+            
+        default:
+            break;
+    }
+
+    isOvertime = YES;
     
     
 }
@@ -751,6 +788,11 @@ static BOOL isShowOverMenu = NO;
 	
 	[alertV addSubview:manageLabel];
 	manageLabel.text = @"管理员密码";
+    if (UIScreenW < 375) {
+        
+    manageLabel.font = [UIFont systemFontOfSize:15];
+        
+    }
 	manageLabel.textColor = [UIColor blackColor];
 	
 	manageLabel.textAlignment = NSTextAlignmentCenter;
@@ -770,7 +812,16 @@ static BOOL isShowOverMenu = NO;
 	manageField.layer.borderWidth = 1;
 	manageField.layer.cornerRadius = 4;
 	manageField.clearButtonMode = UITextFieldViewModeWhileEditing;
-	manageField.placeholder = @"请输入用户管理员密码";
+	manageField.placeholder = @"请输入用户门锁管理员密码";
+    if (UIScreenW < 375) {
+        
+        manageField.font = [UIFont systemFontOfSize:13];
+        
+    }else
+    {
+        manageField.font = [UIFont systemFontOfSize:16];
+        
+    }
    // [manageField setValue:[UIColor colorWithWhite:1.0 alpha:0.7] forKeyPath:@"_placeholderLabel.textColor"];
 	
 	manageField.textColor = [UIColor blackColor];

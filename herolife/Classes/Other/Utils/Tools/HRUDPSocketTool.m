@@ -104,6 +104,13 @@ static id _instance;
 		//接收到返回的wifi数据
 		if ([jsonDict[@"hrpush"][@"type"] isEqualToString:@"set"])
 		{
+            if ([jsonDict[@"msg"][@"set"] isEqualToString:@"1"]) {
+                
+                
+                [kNotification postNotificationName:kNotificationReceiveSet1 object:nil];
+                return YES;
+            }
+            
 			if ([jsonDict[@"msg"][@"set"] isEqualToString:@"3"]) {
 				
 				WIFIListModel *wifiModel = [WIFIListModel mj_objectWithKeyValues:jsonDict[@"msg"]];
@@ -113,7 +120,8 @@ static id _instance;
 				app.rssilistArray = wifiModel.rssilist;
 				
 				[kNotification postNotificationName:kNotificationReceiveWiFiList object:nil];
-				
+                
+                return YES;
 			}
 		}
 		

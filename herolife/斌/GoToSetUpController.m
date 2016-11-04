@@ -252,7 +252,7 @@ static int const HRTimeDuration = 601;
     infoLabel.font= [UIFont systemFontOfSize:17];
     
     infoLabel.numberOfLines = 0;
-    infoLabel.text = @"请在iPhone“设置-无线局域网”中选择名称为“小盾”的无线网络，等待WiFi连接成功后返回此页";
+    infoLabel.text = @"请在iPhone“设置-无线局域网”中选择名称为“互联网智能门锁”的无线网络，等待WiFi连接成功后返回此页";
     
     
     
@@ -400,7 +400,7 @@ static NSString *wift;
 	self.leftTime--;
 	DDLogWarn(@"--------连上了--------%d", self.leftTime);
 	wift = [NSString stringWithGetWifiName];
-	if ([wift isEqualToString:@"小盾"]) {
+	if ([wift isEqualToString:@"互联网智能门锁"]) {
 		
 		
 		[self registerLocalNotification:1.0];

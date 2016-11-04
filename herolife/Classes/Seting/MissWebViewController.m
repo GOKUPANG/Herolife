@@ -54,6 +54,7 @@
 	}];
 	
 }
+
 - (void)viewWillAppear:(BOOL)animated
 {
 	[super viewWillAppear:animated];
@@ -101,7 +102,8 @@
 }
 - (void)viewWillDisappear:(BOOL)animated
 {
-	[super viewWillDisappear:animated];
+    [super viewWillDisappear:animated];
+    [SVProgressTool hr_dismiss];
 	[self IsTabBarHidden: NO];
 }
 #pragma mark - 隐藏底部条 - 海波代码

@@ -71,7 +71,7 @@
 @property(nonatomic, weak) NSTimer *overTimer;
 @end
 /** 停留时间 */
-static int const HRTimeDuration = 3;
+static int const HRTimeDuration = 40;
 
 
 @implementation AppDelegate
@@ -131,7 +131,9 @@ static NSInteger disconnectCount = 0;
 	
 	
 	//添加通知
-	[kNotification addObserver:self selector:@selector(receiveWiFiList) name:kNotificationReceiveWiFiList object:nil];
+    [kNotification addObserver:self selector:@selector(receiveSet1) name:kNotificationReceiveSet1 object:nil];
+    [kNotification addObserver:self selector:@selector(receiveWiFiList) name:kNotificationReceiveWiFiList object:nil];
+    
 	
 	//远程推送相关
 	//监听点击事件
@@ -230,7 +232,7 @@ static NSInteger disconnectCount = 0;
     {
           NSLog(@"收到本地通知");
         //发送set=0 和set = 2的帧
-        [self sendUDPWithSet];
+//        [self sendUDPWithSet];
         
     }
 
@@ -347,11 +349,18 @@ static NSInteger disconnectCount = 0;
 -(void)dddd:(NSNotification*)noti{
 	NSLog(@"ddd,%@",noti);
 }
+
 static BOOL isOverTime = NO;
+static BOOL isReceiveSet1 = NO;
+static BOOL isReceiveSet3 = NO;
+- (void)receiveSet1
+{
+    isReceiveSet1 = YES;
+}
 - (void)receiveWiFiList
 {
 	isOverTime = YES;
-    
+    isReceiveSet3 = YES;
     
     
     //取出数据
@@ -364,22 +373,24 @@ static BOOL isOverTime = NO;
     }
     
     
-	UINavigationController *nav = (UINavigationController *)[NSObject activityViewController];
-	
-	for (UIViewController *topVC in nav.childViewControllers) {
-		HRNavigationViewController *hrNav = (HRNavigationViewController *)topVC;
-		for (id navVC in hrNav.childViewControllers) {
-			
-			NSLog(@"topVC%@", NSStringFromClass([navVC class]));
-			if ([navVC isKindOfClass:[EnterPSWController class]]) {
-				DDLogWarn(@"VC-%@",NSStringFromClass([navVC class]));
-			}else if ([navVC isKindOfClass:[GoToSetUpController class]]) {
-				DDLogWarn(@"VC-%@",NSStringFromClass([navVC class]));
-				EnterPSWController *enterVC = [[EnterPSWController alloc] init];
-				GoToSetUpController *gto = (GoToSetUpController *)navVC;
-			[gto.navigationController pushViewController:enterVC animated:YES];
-                
-			}
+//	UINavigationController *nav = (UINavigationController *)[NSObject activityViewController];
+//	
+//	for (UIViewController *topVC in nav.childViewControllers) {
+//		HRNavigationViewController *hrNav = (HRNavigationViewController *)topVC;
+//		for (id navVC in hrNav.childViewControllers) {
+//			
+//			NSLog(@"topVC%@", NSStringFromClass([navVC class]));
+//			if ([navVC isKindOfClass:[EnterPSWController class]]) {
+//				DDLogWarn(@"VC-%@",NSStringFromClass([navVC class]));
+//			}else if ([navVC isKindOfClass:[GoToSetUpController class]]) {
+//				DDLogWarn(@"VC-%@",NSStringFromClass([navVC class]));
+//				EnterPSWController *enterVC = [[EnterPSWController alloc] init];
+//				GoToSetUpController *gto = (GoToSetUpController *)navVC;
+//			[gto.navigationController pushViewController:enterVC animated:YES];
+//                
+//			}
+    
+    
 //			{
 //				//收到通知跳转到wifi 输入密码这个界面
 //				EnterPSWController *enterVC = [[EnterPSWController alloc] init];
@@ -389,8 +400,8 @@ static BOOL isOverTime = NO;
 //				
 //			}
 
-		}
-	}
+//		}
+//	}
 //	UIViewController *topController = nav.childViewControllers.lastObject;
 	
 //	UIViewController *topController = [AppDelegate currentViewController];
@@ -546,7 +557,7 @@ static BOOL isOverTime = NO;
     NSString *pushString = [kUserDefault objectForKey:isPushToSystem];
     if (pushString.length > 0) {
         
-        if ([wifi isEqualToString:@"小盾"]) {
+        if ([wifi isEqualToString:@"互联网智能门锁"]) {
             
             //发送set=0 和set = 2的帧
             [self sendUDPWithSet];
@@ -716,11 +727,10 @@ static BOOL isOverTime = NO;
 		NSData *data = [str dataUsingEncoding:NSUTF8StringEncoding];
 		
 		[self.socket writeData:data withTimeout:-1 tag:0];
-		if (disconnectCount >= 10) {
+		if (disconnectCount == 10) {
 			
             HRTabBarViewController *TabBar = (HRTabBarViewController *)[NSObject activityViewController];
             HRNavigationViewController *nav = TabBar.childViewControllers.firstObject;
-            int index = 0;
             UIViewController *vc = nav.childViewControllers.lastObject;
             
            
@@ -732,7 +742,6 @@ static BOOL isOverTime = NO;
                 
                 [self.tipsLabel showText:@"未连接到服务器!" duration:666666666];
             }
-            index= 0;
 		}
 		
 	});
@@ -1178,9 +1187,14 @@ static NSUInteger lengthInteger = 0;
 	if ([jsonDict[@"hrpush"][@"type"] isEqualToString:@"set"] && [jsonDict[@"msg"][@"types"] isEqualToString:@"common"]) {
 		
 		DDLogInfo(@"创建临时授权数据%@", jsonDict);
-		//用同样的方法,因为那个数组保存的都是授权信息
-		[self addCreateAutherDict:jsonDict];
-		[[NSNotificationCenter defaultCenter] postNotificationName:kNotificationReceiveTempAutherInformation object:nil userInfo:jsonDict];
+        NSInteger state = [jsonDict[@"msg"][@"state"] integerValue];
+        if (state == 21) {
+            
+            //用同样的方法,因为那个数组保存的都是授权信息
+            [self addCreateAutherDict:jsonDict];
+        }
+                
+        [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationReceiveTempAutherInformation object:nil userInfo:jsonDict];
 		return;
 	}
 	
@@ -1713,7 +1727,7 @@ static NSUInteger lengthInteger = 0;
 - (void)addTimer
 {
 	self.leftTime = HRTimeDuration;
-	self.timer = [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(updateTimeLabel) userInfo:nil repeats:YES];
+	self.timer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(updateTimeLabel) userInfo:nil repeats:YES];
 	
 }
 static NSString *wift;
@@ -1721,12 +1735,31 @@ static NSString *wift;
 {
 	self.leftTime--;
 	[self sendUDPSockeWithString:@"0"];
-	
-	if (self.leftTime == 1) {
-		[self sendUDPSockeWithString:@"2"];
-		[self.timer invalidate];
-		self.timer = nil;
-	}
+    if (!isReceiveSet1) {
+        
+        [self sendUDPSockeWithString:@"0"];
+    }else
+    {
+        
+        [self sendUDPSockeWithString:@"2"];
+        if (!isReceiveSet3) {
+            
+            [self sendUDPSockeWithString:@"2"];
+        }else
+        {
+            isReceiveSet3 = NO;
+            isReceiveSet1 = NO;
+            [self.timer invalidate];
+            self.timer = nil;
+        }
+    }
+//    NSLog(@"发送set= 0的帧");
+//	if (self.leftTime == 1) {
+//        [self sendUDPSockeWithString:@"2"];
+//        NSLog(@"发送set= 2的帧");
+//		[self.timer invalidate];
+//		self.timer = nil;
+//	}
 	
 	if (self.leftTime == 0) {
 		

@@ -208,8 +208,14 @@ static int indexCount = 0;
 	/// 从偏好设置里加载数据
 	NSString *uuid = self.listModel.uuid;
 	//NSString *url = [NSString stringWithFormat:@"http://www.gzhuarui.cn/?q=huaruiapi/herolife-dev-hrsc-ml&uuid=%@&sy=(unlock|batlow|ltnolock|errlimt)&page=%d", uuid, indexCount];
-    NSString *url = [NSString stringWithFormat:@"%@%@&sy=(unlock|batlow|ltnolock|errlimt)&page=%d",HRAPI_RecordeLock_URL,uuid,indexCount];
+    NSString *url = [NSString stringWithFormat:@"%@%@&sy=(unlock|batlow|ltnolock|errlimt|illunlock|holding)&page=%d",HRAPI_RecordeLock_URL,uuid,indexCount];
+    
+    
+    
 	url = [url stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
+    
+    NSLog(@"请求记录的网址%@",url);
+    
 	
 	HRWeakSelf
 	[HRHTTPTool hr_getHttpWithURL:url parameters:nil responseDict:^(id responseObject, NSError *error) {
@@ -219,7 +225,7 @@ static int indexCount = 0;
 			return ;
 		}
 		
-		DDLogWarn(@"记录查询HTTP请求%@", responseObject);
+		//DDLogWarn(@"记录查询HTTP请求%@", responseObject);
 		//如果responseObject不是数组类型就不是我们想要的数据，应该过滤掉
 		if (![responseObject isKindOfClass:[NSArray class]]) {
 //			[weakSelf.queryArray removeAllObjects];
@@ -231,25 +237,43 @@ static int indexCount = 0;
 			DDLogDebug(@"responseObject count == 0");
 			return;
 		}
+        
+        
+     
 		
-//		[weakSelf.queryArray removeAllObjects];
 		NSArray *responseArr = (NSArray*)responseObject;
+        
+        
+      //  NSLog(@"记录查询请求回来的数据%@",responseArr);
+        
 		
 		for (NSDictionary *dict in responseArr) {
 			DoorLockModel *lockModel = [DoorLockModel mj_objectWithKeyValues:dict];
-			[weakSelf.queryArray addObject:lockModel];
+            
+            
+            
+            
+            if ([lockModel.uuid isEqualToString:uuid]) {
+                NSLog(@"符合的情况");
+                [weakSelf.queryArray addObject:lockModel];
+
+                
+            }
 		}
 		
 		[self.tableView reloadData];
 	}];
 	indexCount++;
+    
+    NSLog(@"查询数组的长度%lu",(unsigned long)weakSelf.queryArray.count);
+    
 }
 
 #pragma mark -点击第一行跳转到推送设置界面
 
 -(void)ViewClick
 {
-    NSLog(@"授权列表的名字%@",self.AuthorUserName);
+   // NSLog(@"授权列表的名字%@",self.AuthorUserName);
     
     
     if (self.AuthorUserName.length > 0) {
@@ -361,7 +385,7 @@ static int indexCount = 0;
     .leftEqualToView(lineView)
     .widthIs(70)
     .heightIs(30);
-    _pushLabel.text = @"推送";
+    _pushLabel.text = @"推送设置";
     _pushLabel.font = [UIFont systemFontOfSize:17];
    // _pushLabel.font = [UIFont fontWithName:@"HelveticaNeue-Thin" size:18];
 
@@ -459,6 +483,19 @@ static int indexCount = 0;
     
     cell.selectionStyle=UITableViewCellSelectionStyleNone;
 	cell.lockModel = self.queryArray[indexPath.row];
+    if ([cell.lockModel.unread isEqualToString:@"read"]) {
+
+        NSLog(@"已读");
+        
+        cell.selectImageView.hidden = YES;
+        
+    }
+    else{
+        NSLog(@"未读");
+
+        cell.selectImageView.hidden = NO;
+        
+    }
     
     return cell;
     
@@ -470,6 +507,48 @@ static int indexCount = 0;
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     DoorLockModel *model = self.queryArray[indexPath.row];
+    
+    
+    NSString * did = model.did ;
+    
+    NSLog(@"did是%@",did);
+    
+    
+    //加个post请求 修改unread字段
+    
+    AFHTTPSessionManager * manager = [AFHTTPSessionManager hrManager ];
+    
+    
+    NSString * url = [NSString stringWithFormat:@"%@%@",HRAPI_RecoderSelectState_URL, did];
+    
+    NSLog(@"更新的网址是%@",url);
+    
+    
+    [manager GET:url parameters:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        
+        NSLog(@"更新unread成功");
+        
+        
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        
+        NSLog(@"更新unread失败%@",error);
+        
+        
+    }];
+    
+    
+    model.unread = @"read";
+    
+    [self.queryArray replaceObjectAtIndex:indexPath.row withObject:model];
+    
+    [tableView reloadData];
+    
+    
+    
+    
+    
+    
+    
     
     NSString *title = model.title;
     NSRange range = [title rangeOfString:@"|"];

@@ -20,6 +20,8 @@
 
 /** 操作记录 */
 @property(nonatomic,strong)UILabel * recordLabel;
+/** 选中图片 */
+@property(nonatomic, weak) UIImageView *selectImageView;
 /** <#name#> */
 @property(nonatomic, strong) DoorLockModel *lockModel;
 

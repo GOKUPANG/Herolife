@@ -275,6 +275,8 @@
 #define kNotificationQRCodeCreateLock @"kNotificationQRCodeCreateLock"
 /// 接收到wifi列表 UDP 通知
 #define kNotificationReceiveWiFiList @"kNotificationReceiveWiFiList"
+/// 接收到set = 1 UDP 通知
+#define kNotificationReceiveSet1 @"kNotificationReceiveSet1"
 /// 接收到set = 30 通知
 #define kNotificationReceiveStratAddWiFiLink @"kNotificationReceiveStratAddWiFiLink"
 /// 接收到set = 31 通知
@@ -295,12 +297,15 @@
 
 #ifdef DEBUG
 static const int ddLogLevel = DDLogLevelVerbose;
-#define NSLog(...) NSLog(__VA_ARGS__)
+//#define NSLog(...) NSLog(__VA_ARGS__)
+
+#define NSLog(format, ...) printf("\n[%s] %s [第%d行] %s\n", __TIME__, __FUNCTION__, __LINE__, [[NSString stringWithFormat:format, ## __VA_ARGS__] UTF8String]);
+
 #else
 static const int ddLogLevel = DDLogLevelOff;
-#define NSLog(...)
+//#define NSLog(...)
+#define NSLog(format, ...)
 #endif
-
 
 
 

@@ -71,6 +71,9 @@ UIKIT_EXTERN CGFloat const HRNavH;
 /// 获取锁信息数据的GET请求URL
 #define HRAPI_LockInFo_URL		[NSString stringWithFormat:@"%@%@", SERVER_DOMAIN, @"huaruiapi/herolife-dev"]
 
+/// 获取门锁记录选中状态数据的GET请求URL
+#define HRAPI_RecoderSelectState_URL		[NSString stringWithFormat:@"%@%@", SERVER_DOMAIN, @"node/"]
+
 /// 我授权给别人的数据
 #define HRAPI_LockAutherUserList_URL		[NSString stringWithFormat:@"%@%@", SERVER_DOMAIN, @"huaruiapi/herolife-dev-hrsc-al&user="]
 /// 别人授权给我的数据
