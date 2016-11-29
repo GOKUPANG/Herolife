@@ -83,10 +83,21 @@
 /**  */
 @property(nonatomic, strong) NSTimer *timer;
 
+/** 修改过的数组 */
+@property(nonatomic,strong)NSMutableArray * FIXArray;
+
+@property(nonatomic,assign)NSInteger isfix;
+
+
+
+
 
 @end
 
 @implementation PushSettingController
+
+
+
 #pragma mark - label 懒加载
 - (UILabel *)onLineLabel
 {
@@ -181,9 +192,38 @@
 }
 
 
-#pragma mark - UI事件  -haibo
+#pragma mark - UI事件  -haibo  返回按钮方法
 - (void)backButtonClick:(UIButton *)btn
 {
+    
+    
+    NSLog(@"isfix的值现在是%ld",_isfix);
+    
+    
+    if (![self.FIXArray isEqualToArray:self.listModel.op]||_isfix == 1) {
+       // NSLog(@"数组没有改变");
+        UIAlertController * alertClr = [UIAlertController alertControllerWithTitle:@"是否保存当前设置" message:@"" preferredStyle:UIAlertControllerStyleAlert];
+        
+        UIAlertAction * cancelAction = [UIAlertAction actionWithTitle:@"不保存" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+            
+            [self.navigationController popViewControllerAnimated:YES];
+            
+            
+        }];
+        
+        UIAlertAction *confirmAction = [UIAlertAction actionWithTitle:@"保存" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            [self SaveBtnClick];
+            
+        }];
+        [alertClr addAction:cancelAction];
+        [alertClr addAction:confirmAction];
+        
+        
+        [self presentViewController:alertClr animated:YES completion:nil];
+
+        
+    }
+   
     [self.navigationController popViewControllerAnimated:YES];
 }
 #pragma mark - 导航条 设置
@@ -230,6 +270,13 @@
     [self.view addSubview:navView];
     
     self.navView = navView;
+    
+    self.isfix = 0 ;
+    
+    self.FIXArray = [NSMutableArray arrayWithArray:self.listModel.op];
+    
+    
+    
     
     
     /***************** 获取门锁op数组 *******************/
@@ -312,6 +359,50 @@ static BOOL isOvertime = NO;
     [appDelegate connectToHost];
     self.appDelegate = appDelegate;
     
+}
+
+
+#pragma mark - 四个开关的改变值的方法
+
+-(void)SW1:(UISwitch *)sw
+{
+    
+    NSLog(@"%@",self.FIXArray);
+    
+    int s1 = sw.on;
+    NSString * str = [NSString stringWithFormat:@"%d",s1];
+    
+    [self.FIXArray replaceObjectAtIndex:0 withObject:str];
+    
+    
+    
+}
+
+-(void)SW2:(UISwitch *)sw
+{
+    int s2 = sw.on;
+    NSString * str = [NSString stringWithFormat:@"%d",s2];
+    
+    [self.FIXArray replaceObjectAtIndex:1 withObject:str];
+
+
+}
+
+-(void)SW3:(UISwitch *)sw
+{
+    
+    int s3 = sw.on;
+    NSString * str = [NSString stringWithFormat:@"%d",s3];
+    [self.FIXArray replaceObjectAtIndex:2 withObject:str];
+
+}
+
+-(void)SW4:(UISwitch *)sw
+{
+    int s4 = sw.on;
+    NSString * str = [NSString stringWithFormat:@"%d",s4];
+    [self.FIXArray replaceObjectAtIndex:3 withObject:str];
+
 }
 
 
@@ -406,6 +497,9 @@ static BOOL isOvertime = NO;
     .rightEqualToView(self.view);
     
     
+    
+    
+    
 /****************************** 第二条线基本推送下面的线 ******************************/
     
     
@@ -447,13 +541,7 @@ static BOOL isOvertime = NO;
     .rightEqualToView(lineView2)
     .heightIs(1);
     
-    
-   
-    
-    
-    
-    
-     /****************************** 第四条线推送2 ******************************/
+   /****************************** 第四条线推送2 ******************************/
     
     UIView *lineView4 = [[UIView alloc]init];
     [self.view addSubview:lineView4];
@@ -487,7 +575,7 @@ static BOOL isOvertime = NO;
     
     lineView6.sd_layout
     .topSpaceToView(lineView5,45.0 * HRMyScreenH)
-    .leftSpaceToView(self.view,42.5 *HRMyScreenW)
+    .leftSpaceToView(self.view,42.5 * HRMyScreenW)
     .rightEqualToView(lineView5)
     .heightIs(1);
     
@@ -551,6 +639,8 @@ static BOOL isOvertime = NO;
     .heightIs(0)
     .widthIs(0);
     
+     [SW1 addTarget:self action:@selector(SW1:) forControlEvents:UIControlEventValueChanged];
+    
     
     UISwitch * SW2 = [[UISwitch alloc]init];
     [self.view addSubview:SW2];
@@ -561,9 +651,14 @@ static BOOL isOvertime = NO;
     .heightIs(0)
     .widthIs(0);
     
+     [SW2 addTarget:self action:@selector(SW2:) forControlEvents:UIControlEventValueChanged];
+    
     
     UISwitch * SW3 = [[UISwitch alloc]init];
+    
     [self.view addSubview:SW3];
+    
+    [SW3 addTarget:self action:@selector(SW3:) forControlEvents:UIControlEventValueChanged];
     
     
     
@@ -582,6 +677,9 @@ static BOOL isOvertime = NO;
     .bottomSpaceToView(lineView6,5)
     .heightIs(0)
     .widthIs(0);
+    
+    
+     [SW4 addTarget:self action:@selector(SW4:) forControlEvents:UIControlEventValueChanged];
     
     
     #pragma mark - 短信推送开关
@@ -989,6 +1087,15 @@ static BOOL isOvertime = NO;
     
     loginPwdField.placeholder = @"对方常用手机";
     
+    NSString * FriendName = [self.OPArray objectAtIndex:4];
+    
+    if (![FriendName isEqualToString:@"none"]) {
+        loginPwdField.text = FriendName ;
+        
+    }
+    
+   
+    
     
     
     loginPwdField.textColor = [UIColor blackColor];
@@ -999,7 +1106,6 @@ static BOOL isOvertime = NO;
     UITextField * PSWNameField = [[UITextField alloc]initWithFrame:CGRectMake(loginX, 100, alertV.frame.size.width -  loginX*1.2, 32)];
     
     PSWNameField.layer.borderColor = [[UIColor blackColor] CGColor];
-    
     
     
     PSWNameField.leftViewMode = UITextFieldViewModeAlways;
@@ -1013,13 +1119,17 @@ static BOOL isOvertime = NO;
     PSWNameField.layer.borderWidth = 1;
     PSWNameField.layer.cornerRadius = 4;
     
+    NSString * PSWName = [self.OPArray objectAtIndex:5];
+    
+    if (![PSWName isEqualToString:@"none"]) {
+        PSWNameField.text = PSWName;
+        
+    }
+
+    
     PSWNameField.placeholder = @"对方称呼";
     
     PSWNameField.textColor = [UIColor blackColor];
-    
-    
-    
-    
     
     
     UILabel * PswLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 100, loginX, 32)];
@@ -1049,8 +1159,15 @@ static BOOL isOvertime = NO;
     MyNameField.layer.borderWidth = 1;
     MyNameField.layer.cornerRadius = 4;
     
-    MyNameField.placeholder = @"您的称呼";
+    NSString * MyName = [self.OPArray objectAtIndex:6];
     
+    if (![MyName isEqualToString:@"none"]) {
+        MyNameField.text = MyName ;
+        
+    }
+
+    
+    MyNameField.placeholder = @"您的称呼";
     
     
     MyNameField.textColor = [UIColor blackColor];
@@ -1087,6 +1204,14 @@ static BOOL isOvertime = NO;
     DoorAdressField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
     DoorAdressField.layer.borderWidth = 1;
     DoorAdressField.layer.cornerRadius = 4;
+    
+    NSString * DoorAdress = [self.OPArray objectAtIndex:7];
+    
+    if (![DoorAdress isEqualToString:@"none"]) {
+        DoorAdressField.text =DoorAdress ;
+        
+    }
+    
     
     DoorAdressField.placeholder = @"门锁所在地";
    
@@ -1138,9 +1263,6 @@ static BOOL isOvertime = NO;
         self.KidnapAlertView.alpha=1;
         
     } completion:^(BOOL finished) {
-        
-        
-        //  [customAlertView dissMiss];
         
         
     }];
@@ -1196,9 +1318,14 @@ static BOOL isOvertime = NO;
     loginPwdField.layer.borderWidth = 1;
     loginPwdField.layer.cornerRadius = 4;
     
+    NSString * FanQiaoPhone = [self.OPArray objectAtIndex:8];
+    
+    if (![FanQiaoPhone isEqualToString:@"none"]) {
+        loginPwdField.text = FanQiaoPhone ;
+        
+    }
+
     loginPwdField.placeholder = @"提醒人的手机";
-    
-    
     
     loginPwdField.textColor = [UIColor blackColor];
     
@@ -1223,6 +1350,14 @@ static BOOL isOvertime = NO;
     PSWNameField.layer.cornerRadius = 4;
     
     PSWNameField.placeholder = @"防撬提醒人姓名";
+    
+    NSString * FanQiaoName = [self.OPArray objectAtIndex:9];
+    
+    if (![FanQiaoName isEqualToString:@"none"]) {
+        PSWNameField.text = FanQiaoName ;
+        
+    }
+
 
     
     PSWNameField.textColor = [UIColor blackColor];
@@ -1275,14 +1410,6 @@ static BOOL isOvertime = NO;
 #pragma mark - 毛玻璃点击
 -(void)testtttt
 {
-    /**
-         UISwitch * msw1 = [self.view viewWithTag:5];
-     UISwitch * msw2 = [self.view viewWithTag:6];
-     
-     */
-    
-    
-    
     
 }
 
@@ -1329,6 +1456,24 @@ static BOOL isOvertime = NO;
     NSArray * opArray = [NSArray arrayWithObjects:str1,str2,str3,str4,self.FriendPhone,self.FriendName,self.MyName,self.DoorAddress,self.FanQiaoPhone,self.FanQiaoName, nil];
     
     
+    //斌添加11月8日  保存当前输入框的文字
+   /*
+    [[NSUserDefaults standardUserDefaults] setObject:self.FriendPhone forKey:@"FriendPhone"];
+    
+    [[NSUserDefaults standardUserDefaults] setObject:self.FriendName forKey:@"FriendName"];
+    [[NSUserDefaults standardUserDefaults] setObject:self.MyName forKey:@"MyName"];
+    
+    [[NSUserDefaults standardUserDefaults] setObject:self.DoorAddress forKey:@"DoorAddress"];
+    
+    [[NSUserDefaults standardUserDefaults] setObject:self.FanQiaoPhone forKey:@"FanQiaoPhone"];
+    
+    [[NSUserDefaults standardUserDefaults] setObject:self.FanQiaoName forKey:@"FanQiaoName"];
+    
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    
+    
+    
+    */
     NSString * token = [[NSUserDefaults standardUserDefaults] objectForKey:@"PushToken"];
     
     NSString * srcUserName  =  [kUserDefault objectForKey:kDefaultsUserName];
@@ -1404,6 +1549,10 @@ static BOOL isOvertime = NO;
 
 - (void) customAlertView:(YXCustomAlertView *) customAlertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
+    
+    self.isfix = 1 ;
+    
+    
     if (buttonIndex==0) {
         
         
@@ -1425,10 +1574,6 @@ static BOOL isOvertime = NO;
             
         }
         
-        
-
-    
-    
     [UIView animateWithDuration:0.5 animations:^{
         
         
@@ -1516,10 +1661,7 @@ static BOOL isOvertime = NO;
     
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    
-}
+
 
 
 @end

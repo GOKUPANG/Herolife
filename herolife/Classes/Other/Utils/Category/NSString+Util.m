@@ -684,7 +684,7 @@
 	
 }
 
-#pragma mark - 添加门锁之发送set = 7的帧
+#pragma mark - 添加门锁之发送set = 32的帧
 + (NSString *)stringWithSocketAddLockWithlockUUID:(NSString *)lockUUID  person:(NSArray *)person permit:(NSArray *)permit autherTime:(NSString *)autherTime
 {
     
@@ -749,7 +749,67 @@
     
 }
 
-
+#pragma mark - 添加门锁失败时发送set = 32的帧
++ (NSString *)stringWithSocketAddLockFailWithlockUUID:(NSString *)lockUUID  person:(NSArray *)person permit:(NSArray *)permit autherTime:(NSString *)autherTime dst:(NSDictionary *)dst
+{
+    
+    NSString *token = [[NSUserDefaults standardUserDefaults] objectForKey:PushToken];
+    NSString *user = [[NSUserDefaults standardUserDefaults] objectForKey:kDefaultsUserName];
+    
+    /// 获取用户UUID
+    NSString *ramStr = [kUserDefault objectForKey:kUserDefaultUUID];
+    
+    //起始地址
+    NSMutableDictionary *msgFromDict = [NSMutableDictionary dictionary];
+    msgFromDict[@"user"] = user;
+    msgFromDict[@"dev"] = ramStr;
+    
+    NSMutableDictionary *hrpushDict = [NSMutableDictionary dictionary];
+    hrpushDict[@"version"] = @"0.0.1";
+    hrpushDict[@"status"] = @"200";
+    hrpushDict[@"time"] = [self loadCurrentDate];
+    
+    //从偏好设置里 取token
+    hrpushDict[@"token"] = token;
+    hrpushDict[@"type"] = @"set";
+    hrpushDict[@"desc"] = @"none";
+    hrpushDict[@"src"] = msgFromDict;
+    
+    //目标地址
+    
+    hrpushDict[@"dst"] = dst;
+    
+    NSMutableDictionary *msgDict = [NSMutableDictionary dictionary];
+    /// 获取用户uid
+    NSString *uid = [kUserDefault objectForKey:kDefaultsUid];
+    msgDict[@"uid"] = uid;
+    msgDict[@"types"] = @"common";
+    msgDict[@"sy"] = @"hrsc-al";
+    msgDict[@"uuid"] = lockUUID;
+    msgDict[@"state"] = @"32";
+    msgDict[@"person"] = person;
+    msgDict[@"permit"] = permit;
+    //新增字段
+    msgDict[@"admin"] = user;
+    msgDict[@"time"] = autherTime;
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    dict[@"hrpush"] = hrpushDict;
+    dict[@"msg"] = msgDict;
+    
+    NSData *jsonDataDict = [NSJSONSerialization dataWithJSONObject:dict options:kNilOptions error:nil];
+    
+    NSString *dictStr = [[NSString alloc] initWithData:jsonDataDict encoding:NSUTF8StringEncoding];
+    
+    NSString *hrpush = @"hrpush\r\n";
+    
+    NSString *hrlength = [NSString stringWithFormat:@"length\r\n%lu\r\n", (unsigned long)dictStr.length];
+    
+    NSString *footerStr = @"\r\n\0";
+    NSString *urlString = [NSString stringWithFormat:@"%@%@%@%@", hrpush, hrlength, dictStr, footerStr];
+    
+    return urlString;
+    
+}
 #pragma mark - 取消别人授权给我的锁
 + (NSString *)stringWithSocketDelegateFamilyLockWithDstUuid:(NSString *)dstUuid lockUUID:(NSString *)lockUUID did:(NSString *)did devUser:(NSString *)devUser
 {
@@ -901,7 +961,6 @@
 	hrpushDict[@"src"] = msgFromDict;
 	hrpushDict[@"dst"] = msgDestDict;
 	
-	
 	NSMutableDictionary *dict = [NSMutableDictionary dictionary];
 	dict[@"hrpush"] = hrpushDict;
 	dict[@"msg"] = msgDict;
@@ -911,14 +970,40 @@
 	NSString *dictStr = [[NSString alloc] initWithData:jsonDataDict encoding:NSUTF8StringEncoding];
 	
 	NSString *hrpush = @"hrpush\r\n";
-	
-	NSString *hrlength = [NSString stringWithFormat:@"length\r\n%lu\r\n", (unsigned long)dictStr.length];
+    
+    int index = 0;
+    for (int i = 0; i < dictStr.length; i++) {
+        NSString *stringM = [dictStr substringWithRange:NSMakeRange(i, 1)];
+        BOOL isChinese = [[[self alloc] init] isChinese:stringM];
+        if (isChinese) {
+            index++;
+        }
+    }
+    
+    
+    
+    NSString *hrlength = [NSString stringWithFormat:@"length\r\n%lu\r\n", (unsigned long)dictStr.length - index + index *3];
 	
 	NSString *footerStr = @"\r\n\0";
 	NSString *urlString = [NSString stringWithFormat:@"%@%@%@%@", hrpush, hrlength, dictStr, footerStr];
 	
 	return urlString;
 
+}
+
+- (BOOL)isChinese:(NSString*)c{
+    int strlength = 0;
+    char* p = (char*)[c cStringUsingEncoding:NSUnicodeStringEncoding];
+    for (int i=0 ; i<[c lengthOfBytesUsingEncoding:NSUnicodeStringEncoding] ;i++) {
+        if (*p) {
+            p++;
+            strlength++;
+        }
+        else {
+            p++;
+        }
+    }
+    return ((strlength/2)==1)?YES:NO;
 }
 
 #pragma mark - 获取当前wifi的名称

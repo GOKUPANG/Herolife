@@ -41,27 +41,29 @@
 - (void)layoutSubviews
 {
 	[super layoutSubviews];
-	
-	CGRect rect = self.frame;
-	rect.size.height = self.hr_height - HRCommonScreenH * 2.5;
-	self.frame = rect;
-	
-	[self.leftImage mas_makeConstraints:^(MASConstraintMaker *make) {
-		make.left.equalTo(self).offset(HRCommonScreenW * 30);
-		make.top.equalTo(self).offset(HRCommonScreenH * 10);
-		make.bottom.equalTo(self).offset(- HRCommonScreenH * 10);
-		make.width.mas_equalTo(HRCommonScreenH * 57 );
-	}];
-	
-	[self.leftLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-		make.left.equalTo(self.leftImage.mas_right).offset(HRCommonScreenW * 28);
-		make.centerY.equalTo(self.leftImage);
-	}];
-	
-	[self.rightButton mas_makeConstraints:^(MASConstraintMaker *make) {
-		make.right.equalTo(self).offset(- HRCommonScreenW * 28);
-		make.centerY.equalTo(self.leftImage);
-	}];
+    
+    CGRect rect = self.frame;
+    rect.size.height = self.hr_height - HRCommonScreenH * 2.5;
+    self.frame = rect;
+    
+    [self.leftImage mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self).offset(HRCommonScreenW * 30);
+        //		make.top.equalTo(self).offset(HRCommonScreenH * 10);
+        //		make.bottom.equalTo(self).offset(- HRCommonScreenH * 10);
+        //		make.width.mas_equalTo(HRCommonScreenH * 57 );
+        make.centerY.equalTo(self);
+    }];
+    
+    [self.leftLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.leftImage.mas_right).offset(HRCommonScreenW * 28);
+        make.centerY.equalTo(self.leftImage);
+    }];
+    
+    [self.rightButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.equalTo(self).offset(- HRCommonScreenW * 28);
+        make.centerY.equalTo(self.leftImage);
+    }];
+    
 }
 
 

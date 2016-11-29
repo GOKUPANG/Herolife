@@ -7,6 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-
 @interface DeviceListController : UIViewController
+
 @end

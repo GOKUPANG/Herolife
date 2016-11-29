@@ -111,7 +111,7 @@
 	
 	//导航条
 	HRNavigationBar *navView = [[HRNavigationBar alloc] init];
-	navView.titleLabel.text = @"手动添加设备";
+	navView.titleLabel.text = @"按类型添加";
 	navView.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.1];
 	[self.view addSubview:navView];
 	self.navView = navView;
@@ -152,7 +152,7 @@
 	manualLabel.textColor = [UIColor whiteColor];
 	manualLabel.textAlignment = NSTextAlignmentCenter;
 	manualLabel.font = [UIFont systemFontOfSize:14];
-	manualLabel.text = @"手动添加";
+	manualLabel.text = @"按类型添加";
 	[self.view addSubview:manualLabel];
 	
 	self.manualLabel = manualLabel;

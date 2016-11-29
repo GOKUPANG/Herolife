@@ -93,7 +93,7 @@ static id _instance;
 		NSData *jsonData = [lengthStr dataUsingEncoding:NSUTF8StringEncoding];
 		/// 把二进制数据 转成JSON字典
 		NSDictionary *jsonDict = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingMutableLeaves error:nil];
-//		DDLogWarn(@"AsyncUdpSocket  收到的数据%@", jsonDict);
+		DDLogWarn(@"AsyncUdpSocket  收到截取之后的数据%@", jsonDict);
 		//如果有错误信息
 		if ([jsonDict[@"hrpush"][@"type"] isEqualToString:@"error"])
 		{

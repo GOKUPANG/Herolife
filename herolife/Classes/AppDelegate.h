@@ -10,7 +10,6 @@
 @class HRPushMode;
 @class DeviceListTcpModel;
 @class DeviceAutherModel;
-
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;

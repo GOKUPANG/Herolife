@@ -106,7 +106,7 @@
 	
 	//成功添加智能门锁Label
 	HRLabel *lockLabel = [[HRLabel alloc] init];
-	lockLabel.text = @"成功添加智能门锁";
+	lockLabel.text = @"添加智能门锁";
 	[self.view addSubview:lockLabel];
 	self.lockLabel = lockLabel;
 	
@@ -126,6 +126,7 @@
 	NSMutableDictionary *dict = [NSMutableDictionary dictionary];
 	dict[NSForegroundColorAttributeName] = [UIColor colorWithRed:204 / 255.0 green:204 / 255.0 blue:204 / 255.0 alpha:1.0];
 	dict[NSAttachmentAttributeName] = [UIFont systemFontOfSize:17];
+    nameField.text = @"互联网智能门锁";
 	nameField.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"请输入设备名称:" attributes:dict];
 	nameField.delegate = self;
 	[self.view addSubview:nameField];

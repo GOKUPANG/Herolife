@@ -129,7 +129,7 @@
         }
     }
     
-    
+    [SVProgressTool hr_dismiss];
 }
 
 #pragma mark - 导航条 设置

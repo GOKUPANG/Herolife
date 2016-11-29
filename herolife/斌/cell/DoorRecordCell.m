@@ -75,18 +75,26 @@
    */
     
     
-    
+    /*
     self.selectImageView.sd_layout
     .leftSpaceToView(self.contentView,15.0/375.0 *self.contentView.frame.size.width)
     .widthIs(20.0/375.0 * self.contentView.frame.size.width)
     .bottomSpaceToView(self.contentView,10.0)
     .heightIs(20.0);
+     */
+    
+    self.selectImageView.sd_layout
+    .leftSpaceToView(self.contentView,15.0)
+    .widthIs(10.0 )
+    .bottomSpaceToView(self.contentView,15.0)
+    .heightIs(10.0);
     
     
  
     //时间
- _timeLabel.sd_layout
-    .leftSpaceToView(self.contentView,35.0/375.0 *self.contentView.frame.size.width)
+    _timeLabel.sd_layout
+    //.leftSpaceToView(self.contentView,35.0/375.0 *self.contentView.frame.size.width)
+    .leftSpaceToView(self.selectImageView,1)
     .widthIs(110.0/375.0 * self.contentView.frame.size.width)
     .bottomSpaceToView(self.contentView,10.0)
     .heightIs(20.0);

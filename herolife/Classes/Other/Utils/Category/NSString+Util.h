@@ -49,6 +49,8 @@
 
 #pragma mark - 添加门锁之发送set = 7的帧
 + (NSString *)stringWithSocketAddLockWithlockUUID:(NSString *)lockUUID  person:(NSArray *)person permit:(NSArray *)permit autherTime:(NSString *)autherTime;
++ (NSString *)stringWithSocketAddLockFailWithlockUUID:(NSString *)lockUUID  person:(NSArray *)person permit:(NSArray *)permit autherTime:(NSString *)autherTime dst:(NSDictionary *)dst;
+
 #pragma mark - 临时授权 的锁
 + (NSString *)stringWithSocketAddTemporaryAutherLockWithlockUUID:(NSString *)lockUUID person:(NSArray *)person permit:(NSArray *)permit autherTime:(NSString *)autherTime;
 /// 获取当前时间

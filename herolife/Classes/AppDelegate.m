@@ -264,7 +264,9 @@ static NSInteger disconnectCount = 0;
 	
 	UMConfigInstance.appKey = UMENG_APP_KEY;
 	UMConfigInstance.channelId = nil;
-	UMConfigInstance.eSType = E_UM_GAME; //仅适用于游戏场景，应用统计不用设置
+	UMConfigInstance.eSType = E_UM_GAME;
+    
+    //仅适用于游戏场景，应用统计不用设置
 	
 	[MobClick startWithConfigure:UMConfigInstance];//配置以上参数后调用此方法初始化SDK！
 	
@@ -272,6 +274,12 @@ static NSInteger disconnectCount = 0;
 //	[MobClick startWithConfigure:<#(UMAnalyticsConfig *)#>]
 //		[MobClick setAppVersion:[NSBundle mainBundle].infoDictionary[@"CFBundleShortVersionString"]];
 //		[MobClick setCrashReportEnabled:YES];
+}
+
+
+- (UIInterfaceOrientationMask)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window
+{
+    return UIInterfaceOrientationMaskPortrait;
 }
 - (void)applicationDidFinishLaunching:(UIApplication *)application
 {
@@ -310,29 +318,6 @@ static NSInteger disconnectCount = 0;
 	[kUserDefault synchronize];
      NSLog(@"................token:%@", deToken);
    
-    
-    
-    /*
-     
-     弹窗 弹出token 
-    UIAlertController * alertController = [UIAlertController alertControllerWithTitle:@"温馨提示" message:deToken preferredStyle:UIAlertControllerStyleAlert];
-    
-    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        
-    }];
-    
-    [alertController addAction:cancelAction];
-    [self.window.rootViewController presentViewController:alertController animated:YES completion:nil];
-     
-     
-     */
-    
-    
-    
-    
-    
-    
-	
 }
 - (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error
 {
@@ -362,6 +347,7 @@ static BOOL isReceiveSet3 = NO;
 	isOverTime = YES;
     isReceiveSet3 = YES;
     
+    [SVProgressTool hr_dismiss];
     
     //取出数据
     NSString *pushString = [kUserDefault objectForKey:isPushToSystem];
@@ -459,17 +445,17 @@ static BOOL isReceiveSet3 = NO;
 // 本地通知回调函数，当应用程序在前台时调用
 - (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification {
 	//建立UDP连接
-	[self setupUDPSocket];
-	
-	dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-		[SVProgressTool hr_showWithStatus:@"正在加载数据, 请稍后..."];
-		
-		// 启动定时器
-		isOverTime = NO;
-		[_overTimer invalidate];
-		//十秒之后如果没有数据就提示超时
-		_overTimer = [NSTimer scheduledTimerWithTimeInterval:30.0 target:self selector:@selector(startTimer) userInfo:nil repeats:NO];
-	});
+//	[self setupUDPSocket];
+//	
+//	dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//		[SVProgressTool hr_showWithStatus:@"正在加载数据, 请稍后..."];
+//		
+//		// 启动定时器
+//		isOverTime = NO;
+//		[_overTimer invalidate];
+//		//十秒之后如果没有数据就提示超时
+//		_overTimer = [NSTimer scheduledTimerWithTimeInterval:30.0 target:self selector:@selector(startTimer) userInfo:nil repeats:NO];
+//	});
 	
 	
 	
@@ -549,6 +535,10 @@ static BOOL isReceiveSet3 = NO;
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
+    
+    isReceiveSet3 = NO;
+    isReceiveSet1 = NO;
+    
 	NSString *wifi = [NSString stringWithGetWifiName];
 	
 	[UIApplication sharedApplication].applicationIconBadgeNumber = 0;
@@ -724,6 +714,7 @@ static BOOL isReceiveSet3 = NO;
         NSString *token = [NSString stringWithFormat:@"ios+@+%@", UUID];
 		NSString *str = [NSString stringWithPostTCPJsonVersion:@"0.0.1" status:@"200" token:token msgType:@"login" msgExplain:@"login" fromUserName:userName destUserName:@"huaruicloud" destDevName:@"huaruiPushServer" msgBodyStringDict:bodyDict];
 		DDLogWarn(@"onSocket登入认证%@", str);
+        
 		NSData *data = [str dataUsingEncoding:NSUTF8StringEncoding];
 		
 		[self.socket writeData:data withTimeout:-1 tag:0];
@@ -1268,6 +1259,14 @@ static NSUInteger lengthInteger = 0;
 {
 	
 	DeviceAutherModel *data = [DeviceAutherModel mj_objectWithKeyValues:dict[@"msg"]];
+    
+    for (DeviceAutherModel *autherData in self.autherArray) {
+        if ([data.did isEqualToString:autherData.did]) {
+            autherData.time = data.time;
+            return;
+        }
+    }
+    
 	[self.autherArray addObject:data];
 	DDLogWarn(@"NSMutableArray%@count-%lu", self.autherArray, (unsigned long)self.autherArray.count);
 }
@@ -1734,17 +1733,20 @@ static NSString *wift;
 - (void)updateTimeLabel
 {
 	self.leftTime--;
-	[self sendUDPSockeWithString:@"0"];
+//	[self sendUDPSockeWithString:@"0"];
     if (!isReceiveSet1) {
         
         [self sendUDPSockeWithString:@"0"];
+        
+        DDLogWarn(@"发送UDPSocke数据set=0");
     }else
     {
         
-        [self sendUDPSockeWithString:@"2"];
+//        [self sendUDPSockeWithString:@"2"];
         if (!isReceiveSet3) {
             
             [self sendUDPSockeWithString:@"2"];
+            DDLogWarn(@"发送UDPSocke数据set=2");
         }else
         {
             isReceiveSet3 = NO;
@@ -1775,8 +1777,9 @@ static NSString *wift;
 	NSMutableDictionary *dict = [NSMutableDictionary dictionary];
 	dict[@"set"] = string;
 	NSString *sendString = [NSString stringWithUDPMsgDict:dict];
-    NSLog(@"发送UDPSocke数据set=0 %@", sendString);
+    DDLogWarn(@"发送UDPSocke数据 %@", sendString);
 	[_udpSocket sendUDPSockeWithString:sendString];
+    
 }
 
 -(void) setLogger {

@@ -90,7 +90,7 @@
 	titleLabel.font = [UIFont systemFontOfSize: 18];
 	//		titleLabel.font = [UIFont fontWithName:@"HelveticaNeue-Thin" size:18.f];
 	titleLabel.textAlignment = NSTextAlignmentCenter;
-	titleLabel.text = @"设备列表";
+	titleLabel.text = @"开始添加";
 	titleLabel.textColor = [UIColor whiteColor];
 	[navView addSubview:titleLabel];
 	self.titleLabel = titleLabel;
@@ -136,7 +136,9 @@
 	
 	//通过电源, 长按6秒, 直到指示灯闪烁 label
 	UILabel *promptLabel = [[UILabel alloc] init];
-	promptLabel.text = @"接通电源，长按WiFi盒子set键5秒，直到指示灯闪烁";
+    promptLabel.numberOfLines = 0;
+	promptLabel.text = @"接通电源，先长按WiFi盒子set键6秒，直到指示灯闪烁,再点击下一步按钮";
+    promptLabel.textAlignment = NSTextAlignmentCenter;
 	promptLabel.textColor = [UIColor whiteColor];
     if (HRUIScreenH < 667) {
         
@@ -219,6 +221,8 @@
 	
 	//label
 	[self.promptLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.view).offset(10);
+        make.right.equalTo(self.view).offset(-10);
 		make.top.equalTo(self.upView.mas_bottom).offset(HRCommonScreenH * 20);
 		make.centerX.equalTo(self.view);
 	}];

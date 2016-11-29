@@ -20,7 +20,7 @@
 #import "WIFIListModel.h"
 #import "UDPModel.h"
 #import "HRPushMode.h"
-
+#import "NextController.h"
 @interface EnterPSWController ()<UITableViewDelegate,UITableViewDataSource>
 
 
@@ -248,7 +248,7 @@ static int const HRTimeDuration = 300;
     
     WIFILabel.textAlignment= NSTextAlignmentLeft;
     
-    WIFILabel.text = @"";
+  //  WIFILabel.text = @"";
     
     
     
@@ -280,7 +280,6 @@ static int const HRTimeDuration = 300;
     .leftSpaceToView(self.view,25)
     .widthIs(HRUIScreenW - 70)
     .heightIs(22);
-    
     WIFITextField.textColor = [UIColor whiteColor];
     
     WIFITextField.returnKeyType = UIReturnKeyDone;
@@ -291,13 +290,17 @@ static int const HRTimeDuration = 300;
     [WIFITextField setValue:[UIColor colorWithRed:153.0/255.0 green:153.0/255.0 blue:153.0/255.0 alpha:1] forKeyPath:@"_placeholderLabel.textColor"];
     
     WIFITextField.clearButtonMode =    UITextFieldViewModeAlways;
-	WIFITextField.text = @" ";
-    
+#ifdef DEBUG
+	WIFITextField.text = @"HRGC39026922";
+#endif
   
     
 	self.WIFITextField = WIFITextField;
     
-    self.WIFITextField.secureTextEntry = YES;
+    
+    //斌修改11月8日
+    
+    //self.WIFITextField.secureTextEntry = YES;
 
     
     
@@ -644,8 +647,17 @@ static NSString *wift;
 	if (self.leftTime == 0) {
 		
         [SVProgressTool hr_showErrorWithStatus:@"请求超时!"];
+        
+        for (UIViewController *VC in self.navigationController.childViewControllers) {
+            if ([NSStringFromClass([VC class]) isEqualToString:@"NextController"]) {
+                
+                [self.navigationController popToViewController: VC animated:YES];
+            }
+        }
+        
 		[self.timer invalidate];
-		self.timer = nil;
+        self.timer = nil;
+        
 	}
 	
 }

@@ -1482,6 +1482,24 @@ static BOOL isShowOverMenu = NO;
         [dic setObject:view forKey:MENU_HEADER_VIEW_KEY];
 		
         
+    }else
+    {
+        
+        view = [[CustomerInfoSectionView alloc]init];
+        //在这里写入头部视图的信息
+        DeviceAutherModel *listModel = self.deviceAutherArray[section];
+        NSString *autherName = listModel.person.lastObject;
+        NSString *time;
+        if ([listModel.time isEqualToString:@"none"] || [listModel.time isEqualToString:@"99:59"]) {
+            time = @"永久";
+        }else
+        {
+            time = listModel.time;
+        }
+        [view initWithImgName:@"邮箱" userNameLabel:autherName timeLabel:time section:section delegate:self];
+        
+        
+        [dic setObject:view forKey:MENU_HEADER_VIEW_KEY];
     }
     return view;
 }

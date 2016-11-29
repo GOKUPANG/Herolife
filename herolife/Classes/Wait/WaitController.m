@@ -11,6 +11,8 @@
 #import "HRTabBar.h"
 #import <objc/message.h>
 
+static NSString *Wifidid = @"";
+static NSString *WifiUUID = @"";
 @interface WaitController ()
 /** 头像 */
 @property(nonatomic, weak) UIImageView *iconImage;
@@ -58,8 +60,8 @@ static int const HRTimeDuration = 60;
 	self.leftTime = 60;
     Wifidid = @"";
     WifiUUID = @"";
+    set32Index = 0;
     isReceiveSet31 = NO;
-	DDLogWarn(@"wifi----------WaitController-------%@", [NSString stringWithGetWifiName]);
 	[self setupViews];
     
     
@@ -141,7 +143,8 @@ static BOOL isReceiveSet31 = NO;
 - (void)receiveStratFailAddWiFiLink:(NSNotification *)note
 {
     NSDictionary *dict = note.userInfo;
-    [self sendSocketWithSetWithUUID:[dict valueForKeyPath:@"uuid"]];
+    NSDictionary *dst = dict[@"hrpush"][@"src"];
+    [self sendSocketFailWithSetWithUUID:dict[@"msg"][@"uuid"] dst:dst];
     if (!isReceiveSet31) {
         [SVProgressTool hr_showErrorWithStatus:@"该锁已在其他帐号上添加,请在其他帐号上删除后重试!"];
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
@@ -151,8 +154,6 @@ static BOOL isReceiveSet31 = NO;
     isReceiveSet31 = YES;
    
 }
-static NSString *Wifidid = @"";
-static NSString *WifiUUID = @"";
 - (void)receiveStratAddWiFiLink:(NSNotification *)note
 {
     
@@ -166,7 +167,6 @@ static NSString *WifiUUID = @"";
     NSString *uuid = dict[@"msg"][@"uuid"];
     WifiUUID = uuid;
     [self addTimerToRepeatSocketSet32WithUUID:uuid];
-//    [self sendSocketWithSetWithUUID: uuid];
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         AddLockController *addLockVC = [[AddLockController alloc] init];
         addLockVC.did = did;
@@ -189,7 +189,23 @@ static NSString *WifiUUID = @"";
     NSString *str = [NSString stringWithSocketAddLockWithlockUUID:uuid person:person permit:permit autherTime:time];
     
     [app sendMessageWithString:str];
-    DDLogWarn(@"WaitController--------set = 32 %@", str);
+    DDLogWarn(@"收到set= 30时发的set = 32-------- %@", str);
+}
+- (void)sendSocketFailWithSetWithUUID:(NSString *)uuid dst:(NSDictionary *)dst
+{
+    
+    AppDelegate *app = (AppDelegate *)[UIApplication sharedApplication].delegate;
+    //    NSString *set = dic[@"msg"][@"did"];
+    
+    [app connectToHost];
+    NSArray *person = [NSArray array];
+    NSArray *permit = [NSArray array];
+    NSString *time = @"none";
+    
+    NSString *str = [NSString stringWithSocketAddLockFailWithlockUUID:uuid person:person permit:permit autherTime:time dst:dst];
+    
+    [app sendMessageWithString:str];
+    DDLogWarn(@"收到set= 31时发的set = 32-------- %@", str);
 }
 - (void)viewWillDisappear:(BOOL)animated
 {
@@ -306,6 +322,8 @@ static NSString *WifiUUID = @"";
 	//提示  label
 	HRLabel *promptLabel = [[HRLabel alloc] init];
 	promptLabel.text = @"网络连接成功，正在将设备添加至云系统...";
+    promptLabel.numberOfLines = 0;
+    promptLabel.textAlignment = NSTextAlignmentCenter;
 	[self.view addSubview:promptLabel];
 	self.promptLabel = promptLabel;
 	
@@ -364,6 +382,9 @@ static NSString *WifiUUID = @"";
 	
 	
 	[self.promptLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.view).offset(10);
+        
+        make.right.equalTo(self.view).offset(-10);
 		make.top.equalTo(self.animView.mas_bottom).offset(HRCommonScreenH *320);
 		make.centerX.equalTo(self.eptView);
 		
@@ -400,8 +421,9 @@ static int set32Index = 0;
 {
     set32Index++;
     
+    DDLogWarn(@"-----------set32Index------%d", set32Index);
     [self sendSocketWithSetWithUUID: WifiUUID];
-    if (set32Index == 5) {
+    if (set32Index >= 5) {
         
         [self.set32Timer invalidate];
         self.set32Timer = nil;

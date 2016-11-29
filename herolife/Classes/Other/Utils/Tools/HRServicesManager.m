@@ -59,6 +59,7 @@
 + (void)loginWithUsername: (NSString *)userName password:(NSString *)password result:(void(^)(NSError *error))result {
 	AFHTTPSessionManager *manager = [AFHTTPSessionManager hrManager];
 	
+    
 	[manager POST: HRAPI_LOGIN_URL
 	   parameters: @{
 					 @"username":userName,

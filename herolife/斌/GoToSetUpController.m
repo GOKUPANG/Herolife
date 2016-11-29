@@ -15,6 +15,7 @@
 
 #import "EnterPSWController.h"
 #import <UserNotifications/UserNotifications.h>
+#import "WaitController.h"
 
 
 @interface GoToSetUpController ()
@@ -44,9 +45,7 @@ static int const HRTimeDuration = 601;
 
 -(void)viewWillAppear:(BOOL)animated
 {
-    
     [super viewWillAppear:animated];
-    
     [self SetMyBackPic];
     
 }

@@ -41,6 +41,7 @@
 #import "DoorLockModel.h"
 #import "TipsLabel.h"
 #import "GTMBase64.h"
+#import "WaitController.h"
 
 //加入系统自带密码库
 
@@ -137,10 +138,13 @@
 /** 删除设备的登录密码输入框*/
 
 @property(nonatomic,strong)UITextField * pswTF;
+
 /** 保存 点击时的设备信息数据 */
 @property(nonatomic, strong) DeviceListModel *showLockModel;
+
 /** 下拉刷新的UITableView */
 @property(nonatomic, weak) UITableView *eptTable;
+
 /** 保存门锁记录查询 page = 0 的数组 */
 @property(nonatomic, strong) NSMutableArray *queryArray;
 
@@ -148,18 +152,24 @@
 @property(nonatomic, strong) TipsLabel *tipsLabel;
 /** 电量 */
 @property(nonatomic, copy) NSString *level;
+
 /** 记录当前拖拽滚动的X */
+
 @property(nonatomic, assign) CGFloat draggingScrollX;
+
 /** 记录当前减速 滚动的X*/
+
 @property(nonatomic, assign) CGFloat deceleratingScrollX;
 
 @end
 
 @implementation DeviceListController
+
 //定时60s查询设备状态
 NSInteger const timerDuration = 60.0;
 
 #pragma mark - label 懒加载
+
 - (UILabel *)onLineLabel
 {
 	if (!_onLineLabel) {
@@ -285,7 +295,9 @@ static NSString *cellID = @"cellID";
 - (void)viewDidLoad {
 	
     [super viewDidLoad];
-	
+    
+    
+    httpRequsetCount = 0;
 	//初始化
 	[self setupViews];
 	
@@ -296,15 +308,13 @@ static NSString *cellID = @"cellID";
 	//建立连接 -- 用户登录认证
 	[self postTokenWithTCPSocket];
 	
-	//下拉刷新
-	[self addRefresh];
+    //下拉刷新
+    [self addRefresh];
 	//通知
 	[self addObserverNotification];
     
     [self addLongGesture];
 	[self addSwipeGestureRecognizer];
-    
-    httpRequsetCount = 0;
 	
 }
 
@@ -333,23 +343,16 @@ static NSString *cellID = @"cellID";
 static BOOL isOvertime = NO;
 - (void)receiveDeleteAutherDevice:(NSNotification *)note
 {
-	[SVProgressHUD showSuccessWithStatus:@"删除成功!"];
-//	NSDictionary *dict = note.userInfo;
-//	NSString *uuid = dict[@"msg"][@"uuid"];
-//	NSMutableArray *mu = [NSMutableArray array];
-//	for (DeviceListModel *model in self.homeArray) {
-//		if ([model.uuid isEqualToString:uuid]) {//如果要删除的UUID 和设备列表数组里的UUID是一样的就删除
-//			continue;
-//		}
-//		
-//		[mu addObject:model];
-//	}
-//	//清空当前数据
+    [SVProgressTool hr_showWithStatus:@"删除成功!"];
+    
+	//清空当前数据
+    
 	self.currentStateModel.uuid = @"";
-//	self.homeArray = mu;
+    
 	//重新获取数据
 	[self getHttpRequset];
-//	[self.collectionView reloadData];
+
+
 }
 static BOOL isShowOverMenu = NO;
 - (void)receviedWithNotOnline
@@ -601,6 +604,7 @@ static BOOL isShowOverMenu = NO;
     [super viewWillDisappear:animated];
     
     [self.timer invalidate];
+    self.timer = nil;
 }
 #pragma mark - 隐藏底部条
 - (void)IsTabBarHidden:(BOOL)hidden
@@ -853,21 +857,8 @@ static BOOL isShowOverMenu = NO;
                 cell.rightLabel.text = @"";
 			}else
 			{
-//				if (self.queryArray.count > 0) {
-//					for (DoorLockModel *model in self.queryArray) {
-//						if ([model.title containsString:@"开锁操作"]) {
-//							
-//							NSString *title = model.title;
-//							NSRange range = [title rangeOfString:@"|"];
-//							
-//							NSString *time = [title substringToIndex:range.location];
-//							
-//							cell.rightLabel.text = time;
-//							break;
-//						}
-//					}
-//				}
-//				cell.minLabel.text = [NSString stringWithFormat:@"剩余电量%@", self.currentStateModel.level];
+                
+                
                 
                 cell.rightLabel.text = [NSString stringWithFormat:@"剩余电量%@", self.currentStateModel.level];;
 			}
@@ -922,7 +913,7 @@ static BOOL isShowOverMenu = NO;
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	
+    
 	DDLogInfo(@"%ld", (long)indexPath.row);
 	
 	switch (indexPath.row) {
@@ -1448,6 +1439,9 @@ static int tokenTimerCount = 300;
         [self setUp3DEptPictureWithHomeArray:weakSelf.homeArray];
         
         weakSelf.listLabel.text = weakSelf.currentStateModel.title;
+        
+        if (weakSelf.currentStateModel.state) {
+            
         if ([weakSelf.currentStateModel.state isEqualToString:@"1"]) {
             weakSelf.listImageView.image = [UIImage imageNamed:@"空心在线"];
         }else
@@ -1455,7 +1449,7 @@ static int tokenTimerCount = 300;
             
             weakSelf.listImageView.image = [UIImage imageNamed:@"空心离线"];
         }
-        
+    }
         [self.tableView reloadData];
         
         
@@ -1566,7 +1560,7 @@ static int httpRequsetCount = 0;
         self.collectionView.userInteractionEnabled = YES;
 	}else
 	{
-		for (DeviceListModel *home in homeArray) {
+		for (DeviceListModel * home in homeArray) {
 			[self.photoModelArray addObject:
 			 [PhotoModel modelWithImageNamed:@"锁虚线"
 								 description:@""]];
@@ -1784,6 +1778,7 @@ static int httpRequsetCount = 0;
 //		[weakSelf.tableView reloadData];
 		[weakSelf.collectionView reloadData];
         
+        httpRequsetCount++;
         //定时60s查询设备状态
         [self addTimer];
 		
@@ -1806,6 +1801,7 @@ static int httpRequsetCount = 0;
         }else
         {
             int index = 0;
+            
             for (DeviceListModel *model in self.homeArray) {
                 if ([model.uuid isEqualToString:self.currentStateModel.uuid]) {//取出和当前的UUID一样的这条数据覆盖掉,currentStateModel数据
                     self.currentStateModel = model;
@@ -1867,8 +1863,8 @@ static int httpRequsetCount = 0;
 
         
         
+        httpRequsetCount++;
     }
-    httpRequsetCount++;
 }
 
 
@@ -1879,7 +1875,7 @@ static int httpRequsetCount = 0;
 	
 	[SVProgressTool hr_showWithStatus:@"正在删除..."];
 	// 判断是否有权限修改用户名
-	for (DeviceAutherModel *auther in self.autherPersonArray) {
+	for (DeviceAutherModel * auther in self.autherPersonArray) {
 		
 		//别人授权的设备
 		if ([auther.uuid isEqualToString: self.showLockModel.uuid]) {
@@ -1989,7 +1985,7 @@ static int httpRequsetCount = 0;
                 [weakSelf.collectionView reloadData];
                 
                 DDLogInfo(@"删除门锁%@error%@", array,error);
-                [SVProgressHUD showSuccessWithStatus:@"删除成功!"];
+                [SVProgressTool hr_showWithStatus:@"删除成功!"];
                 
                 
             }];
@@ -2436,11 +2432,7 @@ static int httpRequsetCount = 0;
     alertV.delegate = self;
     alertV.titleStr = @"更新设备信息";
     
-    
-    
-    
     self.FamilyAlertView = alertV;
-    
     
     [UIView animateWithDuration:0.5 animations:^{
         
@@ -2535,7 +2527,7 @@ static int httpRequsetCount = 0;
 	
 	newDvNameField.textColor = [UIColor whiteColor];
 	
-	newDvNameField.backgroundColor = [UIColor orangeColor];
+	//newDvNameField.backgroundColor = [UIColor orangeColor];
 	
 	[bgView addSubview:newDvNameField];
 	
@@ -2545,11 +2537,20 @@ static int httpRequsetCount = 0;
 	[bgView addSubview:comfirBtn];
 	
 	
-	comfirBtn.sd_layout
+/*	comfirBtn.sd_layout
 	.bottomSpaceToView(bgView , 20.0 * HRMyScreenH)
 	.rightSpaceToView(bgView,98.0 *HRMyScreenW)
 	.widthIs(130.0 *HRMyScreenW)
 	.heightIs(45.0 *HRMyScreenH);
+ */
+    
+    comfirBtn.sd_layout
+    .bottomSpaceToView(bgView,20.0)
+    .centerXEqualToView(bgView)
+    .widthIs(130.0 )
+    .heightIs(45.0 );
+    
+
 	
 	comfirBtn.layer.cornerRadius = 15;
 	comfirBtn.clipsToBounds = YES;
@@ -2559,14 +2560,9 @@ static int httpRequsetCount = 0;
 	
 	
 	comfirBtn.layer.borderColor = [[UIColor colorWithWhite:0.9 alpha:1] CGColor];
-	
-	
-	
-	
+
 	comfirBtn.backgroundColor = [UIColor clearColor];
-	
-	
-	
+    
 	/** ************  确定按钮*/
 	[comfirBtn addTarget:self action:@selector(comfirClick) forControlEvents:UIControlEventTouchUpInside];
 	
@@ -2636,14 +2632,11 @@ static int httpRequsetCount = 0;
 		txt.frame = CGRectMake((KScreenW-60)/2, (bgView.frame.size.height-30)/2, 0, 30);
 		
 		newDvNameField.frame = CGRectMake(tfLength, 80,0, 32);
-		
-		
-		
-		
-		
-		
+        
 		close.transform = CGAffineTransformMakeRotation(M_PI);
+        
 		close.transform = CGAffineTransformMakeScale(0.1, 0.1);
+        
 	} completion:^(BOOL finished) {
 		[close removeFromSuperview];
 		[UIView animateWithDuration:0.5 animations:^{
@@ -2728,8 +2721,6 @@ static int httpRequsetCount = 0;
             [self deleteDoor];
         }
         
-		
-		
 		[UIView animateWithDuration:0.8 animations:^{
 			
 			
@@ -2780,9 +2771,11 @@ static int httpRequsetCount = 0;
 - (void)sendDataDeleteAuthorWithDeviceAutherModel:(DeviceAutherModel *)mode
 {
 	NSString *dstUUId = mode.uuid;
+    
 	NSString *did = mode.did;
-	
+    
 	NSString *str = [NSString stringWithSocketDelegateFamilyLockWithDstUuid:dstUUId lockUUID:dstUUId did:did devUser:mode.admin];
+    
 	[self.appDelegate sendMessageWithString:str];
 	
 	// 启动定时器
@@ -2900,7 +2893,6 @@ static int httpRequsetCount = 0;
 		[self.tableView reloadData];
 	}];
 }
-
 
 
 @end

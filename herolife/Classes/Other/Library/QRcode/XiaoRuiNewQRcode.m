@@ -99,7 +99,7 @@
 	rightLabel.textColor = [UIColor whiteColor];
 	rightLabel.textAlignment = NSTextAlignmentCenter;
 	rightLabel.font = [UIFont systemFontOfSize:14];
-	rightLabel.text = @"手动添加";
+	rightLabel.text = @"按类型添加";
 	
 	[self addSubview:rightLabel];
 	self.manualLabel = rightLabel;

@@ -266,6 +266,7 @@
     
     NSString *urlStr=[NSString stringWithFormat:HRAPI_GetDoorPsw_URL,DoorUUID,userName];
     
+    urlStr = [urlStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding ];
     HRWeakSelf
     [HRHTTPTool hr_getHttpWithURL:urlStr parameters:nil responseDict:^(id responseObject, NSError *error) {
         [self.tableView.mj_header endRefreshing];

@@ -13,6 +13,7 @@
 #import "DeviceListModel.h"
 #import "DoorLockModel.h"
 #import "HRRefreshHeader.h"
+#import "HRRefreshFooter.h"
 
 @interface DoorLockRecordConroller ()<UITableViewDelegate,UITableViewDataSource>
 
@@ -192,82 +193,141 @@ static int indexCount = 0;
 	//集成刷新
 	[self setupRefresh];
 }
+
 #pragma mark - 内部方法
 // 集成刷新控件
 - (void)setupRefresh
 {
-	// header - 下拉刷新
-	self.tableView.mj_header = [HRRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(getHttpRequset)];
-	// 进入刷新状态
-	[self.tableView.mj_header beginRefreshing];
+    // header - 上拉刷新
+    self.tableView.mj_header = [HRRefreshHeader headerWithRefreshingTarget:self refreshingAction:@selector(getHttpRequsetWithHeader)];
+    [self.tableView.mj_header beginRefreshing];
+    // footer - 下拉刷新
+    self.tableView.mj_footer = [HRRefreshFooter footerWithRefreshingTarget:self refreshingAction:@selector(getHttpRequsetWithFooter)];
 }
 
 #pragma mark - 获取设备信息  发送HTTP请求
-- (void)getHttpRequset
+- (void)getHttpRequsetWithFooter
 {
 	/// 从偏好设置里加载数据
 	NSString *uuid = self.listModel.uuid;
-	//NSString *url = [NSString stringWithFormat:@"http://www.gzhuarui.cn/?q=huaruiapi/herolife-dev-hrsc-ml&uuid=%@&sy=(unlock|batlow|ltnolock|errlimt)&page=%d", uuid, indexCount];
+    
+    
+    
+    if (indexCount < 0) {
+        indexCount = 1;
+    }
     NSString *url = [NSString stringWithFormat:@"%@%@&sy=(unlock|batlow|ltnolock|errlimt|illunlock|holding)&page=%d",HRAPI_RecordeLock_URL,uuid,indexCount];
-    
-    
-    
 	url = [url stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
     
     NSLog(@"请求记录的网址%@",url);
     
-	
-	HRWeakSelf
-	[HRHTTPTool hr_getHttpWithURL:url parameters:nil responseDict:^(id responseObject, NSError *error) {
-		[self.tableView.mj_header endRefreshing];
-		if (error) {
-			[ErrorCodeManager showError:error];
-			return ;
-		}
-		
-		//DDLogWarn(@"记录查询HTTP请求%@", responseObject);
-		//如果responseObject不是数组类型就不是我们想要的数据，应该过滤掉
-		if (![responseObject isKindOfClass:[NSArray class]]) {
-//			[weakSelf.queryArray removeAllObjects];
-			DDLogDebug(@"responseObject不是NSArray");
-			return;
-		}
-		//去除服务器发过来的数据里没有值的情况
-		if (((NSArray*)responseObject).count < 1 ) {
-			DDLogDebug(@"responseObject count == 0");
-			return;
-		}
+    
+    HRWeakSelf
+    [HRHTTPTool hr_getHttpWithURL:url parameters:nil responseDict:^(id responseObject, NSError *error) {
+        [self.tableView.mj_footer endRefreshing];
+        if (error) {
+            [ErrorCodeManager showError:error];
+            return ;
+        }
         
+        //DDLogWarn(@"记录查询HTTP请求%@", responseObject);
+        //如果responseObject不是数组类型就不是我们想要的数据，应该过滤掉
+        if (![responseObject isKindOfClass:[NSArray class]]) {
+            //			[weakSelf.queryArray removeAllObjects];
+            DDLogDebug(@"下拉刷新responseObject不是NSArray");
+            return;
+        }
+        //去除服务器发过来的数据里没有值的情况
+        if (((NSArray*)responseObject).count < 1 ) {
+            DDLogDebug(@"下拉刷新responseObject count == 0");
+        }
         
-     
-		
-		NSArray *responseArr = (NSArray*)responseObject;
+        NSArray *responseArr = (NSArray*)responseObject;
         
+        [weakSelf.queryArray removeAllObjects];
         
-      //  NSLog(@"记录查询请求回来的数据%@",responseArr);
-        
-		
-		for (NSDictionary *dict in responseArr) {
-			DoorLockModel *lockModel = [DoorLockModel mj_objectWithKeyValues:dict];
-            
-            
-            
-            
+        for (NSDictionary *dict in responseArr) {
+            DoorLockModel *lockModel = [DoorLockModel mj_objectWithKeyValues:dict];
             if ([lockModel.uuid isEqualToString:uuid]) {
-                NSLog(@"符合的情况");
+                // NSLog(@"符合的情况");
                 [weakSelf.queryArray addObject:lockModel];
-
                 
             }
-		}
-		
-		[self.tableView reloadData];
-	}];
-	indexCount++;
+        }
+        
+        [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:NO];
+        [self.tableView reloadData];
+        indexCount++;
+    }];
+    
+    NSLog(@"下拉刷新查询数组的长度%lu",(unsigned long)weakSelf.queryArray.count);
+
+    
+}
+
+- (void)getHttpRequsetWithHeader
+{
+    /// 从偏好设置里加载数据
+    NSString *uuid = self.listModel.uuid;
+    
+    if (indexCount < 0) {
+        indexCount = 0;
+    }
+    
+    NSString *url = [NSString stringWithFormat:@"%@%@&sy=(unlock|batlow|ltnolock|errlimt|illunlock|holding)&page=%d",HRAPI_RecordeLock_URL,uuid,indexCount];
+    
+    url = [url stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
+    
+    NSLog(@"请求记录的网址%@",url);
+    
+    
+    HRWeakSelf
+    [HRHTTPTool hr_getHttpWithURL:url parameters:nil responseDict:^(id responseObject, NSError *error) {
+        [self.tableView.mj_header endRefreshing];
+        if (error) {
+            [ErrorCodeManager showError:error];
+            return ;
+        }
+        
+        //DDLogWarn(@"记录查询HTTP请求%@", responseObject);
+        //如果responseObject不是数组类型就不是我们想要的数据，应该过滤掉
+        if (![responseObject isKindOfClass:[NSArray class]]) {
+            //			[weakSelf.queryArray removeAllObjects];
+            DDLogDebug(@"responseObject不是NSArray");
+            return;
+        }
+        //去除服务器发过来的数据里没有值的情况
+        if (((NSArray*)responseObject).count < 1 ) {
+            DDLogDebug(@"responseObject count == 0");
+        }
+        
+        NSArray *responseArr = (NSArray*)responseObject;
+        
+        
+        //  NSLog(@"记录查询请求回来的数据%@",responseArr);
+        
+        
+        
+        
+        [weakSelf.queryArray removeAllObjects];
+        
+        for (NSDictionary *dict in responseArr) {
+            DoorLockModel *lockModel = [DoorLockModel mj_objectWithKeyValues:dict];
+            if ([lockModel.uuid isEqualToString:uuid]) {
+                // NSLog(@"符合的情况");
+                [weakSelf.queryArray addObject:lockModel];
+                
+            }
+        }
+        
+        [self.tableView reloadData];
+        indexCount--;
+    }];
     
     NSLog(@"查询数组的长度%lu",(unsigned long)weakSelf.queryArray.count);
     
 }
+
 
 #pragma mark -点击第一行跳转到推送设置界面
 
@@ -442,7 +502,7 @@ static int indexCount = 0;
 	
 	[self setUpHeardView];
     _tableView.rowHeight = 50 ;
-    
+    _tableView.contentInset = UIEdgeInsetsMake(0, 0, 30, 0);
     //隐藏滚动条
 //    _tableView.showsVerticalScrollIndicator =NO;
     //超过边界不允许滚动
@@ -649,9 +709,7 @@ static int indexCount = 0;
 	
 	userNameLabel.textAlignment = NSTextAlignmentCenter;
 	
-	
-	//_userNameLabel.backgroundColor = [UIColor blueColor];
-	
+		
 	
 	
 }
