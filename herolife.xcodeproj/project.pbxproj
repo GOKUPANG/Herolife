@@ -81,10 +81,24 @@
 		D1405BAC1DBDA93900E19C5F /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D1405BAB1DBDA93900E19C5F /* AppDelegate.m */; };
 		D1405BAF1DBDA96500E19C5F /* NSString+Util.m in Sources */ = {isa = PBXBuildFile; fileRef = D1405BAE1DBDA96500E19C5F /* NSString+Util.m */; };
 		D1405BB11DBDA99700E19C5F /* WaitController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1405BB01DBDA99700E19C5F /* WaitController.m */; };
-		D1405BB31DBDA9BD00E19C5F /* EnterPSWController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1405BB21DBDA9BD00E19C5F /* EnterPSWController.m */; };
 		D1405BB51DBDAA0000E19C5F /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D1405BB41DBDAA0000E19C5F /* Info.plist */; };
 		D14D38B01DED378800551FD3 /* HRRefreshFooter.m in Sources */ = {isa = PBXBuildFile; fileRef = D14D38AF1DED378800551FD3 /* HRRefreshFooter.m */; };
 		D14D38B61DED384D00551FD3 /* DoorLockRecordConroller.m in Sources */ = {isa = PBXBuildFile; fileRef = D14D38B51DED384D00551FD3 /* DoorLockRecordConroller.m */; };
+		D14D38D81DED5BA500551FD3 /* ESP_ByteUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = D14D38B91DED5BA500551FD3 /* ESP_ByteUtil.m */; };
+		D14D38D91DED5BA500551FD3 /* ESP_CRC8.m in Sources */ = {isa = PBXBuildFile; fileRef = D14D38BB1DED5BA500551FD3 /* ESP_CRC8.m */; };
+		D14D38DA1DED5BA500551FD3 /* ESP_NetUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = D14D38BD1DED5BA500551FD3 /* ESP_NetUtil.m */; };
+		D14D38DB1DED5BA500551FD3 /* ESP_WifiUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = D14D38BF1DED5BA500551FD3 /* ESP_WifiUtil.m */; };
+		D14D38DD1DED5BA500551FD3 /* ESPDataCode.m in Sources */ = {isa = PBXBuildFile; fileRef = D14D38C31DED5BA500551FD3 /* ESPDataCode.m */; };
+		D14D38DE1DED5BA500551FD3 /* ESPDatumCode.m in Sources */ = {isa = PBXBuildFile; fileRef = D14D38C51DED5BA500551FD3 /* ESPDatumCode.m */; };
+		D14D38DF1DED5BA500551FD3 /* ESPGuideCode.m in Sources */ = {isa = PBXBuildFile; fileRef = D14D38C71DED5BA500551FD3 /* ESPGuideCode.m */; };
+		D14D38E11DED5BA500551FD3 /* ESPTouchGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = D14D38CC1DED5BA500551FD3 /* ESPTouchGenerator.m */; };
+		D14D38E21DED5BA500551FD3 /* ESPTouchResult.m in Sources */ = {isa = PBXBuildFile; fileRef = D14D38CE1DED5BA500551FD3 /* ESPTouchResult.m */; };
+		D14D38E31DED5BA500551FD3 /* ESPTouchTask.m in Sources */ = {isa = PBXBuildFile; fileRef = D14D38D01DED5BA500551FD3 /* ESPTouchTask.m */; };
+		D14D38E41DED5BA500551FD3 /* ESPTouchTaskParameter.m in Sources */ = {isa = PBXBuildFile; fileRef = D14D38D21DED5BA500551FD3 /* ESPTouchTaskParameter.m */; };
+		D14D38E51DED5BA500551FD3 /* ESPUDPSocketClient.m in Sources */ = {isa = PBXBuildFile; fileRef = D14D38D41DED5BA500551FD3 /* ESPUDPSocketClient.m */; };
+		D14D38E61DED5BA500551FD3 /* ESPUDPSocketServer.m in Sources */ = {isa = PBXBuildFile; fileRef = D14D38D61DED5BA500551FD3 /* ESPUDPSocketServer.m */; };
+		D14D38EA1DED826D00551FD3 /* NewConnectWifiController.m in Sources */ = {isa = PBXBuildFile; fileRef = D14D38E91DED826D00551FD3 /* NewConnectWifiController.m */; };
+		D14D38EC1DEE683D00551FD3 /* EnterPSWController.m in Sources */ = {isa = PBXBuildFile; fileRef = D14D38EB1DEE683D00551FD3 /* EnterPSWController.m */; };
 		D158E5AF1DAB36EA000DB8C9 /* UMMobClick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D158E5AE1DAB36EA000DB8C9 /* UMMobClick.framework */; };
 		D158E5B11DAB37FA000DB8C9 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D158E5B01DAB37FA000DB8C9 /* CoreTelephony.framework */; };
 		D15F3BEE1DB4BC6F00EC2390 /* APPPSWController.m in Sources */ = {isa = PBXBuildFile; fileRef = D15F3BED1DB4BC6F00EC2390 /* APPPSWController.m */; };
@@ -363,13 +377,44 @@
 		D1405BAD1DBDA96500E19C5F /* NSString+Util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Util.h"; sourceTree = "<group>"; };
 		D1405BAE1DBDA96500E19C5F /* NSString+Util.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Util.m"; sourceTree = "<group>"; };
 		D1405BB01DBDA99700E19C5F /* WaitController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WaitController.m; sourceTree = "<group>"; };
-		D1405BB21DBDA9BD00E19C5F /* EnterPSWController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EnterPSWController.m; sourceTree = "<group>"; };
 		D1405BB41DBDAA0000E19C5F /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D1405BB61DBDAA0B00E19C5F /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
 		D14D38AE1DED378800551FD3 /* HRRefreshFooter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HRRefreshFooter.h; sourceTree = "<group>"; };
 		D14D38AF1DED378800551FD3 /* HRRefreshFooter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HRRefreshFooter.m; sourceTree = "<group>"; };
 		D14D38B41DED384D00551FD3 /* DoorLockRecordConroller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DoorLockRecordConroller.h; sourceTree = "<group>"; };
 		D14D38B51DED384D00551FD3 /* DoorLockRecordConroller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DoorLockRecordConroller.m; sourceTree = "<group>"; };
+		D14D38B81DED5BA500551FD3 /* ESP_ByteUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ESP_ByteUtil.h; sourceTree = "<group>"; };
+		D14D38B91DED5BA500551FD3 /* ESP_ByteUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ESP_ByteUtil.m; sourceTree = "<group>"; };
+		D14D38BA1DED5BA500551FD3 /* ESP_CRC8.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ESP_CRC8.h; sourceTree = "<group>"; };
+		D14D38BB1DED5BA500551FD3 /* ESP_CRC8.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ESP_CRC8.m; sourceTree = "<group>"; };
+		D14D38BC1DED5BA500551FD3 /* ESP_NetUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ESP_NetUtil.h; sourceTree = "<group>"; };
+		D14D38BD1DED5BA500551FD3 /* ESP_NetUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ESP_NetUtil.m; sourceTree = "<group>"; };
+		D14D38BE1DED5BA500551FD3 /* ESP_WifiUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ESP_WifiUtil.h; sourceTree = "<group>"; };
+		D14D38BF1DED5BA500551FD3 /* ESP_WifiUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ESP_WifiUtil.m; sourceTree = "<group>"; };
+		D14D38C21DED5BA500551FD3 /* ESPDataCode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ESPDataCode.h; sourceTree = "<group>"; };
+		D14D38C31DED5BA500551FD3 /* ESPDataCode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ESPDataCode.m; sourceTree = "<group>"; };
+		D14D38C41DED5BA500551FD3 /* ESPDatumCode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ESPDatumCode.h; sourceTree = "<group>"; };
+		D14D38C51DED5BA500551FD3 /* ESPDatumCode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ESPDatumCode.m; sourceTree = "<group>"; };
+		D14D38C61DED5BA500551FD3 /* ESPGuideCode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ESPGuideCode.h; sourceTree = "<group>"; };
+		D14D38C71DED5BA500551FD3 /* ESPGuideCode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ESPGuideCode.m; sourceTree = "<group>"; };
+		D14D38C81DED5BA500551FD3 /* ESPTouchDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ESPTouchDelegate.h; sourceTree = "<group>"; };
+		D14D38CA1DED5BA500551FD3 /* EspTouchDemo-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "EspTouchDemo-Prefix.pch"; sourceTree = "<group>"; };
+		D14D38CB1DED5BA500551FD3 /* ESPTouchGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ESPTouchGenerator.h; sourceTree = "<group>"; };
+		D14D38CC1DED5BA500551FD3 /* ESPTouchGenerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ESPTouchGenerator.m; sourceTree = "<group>"; };
+		D14D38CD1DED5BA500551FD3 /* ESPTouchResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ESPTouchResult.h; sourceTree = "<group>"; };
+		D14D38CE1DED5BA500551FD3 /* ESPTouchResult.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ESPTouchResult.m; sourceTree = "<group>"; };
+		D14D38CF1DED5BA500551FD3 /* ESPTouchTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ESPTouchTask.h; sourceTree = "<group>"; };
+		D14D38D01DED5BA500551FD3 /* ESPTouchTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ESPTouchTask.m; sourceTree = "<group>"; };
+		D14D38D11DED5BA500551FD3 /* ESPTouchTaskParameter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ESPTouchTaskParameter.h; sourceTree = "<group>"; };
+		D14D38D21DED5BA500551FD3 /* ESPTouchTaskParameter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ESPTouchTaskParameter.m; sourceTree = "<group>"; };
+		D14D38D31DED5BA500551FD3 /* ESPUDPSocketClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ESPUDPSocketClient.h; sourceTree = "<group>"; };
+		D14D38D41DED5BA500551FD3 /* ESPUDPSocketClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ESPUDPSocketClient.m; sourceTree = "<group>"; };
+		D14D38D51DED5BA500551FD3 /* ESPUDPSocketServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ESPUDPSocketServer.h; sourceTree = "<group>"; };
+		D14D38D61DED5BA500551FD3 /* ESPUDPSocketServer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ESPUDPSocketServer.m; sourceTree = "<group>"; };
+		D14D38D71DED5BA500551FD3 /* ESPVersionMacro.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ESPVersionMacro.h; sourceTree = "<group>"; };
+		D14D38E81DED826D00551FD3 /* NewConnectWifiController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewConnectWifiController.h; sourceTree = "<group>"; };
+		D14D38E91DED826D00551FD3 /* NewConnectWifiController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewConnectWifiController.m; sourceTree = "<group>"; };
+		D14D38EB1DEE683D00551FD3 /* EnterPSWController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EnterPSWController.m; sourceTree = "<group>"; };
 		D158E5AE1DAB36EA000DB8C9 /* UMMobClick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = UMMobClick.framework; sourceTree = "<group>"; };
 		D158E5B01DAB37FA000DB8C9 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		D15F3BED1DB4BC6F00EC2390 /* APPPSWController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APPPSWController.m; sourceTree = "<group>"; };
@@ -705,7 +750,7 @@
 			isa = PBXGroup;
 			children = (
 				D1A7DDBE1D81181600D051B0 /* EnterPSWController.h */,
-				D1405BB21DBDA9BD00E19C5F /* EnterPSWController.m */,
+				D14D38EB1DEE683D00551FD3 /* EnterPSWController.m */,
 				D1A7DDC01D81181600D051B0 /* GoToSetUpController.h */,
 				AA929A4E1DB47B5D009D64E6 /* GoToSetUpController.m */,
 				18C6975F1D7462B9004DA2B1 /* cell */,
@@ -979,6 +1024,53 @@
 			path = base64;
 			sourceTree = "<group>";
 		};
+		D14D38B71DED5AB300551FD3 /* AddNewWIFI */ = {
+			isa = PBXGroup;
+			children = (
+				D14D38B81DED5BA500551FD3 /* ESP_ByteUtil.h */,
+				D14D38B91DED5BA500551FD3 /* ESP_ByteUtil.m */,
+				D14D38BA1DED5BA500551FD3 /* ESP_CRC8.h */,
+				D14D38BB1DED5BA500551FD3 /* ESP_CRC8.m */,
+				D14D38BC1DED5BA500551FD3 /* ESP_NetUtil.h */,
+				D14D38BD1DED5BA500551FD3 /* ESP_NetUtil.m */,
+				D14D38BE1DED5BA500551FD3 /* ESP_WifiUtil.h */,
+				D14D38BF1DED5BA500551FD3 /* ESP_WifiUtil.m */,
+				D14D38C21DED5BA500551FD3 /* ESPDataCode.h */,
+				D14D38C31DED5BA500551FD3 /* ESPDataCode.m */,
+				D14D38C41DED5BA500551FD3 /* ESPDatumCode.h */,
+				D14D38C51DED5BA500551FD3 /* ESPDatumCode.m */,
+				D14D38C61DED5BA500551FD3 /* ESPGuideCode.h */,
+				D14D38C71DED5BA500551FD3 /* ESPGuideCode.m */,
+				D14D38C81DED5BA500551FD3 /* ESPTouchDelegate.h */,
+				D14D38CA1DED5BA500551FD3 /* EspTouchDemo-Prefix.pch */,
+				D14D38CB1DED5BA500551FD3 /* ESPTouchGenerator.h */,
+				D14D38CC1DED5BA500551FD3 /* ESPTouchGenerator.m */,
+				D14D38CD1DED5BA500551FD3 /* ESPTouchResult.h */,
+				D14D38CE1DED5BA500551FD3 /* ESPTouchResult.m */,
+				D14D38CF1DED5BA500551FD3 /* ESPTouchTask.h */,
+				D14D38D01DED5BA500551FD3 /* ESPTouchTask.m */,
+				D14D38D11DED5BA500551FD3 /* ESPTouchTaskParameter.h */,
+				D14D38D21DED5BA500551FD3 /* ESPTouchTaskParameter.m */,
+				D14D38D31DED5BA500551FD3 /* ESPUDPSocketClient.h */,
+				D14D38D41DED5BA500551FD3 /* ESPUDPSocketClient.m */,
+				D14D38D51DED5BA500551FD3 /* ESPUDPSocketServer.h */,
+				D14D38D61DED5BA500551FD3 /* ESPUDPSocketServer.m */,
+				D14D38D71DED5BA500551FD3 /* ESPVersionMacro.h */,
+			);
+			name = AddNewWIFI;
+			path = SDWebImage/AddNewWIFI;
+			sourceTree = "<group>";
+		};
+		D14D38E71DED6AB600551FD3 /* NewConnectWifi */ = {
+			isa = PBXGroup;
+			children = (
+				D14D38E81DED826D00551FD3 /* NewConnectWifiController.h */,
+				D14D38E91DED826D00551FD3 /* NewConnectWifiController.m */,
+			);
+			name = NewConnectWifi;
+			path = WiFiList/NewFeature/NewConnectWifi;
+			sourceTree = "<group>";
+		};
 		D15F3BEF1DB4F5CE00EC2390 /* UUID */ = {
 			isa = PBXGroup;
 			children = (
@@ -1062,11 +1154,12 @@
 				D1A7DDC81D811BB900D051B0 /* HRConst.h */,
 				D1A7DDC91D811BB900D051B0 /* HRConst.m */,
 				D1A7DBFD1D8117DD00D051B0 /* Other */,
+				D1A7DD041D8117DD00D051B0 /* QRcode */,
 				D1A7DBEB1D8117DD00D051B0 /* DeviceList */,
 				D1A7DBF01D8117DD00D051B0 /* Forget */,
 				D1A7DBF31D8117DD00D051B0 /* Login */,
 				D1A7DBFA1D8117DD00D051B0 /* Next */,
-				D1A7DD041D8117DD00D051B0 /* QRcode */,
+				D14D38E71DED6AB600551FD3 /* NewConnectWifi */,
 				D1A7DD071D8117DD00D051B0 /* register */,
 				D1A7DD0A1D8117DD00D051B0 /* Seting */,
 				D1A7DBEA1D8117DD00D051B0 /* AddLock */,
@@ -1154,6 +1247,7 @@
 				D1A7DC371D8117DD00D051B0 /* fmdb */,
 				D1A7DC431D8117DD00D051B0 /* FTPopOverMenu */,
 				D1A7DC761D8117DD00D051B0 /* RunLoop */,
+				D14D38B71DED5AB300551FD3 /* AddNewWIFI */,
 				D1A7DC7B1D8117DD00D051B0 /* SDWebImage */,
 			);
 			path = Library;
@@ -1882,7 +1976,9 @@
 				D1C144241D8E2FD800FDDFA0 /* ShouAddFamilyModel.m in Sources */,
 				D1A7DDA51D8117DD00D051B0 /* Login.m in Sources */,
 				D1A7DDA41D8117DD00D051B0 /* IrgmData.m in Sources */,
+				D14D38DD1DED5BA500551FD3 /* ESPDataCode.m in Sources */,
 				D1A7DD401D8117DD00D051B0 /* FMDatabasePool.m in Sources */,
+				D14D38E21DED5BA500551FD3 /* ESPTouchResult.m in Sources */,
 				D1A7DD8F1D8117DD00D051B0 /* UIBarButtonItem+XMGExtension.m in Sources */,
 				D1A7DDAB1D8117DD00D051B0 /* HRServicesManager.m in Sources */,
 				D1147BCC1DB0B6C500ADEECC /* DeviceListController.m in Sources */,
@@ -1901,6 +1997,7 @@
 				D18EF1D21DAE44C200A069D6 /* FTPopOverMenu.m in Sources */,
 				D1AA2E6C1D83F50500D1AEC9 /* AddLockController.m in Sources */,
 				18C697A41D7462B9004DA2B1 /* PCCircleView.m in Sources */,
+				D14D38E31DED5BA500551FD3 /* ESPTouchTask.m in Sources */,
 				D1A7DD311D8117DD00D051B0 /* MJRefreshBackNormalFooter.m in Sources */,
 				D1A7DD771D8117DD00D051B0 /* SDWebImageDownloaderOperation.m in Sources */,
 				D1A7DDAF1D8117DD00D051B0 /* SVProgressTool.m in Sources */,
@@ -1931,6 +2028,7 @@
 				D1A7DDB01D8117DD00D051B0 /* HRButton.m in Sources */,
 				D1A7DDA71D8117DD00D051B0 /* CreateXRHttpTools.m in Sources */,
 				D1352D7E1D9E1065003A83AB /* NextController.m in Sources */,
+				D14D38E51DED5BA500551FD3 /* ESPUDPSocketClient.m in Sources */,
 				D1352D6C1D9E0ECB003A83AB /* ManualCreateXiaoRui.m in Sources */,
 				D1A7DDA31D8117DD00D051B0 /* IracData.m in Sources */,
 				D14D38B61DED384D00551FD3 /* DoorLockRecordConroller.m in Sources */,
@@ -1938,6 +2036,7 @@
 				D1A7DD7B1D8117DD00D051B0 /* UIImage+GIF.m in Sources */,
 				18C697AD1D7462B9004DA2B1 /* PCLockLabel.m in Sources */,
 				D1E35D871D90DE89002A766C /* AutherTimePickView.m in Sources */,
+				D14D38D81DED5BA500551FD3 /* ESP_ByteUtil.m in Sources */,
 				D1A7DDBB1D8117DD00D051B0 /* WiFiListCell.m in Sources */,
 				D12BC7821DB1DA9E00D84B12 /* AccountManagementController.m in Sources */,
 				D1405BAF1DBDA96500E19C5F /* NSString+Util.m in Sources */,
@@ -1953,13 +2052,16 @@
 				D17076761D94D6BB0027C46B /* LoginController.m in Sources */,
 				D1A7DD761D8117DD00D051B0 /* SDWebImageDownloader.m in Sources */,
 				D1A7DD781D8117DD00D051B0 /* SDWebImageManager.m in Sources */,
+				D14D38DB1DED5BA500551FD3 /* ESP_WifiUtil.m in Sources */,
 				D1352D781D9E0F35003A83AB /* HRTabBarViewController.m in Sources */,
 				18C697A81D7462B9004DA2B1 /* JCAlertView.m in Sources */,
 				1868B9131D79200200D19386 /* ChooseBackPicCtl.m in Sources */,
 				D1A7DD211D8117DD00D051B0 /* ForgetController.m in Sources */,
+				D14D38E61DED5BA500551FD3 /* ESPUDPSocketServer.m in Sources */,
 				D1A7DD241D8117DD00D051B0 /* UIView+XD.m in Sources */,
 				D1C3AFE21DACF547008E3426 /* ShouQuanManagerController.m in Sources */,
 				D1352D6E1D9E0ECB003A83AB /* QRCodeController.m in Sources */,
+				D14D38D91DED5BA500551FD3 /* ESP_CRC8.m in Sources */,
 				D1A7DD9F1D8117DD00D051B0 /* HRTempHumid.m in Sources */,
 				D1A7DDA61D8117DD00D051B0 /* Push.m in Sources */,
 				D1A7DD7D1D8117DD00D051B0 /* UIImage+WebP.m in Sources */,
@@ -1976,6 +2078,7 @@
 				D1A7DD371D8117DD00D051B0 /* MJRefreshConst.m in Sources */,
 				D1A7DD951D8117DD00D051B0 /* HRNavigationViewController.m in Sources */,
 				D1A7DD921D8117DD00D051B0 /* UIImageView+Util.m in Sources */,
+				D14D38E41DED5BA500551FD3 /* ESPTouchTaskParameter.m in Sources */,
 				D1A7DD9E1D8117DD00D051B0 /* HRSceneData.m in Sources */,
 				D1A7DD301D8117DD00D051B0 /* MJRefreshBackGifFooter.m in Sources */,
 				D1A7DD281D8117DD00D051B0 /* MJRefreshAutoFooter.m in Sources */,
@@ -1990,9 +2093,11 @@
 				D1A7DD6F1D8117DD00D051B0 /* AsyncSocket.m in Sources */,
 				D1B7924D1D8BF78C00DDA4DD /* UILabel+ContentSize.m in Sources */,
 				D1A7DD341D8117DD00D051B0 /* MJRefreshNormalHeader.m in Sources */,
+				D14D38E11DED5BA500551FD3 /* ESPTouchGenerator.m in Sources */,
 				AA2C52751D91574100D0BD3D /* NSString+PushSet.m in Sources */,
 				D1147BDA1DB0B80200ADEECC /* GTMBase64.m in Sources */,
 				D1A7DD8A1D8117DD00D051B0 /* AFHTTPSessionManager+Util.m in Sources */,
+				D14D38DE1DED5BA500551FD3 /* ESPDatumCode.m in Sources */,
 				D1007CE01D8694280079D3DD /* DeviceAutherModel.m in Sources */,
 				D1352D6F1D9E0ECB003A83AB /* QRViewController.m in Sources */,
 				D1A7DDB31D8117DD00D051B0 /* ManualController.m in Sources */,
@@ -2002,9 +2107,11 @@
 				D1A7DD731D8117DD00D051B0 /* SDImageCache.m in Sources */,
 				D1A7DD291D8117DD00D051B0 /* MJRefreshBackFooter.m in Sources */,
 				18C697A91D7462B9004DA2B1 /* MyButton.m in Sources */,
+				D14D38DF1DED5BA500551FD3 /* ESPGuideCode.m in Sources */,
 				D1A7DD381D8117DD00D051B0 /* NSBundle+MJRefresh.m in Sources */,
 				D1A7DD741D8117DD00D051B0 /* SDWebImageCompat.m in Sources */,
 				D1B3CB351D966D6D009F96D2 /* HerolifeViewController.m in Sources */,
+				D14D38EA1DED826D00551FD3 /* NewConnectWifiController.m in Sources */,
 				D1352D691D9E0ECB003A83AB /* HRQrButton.m in Sources */,
 				D1405BB11DBDA99700E19C5F /* WaitController.m in Sources */,
 				D1A9C8CE1DCB25EE00518886 /* OpenLockController.m in Sources */,
@@ -2013,7 +2120,6 @@
 				D1A7DDB11D8117DD00D051B0 /* HRLabel.m in Sources */,
 				AA029EA01D7D75B500EFF91C /* HWPopTool.m in Sources */,
 				AAA8A9C61D8CEA5E00ABA020 /* DoorPswModel.m in Sources */,
-				D1405BB31DBDA9BD00E19C5F /* EnterPSWController.m in Sources */,
 				D1B792491D8BF78C00DDA4DD /* EBForeNotification.m in Sources */,
 				D1A7DDCF1D811ED100D051B0 /* SettingCell.m in Sources */,
 				D1A7DD931D8117DD00D051B0 /* UIView+HRExtension.m in Sources */,
@@ -2026,9 +2132,11 @@
 				D1A7DDA21D8117DD00D051B0 /* HRXiaorui.m in Sources */,
 				D1A7DDB91D8117DD00D051B0 /* HRPushMode.m in Sources */,
 				D1A7DD2C1D8117DD00D051B0 /* MJRefreshHeader.m in Sources */,
+				D14D38DA1DED5BA500551FD3 /* ESP_NetUtil.m in Sources */,
 				D1A7DDA91D8117DD00D051B0 /* HRHTTPTool.m in Sources */,
 				AA2C52781D91578D00D0BD3D /* PushSettingController.m in Sources */,
 				D1A7DD911D8117DD00D051B0 /* UIImage+Util.m in Sources */,
+				D14D38EC1DEE683D00551FD3 /* EnterPSWController.m in Sources */,
 				D19CE3131DD40B5F008E7F3A /* DoorRecordCell.m in Sources */,
 				D1A7DDBC1D8117DD00D051B0 /* WiFiListController.m in Sources */,
 				D1AA2E661D83F48600D1AEC9 /* DeviceListTcpModel.m in Sources */,

@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 
 @interface SVProgressTool : NSObject
-+ (void)hr_showErrorWithStatus:(NSString *)status;
++ (void)hr_showErrorWithStatus:(NSString *)status;+ (void)hr_showErrorWithLongTimeStatus:(NSString *)status;
 + (void)hr_showWithStatus:(NSString *)status;
 + (void)hr_showSuccessWithStatus:(NSString *)status;
 + (void)hr_dismiss;

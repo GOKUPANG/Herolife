@@ -1951,6 +1951,10 @@ static int httpRequsetCount = 0;
                 
                 //重新设置3D图片
                 [self setUp3DEptPictureWithHomeArray: weakSelf.homeArray];
+                if (weakSelf.homeArray.count == 2) {
+                    
+                    [self.collectionView setContentOffset:CGPointMake(1 * HRCommonScreenW *345 *2, 0) animated:NO];
+                }
                 
                 //重新设置列表按钮的图片和文字
                 if (weakSelf.homeArray.count > 0) {
@@ -1985,7 +1989,7 @@ static int httpRequsetCount = 0;
                 [weakSelf.collectionView reloadData];
                 
                 DDLogInfo(@"删除门锁%@error%@", array,error);
-                [SVProgressTool hr_showWithStatus:@"删除成功!"];
+                [SVProgressTool hr_showSuccessWithStatus:@"删除成功!"];
                 
                 
             }];

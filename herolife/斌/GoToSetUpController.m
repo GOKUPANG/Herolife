@@ -397,7 +397,7 @@ static NSString *wift;
 {
 	
 	self.leftTime--;
-	DDLogWarn(@"--------连上了--------%d", self.leftTime);
+	DDLogWarn(@"--------gotoSetUpController连上了--------%d", self.leftTime);
 	wift = [NSString stringWithGetWifiName];
 	if ([wift isEqualToString:@"互联网智能门锁"]) {
 		

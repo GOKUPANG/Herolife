@@ -11,6 +11,8 @@
 #import "GoToSetUpController.h"
 #import "QRCodeController.h"
 #import "HRTabBar.h"
+#import "EnterPSWController.h"
+#import "NewConnectWifiController.h"
 
 @interface NextController ()
 /** 顶部条 */
@@ -35,8 +37,8 @@
 @property(nonatomic, weak) UILabel *titleLabel;
 /** 左边 button */
 @property(nonatomic, weak) UIButton *leftButton;
-/** 右边Label */
-@property(nonatomic, weak) UILabel *rightLabel;
+/** 右边按钮 */
+@property(nonatomic, weak)  UIButton *rightButton;
 @end
 
 @implementation NextController
@@ -102,15 +104,14 @@
 	[navView addSubview:leftButton];
 	self.leftButton = leftButton;
 	
-	//右边label
-	UILabel *rightLabel = [[UILabel alloc] init];
-	rightLabel.font = [UIFont systemFontOfSize: 17];
-	
-	rightLabel.textAlignment = NSTextAlignmentCenter;
-	rightLabel.textColor = [UIColor whiteColor];
-	[navView addSubview:rightLabel];
-	self.rightLabel = rightLabel;
-	
+	//右边按钮
+    UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [rightButton setTitle:@"快速添加" forState:UIControlStateNormal];
+    [rightButton setBackgroundColor:[UIColor clearColor]];
+    [rightButton addTarget:self action:@selector(rightButtonClick:) forControlEvents:UIControlEventTouchUpInside];
+    [navView addSubview:rightButton];
+    self.rightButton = rightButton;
+    
 	//------------------------------------导航条控件end----------------------------//
 	
 	//头像底纹viwe 上
@@ -182,7 +183,7 @@
 		make.top.equalTo(self.navView).offset(0);
 		make.width.mas_offset(HRNavH);
 	}];
-	[self.rightLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+	[self.rightButton mas_makeConstraints:^(MASConstraintMaker *make) {
 		make.right.equalTo(self.navView).offset(- HRCommonScreenW *30);
 		make.centerY.equalTo(self.navView);
 	}];
@@ -239,6 +240,23 @@
 	self.nextButton.layer.masksToBounds = YES;
 }
 #pragma mark - UI事件
+//一键添加wifi事件
+- (void)rightButtonClick:(UIButton *)button
+{
+    button.selected = !button.selected;
+    if (button.selected) {
+        
+        [button setTitle:@"开始添加" forState:UIControlStateNormal];
+        self.titleLabel.text = @"快速添加";
+        _promptLabel.text = @"接通电源，先长按WiFi盒子set键20秒，直到指示灯快速闪烁,再点击下一步按钮";
+    }else
+    {
+        
+        [button setTitle:@"快速添加" forState:UIControlStateNormal];
+        self.titleLabel.text = @"开始添加";
+        _promptLabel.text = @"接通电源，先长按WiFi盒子set键6秒，直到指示灯闪烁,再点击下一步按钮";
+    }
+}
 - (void)backClick:(UIButton *)btn
 {
 	
@@ -248,8 +266,17 @@
 - (void)nextButtonClick:(UIButton *)btn
 {
 	[self IsTabBarHidden:YES];
-	GoToSetUpController *enterVC = [[GoToSetUpController alloc] init];
-	[self.navigationController pushViewController:enterVC animated:YES];
+    if ([self.titleLabel.text isEqualToString:@"开始添加"]) {
+        
+        GoToSetUpController *enterVC = [[GoToSetUpController alloc] init];
+        [self.navigationController pushViewController:enterVC animated:YES];
+        
+    }else
+    {
+        NewConnectWifiController *newConnectVC = [[NewConnectWifiController alloc] init];
+        [self.navigationController pushViewController:newConnectVC animated:YES];
+        
+    }
 }
 - (void)viewWillAppear:(BOOL)animated
 {

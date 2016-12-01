@@ -137,6 +137,10 @@
 
 /// -----------------创建通知----------------------------------
 #define kUserDefault [NSUserDefaults standardUserDefaults]
+/// 保存wifi bssid
+#define kUserDefaultBssidString @"kUserDefaultBssidString"
+/// 保存wifi ssid
+#define kUserDefaultSsidString @"kUserDefaultSsidString"
 /// 保存设备deviceToken
 #define kUserDefaultUUID @"kUserDefaultUUID"
 /// 手机UUID

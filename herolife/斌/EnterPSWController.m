@@ -21,7 +21,7 @@
 #import "UDPModel.h"
 #import "HRPushMode.h"
 #import "NextController.h"
-@interface EnterPSWController ()<UITableViewDelegate,UITableViewDataSource>
+@interface EnterPSWController ()<UITableViewDelegate,UITableViewDataSource, UITextFieldDelegate>
 
 
 @property(nonatomic,strong)UIView * lineView2;
@@ -272,7 +272,7 @@ static int const HRTimeDuration = 300;
     /** WiFi密码输入框*/
     
     UITextField *WIFITextField = [[UITextField alloc]init];
-    
+    WIFITextField.delegate = self;
     [self.view addSubview:WIFITextField];
     
     WIFITextField.sd_layout
@@ -283,7 +283,6 @@ static int const HRTimeDuration = 300;
     WIFITextField.textColor = [UIColor whiteColor];
     
     WIFITextField.returnKeyType = UIReturnKeyDone;
-    
     WIFITextField.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
     
     WIFITextField.placeholder = @"请输入密码";
@@ -291,7 +290,7 @@ static int const HRTimeDuration = 300;
     
     WIFITextField.clearButtonMode =    UITextFieldViewModeAlways;
 #ifdef DEBUG
-	WIFITextField.text = @"HRGC39026922";
+	WIFITextField.text = @"HRKJ39026922";
 #endif
   
     
@@ -338,7 +337,16 @@ static int const HRTimeDuration = 300;
     
 }
 
-
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
+{
+    
+    [self.WIFITextField resignFirstResponder];
+}
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [self.WIFITextField resignFirstResponder];
+    return YES;
+}
 -(void)openEye:(UIButton *)btn
 {
     if (btn.selected == YES) {
@@ -646,7 +654,7 @@ static NSString *wift;
 	}
 	if (self.leftTime == 0) {
 		
-        [SVProgressTool hr_showErrorWithStatus:@"请求超时!"];
+        [SVProgressTool hr_showErrorWithStatus:@"请求失败,该错误可能是输入的密码错误或是请求超时!"];
         
         for (UIViewController *VC in self.navigationController.childViewControllers) {
             if ([NSStringFromClass([VC class]) isEqualToString:@"NextController"]) {

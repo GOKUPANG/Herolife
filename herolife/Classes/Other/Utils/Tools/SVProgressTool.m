@@ -17,6 +17,14 @@
 		[SVProgressHUD dismiss];
 	});
 }
++ (void)hr_showErrorWithLongTimeStatus:(NSString *)status
+{
+    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
+    [SVProgressHUD showErrorWithStatus:status];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [SVProgressHUD dismiss];
+    });
+}
 + (void)hr_showWithStatus:(NSString *)status
 {
 	[SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];

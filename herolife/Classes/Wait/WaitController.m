@@ -65,8 +65,6 @@ static int const HRTimeDuration = 60;
 	[self setupViews];
     
     
-    NSString *userName = [kUserDefault objectForKey:kDefaultsUserName];
-    [self sendSocketQuaryDeviceOnLineWithUser:userName dev:@"fsfdsafdsadf"];
 //
 //    //登陆认证
 //    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
@@ -74,13 +72,115 @@ static int const HRTimeDuration = 60;
 //        [self sendLoginSocket];
 //        
 //    });
-	//添加定时器
+	//添加定时器 - 倒计时
 	[self addTimer];
 	
+    if (self.bssidUUID.length > 0) {// 快速添加跳转到这里
+        
+        [self sendHTTPData];
+    }else//开始添加界面
+    {
+        NSString *userName = [kUserDefault objectForKey:kDefaultsUserName];
+        [self sendSocketQuaryDeviceOnLineWithUser:userName dev:@"fsfdsafdsadf"];
+        //通知
+        [self addObserverNotification];
+    }
     
-    //通知
-    [self addObserverNotification];
+}
+
+#pragma mark - HTTP
+- (void)sendHTTPData
+{
+    //先去查询, HTTP查询如果有数据就去更新, 如果没有就创建&uid=uid&type=hrsc&uuid=uuid
+    NSString *ssid = self.bssidUUID;
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    //	NSString *user = [kUserDefault objectForKey:kDefaultsUserName];  这里去掉user这个字段
+    //	dict[@"user"] = user;
+    dict[@"types"] = @"hrsc";
+    dict[@"uuid"] = ssid;
+    [HRHTTPTool hr_getHttpWithURL:HRAPI_QueryLock_URL parameters:dict responseDict:^(id dictionary, NSError *error) {
+        DDLogWarn(@"array--%@---error---%@", dictionary,error);
+        DDLogWarn(@"class--%@", [dictionary class]);
+        
+        if (error) {
+            [ErrorCodeManager showError:error];
+            
+            return ;
+        }
+        if ([[dictionary class] isSubclassOfClass:[NSArray class]]) {
+            NSArray *arr = (NSArray *)dictionary;
+            if (arr.count > 0) {
+                
+                for (NSDictionary *dict in arr) {
+                    NSString *uuid = [dict valueForKeyPath:@"uuid"];
+                    NSString *uid = [dict valueForKeyPath:@"uid"];
+                    NSString *defaultUid = [kUserDefault objectForKey:kDefaultsUid];
+                    if ([uuid isEqualToString:ssid]) {
+                        AddLockController *addLockVC = [[AddLockController alloc] init];
+                        if ([defaultUid isEqualToString:uid]) {
+                            
+                            addLockVC.did = [dict valueForKeyPath:@"did"];
+                            [self.navigationController pushViewController:addLockVC animated:YES];
+                        }else
+                        {
+                            [SVProgressTool hr_showErrorWithStatus:@"该门锁在其他帐号上已经添加,请在其他帐号上删除该门锁,再重试!"];
+                            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                                
+                                [self.navigationController popViewControllerAnimated:YES];
+                            });
+                        }
+                    }
+                }
+            }else
+            {
+                //创建门锁HTTP
+                [self createLockHTTPWithUUID:ssid];
+                
+            }
+        }
+        
+    }];
     
+}
+#pragma mark - 创建门锁HTTP
+- (void)createLockHTTPWithUUID:(NSString *)uuid
+{
+    NSString *licence = [NSString hr_stringWithBase64];
+    
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    dict[@"type"] = @"hrsc";
+    dict[@"field_uuid[und][0][value]"] = uuid;
+    dict[@"field_version[und][0][value]"] = @"dev version";
+    dict[@"title"] = @"智能门锁";
+    dict[@"field_brand[und][0][value]"] = @"dev brand";
+    dict[@"field_licence[und][0][value]"] = licence;
+    dict[@"field_level[und][0][value]"] = @"90%";
+    dict[@"field_state[und][0][value]"] = @"0";
+    dict[@"field_online[und][0][value]"] = @"off";
+    dict[@"field_op[und][0][value]"] = @"1";
+    dict[@"field_op[und][1][value]"] = @"1";
+    dict[@"field_op[und][2][value]"] = @"1";
+    dict[@"field_op[und][3][value]"] = @"1";
+    dict[@"field_op[und][4][value]"] = @"none";
+    dict[@"field_op[und][5][value]"] = @"none";
+    dict[@"field_op[und][6][value]"] = @"none";
+    dict[@"field_op[und][7][value]"] = @"none";
+    dict[@"field_op[und][8][value]"] = @"none";
+    dict[@"field_op[und][9][value]"] = @"none";
+    
+    [HRHTTPTool hr_postHttpWithURL:HRAPI_AddLock_URL parameters:dict responseDict:^(id dictionary, NSError *error) {
+        
+        if (error) {
+            [ErrorCodeManager showError:error];
+            return ;
+        }
+        NSDictionary *dict = (NSDictionary *)dictionary;
+        AddLockController *addLockVC = [[AddLockController alloc] init];
+        addLockVC.did = [dict valueForKeyPath:@"nid"];
+        [self.navigationController pushViewController:addLockVC animated:YES];
+        DDLogWarn(@"createLockHTTP--%@---error---%@", dictionary,error);
+        
+    }];
 }
 
 #pragma mark - 定时60s查询设备状态
@@ -109,8 +209,6 @@ static int const HRTimeDuration = 60;
     
     AppDelegate *app = (AppDelegate *)[UIApplication sharedApplication].delegate;
     [app connectToHost];
-    
-    
     
     NSString *passWold = [[NSUserDefaults standardUserDefaults] objectForKey:kDefaultsPassWord];
     NSString *userName = [[NSUserDefaults standardUserDefaults] objectForKey:kDefaultsUserName];
@@ -210,6 +308,7 @@ static BOOL isReceiveSet31 = NO;
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
+    self.bssidUUID = @"";
 }
 - (void)viewDidAppear:(BOOL)animated
 {

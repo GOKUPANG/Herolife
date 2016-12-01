@@ -9,5 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface WaitController : UIViewController
-
+/** 保存上个界面传过来的wifi  UUID */
+@property(nonatomic, copy) NSString *bssidUUID;
 @end

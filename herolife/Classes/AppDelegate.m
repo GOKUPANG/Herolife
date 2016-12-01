@@ -48,8 +48,13 @@
 
 #import "UMMobClick/MobClick.h"
 #import <UserNotifications/UserNotifications.h>
-
 #import "AppUntils.h"
+
+
+#import "ESP_NetUtil.h"
+
+#import <SystemConfiguration/CaptiveNetwork.h>
+
 @interface AppDelegate ()<AsyncSocketDelegate, UNUserNotificationCenterDelegate>
 /** time */
 @property(nonatomic, strong) NSTimer *heartTimer;
@@ -86,15 +91,11 @@ static NSInteger disconnectCount = 0;
 	
 	//集成ShareSDK
 	[self addShareSDK];
-	
+	//一键添加wifi方式damo代码
+    [ESP_NetUtil tryOpenNetworkPermission];
     //获取手机UUID保存下来
-    
     [AppUntils saveUUIDToKeyChain];
-//    if (![kUserDefault objectForKey:kUserDefaultDeviceUUID]) {
-//        NSString *UUID = [NSString stringWithUUID];
-//        [kUserDefault setObject:UUID forKey:kUserDefaultDeviceUUID];
-//        [kUserDefault synchronize];
-//    }
+    
     if (![kUserDefault objectForKey:kUserDefaultDeviceUUID]) {
         NSString *uuid = [AppUntils readUUIDFromKeyChain];
         NSLog(@"--------------手机uuid%@", uuid);
@@ -422,6 +423,13 @@ static BOOL isReceiveSet3 = NO;
 //		
 //		
 //	});
+    
+    //一键添加wifi方式damo代码
+    if (application.backgroundTimeRemaining > 10)
+    {
+        NSLog(@"ESPAppDelegate: some thread goto background, remained: %f seconds", application.backgroundTimeRemaining);
+    }
+    
 	//延时后台进程
 	[self beginBackgroundTask];
 	//后台任务
@@ -579,7 +587,35 @@ static BOOL isReceiveSet3 = NO;
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
-	
+    
+    //一键添加wifi方式damo代码
+    NSDictionary *netInfo = [self fetchNetInfo];
+    NSString *ssidString = [netInfo objectForKey:@"SSID"];
+    
+    NSString *bssidString = [netInfo objectForKey:@"BSSID"];
+    
+    [kUserDefault setObject:ssidString forKey:kUserDefaultSsidString];
+    [kUserDefault setObject:bssidString forKey:kUserDefaultBssidString];
+    [kUserDefault synchronize];
+}
+//一键添加wifi方式damo代码
+- (NSDictionary *)fetchNetInfo
+{
+    NSArray *interfaceNames = CFBridgingRelease(CNCopySupportedInterfaces());
+    //    NSLog(@"%s: Supported interfaces: %@", __func__, interfaceNames);
+    
+    NSDictionary *SSIDInfo;
+    for (NSString *interfaceName in interfaceNames) {
+        SSIDInfo = CFBridgingRelease(
+                                     CNCopyCurrentNetworkInfo((__bridge CFStringRef)interfaceName));
+        //        NSLog(@"%s: %@ => %@", __func__, interfaceName, SSIDInfo);
+        
+        BOOL isNotEmpty = (SSIDInfo.count > 0);
+        if (isNotEmpty) {
+            break;
+        }
+    }
+    return SSIDInfo;
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {
