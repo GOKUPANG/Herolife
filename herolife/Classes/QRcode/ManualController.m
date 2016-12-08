@@ -21,6 +21,7 @@
 #import "ManualController.h"
 #import "NextController.h"
 #import "AddDeivcecell.h"
+#import "ManualCreateController.h"
 @interface ManualController ()<UITableViewDelegate,UITableViewDataSource>
 /** 顶部条 */
 @property(nonatomic, weak) HRNavigationBar *navView;
@@ -290,15 +291,17 @@
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-	return 1;
+	return 2;
 	
 }
 
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	
-	AddDeivcecell * cell = [tableView dequeueReusableCellWithIdentifier:@"cellID"];
+//	
+//	AddDeivcecell * cell = [tableView dequeueReusableCellWithIdentifier:@"cellID"];
+    
+    UITableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:@"cellID"];
 	
 	if (cell == nil) {
 		cell = [[AddDeivcecell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cellID"];
@@ -306,19 +309,26 @@
 	}
 	
 	cell.backgroundColor = [UIColor clearColor];
+    cell.textLabel.textColor = [UIColor whiteColor];
 	
-	cell.DeviceNameLabel.text = @"互联网智能门锁";
-	
-	// cell.textLabel.textColor = [UIColor whiteColor];
-	
-	
-	cell.phoneImage.image = [UIImage imageNamed:@"门锁"];
-	
-	
-	//设置分割线的偏移
-	
- //   cell.separatorInset =UIEdgeInsetsMake(0, -50, 0, 0);
-	
+//    if (indexPath.row == 0) {
+//        cell.DeviceNameLabel.text = @"互联网智能门锁";
+//        cell.phoneImage.image = [UIImage imageNamed:@"门锁"];
+//    }else if (indexPath.row == 1)
+//    {
+//        cell.DeviceNameLabel.text = @"智能机器人";
+//        cell.phoneImage.image = [UIImage imageNamed:@"添加设备小睿"];
+//        
+//    }
+    if (indexPath.row == 0) {
+        cell.textLabel.text = @"互联网智能门锁";
+        cell.imageView.image = [UIImage imageNamed:@"门锁"];
+    }else if (indexPath.row == 1)
+    {
+        cell.textLabel.text = @"智能机器人";
+        cell.imageView.image = [UIImage imageNamed:@"添加设备小睿"];
+        
+    }
 	//设置右边的小箭头
 	cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 	
@@ -336,8 +346,13 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
 	NSLog(@"选中了第%ld行",(long)indexPath.row);
-	NextController *nextVC = [[NextController alloc] init];
-	[self.navigationController pushViewController:nextVC animated:YES];
+    if (indexPath.row == 0) {
+        NextController *nextVC = [[NextController alloc] init];
+        [self.navigationController pushViewController:nextVC animated:YES];
+    }else if (indexPath.row == 1) {
+        ManualCreateController *manVC = [[ManualCreateController alloc] init];
+        [self.navigationController pushViewController:manVC animated:YES];
+    }
 }
 
 @end

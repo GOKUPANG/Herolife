@@ -12,6 +12,7 @@
 #import "DoorLockRecordConroller.h"
 #import "LoginController.h"
 #import "SRActionSheet.h"
+#import "HRNavigationViewController.h"
 
 @interface AccountManagementController ()<UITextFieldDelegate,SRActionSheetDelegate>
 
@@ -293,7 +294,6 @@
 
         [SVProgressTool hr_showSuccessWithStatus:@"修改密码成功"];
         
-        [self.navigationController popViewControllerAnimated:YES];
 
         
         //设置密码保存
@@ -304,8 +304,13 @@
         
         
         [kUserDefault synchronize];
-        
-        
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            
+            LoginController *login = [[LoginController alloc] init];
+            HRNavigationViewController *nav = [[HRNavigationViewController alloc] initWithRootViewController:login];
+            [UIApplication sharedApplication].keyWindow.rootViewController = nav;
+            
+        });
         
 
         

@@ -9,13 +9,45 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "herolife/Classes/DeviceList/DeviceListController.m"
-            timestampString = "502187882.42111"
+            filePath = "herolife/Classes/WiFiList/NewFeature/CreateXiaoRui/CreateXiaoRui.m"
+            timestampString = "502686009.468666"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2794"
-            endingLineNumber = "2794"
-            landmarkName = "-startTimer"
+            startingLineNumber = "19"
+            endingLineNumber = "19"
+            landmarkName = "+shareCreateXiaoRui"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "herolife/Classes/WiFiList/NewFeature/CreateXiaoRui/CreateXiaoRui.m"
+            timestampString = "502686012.824213"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "23"
+            endingLineNumber = "23"
+            landmarkName = "-awakeFromNib"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "herolife/Classes/Wait/WaitController.m"
+            timestampString = "502770043.375454"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "258"
+            endingLineNumber = "258"
+            landmarkName = "-receiveStratFailAddWiFiLink:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

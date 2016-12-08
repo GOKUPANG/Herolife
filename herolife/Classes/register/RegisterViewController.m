@@ -11,7 +11,6 @@
 //#import "AFHTTPSessionManager+Util.h"
 //#import <AFNetworking.h>
 
-static NSTimeInterval const dimissTimer = 2;
 @interface RegisterViewController ()<UITextFieldDelegate,UIGestureRecognizerDelegate>
 /** 顶部条 */
 @property(nonatomic, weak) HRNavigationBar *navView;
@@ -352,7 +351,7 @@ static NSTimeInterval const dimissTimer = 2;
 	[self.view endEditing:YES];
 	//动画
 	[self setupAnimateWithIndex:0];
-	
+    
 	//判断密码
 	if (![self.passwdField.text isEqualToString:self.passwdConfirmField.text]) {
 		
@@ -379,6 +378,8 @@ static NSTimeInterval const dimissTimer = 2;
 		return;
 	}
 	
+    
+    
 	[SVProgressTool hr_showWithStatus:@"正在注册..."];
 	
 	
@@ -510,6 +511,23 @@ static NSTimeInterval const dimissTimer = 2;
 	} else if (textField == self.passwdField) {
 		//动画
 		[self setupAnimateWithIndex:2];
+        
+            
+        int index = 0;
+        for (int i = 0; i < self.userNameField.text.length; i++) {
+            NSString *stringM = [self.userNameField.text substringWithRange:NSMakeRange(i, 1)];
+            BOOL isChinese = [[[NSString alloc] init] isChinese:stringM];
+            if (isChinese) {
+                index++;
+            }
+        }
+        NSInteger length = self.userNameField.text.length - index + index *3;
+        if (length > 24) {
+            [SVProgressTool hr_showErrorWithLongTimeStatus:@"您输入的用户名过长,请重新输入!"];
+            return NO;
+        }
+        
+        
 	} else if (textField == self.passwdConfirmField) {
 		
 		//动画
@@ -539,8 +557,15 @@ static NSTimeInterval const dimissTimer = 2;
 	
 	return YES;
 }
-
-
+- (void)textFieldDidEndEditing:(UITextField *)textField
+{
+    
+}
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    
+    return YES;
+}
 
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField

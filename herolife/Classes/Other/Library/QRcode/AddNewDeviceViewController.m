@@ -9,9 +9,9 @@
 #import "AddNewDeviceViewController.h"
 #import "SearchDeviceView.h"
 #import "XiaoRuiNewQRcode.h"
-#import "CreateXiaoRui.h"
 #import "ManualCreateXiaoRui.h"
 #import "NextController.h"
+#import "CreateXiaoRuiController.h"
 
 @interface AddNewDeviceViewController ()
 
@@ -63,6 +63,10 @@
 	}
 	
 	
+}
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
 }
 - (void)viewWillAppear:(BOOL)animated
 {
@@ -127,8 +131,12 @@
 
 	}else
 	{
-		
-		[self showError];
+        
+        CreateXiaoRuiController *createVC = [[CreateXiaoRuiController alloc] init];
+        createVC.qrUUID = data;
+        [self.navigationController pushViewController:createVC animated:YES];
+//		[self showError];
+        
 	}
 	
 }

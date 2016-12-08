@@ -30,22 +30,20 @@
 		}
 	}
 	
-	AFHTTPSessionManager *manager = [AFHTTPSessionManager hrManager];
+    [HRHTTPTool hr_postHttpWithURL:HRAPI_XiaoRuiNode_URL parameters:parameters responseDict:^(id responseObject, NSError *error) {
+        if (error) {
+            responseDict(nil);
+            result(error);
+            return ;
+        }
+        
+        
+        NSDictionary *dict = (NSDictionary *)responseObject;
+        DDLogInfo(@"创建红外地址表%@",dict);
+        responseDict(dict);
+        result(nil);
+    }];
 	
-	[manager POST:HRAPI_XiaoRuiNode_URL parameters:parameters success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-		
-		//		kNotificationPost(@"")
-		NSDictionary *dict = (NSDictionary *)responseObject;
-		DDLogInfo(@"创建红外地址表%@",dict);
-		responseDict(dict);
-		result(nil);
-		
-	} failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-		responseDict(nil);
-		result(error);
-		
-	}];
-
 }
 
 + (void)postHttpCreateSingleswitchWithMid:(NSString *)mid title:(NSString *)title responseDict:(void(^)(NSDictionary *dict))responseDict result:(void(^)(NSError *error))result
@@ -61,26 +59,26 @@
 	parameters[@"field_brand[und][0][value]"] = @"xiaorui brand";
 	parameters[@"field_state[und][0][value]"] = @"1";
 	
-	AFHTTPSessionManager *manager = [AFHTTPSessionManager hrManager];
+    
 	for (int i = 1; i < 4; i++) {
 		for (int j = 0; j < 10; j++) {
 			NSString *str = [NSString stringWithFormat:@"field_param%02d[und][%d][value]", i,j];
 			parameters[str] = @"0";
 		}
 	}
-	
-	[manager POST:HRAPI_XiaoRuiNode_URL parameters:parameters success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-		
-		//		kNotificationPost(@"")
-		NSDictionary *dict = (NSDictionary *)responseObject;
-		DDLogInfo(@"创建单火地址表%@",dict);
-		responseDict(dict);
-		result(nil);
-		
-	} failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-		DDLogDebug(@"%@", error);
-		responseDict(nil);
-		result(error);
-	}];
+    
+    [HRHTTPTool hr_postHttpWithURL:HRAPI_XiaoRuiNode_URL parameters:parameters responseDict:^(id responseObject, NSError *error) {
+        if (error) {
+            responseDict(nil);
+            result(error);
+            return ;
+        }
+        
+        
+        NSDictionary *dict = (NSDictionary *)responseObject;
+        DDLogInfo(@"创建单火地址表%@",dict);
+        responseDict(dict);
+        result(nil);
+    }];
 }
 @end

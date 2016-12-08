@@ -28,6 +28,9 @@
 + (NSString *)stringWithSceneType:(NSString *)type did:(NSString *)did title:(NSString *)title picture:(NSArray *)picture data:(NSArray *)data;
 
 
+/// 远程推送注销帧
++ (NSString *)stringWithSocketLogOut;
+
 /// UDP  请求帧
 + (NSString *)stringWithUDPMsgDict:(NSMutableDictionary *)msgDict;
 
@@ -58,6 +61,8 @@
 /// 获取用户UUID
 + (NSString *)stringWithUUID;
 - (NSString *) toUnicode;
+///检测是否包含中文字符
+- (BOOL)isChinese:(NSString*)c;
 /**
  *  unicode转中文
  *

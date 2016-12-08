@@ -92,7 +92,17 @@ static int const HRTimeDuration = 60;
 - (void)sendHTTPData
 {
     //先去查询, HTTP查询如果有数据就去更新, 如果没有就创建&uid=uid&type=hrsc&uuid=uuid
-    NSString *ssid = self.bssidUUID;
+    NSMutableString *muString = [NSMutableString string];
+    for (int i = 0; i < 6; i++) {
+        NSRange range = NSMakeRange(i *2, 2);
+        NSString *str = [self.bssidUUID substringWithRange:range];
+        NSString *result = [str substringToIndex:1];
+        if ([result isEqualToString:@"0"]) {
+            str = [str substringFromIndex:1];
+        }
+        [muString appendString:str];
+    }
+    NSString *ssid = muString;
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     //	NSString *user = [kUserDefault objectForKey:kDefaultsUserName];  这里去掉user这个字段
     //	dict[@"user"] = user;
@@ -123,10 +133,11 @@ static int const HRTimeDuration = 60;
                             [self.navigationController pushViewController:addLockVC animated:YES];
                         }else
                         {
-                            [SVProgressTool hr_showErrorWithStatus:@"该门锁在其他帐号上已经添加,请在其他帐号上删除该门锁,再重试!"];
-                            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                            [SVProgressTool hr_showErrorWithLongTimeStatus:@"该门锁在其他帐号上已经添加,请在其他帐号上删除该门锁,再重试!"];
+                            DDLogWarn(@"该门锁在其他帐号上已经添加,请在其他帐号上删除该门锁,再重试!");
+                            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                                 
-                                [self.navigationController popViewControllerAnimated:YES];
+                                [self cancelButtonClick:self.cancelButton];
                             });
                         }
                     }
@@ -309,6 +320,12 @@ static BOOL isReceiveSet31 = NO;
 {
     [super viewWillDisappear:animated];
     self.bssidUUID = @"";
+    
+    [self.timer invalidate];
+    self.timer = nil;
+    
+    [self.set32Timer invalidate];
+    self.timer = nil;
 }
 - (void)viewDidAppear:(BOOL)animated
 {
@@ -345,6 +362,7 @@ static BOOL isReceiveSet31 = NO;
 		self.backImgView.image =[UIImage imageNamed:imgName];
 	}
 	
+    
 	
 }
 

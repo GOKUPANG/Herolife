@@ -13,6 +13,7 @@
 #import "HRTabBar.h"
 #import "EnterPSWController.h"
 #import "NewConnectWifiController.h"
+#import "CreateXiaoRuiController.h"
 
 @interface NextController ()
 /** 顶部条 */
@@ -92,10 +93,12 @@
 	titleLabel.font = [UIFont systemFontOfSize: 18];
 	//		titleLabel.font = [UIFont fontWithName:@"HelveticaNeue-Thin" size:18.f];
 	titleLabel.textAlignment = NSTextAlignmentCenter;
-	titleLabel.text = @"开始添加";
+	titleLabel.text = @"手动添加";
 	titleLabel.textColor = [UIColor whiteColor];
 	[navView addSubview:titleLabel];
 	self.titleLabel = titleLabel;
+    
+    
 	//左边view
 	UIButton *leftButton = [UIButton buttonWithType:UIButtonTypeCustom];
 	[leftButton setImage:[UIImage imageNamed:@"返回号"] forState:UIControlStateNormal];
@@ -107,8 +110,9 @@
 	//右边按钮
     UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [rightButton setTitle:@"快速添加" forState:UIControlStateNormal];
-    [rightButton setBackgroundColor:[UIColor clearColor]];
+    [rightButton setBackgroundColor:[[UIColor whiteColor] colorWithAlphaComponent:0.2]];
     [rightButton addTarget:self action:@selector(rightButtonClick:) forControlEvents:UIControlEventTouchUpInside];
+    rightButton.titleLabel.font = [UIFont fontWithName:@"PingFangSC-Thin" size:15];
     [navView addSubview:rightButton];
     self.rightButton = rightButton;
     
@@ -184,10 +188,12 @@
 		make.width.mas_offset(HRNavH);
 	}];
 	[self.rightButton mas_makeConstraints:^(MASConstraintMaker *make) {
-		make.right.equalTo(self.navView).offset(- HRCommonScreenW *30);
+		make.right.equalTo(self.navView).offset(- HRCommonScreenW *15);
 		make.centerY.equalTo(self.navView);
+        make.width.mas_equalTo(90);
 	}];
-	
+    self.rightButton.layer.cornerRadius = self.rightButton.hr_height * 0.5;
+    self.rightButton.layer.masksToBounds = YES;
 	
 	[self.upView mas_makeConstraints:^(MASConstraintMaker *make) {
 		
@@ -246,27 +252,25 @@
     button.selected = !button.selected;
     if (button.selected) {
         
-        [button setTitle:@"开始添加" forState:UIControlStateNormal];
+        [button setTitle:@"手动添加" forState:UIControlStateNormal];
         self.titleLabel.text = @"快速添加";
         _promptLabel.text = @"接通电源，先长按WiFi盒子set键20秒，直到指示灯快速闪烁,再点击下一步按钮";
     }else
     {
         
         [button setTitle:@"快速添加" forState:UIControlStateNormal];
-        self.titleLabel.text = @"开始添加";
+        self.titleLabel.text = @"手动添加";
         _promptLabel.text = @"接通电源，先长按WiFi盒子set键6秒，直到指示灯闪烁,再点击下一步按钮";
     }
 }
 - (void)backClick:(UIButton *)btn
 {
-	
-	
 	[self.navigationController popViewControllerAnimated:YES];
 }
 - (void)nextButtonClick:(UIButton *)btn
 {
 	[self IsTabBarHidden:YES];
-    if ([self.titleLabel.text isEqualToString:@"开始添加"]) {
+    if ([self.titleLabel.text isEqualToString:@"手动添加"]) {
         
         GoToSetUpController *enterVC = [[GoToSetUpController alloc] init];
         [self.navigationController pushViewController:enterVC animated:YES];

@@ -101,18 +101,20 @@ UIKIT_EXTERN CGFloat const HRNavH;
 
 
 
+/// 获取小睿信息数据的GET请求URL
+#define HRAPI_XiaoRuiInFo_URL [NSString stringWithFormat:@"%@%@", SERVER_DOMAIN, @"huaruiapi/xiaorui-info"]
 
 /// 获取温湿度数据的GET请求URL
-#define HRAPI_TempHumid_URL @"http://www.gzhuarui.cn/?q=huaruiapi/xiaorui-humiture"
+#define HRAPI_TempHumid_URL [NSString stringWithFormat:@"%@%@", SERVER_DOMAIN, @"huaruiapi/xiaorui-humiture"]
 
 /// 创建小睿GET请求URL
-#define HRAPI_XiaoRuiNode_URL @"http://www.gzhuarui.cn/?q=huaruiapi/node"
+#define HRAPI_XiaoRuiNode_URL [NSString stringWithFormat:@"%@%@", SERVER_DOMAIN, @"huaruiapi/node"]
 /// 获取小睿PM2.5值数据的GET请求URL
-#define HRAPI_XiaoRuiPm2_5_URL @"http://www.gzhuarui.cn/?q=huaruiapi/xiaorui-pm2_5"
+#define HRAPI_XiaoRuiPm2_5_URL [NSString stringWithFormat:@"%@%@", SERVER_DOMAIN, @"huaruiapi/xiaorui-pm2_5"]
 /// 获取小睿VOC值数据的GET请求URL
-#define HRAPI_XiaoRuiVOC_URL @"http://www.gzhuarui.cn/?q=huaruiapi/xiaorui-voc"
+#define HRAPI_XiaoRuiVOC_URL [NSString stringWithFormat:@"%@%@", SERVER_DOMAIN, @"huaruiapi/xiaorui-voc"]
 /// 注册小睿POST请求URL
-#define HRAPI_XiaoRuiRegister_URL @"http://www.gzhuarui.cn/?q=huaruiapi/user"
+#define HRAPI_XiaoRuiRegister_URL [NSString stringWithFormat:@"%@%@", SERVER_DOMAIN, @"huaruiapi/user"]
 /// 修改密码PUT请求URL
 //#define HRAPI_XiaoRuiModifyPassword_URL @"http://www.gzhuarui.cn/?q=huaruiapi/user/"
 
@@ -120,15 +122,14 @@ UIKIT_EXTERN CGFloat const HRNavH;
 //斌修改 正式发布时要把接口换回去
 #define HRAPI_XiaoRuiModifyPassword_URL		[NSString stringWithFormat:@"%@%@", SERVER_DOMAIN, @"huaruiapi/user/"]
 
-
 /// 获取小睿红外空调信息GET请求URL
-#define HRAPI_XiaoRuiIRAC_URL @"http://www.gzhuarui.cn/?q=huaruiapi/xiaorui-irac"
+#define HRAPI_XiaoRuiIRAC_URL [NSString stringWithFormat:@"%@%@", SERVER_DOMAIN, @"huaruiapi/xiaorui-irac"]
 /// 获取小睿通用设备信息GET请求URL
-#define HRAPI_XiaoRuiIRGM_URL @"http://www.gzhuarui.cn/?q=huaruiapi/xiaorui-irgm"
+#define HRAPI_XiaoRuiIRGM_URL [NSString stringWithFormat:@"%@%@", SERVER_DOMAIN, @"huaruiapi/xiaorui-irgm"]
 /// 获取小睿开关设备信息GET请求URL
-#define HRAPI_XiaoRuiIHRDO_URL @"http://www.gzhuarui.cn/?q=huaruiapi/xiaorui-hrdo"
+#define HRAPI_XiaoRuiIHRDO_URL [NSString stringWithFormat:@"%@%@", SERVER_DOMAIN, @"huaruiapi/xiaorui-hrdo"]
 /// 获取小睿情景设备信息GET请求URL
-#define HRAPI_XiaoRuiIHRScene_URL @"http://www.gzhuarui.cn/?q=huaruiapi/xiaorui-scene"
+#define HRAPI_XiaoRuiIHRScene_URL [NSString stringWithFormat:@"%@%@", SERVER_DOMAIN, @"huaruiapi/xiaorui-scene"]
 
 
 

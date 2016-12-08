@@ -16,5 +16,5 @@
 @property (nonatomic, assign) CGFloat hr_y;
 @property (nonatomic, assign) CGFloat hr_centerX;
 @property (nonatomic, assign) CGFloat hr_centerY;
-
+-(UIViewController *)getCurrentViewController;
 @end

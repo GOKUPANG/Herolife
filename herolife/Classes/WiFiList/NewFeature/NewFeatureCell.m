@@ -9,6 +9,7 @@
 #import "NewFeatureCell.h"
 #import "HRTabBarViewController.h"
 #import "LoginController.h"
+#import "HRNavigationViewController.h"
 
 
 @interface NewFeatureCell ()
@@ -49,10 +50,12 @@
 	// 跳转方式:push,modal
 	
 	// 创建tabBarVc
-	LoginController *vc = [[LoginController alloc] init];
+	LoginController *loginVC = [[LoginController alloc] init];
+    
+    HRNavigationViewController *nav = [[HRNavigationViewController alloc] initWithRootViewController:loginVC];
 	
 	// 切换窗口的根控制器进行跳转
-	[UIApplication sharedApplication].keyWindow.rootViewController = vc;
+	[UIApplication sharedApplication].keyWindow.rootViewController = nav;
 	
 	CATransition *anim = [CATransition animation];
 	anim.type = @"rippleEffect";

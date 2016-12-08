@@ -80,11 +80,6 @@
     
     _FenGeXian.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.7];
     
-    
-    
-    
-    
-    
 }
 
 

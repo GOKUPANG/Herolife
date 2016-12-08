@@ -12,7 +12,6 @@
 #import "QRViewController.h"
 #import <AVFoundation/AVFoundation.h>
 #import "AddNewDeviceViewController.h"
-#import "CreateXiaoRui.h"
 #import "HRQrButton.h"
 #import "ManualController.h"
 

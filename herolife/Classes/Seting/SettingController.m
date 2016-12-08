@@ -472,6 +472,12 @@ static NSString *cellID = @"cellID";
 	if (buttonIndex != alertView.cancelButtonIndex) {
 		//隐藏slideMenu
 		[self logout];
+        
+        //注销远程推送
+        AppDelegate *app = (AppDelegate *)[UIApplication sharedApplication].delegate;
+        [app connectToHost];
+        NSString *str = [NSString stringWithSocketLogOut];
+        [app sendMessageWithString:str];
 	}
 }
 -(void)logout {

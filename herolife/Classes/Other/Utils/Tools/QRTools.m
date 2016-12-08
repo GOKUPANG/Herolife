@@ -76,7 +76,6 @@
 	
 	QRCodeController *qrcodeVC = [[QRCodeController alloc] init];
 	qrcodeVC.view.alpha = 0;
-	__weak typeof (self) weakSelf = self;
 	[qrcodeVC setDidReceiveBlock:^(NSString *result) {
 		
 		NSMutableDictionary *dict = [NSMutableDictionary dictionary];

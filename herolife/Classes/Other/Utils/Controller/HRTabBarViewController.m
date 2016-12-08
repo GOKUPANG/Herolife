@@ -78,6 +78,11 @@
 - (void)hrTabBar:(HRTabBar *)tabBar didClickBtn:(NSInteger)index
 {
 	self.selectedIndex = index -1;
+    HRNavigationViewController *nav = self.selectedViewController;
+    for (UIViewController *VC in nav.childViewControllers) {
+        DDLogWarn(@"UIViewController--selectedViewController--%@", NSStringFromClass([VC class]));
+    }
+    DDLogWarn(@"selectedViewController--%@", NSStringFromClass([self.selectedViewController class]));
 }
 
 

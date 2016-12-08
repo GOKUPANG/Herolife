@@ -58,8 +58,6 @@
 		D12BC7821DB1DA9E00D84B12 /* AccountManagementController.m in Sources */ = {isa = PBXBuildFile; fileRef = D12BC7811DB1DA9E00D84B12 /* AccountManagementController.m */; };
 		D1352D641D9E0ECB003A83AB /* AddNewDeviceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1352D4A1D9E0ECB003A83AB /* AddNewDeviceViewController.m */; };
 		D1352D651D9E0ECB003A83AB /* backWhite@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D1352D4B1D9E0ECB003A83AB /* backWhite@2x.png */; };
-		D1352D661D9E0ECB003A83AB /* CreateXiaoRui.m in Sources */ = {isa = PBXBuildFile; fileRef = D1352D4D1D9E0ECB003A83AB /* CreateXiaoRui.m */; };
-		D1352D671D9E0ECB003A83AB /* CreateXiaoRui.xib in Resources */ = {isa = PBXBuildFile; fileRef = D1352D4E1D9E0ECB003A83AB /* CreateXiaoRui.xib */; };
 		D1352D681D9E0ECB003A83AB /* Default-568h@3x-1.png in Resources */ = {isa = PBXBuildFile; fileRef = D1352D4F1D9E0ECB003A83AB /* Default-568h@3x-1.png */; };
 		D1352D691D9E0ECB003A83AB /* HRQrButton.m in Sources */ = {isa = PBXBuildFile; fileRef = D1352D511D9E0ECB003A83AB /* HRQrButton.m */; };
 		D1352D6A1D9E0ECB003A83AB /* icon_qr.png in Resources */ = {isa = PBXBuildFile; fileRef = D1352D521D9E0ECB003A83AB /* icon_qr.png */; };
@@ -116,6 +114,8 @@
 		D1940DD31D6AF73C00A262EC /* libstdc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D1940DD21D6AF73C00A262EC /* libstdc++.tbd */; };
 		D1940DD51D6AF74A00A262EC /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D1940DD41D6AF74A00A262EC /* JavaScriptCore.framework */; };
 		D1940DD71D6AF76400A262EC /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D1940DD61D6AF76400A262EC /* libsqlite3.tbd */; };
+		D194FE681DF1709300FE146E /* ManualCreateController.m in Sources */ = {isa = PBXBuildFile; fileRef = D194FE661DF1709300FE146E /* ManualCreateController.m */; };
+		D194FE691DF1709300FE146E /* ManualCreateController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D194FE671DF1709300FE146E /* ManualCreateController.xib */; };
 		D19CE3131DD40B5F008E7F3A /* DoorRecordCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D19CE3121DD40B5F008E7F3A /* DoorRecordCell.m */; };
 		D1A7DD211D8117DD00D051B0 /* ForgetController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1A7DBF21D8117DD00D051B0 /* ForgetController.m */; };
 		D1A7DD221D8117DD00D051B0 /* InputText.m in Sources */ = {isa = PBXBuildFile; fileRef = D1A7DBF51D8117DD00D051B0 /* InputText.m */; };
@@ -238,6 +238,11 @@
 		D1C3AFDE1DACF50C008E3426 /* NSString+DoorLock.m in Sources */ = {isa = PBXBuildFile; fileRef = D1C3AFDD1DACF50C008E3426 /* NSString+DoorLock.m */; };
 		D1C3AFE21DACF547008E3426 /* ShouQuanManagerController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1C3AFE11DACF547008E3426 /* ShouQuanManagerController.m */; };
 		D1D23DEF1D7570A100FCB5C9 /* AddDeivcecell.m in Sources */ = {isa = PBXBuildFile; fileRef = D1D23DEC1D7570A100FCB5C9 /* AddDeivcecell.m */; };
+		D1DD1D941DF655150028764F /* CreateXiaoRuiController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1DD1D921DF655150028764F /* CreateXiaoRuiController.m */; };
+		D1DD1D9D1DF663B50028764F /* CreatXiaoRuiView.m in Sources */ = {isa = PBXBuildFile; fileRef = D1DD1D9C1DF663B50028764F /* CreatXiaoRuiView.m */; };
+		D1DD1D9F1DF663F90028764F /* CreatXiaoRuiView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D1DD1D9E1DF663F90028764F /* CreatXiaoRuiView.xib */; };
+		D1DF6A5A1DF9076D00CA8F8B /* EnvironmentController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1DF6A581DF9076D00CA8F8B /* EnvironmentController.m */; };
+		D1DF6A5B1DF9076D00CA8F8B /* EnvironmentController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D1DF6A591DF9076D00CA8F8B /* EnvironmentController.xib */; };
 		D1E35D871D90DE89002A766C /* AutherTimePickView.m in Sources */ = {isa = PBXBuildFile; fileRef = D1E35D861D90DE89002A766C /* AutherTimePickView.m */; };
 		D1EFCAC31D88EDD20045A0C0 /* DoorLockModel.m in Sources */ = {isa = PBXBuildFile; fileRef = D1EFCAC21D88EDD20045A0C0 /* DoorLockModel.m */; };
 		DAE2A790C81C0FDB9C617E84 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DC40F28764523F49428DB0CE /* libPods.a */; };
@@ -345,9 +350,6 @@
 		D1352D491D9E0ECB003A83AB /* AddNewDeviceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddNewDeviceViewController.h; sourceTree = "<group>"; };
 		D1352D4A1D9E0ECB003A83AB /* AddNewDeviceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddNewDeviceViewController.m; sourceTree = "<group>"; };
 		D1352D4B1D9E0ECB003A83AB /* backWhite@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "backWhite@2x.png"; sourceTree = "<group>"; };
-		D1352D4C1D9E0ECB003A83AB /* CreateXiaoRui.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateXiaoRui.h; sourceTree = "<group>"; };
-		D1352D4D1D9E0ECB003A83AB /* CreateXiaoRui.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateXiaoRui.m; sourceTree = "<group>"; };
-		D1352D4E1D9E0ECB003A83AB /* CreateXiaoRui.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CreateXiaoRui.xib; sourceTree = "<group>"; };
 		D1352D4F1D9E0ECB003A83AB /* Default-568h@3x-1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@3x-1.png"; sourceTree = "<group>"; };
 		D1352D501D9E0ECB003A83AB /* HRQrButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HRQrButton.h; sourceTree = "<group>"; };
 		D1352D511D9E0ECB003A83AB /* HRQrButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HRQrButton.m; sourceTree = "<group>"; };
@@ -439,6 +441,9 @@
 		D1940DD21D6AF73C00A262EC /* libstdc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libstdc++.tbd"; path = "usr/lib/libstdc++.tbd"; sourceTree = SDKROOT; };
 		D1940DD41D6AF74A00A262EC /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		D1940DD61D6AF76400A262EC /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
+		D194FE651DF1709300FE146E /* ManualCreateController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ManualCreateController.h; sourceTree = "<group>"; };
+		D194FE661DF1709300FE146E /* ManualCreateController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ManualCreateController.m; sourceTree = "<group>"; };
+		D194FE671DF1709300FE146E /* ManualCreateController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ManualCreateController.xib; sourceTree = "<group>"; };
 		D19CE3121DD40B5F008E7F3A /* DoorRecordCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DoorRecordCell.m; sourceTree = "<group>"; };
 		D1A7DBF11D8117DD00D051B0 /* ForgetController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ForgetController.h; sourceTree = "<group>"; };
 		D1A7DBF21D8117DD00D051B0 /* ForgetController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ForgetController.m; sourceTree = "<group>"; };
@@ -685,6 +690,14 @@
 		D1C3AFE11DACF547008E3426 /* ShouQuanManagerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShouQuanManagerController.m; sourceTree = "<group>"; };
 		D1D23DEB1D7570A100FCB5C9 /* AddDeivcecell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AddDeivcecell.h; path = ../AddDeivcecell.h; sourceTree = "<group>"; };
 		D1D23DEC1D7570A100FCB5C9 /* AddDeivcecell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AddDeivcecell.m; path = ../AddDeivcecell.m; sourceTree = "<group>"; };
+		D1DD1D911DF655150028764F /* CreateXiaoRuiController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateXiaoRuiController.h; sourceTree = "<group>"; };
+		D1DD1D921DF655150028764F /* CreateXiaoRuiController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateXiaoRuiController.m; sourceTree = "<group>"; };
+		D1DD1D9B1DF663B50028764F /* CreatXiaoRuiView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreatXiaoRuiView.h; sourceTree = "<group>"; };
+		D1DD1D9C1DF663B50028764F /* CreatXiaoRuiView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreatXiaoRuiView.m; sourceTree = "<group>"; };
+		D1DD1D9E1DF663F90028764F /* CreatXiaoRuiView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CreatXiaoRuiView.xib; sourceTree = "<group>"; };
+		D1DF6A571DF9076D00CA8F8B /* EnvironmentController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EnvironmentController.h; sourceTree = "<group>"; };
+		D1DF6A581DF9076D00CA8F8B /* EnvironmentController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EnvironmentController.m; sourceTree = "<group>"; };
+		D1DF6A591DF9076D00CA8F8B /* EnvironmentController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EnvironmentController.xib; sourceTree = "<group>"; };
 		D1E35D851D90DE89002A766C /* AutherTimePickView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AutherTimePickView.h; path = ../AutherTimePickView.h; sourceTree = "<group>"; };
 		D1E35D861D90DE89002A766C /* AutherTimePickView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AutherTimePickView.m; path = ../AutherTimePickView.m; sourceTree = "<group>"; };
 		D1E35D881D916BCB002A766C /* ShouQuanManagerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShouQuanManagerController.h; sourceTree = "<group>"; };
@@ -1108,6 +1121,7 @@
 			isa = PBXGroup;
 			children = (
 				D1C3AFB81DAC9AC0008E3426 /* HEROLIFE.entitlements */,
+				D1DF6A551DF905DA00CA8F8B /* XiaoRui */,
 				D1A7DBE91D8117DD00D051B0 /* Classes */,
 				18C6975E1D7462B9004DA2B1 /* 斌 */,
 				D17CF0EF1D6567E7007C95DD /* Supporting Files */,
@@ -1144,6 +1158,22 @@
 				D17CF1161D6567E7007C95DD /* Info.plist */,
 			);
 			path = herolifeUITests;
+			sourceTree = "<group>";
+		};
+		D194FE641DF1702800FE146E /* CreateXiaoRui */ = {
+			isa = PBXGroup;
+			children = (
+				D1DD1D911DF655150028764F /* CreateXiaoRuiController.h */,
+				D1DD1D921DF655150028764F /* CreateXiaoRuiController.m */,
+				D1DD1D9B1DF663B50028764F /* CreatXiaoRuiView.h */,
+				D1DD1D9C1DF663B50028764F /* CreatXiaoRuiView.m */,
+				D1DD1D9E1DF663F90028764F /* CreatXiaoRuiView.xib */,
+				D194FE651DF1709300FE146E /* ManualCreateController.h */,
+				D194FE661DF1709300FE146E /* ManualCreateController.m */,
+				D194FE671DF1709300FE146E /* ManualCreateController.xib */,
+			);
+			name = CreateXiaoRui;
+			path = ../CreateXiaoRui;
 			sourceTree = "<group>";
 		};
 		D1A7DBE91D8117DD00D051B0 /* Classes */ = {
@@ -1682,9 +1712,6 @@
 				D1352D491D9E0ECB003A83AB /* AddNewDeviceViewController.h */,
 				D1352D4A1D9E0ECB003A83AB /* AddNewDeviceViewController.m */,
 				D1352D4B1D9E0ECB003A83AB /* backWhite@2x.png */,
-				D1352D4C1D9E0ECB003A83AB /* CreateXiaoRui.h */,
-				D1352D4D1D9E0ECB003A83AB /* CreateXiaoRui.m */,
-				D1352D4E1D9E0ECB003A83AB /* CreateXiaoRui.xib */,
 				D1352D4F1D9E0ECB003A83AB /* Default-568h@3x-1.png */,
 				D1352D501D9E0ECB003A83AB /* HRQrButton.h */,
 				D1352D511D9E0ECB003A83AB /* HRQrButton.m */,
@@ -1708,6 +1735,27 @@
 				D1352D631D9E0ECB003A83AB /* XiaoRuiNewQRcode.xib */,
 			);
 			path = QRcode;
+			sourceTree = "<group>";
+		};
+		D1DF6A551DF905DA00CA8F8B /* XiaoRui */ = {
+			isa = PBXGroup;
+			children = (
+				D194FE641DF1702800FE146E /* CreateXiaoRui */,
+				D1DF6A561DF906EB00CA8F8B /* Environment */,
+			);
+			name = XiaoRui;
+			path = Classes/WiFiList/NewFeature/XiaoRui;
+			sourceTree = "<group>";
+		};
+		D1DF6A561DF906EB00CA8F8B /* Environment */ = {
+			isa = PBXGroup;
+			children = (
+				D1DF6A571DF9076D00CA8F8B /* EnvironmentController.h */,
+				D1DF6A581DF9076D00CA8F8B /* EnvironmentController.m */,
+				D1DF6A591DF9076D00CA8F8B /* EnvironmentController.xib */,
+			);
+			name = Environment;
+			path = ../CreateXiaoRui/Environment;
 			sourceTree = "<group>";
 		};
 		EFE49747F7B44972AEF6CB46 /* Frameworks */ = {
@@ -1875,11 +1923,12 @@
 				D17CF0FA1D6567E7007C95DD /* Main.storyboard in Resources */,
 				D1B3CB3B1D966DB5009F96D2 /* HerolifeImageCell.xib in Resources */,
 				D1352D681D9E0ECB003A83AB /* Default-568h@3x-1.png in Resources */,
-				D1352D671D9E0ECB003A83AB /* CreateXiaoRui.xib in Resources */,
 				18C697A71D7462B9004DA2B1 /* JCAlertView.bundle in Resources */,
 				AAA8A9DC1D8CEB4100ABA020 /* 未选择@3x.png in Resources */,
+				D1DD1D9F1DF663F90028764F /* CreatXiaoRuiView.xib in Resources */,
 				1868B8ED1D76C4B300D19386 /* 后退@3x.png in Resources */,
 				1868B8F11D76CD4A00D19386 /* 智能开锁@3x.png in Resources */,
+				D194FE691DF1709300FE146E /* ManualCreateController.xib in Resources */,
 				D1352D731D9E0ECB003A83AB /* SearchDeviceView.xib in Resources */,
 				AAA8A9D61D8CEB4100ABA020 /* 授权选择@2x.png in Resources */,
 				18C697991D7462B9004DA2B1 /* 键盘@2x.png in Resources */,
@@ -1891,6 +1940,7 @@
 				AAA8A9D51D8CEB4100ABA020 /* 授权选择.png in Resources */,
 				D1A7DD361D8117DD00D051B0 /* MJRefresh.bundle in Resources */,
 				D1352D651D9E0ECB003A83AB /* backWhite@2x.png in Resources */,
+				D1DF6A5B1DF9076D00CA8F8B /* EnvironmentController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2039,6 +2089,7 @@
 				D14D38D81DED5BA500551FD3 /* ESP_ByteUtil.m in Sources */,
 				D1A7DDBB1D8117DD00D051B0 /* WiFiListCell.m in Sources */,
 				D12BC7821DB1DA9E00D84B12 /* AccountManagementController.m in Sources */,
+				D1DD1D941DF655150028764F /* CreateXiaoRuiController.m in Sources */,
 				D1405BAF1DBDA96500E19C5F /* NSString+Util.m in Sources */,
 				D1A7DD3E1D8117DD00D051B0 /* FMDatabase.m in Sources */,
 				D1A7DD411D8117DD00D051B0 /* FMDatabaseQueue.m in Sources */,
@@ -2114,6 +2165,7 @@
 				D14D38EA1DED826D00551FD3 /* NewConnectWifiController.m in Sources */,
 				D1352D691D9E0ECB003A83AB /* HRQrButton.m in Sources */,
 				D1405BB11DBDA99700E19C5F /* WaitController.m in Sources */,
+				D194FE681DF1709300FE146E /* ManualCreateController.m in Sources */,
 				D1A9C8CE1DCB25EE00518886 /* OpenLockController.m in Sources */,
 				18C697AA1D7462B9004DA2B1 /* UITableView+SDAutoTableViewCellHeight.m in Sources */,
 				D1A7DDAA1D8117DD00D051B0 /* HRRefreshHeader.m in Sources */,
@@ -2123,6 +2175,7 @@
 				D1B792491D8BF78C00DDA4DD /* EBForeNotification.m in Sources */,
 				D1A7DDCF1D811ED100D051B0 /* SettingCell.m in Sources */,
 				D1A7DD931D8117DD00D051B0 /* UIView+HRExtension.m in Sources */,
+				D1DF6A5A1DF9076D00CA8F8B /* EnvironmentController.m in Sources */,
 				D1B088E81DAA484200072214 /* NewFeatureCell.m in Sources */,
 				D1AA2E631D83F48600D1AEC9 /* DeviceListCell.m in Sources */,
 				D1A7DDBA1D8117DD00D051B0 /* UDPModel.m in Sources */,
@@ -2144,7 +2197,7 @@
 				AAA8A9BE1D8CEA0E00ABA020 /* YXCustomAlertView.m in Sources */,
 				AA929A4F1DB47B5D009D64E6 /* GoToSetUpController.m in Sources */,
 				D1AE5E4D1DAF24410051D7D9 /* GestureViewController.m in Sources */,
-				D1352D661D9E0ECB003A83AB /* CreateXiaoRui.m in Sources */,
+				D1DD1D9D1DF663B50028764F /* CreatXiaoRuiView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

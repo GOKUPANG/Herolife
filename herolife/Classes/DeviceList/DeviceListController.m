@@ -72,9 +72,6 @@
     UILabel * detailNameLB;
     
     UILabel *newDvName;
-
-    
-    
     CGFloat tfLength;
     NSConditionLock *lock;
 }
@@ -132,8 +129,6 @@
 
 
 @property(nonatomic,strong) YXCustomAlertView *  FamilyAlertView;
-
-
 
 /** 删除设备的登录密码输入框*/
 
@@ -374,14 +369,12 @@ static BOOL isShowOverMenu = NO;
 				model.state = @"0";
 				model.online = @"on";
 				model.level = @"";
+                
 				
 			}
 			// 重新给锁添加 数组图片
-			if ([model.types isEqualToString:@"hrsc"]) {
 				
-				
-				[homeMu addObject:model];
-			}
+            [homeMu addObject:model];
 			self.homeArray = homeMu;
 		}
 	
@@ -448,11 +441,7 @@ static BOOL isShowOverMenu = NO;
 				
 			}
 			// 重新给锁添加 数组图片
-			if ([model.types isEqualToString:@"hrsc"]) {
-				
-			
-			[homeMu addObject:model];
-		}
+        [homeMu addObject:model];
 		self.homeArray = homeMu;
 		}
 		
@@ -605,6 +594,12 @@ static BOOL isShowOverMenu = NO;
     
     [self.timer invalidate];
     self.timer = nil;
+    for (UINavigationController *nav in  self.tabBarController.childViewControllers) {
+        for (UIViewController *VC in nav.childViewControllers) {
+            
+            DDLogWarn(@"home----tabBarController--%@", NSStringFromClass([VC class]));
+        }
+    }
 }
 #pragma mark - 隐藏底部条
 - (void)IsTabBarHidden:(BOOL)hidden
@@ -800,43 +795,46 @@ static BOOL isShowOverMenu = NO;
 	switch (indexPath.row) {
   case 0:
 		{
-			if (self.currentStateModel.state.length < 0.5) {
-				cell.leftImage.image = [UIImage imageNamed:@"开锁首页"];
-			}else
-			{
-				NSInteger states = [self.currentStateModel.state integerValue];
-				switch (states) {
-					case 5:
-					{
-						
-						cell.leftImage.image = [UIImage imageNamed:@"禁止开锁"];
-					}
-						break;
-						
-					default:
-					{
-						
-						cell.leftImage.image = [UIImage imageNamed:@"开锁首页"];
-					}
-						break;
-				}
-				
-			}
-			cell.leftLabel.text = @"手机开锁";
-            
-            
-            if (!httpRequsetCount) {
+            DDLogWarn(@"self.currentStateModel.types--------%@", self.currentStateModel.types);
+            if ([self.currentStateModel.types isEqualToString:@"hrsc"]) {//门锁
                 
-                
-                if (self.currentStateModel.level.length < 0.5) {
-                    
-                    cell.rightLabel.text = @"";
+                if (self.currentStateModel.state.length < 0.5) {
+                    cell.leftImage.image = [UIImage imageNamed:@"开锁首页"];
                 }else
                 {
+                    NSInteger states = [self.currentStateModel.state integerValue];
+                    switch (states) {
+                        case 5:
+                        {
+                            
+                            cell.leftImage.image = [UIImage imageNamed:@"禁止开锁"];
+                        }
+                            break;
+                            
+                        default:
+                        {
+                            
+                            cell.leftImage.image = [UIImage imageNamed:@"开锁首页"];
+                        }
+                            break;
+                    }
                     
-                    cell.rightLabel.text = [NSString stringWithFormat:@"剩余电量%@", self.currentStateModel.level];;
                 }
+                cell.leftLabel.text = @"手机开锁";
                 
+                
+                if (!httpRequsetCount) {
+                    
+                    
+                    if (self.currentStateModel.level.length < 0.5) {
+                        
+                        cell.rightLabel.text = @"";
+                    }else
+                    {
+                        
+                        cell.rightLabel.text = [NSString stringWithFormat:@"剩余电量%@", self.currentStateModel.level];;
+                    }
+                    
                 }else
                 {
                     if (self.level.length < 0.5) {
@@ -848,60 +846,65 @@ static BOOL isShowOverMenu = NO;
                         cell.rightLabel.text = [NSString stringWithFormat:@"剩余电量%@", self.currentStateModel.level];;
                     }
                 }
-            
-            
-			if (self.currentStateModel.level.length < 0.5) {
-//				cell.minLabel.text =  @"";
-//				cell.rightLabel.text = self.lastOptionTime;
                 
+                
+                if (self.currentStateModel.level.length < 0.5) {
+                    
+                    cell.rightLabel.text = @"";
+                }else
+                {
+                    
+                    cell.rightLabel.text = [NSString stringWithFormat:@"剩余电量%@", self.currentStateModel.level];;
+                }
+
+            }else if ([self.currentStateModel.types isEqualToString:@"xiaorui"])//小睿
+            {
+                
+                cell.leftLabel.text = @"环境参数";
+                cell.leftImage.image = [UIImage imageNamed:@"小睿首页环境参数"];
                 cell.rightLabel.text = @"";
-			}else
-			{
-                
-                
-                
-                cell.rightLabel.text = [NSString stringWithFormat:@"剩余电量%@", self.currentStateModel.level];;
-			}
-		}
+            }
+        }
 			break;
   case 1:
 		{
 			
-			cell.leftImage.image = [UIImage imageNamed:@"记录"];
-			cell.leftLabel.text = @"记录查询";
-//			cell.rightLabel.text = self.lastOptionTime;
-//			if (self.currentStateModel.level.length < 0.5) {
-//				cell.minLabel.text =  @"";
-//				cell.rightLabel.text = self.lastOptionTime;
-//			}else
-//			{
-//				
-//				if (self.queryArray.count > 0) {
-//					DoorLockModel *model = self.queryArray.firstObject;
-//					
-//					NSString *title = model.title;
-//					NSRange range = [title rangeOfString:@"|"];
-//					
-//					NSString *time = [title substringToIndex:range.location];
-//					
-//					cell.rightLabel.text = time;
-//				
-//			}
-//		}
+            if ([self.currentStateModel.types isEqualToString:@"hrsc"]) {//门锁
+                cell.leftImage.image = [UIImage imageNamed:@"记录"];
+                cell.leftLabel.text = @"记录查询";
+            }else if ([self.currentStateModel.types isEqualToString:@"xiaorui"])//小睿
+            {
+                cell.leftImage.image = [UIImage imageNamed:@"小睿首页家居控制"];
+                cell.leftLabel.text = @"家居控制";
+            }
 		}
 			break;
   case 2:
 		{
 			
-			cell.leftImage.image = [UIImage imageNamed:@"密码首页"];
-			cell.leftLabel.text = @"密码管理";
+            if ([self.currentStateModel.types isEqualToString:@"hrsc"]) {//门锁
+                cell.leftImage.image = [UIImage imageNamed:@"密码首页"];
+                cell.leftLabel.text = @"密码管理";
+            }else if ([self.currentStateModel.types isEqualToString:@"xiaorui"])//小睿
+            {
+                cell.leftImage.image = [UIImage imageNamed:@"小睿首页文本交互"];
+                cell.leftLabel.text = @"文本交互";
+            }
 		}
 			break;
   case 3:
 		{
 			
-			cell.leftImage.image = [UIImage imageNamed:@"授权"];
-			cell.leftLabel.text = @"授权管理";
+            if ([self.currentStateModel.types isEqualToString:@"hrsc"]) {//门锁
+                cell.leftImage.image = [UIImage imageNamed:@"授权"];
+                cell.leftLabel.text = @"授权管理";
+                cell.rightLabel.text = @"";
+            }else if ([self.currentStateModel.types isEqualToString:@"xiaorui"])//小睿xiaorui
+            {
+                cell.leftImage.image = [UIImage imageNamed:@"小睿首页固件版本"];
+                cell.leftLabel.text = @"固件版本";
+                cell.rightLabel.text = self.currentStateModel.version;
+            }
 		}
 			break;
 			
@@ -1412,33 +1415,35 @@ static int tokenTimerCount = 300;
             DDLogDebug(@"responseObject count == 0");
         }
         
+        //小睿bug如果该小睿创建过,再从添加界面到该界面会出现列表按钮文字对应不上当前数据的情况
+        NSInteger homeCount = self.homeArray.count;
+        
         [weakSelf.homeArray removeAllObjects];
         NSArray *responseArr = (NSArray*)responseObject;
         
         for (NSDictionary *dict in responseArr) {
             
             DeviceListModel *home = [DeviceListModel mj_objectWithKeyValues:dict];
-            if ([home.types isEqualToString:@"hrsc"]) {
-                //修改921
-                [weakSelf.homeArray addObject:home];
-            }
+            [weakSelf.homeArray addObject:home];
         }
         weakSelf.appDelegate.homeArray = weakSelf.homeArray;
         
         //判断当前的mode是否为空, 如果为空就让他等于数组的第一个值, 如果不为空就让他等于当前值, 刷新是刷新的当前的数组个数和状态
+        if (weakSelf.homeArray.count != homeCount) {
             
-        weakSelf.currentStateModel = weakSelf.homeArray.firstObject;
-        if (weakSelf.homeArray.count >= 3) {
+            weakSelf.currentStateModel = weakSelf.homeArray.firstObject;
+            if (weakSelf.homeArray.count >= 3) {
+                
+                
+                [self.collectionView setContentOffset:CGPointMake(0, 0) animated:NO];
+                
+                self.collectionView.userInteractionEnabled = YES;
+            }
+            //显示占位图片
+            [self setUp3DEptPictureWithHomeArray:weakSelf.homeArray];
             
-            
-            [self.collectionView setContentOffset:CGPointMake(0, 0) animated:NO];
-            
-            self.collectionView.userInteractionEnabled = YES;
+            weakSelf.listLabel.text = weakSelf.currentStateModel.title;
         }
-        //显示占位图片
-        [self setUp3DEptPictureWithHomeArray:weakSelf.homeArray];
-        
-        weakSelf.listLabel.text = weakSelf.currentStateModel.title;
         
         if (weakSelf.currentStateModel.state) {
             
@@ -1497,79 +1502,16 @@ static int httpRequsetCount = 0;
 		for (NSDictionary *dict in responseArr) {
 			
 			DeviceListModel *home = [DeviceListModel mj_objectWithKeyValues:dict];
-			if ([home.types isEqualToString:@"hrsc"]) {
-				//修改921
+            
 			[weakSelf.homeArray addObject:home];
 		}
-		}
 		weakSelf.appDelegate.homeArray = weakSelf.homeArray;
-		DDLogWarn(@"---------weakSelf.appDelegate.homeArray%@count%lu--------", weakSelf.appDelegate.homeArray, (unsigned long)weakSelf.appDelegate.homeArray.count);
 		
 		//获得设备授权表
 		[self addAutherList];
 		
 	}];
 	
-}
-#pragma mark - 就显示3D效果占位图片
-- (void)setUp3DEptPictureWithHomeArray:(NSArray *)homeArray
-{
-    [self.photoModelArray removeAllObjects];
-    if (homeArray.count == 0) {//如果只有0个设备 就显示三张占位图片
-        
-        [self.photoModelArray addObject:
-         [PhotoModel modelWithImageNamed:@"锁-透明"
-                             description:@""]];
-        [self.photoModelArray addObject:
-         [PhotoModel modelWithImageNamed:@"锁-透明"
-                             description:@""]];
-        [self.photoModelArray addObject:
-         [PhotoModel modelWithImageNamed:@"锁-透明"
-                             description:@""]];
-        [self.collectionView setContentOffset:CGPointMake(1 * HRCommonScreenW *345 *2, 0) animated:NO];
-        self.collectionView.userInteractionEnabled = NO;
-        
-    }else if (homeArray.count == 1) {//如果只有一个设备 就显示两张占位图片
-		
-		[self.photoModelArray addObject:
-		 [PhotoModel modelWithImageNamed:@"锁-透明"
-							 description:@""]];
-		[self.photoModelArray addObject:
-		 [PhotoModel modelWithImageNamed:@"锁虚线"
-							 description:@""]];
-		[self.photoModelArray addObject:
-		 [PhotoModel modelWithImageNamed:@"锁-透明"
-							 description:@""]];
-        
-        [self.collectionView setContentOffset:CGPointMake(1 * HRCommonScreenW *345 *2, 0) animated:NO];
-        self.collectionView.userInteractionEnabled = YES;
-	}else if (homeArray.count == 2) {//如果只有两个设备 就显示1张占位图片
-		
-		[self.photoModelArray addObject:
-		 [PhotoModel modelWithImageNamed:@"锁-透明"
-							 description:@""]];
-		[self.photoModelArray addObject:
-		 [PhotoModel modelWithImageNamed:@"锁虚线"
-							 description:@""]];
-		[self.photoModelArray addObject:
-		 [PhotoModel modelWithImageNamed:@"锁虚线"
-							 description:@""]];
-        if (httpRequsetCount == 0) {
-            [self.collectionView setContentOffset:CGPointMake(1 * HRCommonScreenW *345 *2, 0) animated:NO];
-        }
-        self.collectionView.userInteractionEnabled = YES;
-	}else
-	{
-		for (DeviceListModel * home in homeArray) {
-			[self.photoModelArray addObject:
-			 [PhotoModel modelWithImageNamed:@"锁虚线"
-								 description:@""]];
-			
-        }
-        
-        self.collectionView.userInteractionEnabled = YES;
-	}
-    [self.collectionView reloadData];
 }
 #pragma mark - 获得设备授权表 HTTP
 - (void)addAutherList
@@ -1671,16 +1613,16 @@ static int httpRequsetCount = 0;
 		
 		uuidAllString = [NSString stringWithFormat:@"%@%@|", uuidAllString, auther.uuid];
 	}
-    if (uuidAllString.length > 1) {
+    
+    
+    if (uuidAllString.length > 1) {//如果UUID有值
         uuidAllString = [uuidAllString substringToIndex:uuidAllString.length - 1];
      
 	NSString *url = [NSString stringWithFormat:@"%@(%@)", HRAPI_LockAutherInformation_URL,uuidAllString];
 	
-	DDLogWarn(@"获得授权设备信息 url1%@", url);
 	url = [url stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
 	
 	
-	DDLogWarn(@"获得授权设备信息 url2%@", url);
 	HRWeakSelf
 	[HRHTTPTool hr_getHttpWithURL:url parameters:nil responseDict:^(id responseObject, NSError *error) {
 		DDLogWarn(@"获得授权设备信息 HTTP-array:%@---error:%@", responseObject,error);
@@ -1689,18 +1631,8 @@ static int httpRequsetCount = 0;
 			[ErrorCodeManager showError:error];
 			return ;
 		}
-		
-		//如果responseObject不是数组类型就不是我们想要的数据，应该过滤掉
-		if (![responseObject isKindOfClass:[NSArray class]]) {
-			[weakSelf.personDeviceArray removeAllObjects];
-			DDLogDebug(@"responseObject不是NSArray");
-		}
-		//去除服务器发过来的数据里没有值的情况
-		if (((NSArray*)responseObject).count < 1 ) {
-			DDLogDebug(@"responseObject count == 0");
-		}
-		
-		[weakSelf.personDeviceArray removeAllObjects];
+        
+        [weakSelf.personDeviceArray removeAllObjects];
 		NSArray *responseArr = (NSArray*)responseObject;
 		
 		for (NSDictionary *dict in responseArr) {
@@ -1744,7 +1676,7 @@ static int httpRequsetCount = 0;
 		}
         
         //重新设置列表按钮的图片和文字
-        if (!httpRequsetCount) {
+        if (!httpRequsetCount) {////httpRequsetCount = 0
             if (weakSelf.homeArray.count > 0) {
                 
                 weakSelf.listLabel.text = weakSelf.currentStateModel.title;
@@ -1761,8 +1693,10 @@ static int httpRequsetCount = 0;
                 weakSelf.listLabel.text = @"";
                 weakSelf.listImageView.image = [UIImage imageNamed:@""];
             }
- 
-        }else
+
+            [weakSelf.tableView reloadData];
+            [weakSelf.collectionView reloadData];
+        }else//httpRequsetCount > 0
         {
             if (weakSelf.homeArray.count > 0) {
                 
@@ -1773,10 +1707,11 @@ static int httpRequsetCount = 0;
                 weakSelf.listLabel.text = @"";
                 weakSelf.listImageView.image = [UIImage imageNamed:@""];
             }
+            
+            [weakSelf.collectionView reloadData];
         }
         
 //		[weakSelf.tableView reloadData];
-		[weakSelf.collectionView reloadData];
         
         httpRequsetCount++;
         //定时60s查询设备状态
@@ -1785,8 +1720,6 @@ static int httpRequsetCount = 0;
 	}];
     }else
     {
-        
-        
         //当没有授权设备时
         
         [self.photoModelArray removeAllObjects];
@@ -1805,15 +1738,36 @@ static int httpRequsetCount = 0;
             for (DeviceListModel *model in self.homeArray) {
                 if ([model.uuid isEqualToString:self.currentStateModel.uuid]) {//取出和当前的UUID一样的这条数据覆盖掉,currentStateModel数据
                     self.currentStateModel = model;
+                    
                     index++;
                     
                 }
             }
             
-            if (index) {
+            if (index) {//如果有新数据
+//                index = 0;
+//                int i = -1;
                 
                 //显示占位图片
                 [self setUp3DEptPictureWithHomeArray:self.homeArray];
+                
+                //找出当前数据在数组中的位置, 通过位置让当前的设备滚动到正确的位置
+//                for (DeviceListModel *model in self.homeArray) {
+//                    index++;
+//                     if ([model.uuid isEqualToString:self.currentStateModel.uuid]) {
+//                           i = i + index + 2;
+//                     }
+//                }
+//                if (i > 0) {
+//                    if (self.homeArray.count == 2) {
+//                        [self.collectionView setContentOffset:CGPointMake(1 * HRCommonScreenW *345 *i + 1, 0) animated:NO];
+//                    }else if (self.homeArray.count > 2)
+//                    {
+//                        
+//                        [self.collectionView setContentOffset:CGPointMake(1 * HRCommonScreenW *345 *i, 0) animated:NO];
+//                    }
+//                }
+               
             }else
             {
                 self.currentStateModel = self.homeArray.firstObject;
@@ -1824,7 +1778,7 @@ static int httpRequsetCount = 0;
         
         //重新设置列表按钮的图片和文字
         if (!httpRequsetCount) {
-            if (self.homeArray.count > 0) {
+            if (self.homeArray.count > 0) {//httpRequsetCount = 0
                 
                 self.listLabel.text = self.currentStateModel.title;
                 if ([self.currentStateModel.state isEqualToString:@"1"]) {
@@ -1841,7 +1795,9 @@ static int httpRequsetCount = 0;
                 self.listImageView.image = [UIImage imageNamed:@""];
             }
             
-        }else
+            [self.tableView reloadData];
+            [self.collectionView reloadData];
+        }else//httpRequsetCount > 0
         {
             if (self.homeArray.count > 0) {
                 
@@ -1853,10 +1809,9 @@ static int httpRequsetCount = 0;
                 
                 self.listImageView.image = [UIImage imageNamed:@""];
             }
+            [self.collectionView reloadData];
         }
         
-        //		[weakSelf.tableView reloadData];
-        [self.collectionView reloadData];
         
         //定时60s查询设备状态
         [self addTimer];
@@ -1868,6 +1823,84 @@ static int httpRequsetCount = 0;
 }
 
 
+#pragma mark - 就显示3D效果占位图片
+- (void)setUp3DEptPictureWithHomeArray:(NSArray *)homeArray
+{
+    [self.photoModelArray removeAllObjects];
+    
+    if (homeArray.count == 0) {//如果只有0个设备 就显示三张占位图片
+        
+        [self.photoModelArray addObject:
+         [PhotoModel modelWithImageNamed:@"锁-透明"
+                             description:@""]];
+        [self.photoModelArray addObject:
+         [PhotoModel modelWithImageNamed:@"锁-透明"
+                             description:@""]];
+        [self.photoModelArray addObject:
+         [PhotoModel modelWithImageNamed:@"锁-透明"
+                             description:@""]];
+        [self.collectionView setContentOffset:CGPointMake(1 * HRCommonScreenW *345 *2, 0) animated:NO];
+        self.collectionView.userInteractionEnabled = NO;
+        
+    }else if (homeArray.count == 1) {//如果只有一个设备 就显示两张占位图片
+        
+        [self.photoModelArray addObject:
+         [PhotoModel modelWithImageNamed:@"锁-透明"
+                             description:@""]];
+        
+        DeviceListModel *model = homeArray.firstObject;
+        //根据类型判断显示那张图片
+        [self addLockOrXiaoRuiImagePhotoModelArrayWithTypes: model.types];
+        
+        [self.photoModelArray addObject:
+         [PhotoModel modelWithImageNamed:@"锁-透明"
+                             description:@""]];
+        
+        [self.collectionView setContentOffset:CGPointMake(1 * HRCommonScreenW *345 *2, 0) animated:NO];
+        self.collectionView.userInteractionEnabled = YES;
+    }else if (homeArray.count == 2) {//如果只有两个设备 就显示1张占位图片
+        
+        [self.photoModelArray addObject:
+         [PhotoModel modelWithImageNamed:@"锁-透明"
+                             description:@""]];
+        
+        for (DeviceListModel *model in homeArray) {
+            //根据类型判断显示那张图片
+            [self addLockOrXiaoRuiImagePhotoModelArrayWithTypes: model.types];
+        }
+        
+        if (httpRequsetCount == 0) {
+            [self.collectionView setContentOffset:CGPointMake(1 * HRCommonScreenW *345 *2, 0) animated:NO];
+        }
+        self.collectionView.userInteractionEnabled = YES;
+    }else
+    {
+        
+        for (DeviceListModel *model in homeArray) {
+            //根据类型判断显示那张图片
+            [self addLockOrXiaoRuiImagePhotoModelArrayWithTypes: model.types];
+        }
+        
+        self.collectionView.userInteractionEnabled = YES;
+    }
+    [self.collectionView reloadData];
+}
+
+//根据类型判断显示那张图片
+- (void)addLockOrXiaoRuiImagePhotoModelArrayWithTypes:(NSString *)types
+{
+    if ([types isEqualToString:@"hrsc"]) {
+        
+        [self.photoModelArray addObject:
+         [PhotoModel modelWithImageNamed:@"锁虚线"
+                             description:@""]];
+    }else
+    {
+        [self.photoModelArray addObject:
+         [PhotoModel modelWithImageNamed:@"小睿首页"
+                             description:@""]];
+    }
+}
 #pragma mark -删除门锁 HTTP
 
 -(void)deleteDoor
@@ -1951,10 +1984,6 @@ static int httpRequsetCount = 0;
                 
                 //重新设置3D图片
                 [self setUp3DEptPictureWithHomeArray: weakSelf.homeArray];
-                if (weakSelf.homeArray.count == 2) {
-                    
-                    [self.collectionView setContentOffset:CGPointMake(1 * HRCommonScreenW *345 *2, 0) animated:NO];
-                }
                 
                 //重新设置列表按钮的图片和文字
                 if (weakSelf.homeArray.count > 0) {
@@ -1983,6 +2012,13 @@ static int httpRequsetCount = 0;
                         
                         self.listImageView.image = [UIImage imageNamed:@""];
                     }
+                }
+                
+                if (weakSelf.homeArray.count == 2) {
+                    
+                    [self.collectionView setContentOffset:CGPointMake(1 * HRCommonScreenW *345 *2, 0) animated:NO];
+                }else if (weakSelf.homeArray.count > 2) {
+                    [self.collectionView setContentOffset:CGPointMake(1 * HRCommonScreenW *345 *0, 0) animated:NO];
                 }
                 
                 [weakSelf.tableView reloadData];
@@ -2192,7 +2228,8 @@ static int httpRequsetCount = 0;
     NSString *muString = [self encryptionWithPassWorldAndUserName];
     
     NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
-    parameters[@"type"] = @"hrsc";
+    
+    parameters[@"type"] = model.types;
     parameters[@"field_licence[und][0][value]"] = muString;
     
     NSLog(@"model的types是%@",model.types);
@@ -2861,7 +2898,6 @@ static int httpRequsetCount = 0;
 {
 	/// 从偏好设置里加载数据
 	NSString *uuid = self.currentStateModel.uuid;
-	//NSString *url = [NSString stringWithFormat:@"http://www.gzhuarui.cn/?q=huaruiapi/herolife-dev-hrsc-ml&uuid=%@&sy=(unlock|batlow|ltnolock|errlimt)&page=%d", uuid, indexCount];
 	NSString *url = [NSString stringWithFormat:@"%@%@&sy=(unlock|batlow|ltnolock|errlimt)&page=%d",HRAPI_RecordeLock_URL,uuid,0];
 	url = [url stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
 	
