@@ -149,20 +149,20 @@ static int const HRTimeDuration = 601;
 	rect.origin.y = 64;
 	//海波代码----------------------end-------------------------------------
 	
-    UIView * halfAlphaView = [[UIView alloc]initWithFrame:rect];
-    
-    [self.view addSubview:halfAlphaView];
-    
-    halfAlphaView.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.1];
-	
-    UIView * circleView  = [[UIView alloc]init];
-    [self.view addSubview: circleView];
-	
-    circleView.sd_layout
-    .topSpaceToView(self.view,64.0 + 65.0 * HRCommonScreenH)
-    .leftSpaceToView(self.view,30.0 * HRCommonScreenW)
-    .rightSpaceToView(self.view,30.0 * HRCommonScreenW)
-    .heightIs(HRUIScreenW - 60.0 * HRCommonScreenW);
+//    UIView * halfAlphaView = [[UIView alloc]initWithFrame:rect];
+//    
+//    [self.view addSubview:halfAlphaView];
+//    
+//    halfAlphaView.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.1];
+//	
+//    UIView * circleView  = [[UIView alloc]init];
+//    [self.view addSubview: circleView];
+//	
+//    circleView.sd_layout
+//    .topSpaceToView(self.view,64.0 + 65.0 * HRCommonScreenH)
+//    .leftSpaceToView(self.view,30.0 * HRCommonScreenW)
+//    .rightSpaceToView(self.view,30.0 * HRCommonScreenW)
+//    .heightIs(HRUIScreenW - 60.0 * HRCommonScreenW);
     
 //    circleView.layer.cornerRadius = (HRUIScreenW - 60.0 * HRCommonScreenW)/2;
 	
@@ -175,15 +175,15 @@ static int const HRTimeDuration = 601;
     
    
     
-    _CircleImage  =  [[UIImageView alloc]init];
-    
-    [circleView addSubview:_CircleImage];
+//    _CircleImage  =  [[UIImageView alloc]init];
+//    
+//    [circleView addSubview:_CircleImage];
 	
-    _CircleImage.sd_layout
-    .topSpaceToView(self.navView,55 *HRCommonScreenH)
-//    .bottomSpaceToView(circleView,164.0*HRCommonScreenH)
-    .leftSpaceToView(self.navView,230 * HRCommonScreenW)
-    .rightSpaceToView(self.navView,230 * HRCommonScreenW);
+//    _CircleImage.sd_layout
+//    .topSpaceToView(self.navView,55 *HRCommonScreenH)
+////    .bottomSpaceToView(circleView,164.0*HRCommonScreenH)
+//    .leftSpaceToView(self.navView,230 * HRCommonScreenW)
+//    .rightSpaceToView(self.navView,230 * HRCommonScreenW);
     
 //    _CircleImage.image = [UIImage imageNamed:@"手机背景"];
 	

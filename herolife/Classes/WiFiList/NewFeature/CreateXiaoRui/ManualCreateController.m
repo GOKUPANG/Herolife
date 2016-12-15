@@ -40,8 +40,8 @@
     [super viewWillAppear:animated];
     
     UIView *backView = [[UIView alloc] initWithFrame:self.view.bounds];
-    backView.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.2];
-    [self.view addSubview:backView];
+    backView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.2];
+    [self.view insertSubview:backView aboveSubview:self.backImgView];
     NSInteger  PicNum =   [[NSUserDefaults standardUserDefaults] integerForKey:@"PicNum"];
     
     if (!PicNum) {
@@ -284,13 +284,32 @@
                 [self httpWithUpdataXiaoRuiWithData:data];
             }else
             {
-                [SVProgressTool hr_showErrorWithStatus:@"该小睿在其他帐号上已经激活,请在其他帐号上删除该小睿,再重试!"];
+                
+                //弹出提示框
+                [self showAlertControllerWithUUID:data.uuid];
             }
             
         }
         
 
     }];
+}
+
+- (void)showAlertControllerWithUUID:(NSString *)UUID
+{
+    [SVProgressTool hr_dismiss];
+    [self.view endEditing:YES];
+    NSString *title = [NSString stringWithFormat:@"该设备%@已在其他用户上注册,请删除后再进行激活操作!", UUID];
+    UIAlertController * alertController = [UIAlertController alertControllerWithTitle:@"" message:title preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [self goToHomeList];
+    }];
+    
+    [alertController addAction:cancelAction];
+    
+    
+    [self presentViewController:alertController animated:YES completion:nil];
 }
 
 

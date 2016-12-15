@@ -169,7 +169,7 @@
     
     
     UIView *view = [[UIView alloc] initWithFrame:[UIScreen mainScreen].bounds];
-    view.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.3];
+    view.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.2];
     [self.view addSubview:view];
     
     

@@ -42,6 +42,9 @@
 #import "TipsLabel.h"
 #import "GTMBase64.h"
 #import "WaitController.h"
+#import "EnvironmentController.h"
+#import "HomeControllController.h"
+#import "TextInteractionController.h"
 
 //加入系统自带密码库
 
@@ -923,116 +926,138 @@ static BOOL isShowOverMenu = NO;
 		case  0:
 			
 		{
-			OpenLockController * OLC = [OpenLockController new];
-			
-			// 直接
-//            if ([self.currentStateModel.state isEqualToString:@"5"]) {
-//                [SVProgressTool hr_showErrorWithStatus:@"该锁已关闭远程开锁功能, 请在wifi盒子上打开远程开锁开关后重试!"];
-//                return;
-//                
-//            }
-			for (DeviceAutherModel *auther in self.autherPersonArray) {
-    
-				if ([auther.uuid isEqualToString: self.currentStateModel.uuid]) {
-					NSArray *arr = auther.permit;
-					if ([arr[0] isEqualToString:@"1"]) {
-						
-						OLC.listModel = self.currentStateModel;
-						OLC.AuthorUserName = auther.admin;
-						[self.navigationController pushViewController:OLC animated:YES];
-						
-					}else
-					{
-						[SVProgressTool hr_showErrorWithStatus:@"该锁当前用户无权限控制门锁!"];
-					}
-					return ;
-				}
-			}
-            if (!self.currentStateModel) {
+            if ([self.currentStateModel.types isEqualToString:@"hrsc"]) {
                 
-//                [self showOnLineLabelWithTitle:@"未添加门锁"];
-                [self.tipsLabel showText:@"未添加门锁" duration:2.0];
+                OpenLockController * OLC = [OpenLockController new];
+                for (DeviceAutherModel *auther in self.autherPersonArray) {
+                    
+                    if ([auther.uuid isEqualToString: self.currentStateModel.uuid]) {
+                        NSArray *arr = auther.permit;
+                        if ([arr[0] isEqualToString:@"1"]) {
+                            
+                            OLC.listModel = self.currentStateModel;
+                            OLC.AuthorUserName = auther.admin;
+                            [self.navigationController pushViewController:OLC animated:YES];
+                            
+                        }else
+                        {
+                            [SVProgressTool hr_showErrorWithStatus:@"该锁当前用户无权限控制门锁!"];
+                        }
+                        return ;
+                    }
+                }
+                
+                OLC.listModel = self.currentStateModel;
+                [self.navigationController pushViewController:OLC animated:YES];
+
+            }else if ([self.currentStateModel.types isEqualToString:@"xiaorui"])
+            {
+                EnvironmentController *enviVC = [[EnvironmentController alloc] init];
+                enviVC.deviceModel = self.currentStateModel;
+                [self.navigationController pushViewController:enviVC animated:YES];
+            }else
+            {
+                
+                [self.tipsLabel showText:@"未添加设备" duration:2.0];
                 return;
             }
-			OLC.listModel = self.currentStateModel;
-			[self.navigationController pushViewController:OLC animated:YES];
-			
 		}
 			
 			break;
 			
 		case 1:
 		{
-			
-			DoorLockRecordConroller *  DLC = [DoorLockRecordConroller new];
-			
-			// 直接
-			for (DeviceAutherModel *auther in self.autherPersonArray) {
-    
-				if ([auther.uuid isEqualToString: self.currentStateModel.uuid]) {
-					NSArray *arr = auther.permit;
-					if ([arr[1] isEqualToString:@"1"]) {
-						
-						DLC.listModel = self.currentStateModel;
-                        DLC.AuthorUserName = auther.admin ;
-                        
-						[self.navigationController pushViewController:DLC animated:YES];
-						
-					}else
-					{
-						[SVProgressTool hr_showErrorWithStatus:@"该锁当前用户无权限记录查询!"];
-					}
-					return ;
-				}
-			}
-			
-            if (!self.currentStateModel) {
+            
+            if ([self.currentStateModel.types isEqualToString:@"hrsc"]) {
                 
-                [self.tipsLabel showText:@"未添加门锁" duration:2.0];
+                DoorLockRecordConroller *  DLC = [DoorLockRecordConroller new];
+                
+                // 直接
+                for (DeviceAutherModel *auther in self.autherPersonArray) {
+                    
+                    if ([auther.uuid isEqualToString: self.currentStateModel.uuid]) {
+                        NSArray *arr = auther.permit;
+                        if ([arr[1] isEqualToString:@"1"]) {
+                            
+                            DLC.listModel = self.currentStateModel;
+                            DLC.AuthorUserName = auther.admin ;
+                            
+                            [self.navigationController pushViewController:DLC animated:YES];
+                            
+                        }else
+                        {
+                            [SVProgressTool hr_showErrorWithStatus:@"该锁当前用户无权限记录查询!"];
+                        }
+                        return ;
+                    }
+                }
+                
+                DLC.listModel = self.currentStateModel;
+                [self.navigationController pushViewController:DLC animated:YES];
+
+            }else if ([self.currentStateModel.types isEqualToString:@"xiaorui"])
+            {
+                HomeControllController *homeVC = [[HomeControllController alloc] init];
+                
+                homeVC.deviceModel = self.currentStateModel;
+                [self.navigationController pushViewController:homeVC animated:YES];
+            }else
+            {
+                
+                [self.tipsLabel showText:@"未添加设备" duration:2.0];
                 return;
             }
-			DLC.listModel = self.currentStateModel;
-			[self.navigationController pushViewController:DLC animated:YES];
 			
 		}
 			break;
 			
 			
 		case 2:
-		{
-			
-			APPPSWController * PSWC = [APPPSWController new];
-			
-			// 直接
-			for (DeviceAutherModel *auther in self.autherPersonArray) {
-    
-				if ([auther.uuid isEqualToString: self.currentStateModel.uuid]) {
-					NSArray *arr = auther.permit;
-					if ([arr[2] isEqualToString:@"1"]) {
-						
-						PSWC.listModel = self.currentStateModel;
-						[self.navigationController pushViewController:PSWC animated:YES];
-						
-					}else
-					{
-						[SVProgressTool hr_showErrorWithStatus:@"该锁当前用户无权限密码管理!"];
-					}
-					return ;
-				}
-			}
-			
+        {
+            if ([self.currentStateModel.types isEqualToString:@"hrsc"]) {
+                
+                
+                APPPSWController * PSWC = [APPPSWController new];
+                
+                // 直接
+                for (DeviceAutherModel *auther in self.autherPersonArray) {
+                    
+                    if ([auther.uuid isEqualToString: self.currentStateModel.uuid]) {
+                        NSArray *arr = auther.permit;
+                        if ([arr[2] isEqualToString:@"1"]) {
+                            
+                            PSWC.listModel = self.currentStateModel;
+                            [self.navigationController pushViewController:PSWC animated:YES];
+                            
+                        }else
+                        {
+                            [SVProgressTool hr_showErrorWithStatus:@"该锁当前用户无权限密码管理!"];
+                        }
+                        return ;
+                    }
+                }
+                PSWC.listModel = self.currentStateModel;
+                
+                
+                
+                [self.navigationController pushViewController:PSWC animated:YES];
+                
+                
+                
+            }else if ([self.currentStateModel.types isEqualToString:@"xiaorui"])
+            {
+                TextInteractionController *textVC = [[TextInteractionController alloc] init];
+                textVC.deviceModel = self.currentStateModel;
+                [self.navigationController pushViewController:textVC animated:YES];
+            }
+            
             if (!self.currentStateModel) {
                 
-                [self.tipsLabel showText:@"未添加门锁" duration:2.0];
+                [self.tipsLabel showText:@"未添加设备" duration:2.0];
                 return;
             }
-			PSWC.listModel = self.currentStateModel;
-			
-			
-			
-			[self.navigationController pushViewController:PSWC animated:YES];
-			
-		}
+            
+        }
 			
 			break;
 			
@@ -1058,7 +1083,7 @@ static BOOL isShowOverMenu = NO;
 			
             if (!self.currentStateModel) {
                 
-                [self.tipsLabel showText:@"未添加门锁" duration:2.0];
+                [self.tipsLabel showText:@"未添加设备" duration:2.0];
                 return;
             }
 			SQC.listModel = self.currentStateModel;
@@ -1429,7 +1454,23 @@ static int tokenTimerCount = 300;
         weakSelf.appDelegate.homeArray = weakSelf.homeArray;
         
         //判断当前的mode是否为空, 如果为空就让他等于数组的第一个值, 如果不为空就让他等于当前值, 刷新是刷新的当前的数组个数和状态
-        if (weakSelf.homeArray.count != homeCount) {
+        
+        if (weakSelf.homeArray.count != homeCount) {//代表是添加新设备,而不是跟新设备
+            
+            //如果有锁,就让他选择第一把锁, 没锁就让他选中第一个小睿
+            //也要先排序下
+            NSMutableArray *mu = [NSMutableArray array];
+            for (DeviceListModel *model in self.homeArray) {
+                if ([model.types isEqualToString:@"hrsc"]) {
+                    [mu addObject:model];
+                }
+            }
+            for (DeviceListModel *model in self.homeArray) {
+                if ([model.types isEqualToString:@"xiaorui"]) {
+                    [mu addObject:model];
+                }
+            }
+            self.homeArray = mu;
             
             weakSelf.currentStateModel = weakSelf.homeArray.firstObject;
             if (weakSelf.homeArray.count >= 3) {
@@ -1642,7 +1683,20 @@ static int httpRequsetCount = 0;
 			[weakSelf.homeArray addObject:auther];
 		}
 		
-		
+        //设备排序  锁->授权->小睿
+        NSMutableArray *mu = [NSMutableArray array];
+        for (DeviceListModel *model in weakSelf.homeArray) {
+            if ([model.types isEqualToString:@"hrsc"]) {
+                [mu addObject:model];
+            }
+        }
+        for (DeviceListModel *model in weakSelf.homeArray) {
+            if ([model.types isEqualToString:@"xiaorui"]) {
+                [mu addObject:model];
+            }
+        }
+        
+        weakSelf.homeArray = mu;
 		[self.photoModelArray removeAllObjects];
 		
 		//判断当前的mode是否为空, 如果为空就让他等于数组的第一个值, 如果不为空就让他等于当前值, 刷新是刷新的当前的数组个数和状态
@@ -1718,10 +1772,25 @@ static int httpRequsetCount = 0;
         [self addTimer];
 		
 	}];
-    }else
+    }else//UUID没值
     {
-        //当没有授权设备时
         
+        //设备排序  锁->授权->小睿
+        NSMutableArray *mu = [NSMutableArray array];
+        for (DeviceListModel *model in self.homeArray) {
+            if ([model.types isEqualToString:@"hrsc"]) {
+                [mu addObject:model];
+            }
+        }
+        for (DeviceListModel *model in self.homeArray) {
+            if ([model.types isEqualToString:@"xiaorui"]) {
+                [mu addObject:model];
+            }
+        }
+        self.homeArray = mu;
+        
+        
+        //当没有授权设备时
         [self.photoModelArray removeAllObjects];
         
         //判断当前的mode是否为空, 如果为空就让他等于数组的第一个值, 如果不为空就让他等于当前值, 刷新是刷新的当前的数组个数和状态

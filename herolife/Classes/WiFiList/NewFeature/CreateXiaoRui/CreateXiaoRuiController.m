@@ -27,10 +27,6 @@
 {
     [super viewWillAppear:animated];
     
-    UIView *view = [[UIView alloc] initWithFrame:[UIScreen mainScreen].bounds];
-    view.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.2];
-    [self.view addSubview:view];
-    
     for (UINavigationController *nav in  self.tabBarController.childViewControllers) {
         for (UIViewController *VC in nav.childViewControllers) {
             

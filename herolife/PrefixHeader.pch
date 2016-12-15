@@ -67,6 +67,8 @@
 #import "AsyncUdpSocket.h"
 #import "HRUDPSocketTool.h"
 #import "CALayer+Anim.h"
+//
+#import "HRNoHighLightedButton.h"
 
 
 #define UIScreenH [UIScreen mainScreen].bounds.size.height

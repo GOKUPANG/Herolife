@@ -55,6 +55,18 @@
 		D1147BCC1DB0B6C500ADEECC /* DeviceListController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1147BCB1DB0B6C500ADEECC /* DeviceListController.m */; };
 		D1147BDA1DB0B80200ADEECC /* GTMBase64.m in Sources */ = {isa = PBXBuildFile; fileRef = D1147BD71DB0B80200ADEECC /* GTMBase64.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		D1147BDB1DB0B80200ADEECC /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = D1147BD91DB0B80200ADEECC /* README.md */; };
+		D11913CC1E0296E400ED1B9A /* AddTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = D11913BC1E0296E400ED1B9A /* AddTextView.m */; };
+		D11913CD1E0296E400ED1B9A /* AddTextView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D11913BD1E0296E400ED1B9A /* AddTextView.xib */; };
+		D11913CE1E0296E400ED1B9A /* emotion.png in Resources */ = {isa = PBXBuildFile; fileRef = D11913BE1E0296E400ED1B9A /* emotion.png */; };
+		D11913CF1E0296E400ED1B9A /* ic_action_add.png in Resources */ = {isa = PBXBuildFile; fileRef = D11913BF1E0296E400ED1B9A /* ic_action_add.png */; };
+		D11913D01E0296E400ED1B9A /* ico_login_user.png in Resources */ = {isa = PBXBuildFile; fileRef = D11913C01E0296E400ED1B9A /* ico_login_user.png */; };
+		D11913D11E0296E400ED1B9A /* TextInteractionController.m in Sources */ = {isa = PBXBuildFile; fileRef = D11913C21E0296E400ED1B9A /* TextInteractionController.m */; };
+		D11913D21E0296E400ED1B9A /* TextInteractionController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D11913C31E0296E400ED1B9A /* TextInteractionController.xib */; };
+		D11913D31E0296E400ED1B9A /* UserCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D11913C51E0296E400ED1B9A /* UserCell.m */; };
+		D11913D41E0296E400ED1B9A /* UserCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D11913C61E0296E400ED1B9A /* UserCell.xib */; };
+		D11913D51E0296E400ED1B9A /* XiaoRuiCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D11913C81E0296E400ED1B9A /* XiaoRuiCell.m */; };
+		D11913D61E0296E400ED1B9A /* XiaoRuiCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D11913C91E0296E400ED1B9A /* XiaoRuiCell.xib */; };
+		D11913D71E0296E400ED1B9A /* XMGHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = D11913CB1E0296E400ED1B9A /* XMGHeader.m */; };
 		D12BC7821DB1DA9E00D84B12 /* AccountManagementController.m in Sources */ = {isa = PBXBuildFile; fileRef = D12BC7811DB1DA9E00D84B12 /* AccountManagementController.m */; };
 		D1352D641D9E0ECB003A83AB /* AddNewDeviceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1352D4A1D9E0ECB003A83AB /* AddNewDeviceViewController.m */; };
 		D1352D651D9E0ECB003A83AB /* backWhite@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D1352D4B1D9E0ECB003A83AB /* backWhite@2x.png */; };
@@ -80,6 +92,10 @@
 		D1405BAF1DBDA96500E19C5F /* NSString+Util.m in Sources */ = {isa = PBXBuildFile; fileRef = D1405BAE1DBDA96500E19C5F /* NSString+Util.m */; };
 		D1405BB11DBDA99700E19C5F /* WaitController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1405BB01DBDA99700E19C5F /* WaitController.m */; };
 		D1405BB51DBDAA0000E19C5F /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D1405BB41DBDAA0000E19C5F /* Info.plist */; };
+		D14CF4E01E00E8970005596F /* HomeControllController.m in Sources */ = {isa = PBXBuildFile; fileRef = D14CF4DE1E00E8970005596F /* HomeControllController.m */; };
+		D14CF4E11E00E8970005596F /* HomeControllController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D14CF4DF1E00E8970005596F /* HomeControllController.xib */; };
+		D14CF4ED1E011B770005596F /* InfraredDeviceCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D14CF4EB1E011B770005596F /* InfraredDeviceCell.m */; };
+		D14CF4EE1E011B770005596F /* InfraredDeviceCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D14CF4EC1E011B770005596F /* InfraredDeviceCell.xib */; };
 		D14D38B01DED378800551FD3 /* HRRefreshFooter.m in Sources */ = {isa = PBXBuildFile; fileRef = D14D38AF1DED378800551FD3 /* HRRefreshFooter.m */; };
 		D14D38B61DED384D00551FD3 /* DoorLockRecordConroller.m in Sources */ = {isa = PBXBuildFile; fileRef = D14D38B51DED384D00551FD3 /* DoorLockRecordConroller.m */; };
 		D14D38D81DED5BA500551FD3 /* ESP_ByteUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = D14D38B91DED5BA500551FD3 /* ESP_ByteUtil.m */; };
@@ -226,6 +242,12 @@
 		D1B3CB3B1D966DB5009F96D2 /* HerolifeImageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D1B3CB391D966DB5009F96D2 /* HerolifeImageCell.xib */; };
 		D1B3CB3F1D966DCA009F96D2 /* HerolifeLabelCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D1B3CB3D1D966DCA009F96D2 /* HerolifeLabelCell.m */; };
 		D1B3CB401D966DCA009F96D2 /* HerolifeLabelCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D1B3CB3E1D966DCA009F96D2 /* HerolifeLabelCell.xib */; };
+		D1B50E321DFE3DC000CC83EF /* UUBar.m in Sources */ = {isa = PBXBuildFile; fileRef = D1B50E271DFE3DC000CC83EF /* UUBar.m */; };
+		D1B50E331DFE3DC000CC83EF /* UUBarChart.m in Sources */ = {isa = PBXBuildFile; fileRef = D1B50E291DFE3DC000CC83EF /* UUBarChart.m */; };
+		D1B50E341DFE3DC000CC83EF /* UUChart.m in Sources */ = {isa = PBXBuildFile; fileRef = D1B50E2B1DFE3DC000CC83EF /* UUChart.m */; };
+		D1B50E351DFE3DC000CC83EF /* UUChartLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = D1B50E2D1DFE3DC000CC83EF /* UUChartLabel.m */; };
+		D1B50E361DFE3DC000CC83EF /* UUColor.m in Sources */ = {isa = PBXBuildFile; fileRef = D1B50E2F1DFE3DC000CC83EF /* UUColor.m */; };
+		D1B50E371DFE3DC000CC83EF /* UULineChart.m in Sources */ = {isa = PBXBuildFile; fileRef = D1B50E311DFE3DC000CC83EF /* UULineChart.m */; };
 		D1B792471D8BF78C00DDA4DD /* EBBannerView.m in Sources */ = {isa = PBXBuildFile; fileRef = D1B7923C1D8BF78C00DDA4DD /* EBBannerView.m */; };
 		D1B792481D8BF78C00DDA4DD /* EBBannerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D1B7923D1D8BF78C00DDA4DD /* EBBannerView.xib */; };
 		D1B792491D8BF78C00DDA4DD /* EBForeNotification.m in Sources */ = {isa = PBXBuildFile; fileRef = D1B7923E1D8BF78C00DDA4DD /* EBForeNotification.m */; };
@@ -243,6 +265,7 @@
 		D1DD1D9F1DF663F90028764F /* CreatXiaoRuiView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D1DD1D9E1DF663F90028764F /* CreatXiaoRuiView.xib */; };
 		D1DF6A5A1DF9076D00CA8F8B /* EnvironmentController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1DF6A581DF9076D00CA8F8B /* EnvironmentController.m */; };
 		D1DF6A5B1DF9076D00CA8F8B /* EnvironmentController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D1DF6A591DF9076D00CA8F8B /* EnvironmentController.xib */; };
+		D1DF6A5E1DF94D0D00CA8F8B /* HRNoHighLightedButton.m in Sources */ = {isa = PBXBuildFile; fileRef = D1DF6A5D1DF94D0D00CA8F8B /* HRNoHighLightedButton.m */; };
 		D1E35D871D90DE89002A766C /* AutherTimePickView.m in Sources */ = {isa = PBXBuildFile; fileRef = D1E35D861D90DE89002A766C /* AutherTimePickView.m */; };
 		D1EFCAC31D88EDD20045A0C0 /* DoorLockModel.m in Sources */ = {isa = PBXBuildFile; fileRef = D1EFCAC21D88EDD20045A0C0 /* DoorLockModel.m */; };
 		DAE2A790C81C0FDB9C617E84 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DC40F28764523F49428DB0CE /* libPods.a */; };
@@ -346,6 +369,23 @@
 		D1147BD71DB0B80200ADEECC /* GTMBase64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTMBase64.m; sourceTree = "<group>"; };
 		D1147BD81DB0B80200ADEECC /* GTMDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMDefines.h; sourceTree = "<group>"; };
 		D1147BD91DB0B80200ADEECC /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		D11913BB1E0296E400ED1B9A /* AddTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddTextView.h; sourceTree = "<group>"; };
+		D11913BC1E0296E400ED1B9A /* AddTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddTextView.m; sourceTree = "<group>"; };
+		D11913BD1E0296E400ED1B9A /* AddTextView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddTextView.xib; sourceTree = "<group>"; };
+		D11913BE1E0296E400ED1B9A /* emotion.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = emotion.png; sourceTree = "<group>"; };
+		D11913BF1E0296E400ED1B9A /* ic_action_add.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_action_add.png; sourceTree = "<group>"; };
+		D11913C01E0296E400ED1B9A /* ico_login_user.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ico_login_user.png; sourceTree = "<group>"; };
+		D11913C11E0296E400ED1B9A /* TextInteractionController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextInteractionController.h; sourceTree = "<group>"; };
+		D11913C21E0296E400ED1B9A /* TextInteractionController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextInteractionController.m; sourceTree = "<group>"; };
+		D11913C31E0296E400ED1B9A /* TextInteractionController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TextInteractionController.xib; sourceTree = "<group>"; };
+		D11913C41E0296E400ED1B9A /* UserCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserCell.h; sourceTree = "<group>"; };
+		D11913C51E0296E400ED1B9A /* UserCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserCell.m; sourceTree = "<group>"; };
+		D11913C61E0296E400ED1B9A /* UserCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UserCell.xib; sourceTree = "<group>"; };
+		D11913C71E0296E400ED1B9A /* XiaoRuiCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XiaoRuiCell.h; sourceTree = "<group>"; };
+		D11913C81E0296E400ED1B9A /* XiaoRuiCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XiaoRuiCell.m; sourceTree = "<group>"; };
+		D11913C91E0296E400ED1B9A /* XiaoRuiCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XiaoRuiCell.xib; sourceTree = "<group>"; };
+		D11913CA1E0296E400ED1B9A /* XMGHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMGHeader.h; sourceTree = "<group>"; };
+		D11913CB1E0296E400ED1B9A /* XMGHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XMGHeader.m; sourceTree = "<group>"; };
 		D12BC7811DB1DA9E00D84B12 /* AccountManagementController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccountManagementController.m; sourceTree = "<group>"; };
 		D1352D491D9E0ECB003A83AB /* AddNewDeviceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddNewDeviceViewController.h; sourceTree = "<group>"; };
 		D1352D4A1D9E0ECB003A83AB /* AddNewDeviceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddNewDeviceViewController.m; sourceTree = "<group>"; };
@@ -381,6 +421,12 @@
 		D1405BB01DBDA99700E19C5F /* WaitController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WaitController.m; sourceTree = "<group>"; };
 		D1405BB41DBDAA0000E19C5F /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D1405BB61DBDAA0B00E19C5F /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
+		D14CF4DD1E00E8970005596F /* HomeControllController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeControllController.h; sourceTree = "<group>"; };
+		D14CF4DE1E00E8970005596F /* HomeControllController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeControllController.m; sourceTree = "<group>"; };
+		D14CF4DF1E00E8970005596F /* HomeControllController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HomeControllController.xib; sourceTree = "<group>"; };
+		D14CF4EA1E011B770005596F /* InfraredDeviceCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfraredDeviceCell.h; sourceTree = "<group>"; };
+		D14CF4EB1E011B770005596F /* InfraredDeviceCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfraredDeviceCell.m; sourceTree = "<group>"; };
+		D14CF4EC1E011B770005596F /* InfraredDeviceCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InfraredDeviceCell.xib; sourceTree = "<group>"; };
 		D14D38AE1DED378800551FD3 /* HRRefreshFooter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HRRefreshFooter.h; sourceTree = "<group>"; };
 		D14D38AF1DED378800551FD3 /* HRRefreshFooter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HRRefreshFooter.m; sourceTree = "<group>"; };
 		D14D38B41DED384D00551FD3 /* DoorLockRecordConroller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DoorLockRecordConroller.h; sourceTree = "<group>"; };
@@ -669,6 +715,18 @@
 		D1B3CB3C1D966DCA009F96D2 /* HerolifeLabelCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HerolifeLabelCell.h; sourceTree = "<group>"; };
 		D1B3CB3D1D966DCA009F96D2 /* HerolifeLabelCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HerolifeLabelCell.m; sourceTree = "<group>"; };
 		D1B3CB3E1D966DCA009F96D2 /* HerolifeLabelCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HerolifeLabelCell.xib; sourceTree = "<group>"; };
+		D1B50E261DFE3DC000CC83EF /* UUBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UUBar.h; sourceTree = "<group>"; };
+		D1B50E271DFE3DC000CC83EF /* UUBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UUBar.m; sourceTree = "<group>"; };
+		D1B50E281DFE3DC000CC83EF /* UUBarChart.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UUBarChart.h; sourceTree = "<group>"; };
+		D1B50E291DFE3DC000CC83EF /* UUBarChart.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UUBarChart.m; sourceTree = "<group>"; };
+		D1B50E2A1DFE3DC000CC83EF /* UUChart.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UUChart.h; sourceTree = "<group>"; };
+		D1B50E2B1DFE3DC000CC83EF /* UUChart.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UUChart.m; sourceTree = "<group>"; };
+		D1B50E2C1DFE3DC000CC83EF /* UUChartLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UUChartLabel.h; sourceTree = "<group>"; };
+		D1B50E2D1DFE3DC000CC83EF /* UUChartLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UUChartLabel.m; sourceTree = "<group>"; };
+		D1B50E2E1DFE3DC000CC83EF /* UUColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UUColor.h; sourceTree = "<group>"; };
+		D1B50E2F1DFE3DC000CC83EF /* UUColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UUColor.m; sourceTree = "<group>"; };
+		D1B50E301DFE3DC000CC83EF /* UULineChart.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UULineChart.h; sourceTree = "<group>"; };
+		D1B50E311DFE3DC000CC83EF /* UULineChart.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UULineChart.m; sourceTree = "<group>"; };
 		D1B7923B1D8BF78C00DDA4DD /* EBBannerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EBBannerView.h; sourceTree = "<group>"; };
 		D1B7923C1D8BF78C00DDA4DD /* EBBannerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EBBannerView.m; sourceTree = "<group>"; };
 		D1B7923D1D8BF78C00DDA4DD /* EBBannerView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EBBannerView.xib; sourceTree = "<group>"; };
@@ -698,6 +756,8 @@
 		D1DF6A571DF9076D00CA8F8B /* EnvironmentController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EnvironmentController.h; sourceTree = "<group>"; };
 		D1DF6A581DF9076D00CA8F8B /* EnvironmentController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EnvironmentController.m; sourceTree = "<group>"; };
 		D1DF6A591DF9076D00CA8F8B /* EnvironmentController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EnvironmentController.xib; sourceTree = "<group>"; };
+		D1DF6A5C1DF94D0D00CA8F8B /* HRNoHighLightedButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HRNoHighLightedButton.h; sourceTree = "<group>"; };
+		D1DF6A5D1DF94D0D00CA8F8B /* HRNoHighLightedButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HRNoHighLightedButton.m; sourceTree = "<group>"; };
 		D1E35D851D90DE89002A766C /* AutherTimePickView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AutherTimePickView.h; path = ../AutherTimePickView.h; sourceTree = "<group>"; };
 		D1E35D861D90DE89002A766C /* AutherTimePickView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AutherTimePickView.m; path = ../AutherTimePickView.m; sourceTree = "<group>"; };
 		D1E35D881D916BCB002A766C /* ShouQuanManagerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShouQuanManagerController.h; sourceTree = "<group>"; };
@@ -1037,6 +1097,43 @@
 			path = base64;
 			sourceTree = "<group>";
 		};
+		D11913BA1E0296E400ED1B9A /* TextInteraction */ = {
+			isa = PBXGroup;
+			children = (
+				D11913BB1E0296E400ED1B9A /* AddTextView.h */,
+				D11913BC1E0296E400ED1B9A /* AddTextView.m */,
+				D11913BD1E0296E400ED1B9A /* AddTextView.xib */,
+				D11913BE1E0296E400ED1B9A /* emotion.png */,
+				D11913BF1E0296E400ED1B9A /* ic_action_add.png */,
+				D11913C01E0296E400ED1B9A /* ico_login_user.png */,
+				D11913C11E0296E400ED1B9A /* TextInteractionController.h */,
+				D11913C21E0296E400ED1B9A /* TextInteractionController.m */,
+				D11913C31E0296E400ED1B9A /* TextInteractionController.xib */,
+				D11913C41E0296E400ED1B9A /* UserCell.h */,
+				D11913C51E0296E400ED1B9A /* UserCell.m */,
+				D11913C61E0296E400ED1B9A /* UserCell.xib */,
+				D11913C71E0296E400ED1B9A /* XiaoRuiCell.h */,
+				D11913C81E0296E400ED1B9A /* XiaoRuiCell.m */,
+				D11913C91E0296E400ED1B9A /* XiaoRuiCell.xib */,
+				D11913CA1E0296E400ED1B9A /* XMGHeader.h */,
+				D11913CB1E0296E400ED1B9A /* XMGHeader.m */,
+			);
+			path = TextInteraction;
+			sourceTree = "<group>";
+		};
+		D14CF4DC1E00E7800005596F /* HomeControll */ = {
+			isa = PBXGroup;
+			children = (
+				D14CF4DD1E00E8970005596F /* HomeControllController.h */,
+				D14CF4DE1E00E8970005596F /* HomeControllController.m */,
+				D14CF4DF1E00E8970005596F /* HomeControllController.xib */,
+				D14CF4EA1E011B770005596F /* InfraredDeviceCell.h */,
+				D14CF4EB1E011B770005596F /* InfraredDeviceCell.m */,
+				D14CF4EC1E011B770005596F /* InfraredDeviceCell.xib */,
+			);
+			path = HomeControll;
+			sourceTree = "<group>";
+		};
 		D14D38B71DED5AB300551FD3 /* AddNewWIFI */ = {
 			isa = PBXGroup;
 			children = (
@@ -1269,6 +1366,7 @@
 		D1A7DC001D8117DD00D051B0 /* Library */ = {
 			isa = PBXGroup;
 			children = (
+				D1B50E251DFE3DC000CC83EF /* UUChart */,
 				D1147BD51DB0B80200ADEECC /* base64 */,
 				D158E5AE1DAB36EA000DB8C9 /* UMMobClick.framework */,
 				D1B792391D8BF78C00DDA4DD /* EBForeNotification */,
@@ -1596,6 +1694,8 @@
 				D1A7DD011D8117DD00D051B0 /* HRLabel.m */,
 				D1A7DD021D8117DD00D051B0 /* TipsLabel.h */,
 				D1A7DD031D8117DD00D051B0 /* TipsLabel.m */,
+				D1DF6A5C1DF94D0D00CA8F8B /* HRNoHighLightedButton.h */,
+				D1DF6A5D1DF94D0D00CA8F8B /* HRNoHighLightedButton.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1679,6 +1779,25 @@
 			path = WiFiList/NewFeature;
 			sourceTree = "<group>";
 		};
+		D1B50E251DFE3DC000CC83EF /* UUChart */ = {
+			isa = PBXGroup;
+			children = (
+				D1B50E261DFE3DC000CC83EF /* UUBar.h */,
+				D1B50E271DFE3DC000CC83EF /* UUBar.m */,
+				D1B50E281DFE3DC000CC83EF /* UUBarChart.h */,
+				D1B50E291DFE3DC000CC83EF /* UUBarChart.m */,
+				D1B50E2A1DFE3DC000CC83EF /* UUChart.h */,
+				D1B50E2B1DFE3DC000CC83EF /* UUChart.m */,
+				D1B50E2C1DFE3DC000CC83EF /* UUChartLabel.h */,
+				D1B50E2D1DFE3DC000CC83EF /* UUChartLabel.m */,
+				D1B50E2E1DFE3DC000CC83EF /* UUColor.h */,
+				D1B50E2F1DFE3DC000CC83EF /* UUColor.m */,
+				D1B50E301DFE3DC000CC83EF /* UULineChart.h */,
+				D1B50E311DFE3DC000CC83EF /* UULineChart.m */,
+			);
+			path = UUChart;
+			sourceTree = "<group>";
+		};
 		D1B792391D8BF78C00DDA4DD /* EBForeNotification */ = {
 			isa = PBXGroup;
 			children = (
@@ -1740,6 +1859,8 @@
 		D1DF6A551DF905DA00CA8F8B /* XiaoRui */ = {
 			isa = PBXGroup;
 			children = (
+				D11913BA1E0296E400ED1B9A /* TextInteraction */,
+				D14CF4DC1E00E7800005596F /* HomeControll */,
 				D194FE641DF1702800FE146E /* CreateXiaoRui */,
 				D1DF6A561DF906EB00CA8F8B /* Environment */,
 			);
@@ -1909,18 +2030,25 @@
 				AAA49AEF1D9D0C0700D4D248 /* MissWebViewController.xib in Resources */,
 				D1352D6A1D9E0ECB003A83AB /* icon_qr.png in Resources */,
 				D1352D741D9E0ECB003A83AB /* whiteBack@2x.png in Resources */,
+				D11913D41E0296E400ED1B9A /* UserCell.xib in Resources */,
+				D11913D01E0296E400ED1B9A /* ico_login_user.png in Resources */,
 				AAA8A9D71D8CEB4100ABA020 /* 未选择.png in Resources */,
 				AAA8A9D91D8CEB4100ABA020 /* 授权选择@2x.png in Resources */,
 				D1BDCAA81D926F530022BDE2 /* LaunchScreen.storyboard in Resources */,
 				1868B8EB1D76C4A200D19386 /* 后退@2x.png in Resources */,
 				1868B9191D79289500D19386 /* 1.jpg in Resources */,
 				D1352D6B1D9E0ECB003A83AB /* instructions.rtf in Resources */,
+				D11913D21E0296E400ED1B9A /* TextInteractionController.xib in Resources */,
 				AAA8A9D81D8CEB4100ABA020 /* 未选择@2x.png in Resources */,
 				D1352D711D9E0ECB003A83AB /* Scanning line@2x.png in Resources */,
 				D1405BB51DBDAA0000E19C5F /* Info.plist in Resources */,
 				D17CF0FC1D6567E7007C95DD /* Assets.xcassets in Resources */,
+				D11913CF1E0296E400ED1B9A /* ic_action_add.png in Resources */,
 				D1B7924A1D8BF78C00DDA4DD /* EBMute.mp3 in Resources */,
 				D17CF0FA1D6567E7007C95DD /* Main.storyboard in Resources */,
+				D14CF4EE1E011B770005596F /* InfraredDeviceCell.xib in Resources */,
+				D11913D61E0296E400ED1B9A /* XiaoRuiCell.xib in Resources */,
+				D14CF4E11E00E8970005596F /* HomeControllController.xib in Resources */,
 				D1B3CB3B1D966DB5009F96D2 /* HerolifeImageCell.xib in Resources */,
 				D1352D681D9E0ECB003A83AB /* Default-568h@3x-1.png in Resources */,
 				18C697A71D7462B9004DA2B1 /* JCAlertView.bundle in Resources */,
@@ -1936,7 +2064,9 @@
 				AAA8A9B71D8CE9D900ABA020 /* arrow_down@2x.png in Resources */,
 				D1B792481D8BF78C00DDA4DD /* EBBannerView.xib in Resources */,
 				1868B8EF1D76CD3C00D19386 /* 智能开锁@2x.png in Resources */,
+				D11913CE1E0296E400ED1B9A /* emotion.png in Resources */,
 				D1352D761D9E0ECB003A83AB /* XiaoRuiNewQRcode.xib in Resources */,
+				D11913CD1E0296E400ED1B9A /* AddTextView.xib in Resources */,
 				AAA8A9D51D8CEB4100ABA020 /* 授权选择.png in Resources */,
 				D1A7DD361D8117DD00D051B0 /* MJRefresh.bundle in Resources */,
 				D1352D651D9E0ECB003A83AB /* backWhite@2x.png in Resources */,
@@ -2043,6 +2173,7 @@
 				D1A7DDB41D8117DD00D051B0 /* RegisterViewController.m in Sources */,
 				D1AA2E651D83F48600D1AEC9 /* DeviceListModel.m in Sources */,
 				D1A7DD941D8117DD00D051B0 /* HRNavigationBar.m in Sources */,
+				D1B50E361DFE3DC000CC83EF /* UUColor.m in Sources */,
 				18C697AB1D7462B9004DA2B1 /* UIView+SDAutoLayout.m in Sources */,
 				D18EF1D21DAE44C200A069D6 /* FTPopOverMenu.m in Sources */,
 				D1AA2E6C1D83F50500D1AEC9 /* AddLockController.m in Sources */,
@@ -2050,6 +2181,7 @@
 				D14D38E31DED5BA500551FD3 /* ESPTouchTask.m in Sources */,
 				D1A7DD311D8117DD00D051B0 /* MJRefreshBackNormalFooter.m in Sources */,
 				D1A7DD771D8117DD00D051B0 /* SDWebImageDownloaderOperation.m in Sources */,
+				D11913D71E0296E400ED1B9A /* XMGHeader.m in Sources */,
 				D1A7DDAF1D8117DD00D051B0 /* SVProgressTool.m in Sources */,
 				D1A7DD9C1D8117DD00D051B0 /* HRMessageData.m in Sources */,
 				D14D38B01DED378800551FD3 /* HRRefreshFooter.m in Sources */,
@@ -2069,12 +2201,14 @@
 				D1A7DD3B1D8117DD00D051B0 /* UIView+MJExtension.m in Sources */,
 				D1A7DD8C1D8117DD00D051B0 /* CALayer+Anim.m in Sources */,
 				D1A7DD8B1D8117DD00D051B0 /* AFNJSONResponseSerializerWithData.m in Sources */,
+				D11913D51E0296E400ED1B9A /* XiaoRuiCell.m in Sources */,
 				D1352D751D9E0ECB003A83AB /* XiaoRuiNewQRcode.m in Sources */,
 				D1A7DD421D8117DD00D051B0 /* FMResultSet.m in Sources */,
 				D1A7DD2E1D8117DD00D051B0 /* MJRefreshAutoNormalFooter.m in Sources */,
 				18C697A61D7462B9004DA2B1 /* CALayer+Anim.m in Sources */,
 				D1A7DD971D8117DD00D051B0 /* HRTabBarButton.m in Sources */,
 				D1A7DD721D8117DD00D051B0 /* NSData+ImageContentType.m in Sources */,
+				D11913D11E0296E400ED1B9A /* TextInteractionController.m in Sources */,
 				D1A7DDB01D8117DD00D051B0 /* HRButton.m in Sources */,
 				D1A7DDA71D8117DD00D051B0 /* CreateXRHttpTools.m in Sources */,
 				D1352D7E1D9E1065003A83AB /* NextController.m in Sources */,
@@ -2088,6 +2222,7 @@
 				D1E35D871D90DE89002A766C /* AutherTimePickView.m in Sources */,
 				D14D38D81DED5BA500551FD3 /* ESP_ByteUtil.m in Sources */,
 				D1A7DDBB1D8117DD00D051B0 /* WiFiListCell.m in Sources */,
+				D1B50E371DFE3DC000CC83EF /* UULineChart.m in Sources */,
 				D12BC7821DB1DA9E00D84B12 /* AccountManagementController.m in Sources */,
 				D1DD1D941DF655150028764F /* CreateXiaoRuiController.m in Sources */,
 				D1405BAF1DBDA96500E19C5F /* NSString+Util.m in Sources */,
@@ -2098,6 +2233,7 @@
 				18C697A31D7462B9004DA2B1 /* PCCircle.m in Sources */,
 				D1A7DD9D1D8117DD00D051B0 /* HRNewUser.m in Sources */,
 				D1A7DDB21D8117DD00D051B0 /* TipsLabel.m in Sources */,
+				D11913D31E0296E400ED1B9A /* UserCell.m in Sources */,
 				D1A7DD7C1D8117DD00D051B0 /* UIImage+MultiFormat.m in Sources */,
 				D1352D721D9E0ECB003A83AB /* SearchDeviceView.m in Sources */,
 				D17076761D94D6BB0027C46B /* LoginController.m in Sources */,
@@ -2105,6 +2241,7 @@
 				D1A7DD781D8117DD00D051B0 /* SDWebImageManager.m in Sources */,
 				D14D38DB1DED5BA500551FD3 /* ESP_WifiUtil.m in Sources */,
 				D1352D781D9E0F35003A83AB /* HRTabBarViewController.m in Sources */,
+				D1B50E331DFE3DC000CC83EF /* UUBarChart.m in Sources */,
 				18C697A81D7462B9004DA2B1 /* JCAlertView.m in Sources */,
 				1868B9131D79200200D19386 /* ChooseBackPicCtl.m in Sources */,
 				D1A7DD211D8117DD00D051B0 /* ForgetController.m in Sources */,
@@ -2130,6 +2267,7 @@
 				D1A7DD951D8117DD00D051B0 /* HRNavigationViewController.m in Sources */,
 				D1A7DD921D8117DD00D051B0 /* UIImageView+Util.m in Sources */,
 				D14D38E41DED5BA500551FD3 /* ESPTouchTaskParameter.m in Sources */,
+				D14CF4ED1E011B770005596F /* InfraredDeviceCell.m in Sources */,
 				D1A7DD9E1D8117DD00D051B0 /* HRSceneData.m in Sources */,
 				D1A7DD301D8117DD00D051B0 /* MJRefreshBackGifFooter.m in Sources */,
 				D1A7DD281D8117DD00D051B0 /* MJRefreshAutoFooter.m in Sources */,
@@ -2143,11 +2281,14 @@
 				D1A7DD751D8117DD00D051B0 /* SDWebImageDecoder.m in Sources */,
 				D1A7DD6F1D8117DD00D051B0 /* AsyncSocket.m in Sources */,
 				D1B7924D1D8BF78C00DDA4DD /* UILabel+ContentSize.m in Sources */,
+				D1B50E351DFE3DC000CC83EF /* UUChartLabel.m in Sources */,
 				D1A7DD341D8117DD00D051B0 /* MJRefreshNormalHeader.m in Sources */,
 				D14D38E11DED5BA500551FD3 /* ESPTouchGenerator.m in Sources */,
+				D1DF6A5E1DF94D0D00CA8F8B /* HRNoHighLightedButton.m in Sources */,
 				AA2C52751D91574100D0BD3D /* NSString+PushSet.m in Sources */,
 				D1147BDA1DB0B80200ADEECC /* GTMBase64.m in Sources */,
 				D1A7DD8A1D8117DD00D051B0 /* AFHTTPSessionManager+Util.m in Sources */,
+				D14CF4E01E00E8970005596F /* HomeControllController.m in Sources */,
 				D14D38DE1DED5BA500551FD3 /* ESPDatumCode.m in Sources */,
 				D1007CE01D8694280079D3DD /* DeviceAutherModel.m in Sources */,
 				D1352D6F1D9E0ECB003A83AB /* QRViewController.m in Sources */,
@@ -2184,10 +2325,13 @@
 				D1A7DD7A1D8117DD00D051B0 /* UIButton+WebCache.m in Sources */,
 				D1A7DDA21D8117DD00D051B0 /* HRXiaorui.m in Sources */,
 				D1A7DDB91D8117DD00D051B0 /* HRPushMode.m in Sources */,
+				D1B50E341DFE3DC000CC83EF /* UUChart.m in Sources */,
 				D1A7DD2C1D8117DD00D051B0 /* MJRefreshHeader.m in Sources */,
 				D14D38DA1DED5BA500551FD3 /* ESP_NetUtil.m in Sources */,
+				D1B50E321DFE3DC000CC83EF /* UUBar.m in Sources */,
 				D1A7DDA91D8117DD00D051B0 /* HRHTTPTool.m in Sources */,
 				AA2C52781D91578D00D0BD3D /* PushSettingController.m in Sources */,
+				D11913CC1E0296E400ED1B9A /* AddTextView.m in Sources */,
 				D1A7DD911D8117DD00D051B0 /* UIImage+Util.m in Sources */,
 				D14D38EC1DEE683D00551FD3 /* EnterPSWController.m in Sources */,
 				D19CE3131DD40B5F008E7F3A /* DoorRecordCell.m in Sources */,

@@ -55,6 +55,7 @@
 
 #import <SystemConfiguration/CaptiveNetwork.h>
 
+#import "HomeControllController.h"
 @interface AppDelegate ()<AsyncSocketDelegate, UNUserNotificationCenterDelegate>
 /** time */
 @property(nonatomic, strong) NSTimer *heartTimer;
@@ -86,8 +87,14 @@ static NSInteger disconnectCount = 0;
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
 	//友盟统计
 	[self addUmeng];
+//    self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+//    HomeControllController *enVC = [[HomeControllController alloc] init];
+//    HRNavigationViewController *nav = [[HRNavigationViewController alloc] initWithRootViewController:enVC];
+//    self.window.rootViewController = nav;
+//    [self.window makeKeyAndVisible];
+    
 	//显示界面
-	[self setupWindow];
+    [self setupWindow];
 	
 	//集成ShareSDK
 	[self addShareSDK];

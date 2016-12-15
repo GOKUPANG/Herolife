@@ -133,12 +133,8 @@ static int const HRTimeDuration = 60;
                             [self.navigationController pushViewController:addLockVC animated:YES];
                         }else
                         {
-                            [SVProgressTool hr_showErrorWithLongTimeStatus:@"该门锁在其他帐号上已经添加,请在其他帐号上删除该门锁,再重试!"];
                             DDLogWarn(@"该门锁在其他帐号上已经添加,请在其他帐号上删除该门锁,再重试!");
-                            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                                
-                                [self cancelButtonClick:self.cancelButton];
-                            });
+                            [self showAlertControllerWithUUID: uuid];
                         }
                     }
                 }
@@ -153,6 +149,25 @@ static int const HRTimeDuration = 60;
     }];
     
 }
+
+- (void)showAlertControllerWithUUID:(NSString *)UUID
+{
+    [SVProgressTool hr_dismiss];
+    [self.view endEditing:YES];
+    NSString *title = [NSString stringWithFormat:@"该门锁%@在其他帐号上已经添加,请在其他帐号上删除该门锁,再重试!", UUID];
+    UIAlertController * alertController = [UIAlertController alertControllerWithTitle:@"" message:title preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        
+        [self cancelButtonClick:self.cancelButton];
+    }];
+    
+    [alertController addAction:cancelAction];
+    
+    
+    [self presentViewController:alertController animated:YES completion:nil];
+}
+
 #pragma mark - 创建门锁HTTP
 - (void)createLockHTTPWithUUID:(NSString *)uuid
 {
@@ -255,10 +270,7 @@ static BOOL isReceiveSet31 = NO;
     NSDictionary *dst = dict[@"hrpush"][@"src"];
     [self sendSocketFailWithSetWithUUID:dict[@"msg"][@"uuid"] dst:dst];
     if (!isReceiveSet31) {
-        [SVProgressTool hr_showErrorWithStatus:@"该锁已在其他帐号上添加,请在其他帐号上删除后重试!"];
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            [self cancelButtonClick:self.cancelButton];
-        });
+        [self showAlertControllerWithUUID:dict[@"msg"][@"uuid"]];
     }
     isReceiveSet31 = YES;
    

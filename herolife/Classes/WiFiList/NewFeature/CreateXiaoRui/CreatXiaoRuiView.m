@@ -260,10 +260,8 @@
                 
             }else
             {
-                [SVProgressTool hr_showErrorWithLongTimeStatus:@"该小睿在其他帐号上已经激活,请在其他帐号上删除该小睿,再重试!"];
-                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                    [weakSelf backButtonClick:weakSelf.backButton];
-                });
+                //弹出提示框
+                [weakSelf showAlertControllerWithUUID:data.uuid];
             }
             
         }
@@ -271,10 +269,47 @@
     }];
    
 }
-
+- (void)showAlertControllerWithUUID:(NSString *)UUID
+{
+    [self endEditing:YES];
+    [SVProgressTool hr_dismiss];
+    NSString *title = [NSString stringWithFormat:@"该设备%@已在其他用户上注册,请删除后再进行激活操作!", UUID];
+    UIAlertController * alertController = [UIAlertController alertControllerWithTitle:@"" message:title preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        
+        HRTabBarViewController *tabVC = (HRTabBarViewController *)[NSObject activityViewController];
+        for (HRNavigationViewController *nav in tabVC.childViewControllers) {
+            for (UIViewController *VC in nav.childViewControllers) {
+                if ([NSStringFromClass([VC class]) isEqualToString:@"CreateXiaoRuiController"]) {
+                    [VC.navigationController popViewControllerAnimated:NO];
+                }
+            }
+        }
+        [self goToHomeList];
+    }];
+    
+    [alertController addAction:cancelAction];
+    
+    HRTabBarViewController *tabVC = (HRTabBarViewController *)[NSObject activityViewController];
+    for (HRNavigationViewController *nav in tabVC.childViewControllers) {
+        for (UIViewController *VC in nav.childViewControllers) {
+            if ([NSStringFromClass([VC class]) isEqualToString:@"CreateXiaoRuiController"]) {
+                
+                [VC presentViewController:alertController animated:YES completion:nil];
+            }
+        }
+    }
+}
 - (void)drawRect:(CGRect)rect
 {
     [super drawRect:rect];
+    
+    
+    UIView *backView = [[UIView alloc] initWithFrame:self.bounds];
+    backView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.2];
+    [self insertSubview:backView aboveSubview:self.backImageView];
+    
     
     NSInteger  PicNum =   [[NSUserDefaults standardUserDefaults] integerForKey:@"PicNum"];
     
