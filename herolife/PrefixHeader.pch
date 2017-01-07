@@ -26,7 +26,9 @@
 #import "AsyncSocket.h"
 
 #import "HRSqlite.h"
+#import "POP.h"
 
+#import "HRCommonButton.h"
 
 #import "UIView+SDAutoLayout.h"
 #define HRUIScreenW [UIScreen mainScreen].bounds.size.width
@@ -197,6 +199,8 @@
 #define kNotificationTestingDo @"kNotificationTestingDo"
 /// 控制开关 通知
 #define kNotificationControlDo @"kNotificationControlDo"
+/// 首页状态 通知 通知
+#define kNotificationHomeStatus @"kNotificationHomeStatus"
 /// 文本交互 通知
 #define kNotificationMessage @"kNotificationMessage"
 /// 创建情景 通知
@@ -273,6 +277,11 @@
 /********************************************** 通知 key *******************/
 /// 发送通知
 #define kNotification [NSNotificationCenter defaultCenter]
+
+/// 家居控制界面之 - 注册开关界面创建成功之后跳转的通知
+#define kNotificationDofooterViewPop @"kNotificationDofooterViewPop"
+/// 家居控制界面之 - 刷新设备列表
+#define kNotificationRefreshXiaoRuiDevice @"kNotificationRefreshXiaoRuiDevice"
 /// 让tabbar按钮设置初始值 通知
 #define kNotificationInitializationSelecteButton @"kNotificationInitializationSelecteButton"
 /// 用户注册传值 通知

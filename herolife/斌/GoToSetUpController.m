@@ -288,17 +288,26 @@ static int const HRTimeDuration = 601;
         }
     }else
     {
-        NSURL *url =[NSURL URLWithString:UIApplicationOpenSettingsURLString];
-        
-        
+        NSURL *url = [NSURL URLWithString:@"app-Prefs:root=WIFI"];
         if ([[UIApplication sharedApplication] canOpenURL:url]) {
-            
             [[UIApplication sharedApplication] openURL:url];
             
             //保存一个跳转到系统的的记录跳转状态
             [kUserDefault setObject:@"isPushToSystem" forKey:isPushToSystem];
             [kUserDefault synchronize];
         }
+        
+//        NSURL *url =[NSURL URLWithString:UIApplicationOpenSettingsURLString];
+//        
+//        
+//        if ([[UIApplication sharedApplication] canOpenURL:url]) {
+//            
+//            [[UIApplication sharedApplication] openURL:url];
+//            
+//            //保存一个跳转到系统的的记录跳转状态
+//            [kUserDefault setObject:@"isPushToSystem" forKey:isPushToSystem];
+//            [kUserDefault synchronize];
+//        }
     }
     
    

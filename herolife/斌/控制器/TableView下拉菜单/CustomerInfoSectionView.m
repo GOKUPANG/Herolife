@@ -188,6 +188,7 @@
 }
 - (void)awakeFromNib
 {
+    [super awakeFromNib];
     _isOpen = NO;
     
 }

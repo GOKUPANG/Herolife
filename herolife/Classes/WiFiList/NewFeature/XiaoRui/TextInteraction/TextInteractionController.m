@@ -41,10 +41,7 @@
 /** 顶部条 */
 @property(nonatomic, weak) HRNavigationBar *navView;
 
-/** 背景图片*/
-
-@property(nonatomic,strong)UIImageView *backImgView;
-
+@property (weak, nonatomic) IBOutlet UIImageView *backImgView;
 
 @end
 
@@ -222,7 +219,7 @@ static int refreshCount = 1;
 
     
     //彬修改  
-    self.tableView.backgroundView =[[UIImageView alloc  ]initWithImage:[UIImage imageNamed:@"1.jpg"]];
+//    self.tableView.backgroundView =[[UIImageView alloc  ]initWithImage:[UIImage imageNamed:@"1.jpg"]];
     
     
     
@@ -348,12 +345,17 @@ static int refreshCount = 1;
 - (void)addPopView
 {	//添加弹框
 	UIView *eptView = [[UIView alloc] initWithFrame:CGRectMake(0, 64, UIScreenW, UIScreenH)];
-	eptView.backgroundColor = [UIColor colorWithR:127 G:127 B:127 alpha:1.0];
+//	eptView.backgroundColor = [UIColor colorWithR:127 G:127 B:127 alpha:1.0];
+    
+    eptView.backgroundColor = [UIColor clearColor];
 	
 	self.eptView = eptView;
 	self.textView = [[NSBundle mainBundle] loadNibNamed:@"AddTextView" owner:self options:nil].firstObject;
-	self.textView.frame = CGRectMake(30, UIScreenH *0.15, UIScreenW - 60, 195);
-	self.textView.backgroundColor = [UIColor colorWithR:229 G:208 B:207 alpha:1.0];
+	self.textView.frame = CGRectMake(30, UIScreenH *0.15, UIScreenW - 60, 150);
+	self.textView.backgroundColor = [UIColor whiteColor];
+    self.textView.layer.cornerRadius = 10;
+    self.textView.layer.masksToBounds = YES;
+    
 	[self.eptView addSubview:self.textView];
 	[self.view addSubview:self.eptView];
 	self.eptView.hidden = NO;
@@ -386,6 +388,8 @@ static int refreshCount = 1;
             view.hidden = NO;
         }
     }
+    
+    [kNotification removeObserver:self];
 
 }
 #pragma mark - textFieldDelegate
@@ -415,8 +419,8 @@ static int refreshCount = 1;
 - (void)receviedWithNotOnline
 {
 	
-//	[SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
-//	[SVProgressHUD showErrorWithStatus:@"目标不在线!" ];
+	[SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
+	[SVProgressHUD showErrorWithStatus:@"目标不在线!" ];
 }
 - (void)receviedWithMessage:(NSNotification *)note
 {

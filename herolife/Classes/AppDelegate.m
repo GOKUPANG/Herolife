@@ -55,7 +55,7 @@
 
 #import <SystemConfiguration/CaptiveNetwork.h>
 
-#import "HomeControllController.h"
+#import "SceneModelSelectController.h"
 @interface AppDelegate ()<AsyncSocketDelegate, UNUserNotificationCenterDelegate>
 /** time */
 @property(nonatomic, strong) NSTimer *heartTimer;
@@ -87,8 +87,9 @@ static NSInteger disconnectCount = 0;
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
 	//友盟统计
 	[self addUmeng];
+    
 //    self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
-//    HomeControllController *enVC = [[HomeControllController alloc] init];
+//    SceneModelSelectController *enVC = [[SceneModelSelectController alloc] init];
 //    HRNavigationViewController *nav = [[HRNavigationViewController alloc] initWithRootViewController:enVC];
 //    self.window.rootViewController = nav;
 //    [self.window makeKeyAndVisible];
@@ -626,12 +627,18 @@ static BOOL isReceiveSet3 = NO;
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {
-	
+    
+    [kUserDefault setObject:@"isToNewFeture" forKey:@"fisteDownLoadHerolife"];
+    [kUserDefault synchronize];
 }
 - (void)applicationDidReceiveMemoryWarning:(UIApplication *)application
 {
 	[[SDWebImageManager sharedManager].imageCache clearMemory];
 	[[SDWebImageManager sharedManager] cancelAll];
+    
+    
+    [kUserDefault setObject:@"isToNewFeture" forKey:@"fisteDownLoadHerolife"];
+    [kUserDefault synchronize];
 	
 }
 
@@ -962,7 +969,9 @@ static NSUInteger lengthInteger = 0;
 	//过滤服务器回复的pushok
 	
 	if ([jsonDict [@"hrpush"][@"desc"] isEqualToString:@"push ok"]) {
-		NSLog(@"接收到服务器的返回push ok- 要过滤掉");
+		DDLogWarn(@"接收到服务器的返回push ok- 要过滤掉");
+        //首页状态 通知
+        [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationHomeStatus object:nil userInfo:jsonDict];
 		
 	}
 	/****************************开锁接收数据的判断*****************************/
@@ -1149,7 +1158,7 @@ static NSUInteger lengthInteger = 0;
 		[self addDeleteSceneDict:jsonDict];
 		DDLogInfo(@"接收到删除情景 数据%@", jsonDict);
 		[[NSNotificationCenter defaultCenter] postNotificationName:kNotificationDeleteScene object:nil userInfo:jsonDict];
-		
+        
 	}
 	//控制情景
 	if ([jsonDict[@"hrpush"][@"type"] isEqualToString:@"control"] && [jsonDict[@"msg"][@"types"] isEqualToString:@"scene"]) {
@@ -1719,10 +1728,12 @@ static NSUInteger lengthInteger = 0;
 	
 	NSString *herolife = [kUserDefault objectForKey:@"fisteDownLoadHerolife"];
 	if (herolife.length < 1) {
+        
+        [kUserDefault setObject:@"isToNewFeture" forKey:@"fisteDownLoadHerolife"];
+        [kUserDefault synchronize];
+        
 		NewFeatureController *feature = [[NewFeatureController alloc] init];
 		self.window.rootViewController = feature;
-		[kUserDefault setObject:@"fisteDownLoadHerolife" forKey:@"fisteDownLoadHerolife"];
-		[kUserDefault synchronize];
 		return;
 	}
 	

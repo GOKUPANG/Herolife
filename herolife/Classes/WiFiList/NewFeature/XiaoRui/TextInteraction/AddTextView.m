@@ -29,10 +29,15 @@
 
 - (void)awakeFromNib
 {
+    [super awakeFromNib];
 	self.determineBtn.layer.cornerRadius = self.determineBtn.hr_height *0.5;
 	self.cancle.layer.cornerRadius = self.cancle.hr_height *0.5;
 	self.backgroundColor = [self.backgroundColor colorWithAlphaComponent:0.5];
 	[self.deviceName becomeFirstResponder];
+    self.deviceName.layer.cornerRadius = 5;
+    self.deviceName.layer.masksToBounds = YES;
+    self.deviceName.layer.borderWidth = 1;
+    self.deviceName.layer.borderColor = [UIColor blackColor].CGColor;
 	
 }
 - (void)addTapGesture

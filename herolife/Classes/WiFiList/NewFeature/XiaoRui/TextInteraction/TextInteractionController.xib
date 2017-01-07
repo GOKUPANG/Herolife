@@ -1,11 +1,11 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11542" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -13,6 +13,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="TextInteractionController">
             <connections>
                 <outlet property="addBtn" destination="p8J-c4-dO2" id="OZM-Ez-a6v"/>
+                <outlet property="backImgView" destination="CFX-5I-4OK" id="llI-6J-Fn7"/>
                 <outlet property="bottomView" destination="YH3-Cf-GVx" id="8nE-ly-d0j"/>
                 <outlet property="chartText" destination="qho-a3-hQp" id="iwX-Ps-WaL"/>
                 <outlet property="chartView" destination="UGe-E0-aHJ" id="Ssk-Ld-uCU"/>
@@ -25,6 +26,13 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="1.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="CFX-5I-4OK">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                </imageView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="331-eT-q5Y">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.19864106514084506" colorSpace="calibratedRGB"/>
+                </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UGe-E0-aHJ" userLabel="空view">
                     <rect key="frame" x="0.0" y="623" width="375" height="44"/>
                     <subviews>
@@ -68,7 +76,7 @@
                 </view>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Z93-fK-mAx">
                     <rect key="frame" x="0.0" y="0.0" width="375" height="623"/>
-                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <color key="sectionIndexBackgroundColor" red="0.99607843139999996" green="0.58823529409999997" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <connections>
                         <outlet property="dataSource" destination="-1" id="4s0-2U-owC"/>
@@ -80,16 +88,25 @@
             <constraints>
                 <constraint firstItem="Z93-fK-mAx" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="0hh-k7-S2k"/>
                 <constraint firstItem="UGe-E0-aHJ" firstAttribute="top" secondItem="Z93-fK-mAx" secondAttribute="bottom" id="25y-yv-Zhn"/>
+                <constraint firstItem="331-eT-q5Y" firstAttribute="bottom" secondItem="CFX-5I-4OK" secondAttribute="bottom" id="7xX-nD-te3"/>
+                <constraint firstItem="CFX-5I-4OK" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="I8D-AR-yZ4"/>
                 <constraint firstAttribute="trailing" secondItem="Z93-fK-mAx" secondAttribute="trailing" id="Jrm-0m-vMS"/>
+                <constraint firstItem="331-eT-q5Y" firstAttribute="trailing" secondItem="CFX-5I-4OK" secondAttribute="trailing" id="WVa-jS-Pqp"/>
                 <constraint firstAttribute="bottom" secondItem="UGe-E0-aHJ" secondAttribute="bottom" id="YH3-Cf-GVx"/>
+                <constraint firstItem="331-eT-q5Y" firstAttribute="leading" secondItem="CFX-5I-4OK" secondAttribute="leading" id="aAS-Qd-yU7"/>
                 <constraint firstItem="UGe-E0-aHJ" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="f9H-jW-Gfu"/>
+                <constraint firstAttribute="bottom" secondItem="CFX-5I-4OK" secondAttribute="bottom" id="fN6-Fv-PKo"/>
+                <constraint firstAttribute="trailing" secondItem="CFX-5I-4OK" secondAttribute="trailing" id="iB5-w5-qhR"/>
+                <constraint firstItem="CFX-5I-4OK" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="lvZ-GT-gwu"/>
                 <constraint firstItem="Z93-fK-mAx" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="maF-3d-fxZ"/>
+                <constraint firstItem="331-eT-q5Y" firstAttribute="top" secondItem="CFX-5I-4OK" secondAttribute="top" id="rGi-Fs-IQ8"/>
                 <constraint firstAttribute="trailing" secondItem="UGe-E0-aHJ" secondAttribute="trailing" id="sv1-2w-eE8"/>
             </constraints>
             <point key="canvasLocation" x="126.5" y="-188.5"/>
         </view>
     </objects>
     <resources>
+        <image name="1.jpg" width="750" height="1334"/>
         <image name="emotion.png" width="48" height="48"/>
         <image name="ic_action_add.png" width="30" height="30"/>
     </resources>

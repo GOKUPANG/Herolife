@@ -16,6 +16,18 @@
 #import "IrgmData.h"
 #import "HRDOData.h"
 #import "HRSceneData.h"
+#import "AddIraViewController.h"
+#import "EditViewController.h"
+#import "AirCtrlViewController.h"
+#import "GeneralInfraredCtrlViewController.h"
+#import "CurrencyCtrlController.h"
+#import "WindowCurtainsController.h"
+#import "SwitchViewController.h"
+#import "SceneController.h"
+#import "AddCurrencyView.h"
+#import "CurrencyController.h"
+#import "PopEditDoView.h"
+#import "IrgmStudyController.h"
 
 @interface HomeControllController ()<UICollectionViewDelegate, UICollectionViewDataSource,UIActionSheetDelegate,UIAlertViewDelegate>
 ///背景图片
@@ -40,8 +52,6 @@
 /** tableview */
 @property(nonatomic, strong) UITableView *tableView;
 @property(nonatomic, strong) UIView *popView;
-/** PopEditDoView */
-//@property(nonatomic, strong) PopEditDoView *doView;
 /** ept */
 @property(nonatomic, strong) UIView *eptView;
 /** iracView */
@@ -60,6 +70,10 @@
 @property(nonatomic, strong) UILongPressGestureRecognizer *longPressDO;
 /** 情景图标名称 */
 @property(nonatomic, strong) NSArray *iconArray;
+/** PopEditDoView */
+@property(nonatomic, strong) AddCurrencyView *currencyView;
+/** PopEditDoView */
+@property(nonatomic, strong) PopEditDoView *doView;
 @end
 
 @implementation HomeControllController
@@ -67,25 +81,25 @@
 {
     if (!_iconArray) {
         _iconArray = @[
-                       @"ico_scene_athome_clicked",
-                       @"ico_scene_romance_clicked",
-                       @"ico_scene_meeting_clicked",
-                       @"ico_scene_repast_clicked",
-                       @"ico_scene_sleeping_clicked",
-                       @"ico_scene_air_open",
-                       @"ico_scene_air_close",
-                       @"ico_scene_leavehome_clicked",
-                       @"ico_scene_gettingup_clicked",
-                       @"ico_scene_working_clicked",
-                       @"ico_scene_relaxation_clicked",
-                       @"ico_scene_media_clicked",
-                       @"ico_scene_recreation_clicked",
-                       @"ico_scene_reading_clicked",
-                       @"ico_scene_athome_clicked",
-                       @"ico_scene_curtainopen_clicked",
-                       @"ico_scene_curtainclose_clicked",
-                       @"ico_scene_curtainstop_clicked",
-                       @"ico_scene_sports_clicked"
+                       @"在家",
+                       @"浪漫",
+                       @"会议",
+                       @"就餐",
+                       @"睡觉",
+                       @"空调开",
+                       @"空调关",
+                       @"离家",
+                       @"起床",
+                       @"工作",
+                       @"放松",
+                       @"音乐",
+                       @"唱K",
+                       @"阅读",
+                       @"在家",
+                       @"窗帘开",
+                       @"窗帘关",
+                       @"窗帘暂停",
+                       @"运动"
                        ];
     }
     return _iconArray;
@@ -100,6 +114,15 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [kNotification removeObserver:self];
+
+    //保存数据
+    [kUserDefault setObject:self.deviceModel.uid forKey:kdefaultsIracUid];
+    [kUserDefault setObject:self.deviceModel.uuid forKey:kdefaultsIracUuid];
+    [kUserDefault setObject:self.deviceModel.did forKey:kdefaultsIracMid];
+    [kUserDefault synchronize];
+    
+    
     self.mid = self.deviceModel.did;
     //建立连接
     [self postTokenWithTCPSocket];
@@ -111,20 +134,151 @@
     [self setUpViews];
     // 集成刷新控件
     [self setupRefresh];
+    
+    [self addNotificationCenterObserver];
 }
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
     self.navigationController.navigationBar.hidden = YES;
     
+    [self IsTabBarHidden:YES];
     [self setUpBackGroungImage];
+}
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    [self getHomeHTTPRequest];
 }
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
+    [SVProgressTool hr_dismiss];
+    [kNotification removeObserver:self];
     
-    [self IsTabBarHidden:NO];
 }
+
+- (void)dealloc
+{
+    [kNotification removeObserver:self];
+}
+#pragma mark - 通知
+- (void)addNotificationCenterObserver
+{
+    //刷新设备
+    [kNotification addObserver:self selector:@selector(getHomeHTTPRequest) name:kNotificationRefreshXiaoRuiDevice object:nil];
+    
+    //监听空调的创建帧
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receviedWithCreateIrac:) name:kNotificationCreateIrac object:nil];
+    //监听空调的删除帧
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receviedWithDeleteIrac:) name:kNotificationDeleteIrac object:nil];
+    //监听空调的更新帧
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receviedWithUpdateIrac:) name:kNotificationUpdateIrac object:nil];
+    //监听空调的测试帧
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receviedWithTestingIrac:) name:kNotificationTestingIrac object:nil];
+    //监听空调的控制帧
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receviedWithControlIrac:) name:kNotificationControlIrac object:nil];
+    
+    //监听通用的创建帧
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receviedWithCreateIrac:) name:kNotificationCreateIrgm object:nil];
+    //监听通用的删除帧
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receviedWithDeleteIrac:) name:kNotificationDeleteIrgm object:nil];
+    //监听通用的更新帧
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receviedWithUpdateIrac:) name:kNotificationUpdateIrgm object:nil];
+    //监听通用的测试帧
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receviedWithTestingIrgm:) name:kNotificationTestingIrgm object:nil];
+    //监听通用的控制帧
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receviedWithControlIrac:) name:kNotificationControlIrgm object:nil];
+    
+    //监听开关的创建帧
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receviedWithCreateIrac:) name:kNotificationCreateDo object:nil];
+    //监听开关的删除帧
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receviedWithDeleteIrac:) name:kNotificationDeleteDo object:nil];
+    //监听开关的更新帧
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receviedWithUpdateIrac:) name:kNotificationUpdateDo object:nil];
+    //监听开关的测试帧
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receviedWithTestingIrac:) name:kNotificationTestingDo object:nil];
+    //监听通用的控制帧
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receviedWithControlDo:) name:kNotificationControlDo object:nil];
+    
+    //监听情景的创建帧
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receviedWithCreateIrac:) name:kNotificationCreateScene object:nil];
+    //监听情景的更新帧
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receviedWithUpdateIrac:) name:kNotificationUpDataScene object:nil];
+    //监听情景的删除帧
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receviedWithDeleteIrac:) name:kNotificationDeleteScene object:nil];
+    //监听情景的控制帧
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receviedWithControlScene:) name:kNotificationControlScene object:nil];
+    
+    //监听设备是否在线
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receviedWithNotOnline) name:kNotificationNotOnline object:nil];
+}
+
+static BOOL isShowOverMenu = NO;
+- (void)receviedWithNotOnline
+{
+    isShowOverMenu = YES;
+    [SVProgressTool hr_showErrorWithStatus:@"目标设备不在线!"];
+}
+#pragma mark -  通知处理方法
+// -------------------空调 start------------------------------------
+
+//监听空调的创建帧
+- (void)receviedWithCreateIrac:(NSNotification *)notification
+{
+    [self getHomeHTTPRequest];
+}
+
+//监听空调的删除帧
+static BOOL isOvertimeDelete = NO;
+- (void)receviedWithDeleteIrac:(NSNotification *)notification
+{
+    isOvertimeDelete = YES;
+    [SVProgressTool hr_showSuccessWithStatus:@"删除成功!"];
+    
+    [self getHomeHTTPRequest];}
+//监听空调的更新帧
+- (void)receviedWithUpdateIrac:(NSNotification *)notification
+{
+    [self getHomeHTTPRequest];
+    
+}
+
+//监听空调的测试帧
+- (void)receviedWithTestingIrac:(NSNotification *)notification
+{
+}
+//
+- (void)receviedWithTestingIrgm:(NSNotification *)notification
+{
+    [self getHomeHTTPRequest];
+}
+//监听空调的控制帧
+
+- (void)receviedWithControlIrac:(NSNotification *)notification
+{
+    [SVProgressHUD dismiss];
+    isOvertime = YES;
+    [self getHomeHTTPRequest];
+}
+//监听开关的控制帧
+static BOOL isOvertime = NO;
+
+- (void)receviedWithControlDo:(NSNotification *)notification
+{
+    isOvertime = YES;
+    [SVProgressHUD dismiss];
+    [self getHomeHTTPRequest];
+}
+
+- (void)receviedWithControlScene:(NSNotification *)notification
+{
+    isOvertime = YES;
+    [SVProgressTool hr_showSuccessWithStatus:@"执行情景模式成功!"];
+    [self getHomeHTTPRequest];
+}
+
 #pragma mark - 内部方法
 // 集成刷新控件
 - (void)setupRefresh
@@ -144,7 +298,7 @@
     self.flowCollectionView.minimumLineSpacing = 10;
     self.flowCollectionView.minimumInteritemSpacing = 5;
     
-    //    _collectionView.scrollIndicatorInsets = UIEdgeInsetsMake(10, 0, 0, 0);
+    _collectionView.contentInset = UIEdgeInsetsMake(0, 0, 10, 0);
     UINib *cellNib = [UINib nibWithNibName:@"InfraredDeviceCell" bundle:nil];
     [_collectionView registerNib:cellNib forCellWithReuseIdentifier:@"cell"];
     
@@ -187,14 +341,44 @@
 }
 ///添加按钮事件
 - (IBAction)addButtonClick:(UIButton *)btn {
-    
     NSArray *titleArray = @[@"添加空调类型",@"添加电视类型",@"添加红外通用",@"添加智能设备",@"添加情景模式"];
     NSArray *iconArray = @[@"添加空调类型",@"添加电视类型",@"添加红外通用",@"添加智能设备",@"添加情景模式"];
     [FTPopOverMenu showForSender:btn
                         withMenu:titleArray
                   imageNameArray:iconArray
                        doneBlock:^(NSInteger selectedIndex) {
-                           
+                           if (selectedIndex == 0) {//添加空调类型
+                               
+                               AddIraViewController *VC = [[AddIraViewController alloc] init];
+                               VC.iradata = self.deviceModel;
+                               [self.navigationController pushViewController:VC animated:YES];
+                               
+                           }else if (selectedIndex == 1)//添加电视类型
+
+                           {
+                               
+                           }else if (selectedIndex == 2)//添加红外通用
+                           {
+                               //添加弹框
+                               
+                               [self addCurrencyView];
+                               self.currencyView.textLabel = @"添加遥控器";
+                               self.currencyView.titleButton = @"添加";
+                               self.currencyView.deviceType = HRCurrencyDeviceTypeCurrency;
+                               
+                           }else if (selectedIndex == 3)//添加智能设备
+                               
+                           {
+                               SwitchViewController *switchVC = [[SwitchViewController alloc] init];
+                               [self.navigationController pushViewController:switchVC animated:YES];
+                               
+                           }else if (selectedIndex == 4)//添加情景模式
+                               
+                           {
+                               
+                               SceneController *sceneVC = [[SceneController alloc] init];
+                               [self.navigationController pushViewController:sceneVC animated:YES];
+                           }
                            
                        } dismissBlock:^{
                            
@@ -204,21 +388,61 @@
 
 }
 
+//添加通用 窗口
+- (void)addCurrencyView
+{
+    //添加弹框
+    self.currencyView = [[AddCurrencyView alloc] initWithFrame:self.view.bounds];
+    [self.view addSubview:self.currencyView];
+    
+    self.currencyView.backgroundColor  = [UIColor clearColor];
+    self.currencyView.hidden = NO;
+    
+    //添加手势
+    [self addTapGesture];
+}
+#pragma mark - 添加点击手势  点击退出键盘
+- (void)addTapGesture
+{
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapClick)];
+    [self.eptView addGestureRecognizer:tap];
+}
+- (void)tapClick
+{
+    [self.view endEditing:YES];
+}
+
 #pragma mark - HTTP请求
 - (void)getHTTPRequest
 {
-    [self getHttpWithIRAC];
+    
+    dispatch_group_t serviceGroup = dispatch_group_create();
+    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+        dispatch_group_enter(serviceGroup);
+        [self getHttpWithIRAC: serviceGroup];
+        dispatch_group_wait(serviceGroup, DISPATCH_TIME_FOREVER);
+        
+        dispatch_group_enter(serviceGroup);
+        [self getHttpWithIRGM: serviceGroup];
+        
+        dispatch_group_wait(serviceGroup, DISPATCH_TIME_FOREVER);
+        
+        
+        dispatch_group_enter(serviceGroup);
+        [self getHttpWithIRDO: serviceGroup];
+        dispatch_group_wait(serviceGroup, DISPATCH_TIME_FOREVER);
+        
+        dispatch_group_notify(serviceGroup, dispatch_get_global_queue(0, 0), ^{
+            
+            [self getHttpWithScene];
+        });
+        
+    });
     
     
-    [self getHttpWithIRGM];
     
     
-    
-    [self getHttpWithIRDO];
-    
-    
-    
-    [self getHttpWithScene];
+
     
 }
 
@@ -231,6 +455,9 @@
     parameters[@"mid"] = mid;
     
     [HRHTTPTool hr_getHttpWithURL:HRAPI_XiaoRuiIHRScene_URL parameters:parameters responseDict:^(id responseObject, NSError *error) {
+        
+        
+        DDLogDebug(@"HRScene---responseObject--------------------4");
         if (error) {
             [ErrorCodeManager showError:error];
             return ;
@@ -248,7 +475,6 @@
             DDLogDebug(@"responseObject count == 0");
             
             // 要给保存 缓存的单例  清空  数据   如果不清空就可能保存上次的  内容
-            
             [self.appDelegate  addHTTPDoArray:nil];
             return;
         }
@@ -262,13 +488,15 @@
             [mutableArr addObject: sceneData];
         }
         [self.appDelegate  addHTTPSceneArray:mutableArr];
-
+        
+        
+        [kNotification postNotificationName:kNotificationRefreshXiaoRuiDevice object:nil];
     }];
     
 }
 
 //获取开关信息 HTTP请求
-- (void)getHttpWithIRDO
+- (void)getHttpWithIRDO:(dispatch_group_t)serviceGroup
 {
     
     NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
@@ -276,6 +504,8 @@
     parameters[@"mid"] = mid;
     
     [HRHTTPTool hr_getHttpWithURL:HRAPI_XiaoRuiIHRDO_URL parameters:parameters responseDict:^(id responseObject, NSError *error) {
+        dispatch_group_leave(serviceGroup);
+        DDLogDebug(@"HRDO---responseObject--------------------3");
         if (error) {
             [ErrorCodeManager showError:error];
             return ;
@@ -310,7 +540,7 @@
     
 }
 //获取红外空调信息 HTTP请求
-- (void)getHttpWithIRAC
+- (void)getHttpWithIRAC:(dispatch_group_t)serviceGroup
 {
     
     NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
@@ -318,6 +548,10 @@
     parameters[@"mid"] = mid;
     
     [HRHTTPTool hr_getHttpWithURL:HRAPI_XiaoRuiIRAC_URL parameters:parameters responseDict:^(id responseObject, NSError *error) {
+        
+        dispatch_group_leave(serviceGroup);
+        DDLogDebug(@"IRAC---responseObject--------------------1");
+        
         if (error) {
             [ErrorCodeManager showError:error];
             return ;
@@ -340,6 +574,12 @@
             [self.appDelegate addHTTPIracArray:nil];
             return;
         }
+        [IracData mj_setupReplacedKeyFromPropertyName:^NSDictionary *{
+            return @{
+                     @"switchOff" : @"switch"
+                     };
+        }];
+        
         //把模型数组添加到对应的空数组中
         NSMutableArray *mutableArr = [NSMutableArray array];
         NSArray *responseArray = (NSArray*)responseObject;
@@ -354,7 +594,7 @@
 }
 
 //获取通用设备信息 HTTP请求
-- (void)getHttpWithIRGM
+- (void)getHttpWithIRGM:(dispatch_group_t)serviceGroup
 {
     
     NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
@@ -362,6 +602,8 @@
     parameters[@"mid"] = mid;
     
     [HRHTTPTool hr_getHttpWithURL:HRAPI_XiaoRuiIRGM_URL parameters:parameters responseDict:^(id responseObject, NSError *error) {
+        dispatch_group_leave(serviceGroup);
+        DDLogDebug(@"IRGM---responseObject--------------------2");
         if (error) {
             [ErrorCodeManager showError:error];
             return ;
@@ -669,6 +911,111 @@
     return cell;
 }
 
+-(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    
+    NSString *types = [(NSDictionary *)self.iracArray[indexPath.row] valueForKeyPath:@"types"];
+    if ([types isEqualToString:@"irac"]) {
+        IracData *data = [IracData mj_objectWithKeyValues:(NSDictionary *)self.iracArray[indexPath.row]];
+        
+        AirCtrlViewController *vc = [[AirCtrlViewController alloc] init];
+        vc.iracData = data;
+        [self.navigationController pushViewController:vc animated:YES];
+        
+    }else if ([types isEqualToString:@"irgm"]) {
+        IrgmData *data = [IrgmData mj_objectWithKeyValues:(NSDictionary *)self.iracArray[indexPath.row]];
+        
+        if ([data.picture.lastObject isEqualToString:@"1"]) {
+            GeneralInfraredCtrlViewController *vc = [[GeneralInfraredCtrlViewController alloc] init];
+            vc.irgmData = data;
+            [self.navigationController pushViewController:vc animated:YES];
+        }else if ([data.picture.lastObject isEqualToString:@"2"]) {
+            CurrencyCtrlController *vc = [[CurrencyCtrlController alloc] init];
+            vc.irgmData = data;
+            [self.navigationController pushViewController:vc animated:YES];
+        }
+        
+    }else if ([types isEqualToString:@"hrdo"]) {
+        HRDOData *data = [HRDOData mj_objectWithKeyValues:(NSDictionary *)self.iracArray[indexPath.row]];
+        NSString * pictureStr = data.picture.firstObject;
+        if ([pictureStr isEqualToString:@"1"] || [pictureStr isEqualToString:@"2"] || [pictureStr isEqualToString:@"4"]) {
+            
+            if ([data.parameter[2] isEqualToString:@"0"]) {//灯泡关
+                [self controlDoBulbWithData:data status:@"1"];
+                
+                
+            }else if ([data.parameter[2] isEqualToString:@"1"])//灯泡开
+            {
+                [self controlDoBulbWithData:data status:@"0"];
+            }
+            
+        }else if ([pictureStr isEqualToString:@"3"]) {//插座 关
+            
+            if ([data.parameter[2] isEqualToString:@"0"]) {
+                
+                [self controlDoBulbWithData:data status:@"1"];
+            }else if ([data.parameter[2] isEqualToString:@"1"])//插座 开
+            {
+                [self controlDoBulbWithData:data status:@"0"];
+            }
+        }else if ([pictureStr isEqualToString:@"5"]) {// 窗帘
+            
+            WindowCurtainsController *windowVC = [[WindowCurtainsController alloc] init];
+            windowVC.doData = data;
+            [self.navigationController pushViewController:windowVC animated:YES];
+            
+        }
+        
+    }else if ([types isEqualToString:@"scene"])
+    {
+        HRSceneData *rowDict = [HRSceneData mj_objectWithKeyValues:(NSDictionary *)self.iracArray[indexPath.row]];
+        NSArray *data = [NSArray array];
+        /// 发送控制情景 请求帧
+        NSString *str = [NSString stringWithSceneType:@"control" did:rowDict.did title:rowDict.title picture:rowDict.picture data:data];
+        
+        [self.appDelegate sendMessageWithString:str];
+        [SVProgressTool hr_showWithStatus:@"正在控制设备..."];
+        // 设置超时
+        isOvertime = NO;
+        isShowOverMenu = NO;
+        // 启动定时器
+        [_timer invalidate];
+        _timer = [NSTimer scheduledTimerWithTimeInterval:HRTimeInterval target:self selector:@selector(startTimer) userInfo:nil repeats:NO];
+    }
+    
+    
+    
+}
+
+#pragma mark - 开关控制
+- (void)controlDoBulbWithData:(HRDOData *)data status:(NSString *)status
+{
+    NSString *token = [[NSUserDefaults standardUserDefaults] objectForKey:PushToken];
+    NSString *user = [[NSUserDefaults standardUserDefaults] objectForKey:kDefaultsUserName];
+    
+    /// 发送开关 控制请求帧
+    NSString *uuid = [[NSUserDefaults standardUserDefaults] objectForKey:kdefaultsIracUuid];
+    NSString *channelNumber = data.parameter.firstObject;
+    NSString *op = @"None";
+    
+    NSArray *parameter = @[channelNumber, op, data.parameter[1], status];
+    
+    NSString *str = [NSString stringWithHRDOVersion:@"0.0.1" status:@"200" token:token type:@"control" desc:@"control desc message" srcUserName:user dstUserName:user dstDevName:uuid uid:data.uid mid:data.mid did:data.did uuid:data.uuid types:@"hrdo" newVersion:data.version title:data.title brand:data.brand created:data.created update:data.update state:data.state picture:data.picture regional:data.regional parameter:parameter];
+    
+    DDLogWarn(@"-------发送开关 控制请求帧-------dostr%@", str);
+    [self.appDelegate sendMessageWithString:str];
+    [SVProgressTool hr_showWithStatus:@"正在控制设备..."];
+    // 启动定时器
+    [_timer invalidate];
+    isOvertime = NO;
+    isShowOverMenu = NO;
+    _timer = [NSTimer scheduledTimerWithTimeInterval:HRTimeInterval target:self selector:@selector(startTimer) userInfo:nil repeats:NO];
+}
+- (void)startTimer
+{
+    if (!isOvertime && !isShowOverMenu) {
+        [SVProgressTool hr_showErrorWithStatus:@"请求超时!"];
+    }
+}
 static NSInteger gesturerRow = -1;
 #pragma mark - 长按手势
 // 情景长按手势
@@ -772,6 +1119,268 @@ static NSInteger gesturerRow = -1;
     
 }
 
+
+#pragma mark - UIAlertViewDelegate 代理方法
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    
+    if (alertView.tag == 100) {//空调
+        if (buttonIndex == 1) {
+            DDLogInfo(@"空调");
+            
+            IracData *rowDict = [IracData mj_objectWithKeyValues:self.iracArray[gesturerRow]];
+            
+            
+            NSString *token = [[NSUserDefaults standardUserDefaults] objectForKey:PushToken];
+            NSString *user = [[NSUserDefaults standardUserDefaults] objectForKey:kDefaultsUserName];
+            
+            /// 发送创建空调 请求帧
+            NSString *uid = rowDict.uid;
+            NSString *uuid = rowDict.uuid;
+            NSString *mid = rowDict.mid;
+            //根据该ID删除设备
+            NSString *did = rowDict.did;
+            
+            NSArray *picture = [NSArray array];
+            NSArray *regional = [NSArray array];
+            
+            
+            NSString *str = [NSString stringWithIRACVersion:@"0.0.1" status:@"200" token:token type:@"delete" desc:@"delete desc message" srcUserName:user dstUserName:user dstDevName:uuid uid:uid mid:mid did:did uuid:uuid types:@"irac" newVersion:@"0.0.1" title:rowDict.title brand:rowDict.brand created:rowDict.created update:rowDict.update state:@"1" picture:picture regional:regional model:rowDict.model onSwitch:rowDict.switchOff mode:rowDict.mode temperature:rowDict.temperature windspeed:rowDict.windspeed winddirection:rowDict.winddirection];
+            
+            [self.appDelegate sendMessageWithString:str];
+            [SVProgressTool hr_showWithStatus:@"正在删除设备..."];
+            // 设置超时
+            isOvertimeDelete = NO;
+            isShowOverMenu = NO;
+            // 启动定时器
+            [_timer invalidate];
+            _timer = [NSTimer scheduledTimerWithTimeInterval:HRTimeInterval target:self selector:@selector(startTimerDelete) userInfo:nil repeats:NO];
+        }
+        
+    }else if (alertView.tag == 101)//通用
+    {
+        if (buttonIndex == 1) {
+            
+            DDLogInfo(@"通用");
+            IrgmData *rowDict = [IrgmData mj_objectWithKeyValues:self.iracArray[gesturerRow]];
+            
+            
+            NSString *token = [[NSUserDefaults standardUserDefaults] objectForKey:PushToken];
+            NSString *user = [[NSUserDefaults standardUserDefaults] objectForKey:kDefaultsUserName];
+            
+            /// 发送创建空调 请求帧
+            NSString *str = [NSString stringWithIRGMVersion:@"0.0.1"
+                                                     status:@"200"
+                                                      token:token
+                                                       type:@"delete"
+                                                       desc:@"delete desc message"
+                                                srcUserName:user
+                                                dstUserName:user
+                                                 dstDevName:rowDict.uuid
+                                                        uid:rowDict.uid
+                                                        mid:rowDict.mid
+                                                        did:rowDict.did
+                                                       uuid:rowDict.uuid
+                                                      types:rowDict.types
+                                                 newVersion:rowDict.version
+                                                      title:rowDict.title
+                                                      brand:rowDict.brand
+                                                    created:rowDict.created
+                                                     update:rowDict.update
+                                                      state:rowDict.state
+                                                    picture:rowDict.picture
+                                                   regional:rowDict.regional
+                                                         op:rowDict.op
+                                                     name01:rowDict.name01
+                                                     name02:rowDict.name02
+                                                     name03:rowDict.name03
+                                                    param01:rowDict.param01
+                                                    param02:rowDict.param02
+                                                    param03:rowDict.param03];
+            
+            [self.appDelegate sendMessageWithString:str];
+            // 设置超时
+            [SVProgressTool hr_showWithStatus:@"正在删除设备..."];
+            // 设置超时
+            isOvertimeDelete = NO;
+            isShowOverMenu = NO;
+            // 启动定时器
+            [_timer invalidate];
+            _timer = [NSTimer scheduledTimerWithTimeInterval:HRTimeInterval target:self selector:@selector(startTimerDelete) userInfo:nil repeats:NO];
+        }
+    }else if (alertView.tag == 102)//开关删除
+    {
+        if (buttonIndex == 1) {
+            
+            DDLogInfo(@"开关");
+            HRDOData *rowDict = [HRDOData mj_objectWithKeyValues:self.iracArray[gesturerRow]];
+            
+            /// 发送删除开关 请求帧
+            NSString *token = [[NSUserDefaults standardUserDefaults] objectForKey:PushToken];
+            NSString *user = [[NSUserDefaults standardUserDefaults] objectForKey:kDefaultsUserName];
+            NSString *uuid = [[NSUserDefaults standardUserDefaults] objectForKey:kdefaultsIracUuid];
+            NSArray *regional = [NSArray array];
+            NSArray *parameter;
+            NSString *str = [NSString stringWithHRDOVersion:@"0.0.1" status:@"200" token:token type:@"delete" desc:@"delete desc message" srcUserName:user dstUserName:user dstDevName:uuid uid:rowDict.uid mid:rowDict.mid did:rowDict.did uuid:rowDict.uuid types:@"hrdo" newVersion:@"0.0.1" title:rowDict.title brand:rowDict.brand created:[NSString loadCurrentDate] update:[NSString loadCurrentDate] state:@"1" picture:rowDict.picture.firstObject regional:regional parameter:parameter];
+            
+            [self.appDelegate sendMessageWithString:str];
+            [SVProgressTool hr_showWithStatus:@"正在删除设备..."];
+            // 设置超时
+            isOvertimeDelete = NO;
+            isShowOverMenu = NO;
+            // 启动定时器
+            [_timer invalidate];
+            _timer = [NSTimer scheduledTimerWithTimeInterval:HRTimeInterval target:self selector:@selector(startTimerDelete) userInfo:nil repeats:NO];
+        }
+    }else if (alertView.tag == 103)//情景删除
+    {
+        if (buttonIndex == 1) {
+            HRSceneData *rowDict = [HRSceneData mj_objectWithKeyValues:self.iracArray[gesturerRow]];
+            NSArray *data = [NSArray array];
+            /// 发送删除开关 请求帧
+            NSString *str = [NSString stringWithSceneType:@"delete" did:rowDict.did title:rowDict.title picture:rowDict.picture data:data];
+            
+            [self.appDelegate sendMessageWithString:str];
+            [SVProgressTool hr_showWithStatus:@"正在删除设备..."];
+            // 设置超时
+            isOvertimeDelete = NO;
+            isShowOverMenu = NO;
+            // 启动定时器
+            [_timer invalidate];
+            _timer = [NSTimer scheduledTimerWithTimeInterval:HRTimeInterval target:self selector:@selector(startTimerDelete) userInfo:nil repeats:NO];
+        }
+    }
+    
+}
+
+#pragma mark - sheet 代理方法
+-(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (actionSheet.tag == 1000) {//空调
+        
+        if (buttonIndex == 0) {
+            //跳转到编辑 控制器
+            EditViewController *editVC = [[EditViewController alloc] init];
+            IracData *rowDict = [IracData mj_objectWithKeyValues:self.iracArray[gesturerRow]];
+            editVC.iradata = rowDict;
+            [self.navigationController pushViewController:editVC animated:YES];
+            
+        }else if (buttonIndex == 1) {
+            [self showAlertWithDelete:@"删除设备" tag:100];
+            
+        }else if(buttonIndex == 2) {
+            
+        }
+    }else if (actionSheet.tag == 1001)//通用
+    {
+        IrgmData *rowDict = [IrgmData mj_objectWithKeyValues:self.iracArray[gesturerRow]];
+        if (buttonIndex == 0) {
+//            //红外学习
+            if ([rowDict.picture.lastObject isEqualToString:@"1"]) {
+                // 通用红外学习
+                IrgmStudyController *studyVC = [[IrgmStudyController alloc] init];
+                studyVC.irgmData = rowDict;
+                [self.navigationController pushViewController:studyVC animated:YES];
+            
+            }else if ([rowDict.picture.lastObject isEqualToString:@"2"])
+            {
+                CurrencyController *currencyVC = [[CurrencyController alloc] init];
+                currencyVC.irgmData = rowDict;
+                [self.navigationController pushViewController:currencyVC animated:YES];
+                
+            }
+        }else if (buttonIndex == 1) {
+            
+            [self showAlertWithDelete:@"删除设备" tag:101];
+            
+        }else if(buttonIndex == 2) {
+            
+        }
+    }else if (actionSheet.tag == 1002)//开关
+    {
+        HRDOData *rowDict = [HRDOData mj_objectWithKeyValues:self.iracArray[gesturerRow]];
+        if (buttonIndex == 0) {
+            //编辑 view
+            //添加弹框
+            [self addCurrencyView];
+            self.currencyView.textLabel = @"修改设备信息";
+            self.currencyView.titleButton = @"确定";
+            self.currencyView.doData = rowDict;
+            self.currencyView.deviceType = HRCurrencyDeviceTypeDo;
+            
+            self.doView.doData = rowDict;
+            
+        }else if (buttonIndex == 1) {
+            [self showAlertWithDelete:@"删除设备" tag:102];
+            
+        }else if(buttonIndex == 2) {
+            
+        }
+    }
+    else if (actionSheet.tag == 1003)//情景
+    {
+        HRSceneData *rowDict = [HRSceneData mj_objectWithKeyValues:self.iracArray[gesturerRow]];
+        
+        if (buttonIndex == 0) {
+            //编辑 view
+            SceneController *sceneVC = [[SceneController alloc] init];
+            sceneVC.sceneData = rowDict;
+            [self.navigationController pushViewController:sceneVC animated:YES];
+            
+        }else if (buttonIndex == 1) {
+            [self showAlertWithDelete:@"删除设备" tag:103];
+            
+        }else if(buttonIndex == 2) {
+            
+        }
+    }
+    
+}
+#pragma mark - 点击sheet中的删除按钮
+-(void)showAlertWithDelete:(NSString *)delete tag:(NSInteger)tag
+{
+    if (tag == 100) {
+        UIAlertView *alert = [[UIAlertView alloc]
+                              initWithTitle:nil
+                              message:delete
+                              delegate:self
+                              cancelButtonTitle:@"取消"
+                              otherButtonTitles:@"确定", nil];
+        alert.tag = 100;
+        [alert show];
+    }else if (tag == 101)
+    {
+        UIAlertView *alert = [[UIAlertView alloc]
+                              initWithTitle:nil
+                              message:delete
+                              delegate:self
+                              cancelButtonTitle:@"取消"
+                              otherButtonTitles:@"确定", nil];
+        alert.tag = 101;
+        [alert show];
+    }else if (tag == 102)
+    {
+        UIAlertView *alert = [[UIAlertView alloc]
+                              initWithTitle:nil
+                              message:delete
+                              delegate:self
+                              cancelButtonTitle:@"取消"
+                              otherButtonTitles:@"确定", nil];
+        alert.tag = 102;
+        [alert show];
+    }else if (tag == 103)
+    {
+        UIAlertView *alert = [[UIAlertView alloc]
+                              initWithTitle:nil
+                              message:delete
+                              delegate:self
+                              cancelButtonTitle:@"取消"
+                              otherButtonTitles:@"确定", nil];
+        alert.tag = 103;
+        [alert show];
+    }
+}
+
 -(void)showAlert:(NSString *)msg {
     
     UIAlertView *alert = [[UIAlertView alloc]
@@ -781,6 +1390,13 @@ static NSInteger gesturerRow = -1;
                           cancelButtonTitle:@"取消"
                           otherButtonTitles:@"添加空调类型", @"添加通用类型", @"添加开关类型", nil];
     [alert show];
+}
+- (void)startTimerDelete
+{
+    if (!isOvertimeDelete && !
+        isShowOverMenu) {
+        [SVProgressTool hr_showErrorWithStatus:@"请求超时!"];
+    }
 }
 #pragma mark - 隐藏底部条
 - (void)IsTabBarHidden:(BOOL)hidden

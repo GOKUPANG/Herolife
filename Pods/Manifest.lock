@@ -25,6 +25,7 @@ PODS:
   - Masonry (0.6.2)
   - MJExtension (3.0.13)
   - MOBFoundation (2.0.11)
+  - pop (1.0.9)
   - ShareSDK3 (3.4.2):
     - ShareSDK3/ShareSDK (= 3.4.2)
   - ShareSDK3/ShareSDK (3.4.2)
@@ -37,6 +38,7 @@ DEPENDENCIES:
   - Masonry (= 0.6.2)
   - MJExtension
   - MOBFoundation
+  - pop
   - ShareSDK3
   - ShareSDK3/ShareSDKPlatforms/QQ
   - SVProgressHUD
@@ -47,6 +49,7 @@ SPEC CHECKSUMS:
   Masonry: 362e8a1cc0beada4a4c4832d5e863da2a51533be
   MJExtension: 5932755f451458eefa24239358817f8d291240c7
   MOBFoundation: e213065e65eebd8146ab29d10a8445dc8f385091
+  pop: f667631a5108a2e60d9e8797c9b32ddaf2080bce
   ShareSDK3: 2fa975dd22937fc7de3f6b5d0c41a18ba0dd1661
   SVProgressHUD: b0830714205bea1317ea1a2ebc71e5633af334d4
 

@@ -288,13 +288,16 @@
             return;
         }
         
-        		[weakSelf.dataArray removeAllObjects];
+        [weakSelf.dataArray removeAllObjects];
         NSArray *responseArr = (NSArray*)responseObject;
         
         for (NSDictionary *Doordict in responseArr) {
             DoorPswModel *model = [DoorPswModel new];
             NSArray *PersonArray = Doordict[@"person"];
             
+            if (PersonArray.count == 0) {
+                continue;
+            }
             model.PswName = PersonArray[0];
             model.PswNumber = PersonArray[1];
             model.did = Doordict[@"did"];

@@ -45,6 +45,7 @@
 #import "EnvironmentController.h"
 #import "HomeControllController.h"
 #import "TextInteractionController.h"
+#import "HRMessageData.h"
 
 //加入系统自带密码库
 
@@ -111,6 +112,8 @@
 /**  */
 @property(nonatomic, strong) NSTimer *timer;
 /**获取设备令牌的定时器  */
+@property(nonatomic, strong) NSTimer *deviceTokenTimer;
+/**获取设备令牌的定时器  */
 @property(nonatomic, strong) NSTimer *tokenTimer;
 /** <#name#> */
 @property(nonatomic, strong) DeviceListModel *currentStateModel;
@@ -158,6 +161,7 @@
 /** 记录当前减速 滚动的X*/
 
 @property(nonatomic, assign) CGFloat deceleratingScrollX;
+
 
 @end
 
@@ -244,12 +248,11 @@ NSInteger const timerDuration = 60.0;
 {
     [super viewWillAppear:animated];
     
-    [self addTimer];
     
 	for (UINavigationController *nav in self.tabBarController.childViewControllers) {
 		UIViewController *VC = nav.childViewControllers.firstObject;
-		NSLog(@"viewVC--%@", NSStringFromClass([VC class]));
 	}
+    
     NSInteger  PicNum =  [[NSUserDefaults standardUserDefaults] integerForKey:@"PicNum"];
     
     if (!PicNum) {
@@ -271,11 +274,13 @@ NSInteger const timerDuration = 60.0;
         self.backImgView.image =[UIImage imageNamed:imgName];
     }
     [self setTipViewIsHidden];
+    
+    [self IsTabBarHidden:NO];
 }
 - (void)setTipViewIsHidden
 {
     for (UIView *allView in [UIApplication sharedApplication].keyWindow.subviews) {
-        NSLog(@"-----------setTipViewIsHidden%@", NSStringFromCGRect(allView.frame));
+        
         if (allView.hr_height == 30) {
             allView.hidden = YES;
         }
@@ -294,6 +299,8 @@ static NSString *cellID = @"cellID";
 	
     [super viewDidLoad];
     
+    //建立连接 -- 用户登录认证
+    [self postTokenWithTCPSocket];
     
     httpRequsetCount = 0;
 	//初始化
@@ -303,8 +310,6 @@ static NSString *cellID = @"cellID";
 	[self.tableView registerClass:[DeviceListCell class] forCellReuseIdentifier:cellID];
 	[self.collectionView registerClass:[CustomCollectionViewCollectionViewCell class] forCellWithReuseIdentifier:kCustomCellIdentifier];
 	
-	//建立连接 -- 用户登录认证
-	[self postTokenWithTCPSocket];
 	
     //下拉刷新
     [self addRefresh];
@@ -329,7 +334,18 @@ static NSString *cellID = @"cellID";
 	//监听通知 刷新数据
 	[kNotification addObserver:self selector:@selector(receivePostRefresh:) name:kNotificationPostRefresh object:nil];
 	
-	
+    //接收文本触发的通知
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receviedWithMessage:) name:kNotificationMessage object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receviedWithMessage:) name:kNotificationHomeStatus object:nil];
+    
+    //接收到登陆认证的帧
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receviedLoginData:) name:kNotificationLogin object:nil];
+}
+
+- (void)receviedLoginData:(NSNotification *)note
+{
+    [self addTimer];
 }
 
 - (void)receivePostRefresh:(NSNotification *)note
@@ -338,6 +354,37 @@ static NSString *cellID = @"cellID";
 	[self getRefreshHttpRequset];
 }
 
+- (void)receviedWithMessage:(NSNotification *)note
+{
+    
+//    NSDictionary *dict = note.userInfo;
+//    HRMessageData *data = [HRMessageData mj_objectWithKeyValues:dict[@"msg"]];
+    NSString *uuid = self.currentStateModel.uuid;
+    
+    
+//    if (![data.uuid isEqualToString:uuid]) {
+//        return;
+//    }
+    
+    self.listLabel.text = self.currentStateModel.title;
+    
+    self.listImageView.image = [UIImage imageNamed:@"空心在线"];
+    NSMutableArray *homeMu = [NSMutableArray array];
+    //给这个小睿标记一个值, 代表该小睿在线
+    for (DeviceListModel *model  in self.homeArray) {
+        if ([model.uuid isEqualToString:uuid]) {
+            
+            model.state = @"1";
+        }
+        // 重新给锁添加 数组图片
+        [homeMu addObject:model];
+    }
+    
+    self.homeArray = homeMu;
+    [self.tableView reloadData];
+    [self.collectionView reloadData];
+    
+}
 static BOOL isOvertime = NO;
 - (void)receiveDeleteAutherDevice:(NSNotification *)note
 {
@@ -445,8 +492,9 @@ static BOOL isShowOverMenu = NO;
 			}
 			// 重新给锁添加 数组图片
         [homeMu addObject:model];
-		self.homeArray = homeMu;
-		}
+            
+        }
+        self.homeArray = homeMu;
 		
 		if ([uuid isEqualToString:self.currentStateModel.uuid]) {
 			
@@ -582,7 +630,6 @@ static BOOL isShowOverMenu = NO;
 		[_collectionView reloadData];
 	});
 	
-	[self IsTabBarHidden:NO];
 }
 
 - (void)viewWillLayoutSubviews {
@@ -595,14 +642,15 @@ static BOOL isShowOverMenu = NO;
 {
     [super viewWillDisappear:animated];
     
-    [self.timer invalidate];
-    self.timer = nil;
     for (UINavigationController *nav in  self.tabBarController.childViewControllers) {
         for (UIViewController *VC in nav.childViewControllers) {
             
             DDLogWarn(@"home----tabBarController--%@", NSStringFromClass([VC class]));
         }
     }
+    
+    [self.timer invalidate];
+    self.timer = nil;
 }
 #pragma mark - 隐藏底部条
 - (void)IsTabBarHidden:(BOOL)hidden
@@ -764,12 +812,10 @@ static BOOL isShowOverMenu = NO;
 						   [self addTimer];
 						   
 						   [self.tableView reloadData];
-						   NSLog(@"done block. do something. selectedIndex : %ld", (long)selectedIndex);
 						   
 					   } dismissBlock:^{
 						   btn.selected = NO;
 						   self.rightImageView.layer.transform = CATransform3DMakeRotation(M_PI, 0, 0, 1);
-						   NSLog(@"user canceled. do nothing.");
 						   
 					   }];
 	
@@ -1049,9 +1095,8 @@ static BOOL isShowOverMenu = NO;
                 TextInteractionController *textVC = [[TextInteractionController alloc] init];
                 textVC.deviceModel = self.currentStateModel;
                 [self.navigationController pushViewController:textVC animated:YES];
-            }
-            
-            if (!self.currentStateModel) {
+            }else
+            {
                 
                 [self.tipsLabel showText:@"未添加设备" duration:2.0];
                 return;
@@ -1063,34 +1108,46 @@ static BOOL isShowOverMenu = NO;
 			
 		case 3:
 		{
-			ShouQuanManagerController *SQC = [ShouQuanManagerController new];
-			// 别人授权给我的数据和当前点击的数据里的UUID进行比较,看是否有有权限跳转
-			for (DeviceAutherModel *auther in self.autherPersonArray) {
-    
-				if ([auther.uuid isEqualToString: self.currentStateModel.uuid]) {
-					NSArray *arr = auther.permit;
-					if ([arr[3] isEqualToString:@"1"]) {
-						SQC.listModel = self.currentStateModel;
-						[self.navigationController pushViewController:SQC animated:YES];
-						
-					}else
-					{
-						[SVProgressTool hr_showErrorWithStatus:@"该锁当前用户无权限授权管理!"];
-					}
-					return ;
-				}
-			}
 			
-            if (!self.currentStateModel) {
+            if ([self.currentStateModel.types isEqualToString:@"hrsc"]) {
+                ShouQuanManagerController *SQC =[ShouQuanManagerController new];
+                // 别人授权给我的数据和当前点击的数据里的UUID进行比较,看是否有有权限跳转
+                for (DeviceAutherModel *auther in self.autherPersonArray) {
+                    
+                    if ([auther.uuid isEqualToString: self.currentStateModel.uuid]) {
+                        NSArray *arr = auther.permit;
+                        if ([arr[3] isEqualToString:@"1"]) {
+                            SQC.listModel = self.currentStateModel;
+                            [self.navigationController pushViewController:SQC animated:YES];
+                            
+                        }else
+                        {
+                            [SVProgressTool hr_showErrorWithStatus:@"该锁当前用户无权限授权管理!"];
+                        }
+                        return ;
+                    }
+                }
+                
+                if (!self.currentStateModel) {
+                    
+                    [self.tipsLabel showText:@"未添加设备" duration:2.0];
+                    return;
+                }
+                SQC.listModel = self.currentStateModel;
+                
+                [self.navigationController pushViewController:SQC animated:YES];
+                
+                
+            }else if ([self.currentStateModel.types isEqualToString:@"xiaorui"])
+            {
+                
+            }else
+            {
                 
                 [self.tipsLabel showText:@"未添加设备" duration:2.0];
                 return;
             }
-			SQC.listModel = self.currentStateModel;
-			
-			[self.navigationController pushViewController:SQC animated:YES];
-			
-			
+            
 		}
 			
 			break;
@@ -1119,7 +1176,7 @@ static BOOL isShowOverMenu = NO;
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSLog(@"didSelectItemAtIndexPath%ld", (long)indexPath.row);
+    
 }
 #pragma mark - scrollView delegate
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
@@ -1148,7 +1205,6 @@ static BOOL isShowOverMenu = NO;
     
 	int yu = (int)scrollView.contentOffset.x % (int)totalconsizeW;
     
-    NSLog(@"----------------totalconsizeW%f-----------index%d---yu%dscrollView.contentOffset.x%f", totalconsizeW, index, yu,scrollView.contentOffset.x);
     
     if ( scrollView.contentOffset.x > self.draggingScrollX) {
         
@@ -1227,7 +1283,6 @@ static BOOL isShowOverMenu = NO;
     
     int yu = (int)scrollView.contentOffset.x % (int)totalconsizeW;
     
-    NSLog(@"----------------totalconsizeW%f-----------index%d---yu%dscrollView.contentOffset.x%f", totalconsizeW, index, yu,scrollView.contentOffset.x);
     
     if ( scrollView.contentOffset.x > self.deceleratingScrollX) {
         
@@ -1347,10 +1402,11 @@ static BOOL isShowOverMenu = NO;
 }
 
 
-static int tokenTimerCount = 300;
+static int tokenTimerCount = 500;
 - (void)updateTokenTimer
 {
     tokenTimerCount--;
+    //token
     NSString *UUID = [kUserDefault objectForKey:kUserDefaultUUID];
     if (UUID.length < 1) {
         UUID = [kUserDefault objectForKey:kUserDefaultUUID];
@@ -1375,7 +1431,13 @@ static int tokenTimerCount = 300;
         self.tokenTimer = nil;
         return;
     }
-   
+    
+    if (tokenTimerCount == 5) {
+        if (UUID.length < 1) {
+            NSString *DeviceToken = [kUserDefault objectForKey:kUserDefaultDeviceUUID];
+            [kUserDefault setObject:DeviceToken forKey:kUserDefaultUUID];
+        }
+    }
     if (tokenTimerCount == 0) {
         
         [self.tokenTimer invalidate];
@@ -1424,7 +1486,7 @@ static int tokenTimerCount = 300;
         [self.eptTable.mj_header endRefreshing];
         if (error) {
             [ErrorCodeManager showError:error];
-            NSLog(@"HRAPI_LockInFo_URL-error--%@", error);
+            DDLogWarn(@"HRAPI_LockInFo_URL-error--%@", error);
             return ;
         }
         
@@ -1521,7 +1583,7 @@ static int httpRequsetCount = 0;
 		[self.eptTable.mj_header endRefreshing];
 		if (error) {
 			[ErrorCodeManager showError:error];
-			NSLog(@"HRAPI_LockInFo_URL-error--%@", error);
+			DDLogWarn(@"HRAPI_LockInFo_URL-error--%@", error);
 			return ;
 		}
 		
@@ -1763,13 +1825,13 @@ static int httpRequsetCount = 0;
             }
             
             [weakSelf.collectionView reloadData];
+            [self addTimer];
         }
         
 //		[weakSelf.tableView reloadData];
         
         httpRequsetCount++;
         //定时60s查询设备状态
-        [self addTimer];
 		
 	}];
     }else//UUID没值
@@ -1879,11 +1941,11 @@ static int httpRequsetCount = 0;
                 self.listImageView.image = [UIImage imageNamed:@""];
             }
             [self.collectionView reloadData];
+            //定时60s查询设备状态
+            [self addTimer];
         }
         
         
-        //定时60s查询设备状态
-        [self addTimer];
 
         
         
@@ -2013,7 +2075,7 @@ static int httpRequsetCount = 0;
             NSString *url = [NSString stringWithFormat:@"%@%@", HRAPI_UpdateDoorPsw_URL, model.did];
             
             [HRHTTPTool hr_DeleteHttpWithURL:url parameters:nil responseDict:^(id array, NSError *error) {
-                NSLog(@"删除授权记录arr%@err%@", array, error);
+                DDLogWarn(@"删除授权记录arr%@err%@", array, error);
                 if (error) {
                     [SVProgressTool hr_showErrorWithStatus:@"删除设备失败,请重试!"];
                     dispatch_group_leave(serviceGroup);
@@ -2024,7 +2086,6 @@ static int httpRequsetCount = 0;
             }];
 
             dispatch_group_wait(serviceGroup, DISPATCH_TIME_FOREVER);
-            NSLog(@"第%d次", i);
         }
         dispatch_group_notify(serviceGroup, dispatch_get_global_queue(0, 0), ^{
             
@@ -2033,7 +2094,7 @@ static int httpRequsetCount = 0;
             HRWeakSelf
             [HRHTTPTool hr_DeleteHttpWithURL:url parameters:nil responseDict:^(id array, NSError *error) {
                 
-                NSLog(@"删除设备arr%@err%@", array, error);
+                DDLogWarn(@"删除设备arr%@err%@", array, error);
                 if (error != nil) {
                     
                     [ErrorCodeManager showError:error];
@@ -2152,10 +2213,9 @@ static int httpRequsetCount = 0;
         
         NSIndexPath *indexPath = [self.collectionView indexPathForItemAtPoint:p];
         if (indexPath == nil){
-            NSLog(@"couldn't find index path");
+            
         } else {
             
-            NSLog(@"couldn't find index path%ld", indexPath.row);
             //判断数组的个数进行传值
             if (self.homeArray.count == 1) {//当homeArray为1时
                 if (indexPath.row == 1) {
@@ -2301,7 +2361,6 @@ static int httpRequsetCount = 0;
     parameters[@"type"] = model.types;
     parameters[@"field_licence[und][0][value]"] = muString;
     
-    NSLog(@"model的types是%@",model.types);
     
     
     AFHTTPSessionManager *manager = [AFHTTPSessionManager hrManager];
@@ -2573,7 +2632,7 @@ static int httpRequsetCount = 0;
 	bgView =   [[UIVisualEffectView alloc] initWithEffect:[UIBlurEffect effectWithStyle:UIBlurEffectStyleLight]];
 	
 	bgView.frame =   CGRectMake(KScreenW/2, 64+40, 0, dilH);
-	
+
 	bgView.layer.cornerRadius = 15;
 	
 	bgView.clipsToBounds = YES;
@@ -2681,9 +2740,6 @@ static int httpRequsetCount = 0;
 	[close addTarget:self action:@selector(closeView) forControlEvents:UIControlEventTouchUpInside];
 	[self.view addSubview:bg];
 	
-	txt = [[UITextView alloc] initWithFrame:CGRectMake((KScreenW-60)/2, (bgView.frame.size.height-30)/2, 0, 30)];
-	txt.layer.cornerRadius = 10;
-	txt.layer.masksToBounds =YES;
 	[UIView animateWithDuration:0.5 animations:^{
 		
 		
@@ -2695,7 +2751,6 @@ static int httpRequsetCount = 0;
 			
 			newDvNameField.frame = CGRectMake(loginX, 80,  KScreenW-50 -  loginX*1.2, 32);
 			
-			txt.frame = CGRectMake(30, (bgView.frame.size.height-30)/2, KScreenW-120, 30);
 		}];
 		
 	}];
@@ -2795,7 +2850,6 @@ static int httpRequsetCount = 0;
         
 		//处理删除门锁事件
 		
-		NSLog(@"输入框的字符串是%@",self.pswTF.text);
         NSString *qqName = [kUserDefault objectForKey:kNSUserDefaultsNickname];
         if (qqName.length > 0) {
             
@@ -2813,7 +2867,6 @@ static int httpRequsetCount = 0;
             if (![self.pswTF.text isEqualToString:passWord]) {
                 
                 [customAlertView.layer shake];
-                NSLog(@"密码不正确");
                 
                 
                 return;
@@ -2906,11 +2959,8 @@ static int httpRequsetCount = 0;
 - (void)addTimer
 {
 	[self.timer invalidate];
-	
     DeviceListModel *testModel = self.currentStateModel;
-    //获取page = 0的门锁记录
-//		[self getHttpRequsetWithLockRecord];
-   
+    
     
     for (DeviceAutherModel *model in self.autherPersonArray) {//目标设备的名字要填,别人授权给我的管理员名字
         if ([model.uuid isEqualToString:testModel.uuid]) {
@@ -2927,6 +2977,7 @@ static int httpRequsetCount = 0;
     [self sendSocketQuaryDeviceOnLineWithUser:userName dev:testModel.uuid];
     
     self.timer = [NSTimer scheduledTimerWithTimeInterval:timerDuration target:self selector:@selector(updateTimer) userInfo:nil repeats:YES];
+    
 }
 
 
@@ -2952,15 +3003,70 @@ static int httpRequsetCount = 0;
 - (void)sendSocketQuaryDeviceOnLineWithUser:(NSString *)user dev:(NSString *)dev
 {
 	[self.appDelegate connectToHost];
-
+    
+    DeviceListModel *testModel = self.currentStateModel;
     // 设备令牌可能还没有,需要延时 一下
     
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     dict[@"user"] = user;
     dict[@"dev"] = dev;
     NSString *str = [NSString stringWithSocketQuaryDeviceOnLineWithDst:dict];
-    DDLogWarn(@"sendSocketQuaryDeviceOnLine-%@", str);
-    [self.appDelegate sendMessageWithString:str];
+    
+    if ([testModel.types isEqualToString:@"hrsc"]) {//门锁
+        
+        DDLogWarn(@"sendSocketQuaryDeviceOnLine-%@", str);
+        [self.appDelegate sendMessageWithString:str];
+        
+    }else if ([testModel.types isEqualToString:@"xiaorui"]) {//小睿
+        
+        /// 发送开关 控制请求帧
+        NSString *time = [NSString loadCurrentDate];
+        NSString *token = [[NSUserDefaults standardUserDefaults] objectForKey:PushToken];
+        NSString *userFrom = [[NSUserDefaults standardUserDefaults] objectForKey:kDefaultsUserName];
+        
+        
+        
+        NSString *devFrom = [kUserDefault objectForKey:kUserDefaultUUID];
+        NSString *userTo = userFrom;
+        
+        
+        NSString *devTo = testModel.uuid;
+        
+        
+        
+        
+        
+        NSString *uid = [kUserDefault objectForKey:kDefaultsUid];
+        
+        
+        NSString * mid = testModel.did;
+        
+        
+        NSString *did = mid;
+        
+        
+        NSString *uuid = testModel.uuid;
+        
+        NSString *created = [NSString loadCurrentDate];
+        NSString *title = [kUserDefault objectForKey:kUserDefaultTextVCUserName];
+        
+        
+        NSString *mess = @"";
+        mess = [mess stringByReplacingOccurrencesOfString:@"\r" withString:@""];
+        
+        NSString *str = [NSString stringWithFormat:@"{\"hrpush\":{\"version\":\"0.0.1\",\"status\":\"200\",\"time\":\"%@\",\"token\":\"%@\",\"type\": \"control\",\"desc\": \"msg\",\"src\":{\"user\": \"%@\", \"dev\":\"%@\"},\"dst\":{\"user\": \"%@\",\"dev\":\"%@\"}},\"msg\":{\"uid\":\"%@\",\"mid\":\"%@\",\"did\":\"%@\",\"uuid\":\"%@\",\"created\":\"%@\",\"title\":\"%@\",\"mess\":\"%@\"}}", time, token, userFrom,devFrom,userTo,devTo,uid,mid,did,uuid, created, title,mess];
+        
+        NSString *hrpush = @"hrpush\r\n";
+        
+        NSString *hrlength = [NSString stringWithFormat:@"length\r\n%lu\r\n", (unsigned long)str.length];
+        
+        NSString *footerStr = @"\r\n\0";
+        
+        NSString *urlString = [NSString stringWithFormat:@"%@%@%@%@", hrpush, hrlength, str, footerStr];
+        
+        //发送数据
+        [self.appDelegate sendMessageWithString:urlString];
+    }
 }
 #pragma mark - 获取设备信息  发送HTTP请求
 - (void)getHttpRequsetWithLockRecord

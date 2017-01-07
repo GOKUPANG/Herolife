@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="DofooterView">
+            <rect key="frame" x="0.0" y="0.0" width="595" height="482"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="ciG-ns-kEn">
+                    <rect key="frame" x="0.0" y="28" width="595" height="180"/>
+                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="180" id="2Vo-W5-xR2"/>
+                    </constraints>
+                </tableView>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Kjv-w5-ome">
+                    <rect key="frame" x="475" y="228" width="100" height="40"/>
+                    <color key="backgroundColor" red="0.13725490868091583" green="0.49019607901573181" blue="0.81568628549575806" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <state key="normal" title="取消注册">
+                        <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </state>
+                    <connections>
+                        <action selector="cancleBtnClick:" destination="iN0-l3-epB" eventType="touchUpInside" id="nJM-fp-qaW"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="309-lM-2JB">
+                    <rect key="frame" x="20" y="228" width="100" height="40"/>
+                    <color key="backgroundColor" red="0.13725490868091583" green="0.49019607901573181" blue="0.81568628549575806" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="40" id="FVm-l9-HvK"/>
+                        <constraint firstAttribute="width" constant="100" id="Txe-Di-CcA"/>
+                    </constraints>
+                    <state key="normal" title="注册设备">
+                        <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </state>
+                    <connections>
+                        <action selector="registerDevice:" destination="iN0-l3-epB" eventType="touchUpInside" id="1VA-bP-IMf"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="Kjv-w5-ome" secondAttribute="trailing" constant="20" id="3Qe-TG-WQj"/>
+                <constraint firstItem="Kjv-w5-ome" firstAttribute="width" secondItem="309-lM-2JB" secondAttribute="width" id="R36-pV-Pze"/>
+                <constraint firstItem="ciG-ns-kEn" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="topMargin" constant="20" id="Vok-99-Y7O"/>
+                <constraint firstItem="Kjv-w5-ome" firstAttribute="top" secondItem="309-lM-2JB" secondAttribute="top" id="aLP-7Y-Atr"/>
+                <constraint firstItem="309-lM-2JB" firstAttribute="top" secondItem="ciG-ns-kEn" secondAttribute="bottom" constant="20" id="ci0-jV-UG6"/>
+                <constraint firstItem="Kjv-w5-ome" firstAttribute="bottom" secondItem="309-lM-2JB" secondAttribute="bottom" id="eE1-vS-G4x"/>
+                <constraint firstItem="309-lM-2JB" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="20" id="kSH-cS-I9a"/>
+                <constraint firstItem="Kjv-w5-ome" firstAttribute="height" secondItem="309-lM-2JB" secondAttribute="height" id="piV-CL-4oM"/>
+                <constraint firstAttribute="trailing" secondItem="ciG-ns-kEn" secondAttribute="trailing" id="vcz-Yd-4xM"/>
+                <constraint firstItem="ciG-ns-kEn" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="wYS-yc-bwG"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="cancle" destination="Kjv-w5-ome" id="33b-en-xmq"/>
+                <outlet property="editTableView" destination="ciG-ns-kEn" id="wAb-e8-nmx"/>
+                <outlet property="registerDevice" destination="309-lM-2JB" id="Q3g-Km-yuO"/>
+                <outlet property="tabelViewH" destination="2Vo-W5-xR2" id="3TC-YM-xA1"/>
+            </connections>
+            <point key="canvasLocation" x="366.5" y="262"/>
+        </view>
+    </objects>
+</document>

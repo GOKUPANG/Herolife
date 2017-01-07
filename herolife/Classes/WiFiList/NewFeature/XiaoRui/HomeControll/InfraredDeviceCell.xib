@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11542" systemVersion="16B2555" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -19,7 +19,7 @@
                     <rect key="frame" x="85" y="114" width="50" height="50"/>
                 </imageView>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="skX-yb-sjU">
-                    <rect key="frame" x="0.0" y="169" width="221" height="21"/>
+                    <rect key="frame" x="0.0" y="174" width="221" height="21"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
@@ -30,7 +30,7 @@
                 <constraint firstItem="skX-yb-sjU" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="KLv-hH-oee"/>
                 <constraint firstItem="3ya-xN-gG4" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="Oii-eR-suh"/>
                 <constraint firstAttribute="trailing" secondItem="skX-yb-sjU" secondAttribute="trailing" id="a3X-pU-Jft"/>
-                <constraint firstItem="skX-yb-sjU" firstAttribute="top" secondItem="3ya-xN-gG4" secondAttribute="bottom" constant="5" id="aNI-Ip-dim"/>
+                <constraint firstItem="skX-yb-sjU" firstAttribute="top" secondItem="3ya-xN-gG4" secondAttribute="bottom" constant="10" id="aNI-Ip-dim"/>
                 <constraint firstItem="3ya-xN-gG4" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="i8l-lT-UTQ"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>

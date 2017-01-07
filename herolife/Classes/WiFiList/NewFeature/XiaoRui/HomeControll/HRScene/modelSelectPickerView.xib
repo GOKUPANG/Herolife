@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="modelSelectPickerView">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fus-B6-52j">
+                    <rect key="frame" x="0.0" y="417" width="375" height="250"/>
+                    <subviews>
+                        <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2lf-ox-5lj">
+                            <rect key="frame" x="69.5" y="34" width="200" height="150"/>
+                            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="150" id="bGI-ic-1HA"/>
+                                <constraint firstAttribute="width" constant="200" id="gdZ-56-dTg"/>
+                            </constraints>
+                        </pickerView>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ODZ-PE-Kwv">
+                            <rect key="frame" x="94.5" y="194" width="150" height="45"/>
+                            <color key="backgroundColor" red="0.20784313730000001" green="0.68627450980000004" blue="0.91764705879999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="45" id="67c-ik-IV4"/>
+                                <constraint firstAttribute="width" constant="150" id="N7u-gl-82V"/>
+                            </constraints>
+                            <state key="normal" title="确定">
+                                <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </state>
+                            <connections>
+                                <action selector="determineButtonClick:" destination="iN0-l3-epB" eventType="touchUpInside" id="p8j-56-l0E"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qMp-69-YiI">
+                            <rect key="frame" x="320" y="0.0" width="45" height="45"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="45" id="4yh-c2-bgt"/>
+                                <constraint firstAttribute="height" constant="45" id="bmC-g6-OHc"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                            <state key="normal" title="X">
+                                <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <connections>
+                                <action selector="dismissPickerView:" destination="iN0-l3-epB" eventType="touchUpInside" id="bDN-r3-WDn"/>
+                            </connections>
+                        </button>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="温度温度温度" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oWl-xV-JRz">
+                            <rect key="frame" x="114.5" y="12" width="110.5" height="22"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                            <color key="textColor" red="0.43529411759999997" green="0.4431372549" blue="0.47450980390000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="trailing" secondItem="qMp-69-YiI" secondAttribute="trailing" constant="10" id="02G-fv-CTf"/>
+                        <constraint firstItem="qMp-69-YiI" firstAttribute="top" secondItem="fus-B6-52j" secondAttribute="top" id="6N6-Bx-SKk"/>
+                        <constraint firstItem="oWl-xV-JRz" firstAttribute="centerY" secondItem="qMp-69-YiI" secondAttribute="centerY" id="Ig5-SM-piS"/>
+                        <constraint firstAttribute="height" constant="250" id="OSp-XO-Q8n"/>
+                        <constraint firstItem="2lf-ox-5lj" firstAttribute="centerX" secondItem="oWl-xV-JRz" secondAttribute="centerX" id="QN7-R2-xGc"/>
+                        <constraint firstItem="ODZ-PE-Kwv" firstAttribute="top" secondItem="2lf-ox-5lj" secondAttribute="bottom" constant="10" id="Rwd-Hb-x7K"/>
+                        <constraint firstItem="2lf-ox-5lj" firstAttribute="top" secondItem="oWl-xV-JRz" secondAttribute="bottom" id="bWD-s0-aFA"/>
+                        <constraint firstItem="qMp-69-YiI" firstAttribute="leading" secondItem="oWl-xV-JRz" secondAttribute="trailing" constant="95" id="iZd-fF-QZd"/>
+                        <constraint firstItem="2lf-ox-5lj" firstAttribute="centerX" secondItem="ODZ-PE-Kwv" secondAttribute="centerX" id="u99-Kr-v5g"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="fus-B6-52j" secondAttribute="bottom" id="QC9-D2-Uw8"/>
+                <constraint firstAttribute="trailing" secondItem="fus-B6-52j" secondAttribute="trailing" id="aOP-RL-NZe"/>
+                <constraint firstItem="fus-B6-52j" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="uwh-8b-gIc"/>
+            </constraints>
+            <connections>
+                <outlet property="containerView" destination="fus-B6-52j" id="t71-z2-0Uz"/>
+                <outlet property="containerViewMaxY" destination="QC9-D2-Uw8" id="IcM-Mc-DkN"/>
+                <outlet property="determineButton" destination="ODZ-PE-Kwv" id="2Iv-RA-yFS"/>
+                <outlet property="pickerView" destination="2lf-ox-5lj" id="hGD-7r-Ki1"/>
+                <outlet property="tempLabel" destination="oWl-xV-JRz" id="NzS-C8-L8W"/>
+            </connections>
+        </view>
+    </objects>
+</document>

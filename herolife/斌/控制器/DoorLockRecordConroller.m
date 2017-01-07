@@ -255,9 +255,14 @@ static int indexCount = 0;
             }
         }
         
-        [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:NO];
+        if (responseArr.count != 0) {
+            
+            [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:NO];
+            
+            indexCount++;
+        }
+        
         [self.tableView reloadData];
-        indexCount++;
     }];
     
     NSLog(@"下拉刷新查询数组的长度%lu",(unsigned long)weakSelf.queryArray.count);
@@ -270,6 +275,7 @@ static int indexCount = 0;
     /// 从偏好设置里加载数据
     NSString *uuid = self.listModel.uuid;
     
+    indexCount--;
     if (indexCount < 0) {
         indexCount = 0;
     }
@@ -321,7 +327,6 @@ static int indexCount = 0;
         }
         
         [self.tableView reloadData];
-        indexCount--;
     }];
     
     NSLog(@"查询数组的长度%lu",(unsigned long)weakSelf.queryArray.count);

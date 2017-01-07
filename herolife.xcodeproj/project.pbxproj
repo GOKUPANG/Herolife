@@ -68,6 +68,10 @@
 		D11913D61E0296E400ED1B9A /* XiaoRuiCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D11913C91E0296E400ED1B9A /* XiaoRuiCell.xib */; };
 		D11913D71E0296E400ED1B9A /* XMGHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = D11913CB1E0296E400ED1B9A /* XMGHeader.m */; };
 		D12BC7821DB1DA9E00D84B12 /* AccountManagementController.m in Sources */ = {isa = PBXBuildFile; fileRef = D12BC7811DB1DA9E00D84B12 /* AccountManagementController.m */; };
+		D132CB211E208A8F0014B1E3 /* GeneralInfraredCtrl.m in Sources */ = {isa = PBXBuildFile; fileRef = D132CB1E1E208A8F0014B1E3 /* GeneralInfraredCtrl.m */; };
+		D132CB221E208A8F0014B1E3 /* GeneralInfraredCtrlViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D132CB201E208A8F0014B1E3 /* GeneralInfraredCtrlViewController.m */; };
+		D132CB271E208AA60014B1E3 /* IrgmStudyController.m in Sources */ = {isa = PBXBuildFile; fileRef = D132CB241E208AA60014B1E3 /* IrgmStudyController.m */; };
+		D132CB281E208AA60014B1E3 /* IrgmStudyView.m in Sources */ = {isa = PBXBuildFile; fileRef = D132CB261E208AA60014B1E3 /* IrgmStudyView.m */; };
 		D1352D641D9E0ECB003A83AB /* AddNewDeviceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1352D4A1D9E0ECB003A83AB /* AddNewDeviceViewController.m */; };
 		D1352D651D9E0ECB003A83AB /* backWhite@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D1352D4B1D9E0ECB003A83AB /* backWhite@2x.png */; };
 		D1352D681D9E0ECB003A83AB /* Default-568h@3x-1.png in Resources */ = {isa = PBXBuildFile; fileRef = D1352D4F1D9E0ECB003A83AB /* Default-568h@3x-1.png */; };
@@ -88,10 +92,13 @@
 		D1352D781D9E0F35003A83AB /* HRTabBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1352D771D9E0F35003A83AB /* HRTabBarViewController.m */; };
 		D1352D7A1D9E0F5A003A83AB /* QRTools.m in Sources */ = {isa = PBXBuildFile; fileRef = D1352D791D9E0F5A003A83AB /* QRTools.m */; };
 		D1352D7E1D9E1065003A83AB /* NextController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1352D7D1D9E1065003A83AB /* NextController.m */; };
+		D13F2B591E15EEA300173AA4 /* SceneAddCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D13F2B571E15EEA300173AA4 /* SceneAddCell.m */; };
+		D13F2B5A1E15EEA300173AA4 /* SceneAddCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D13F2B581E15EEA300173AA4 /* SceneAddCell.xib */; };
 		D1405BAC1DBDA93900E19C5F /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D1405BAB1DBDA93900E19C5F /* AppDelegate.m */; };
 		D1405BAF1DBDA96500E19C5F /* NSString+Util.m in Sources */ = {isa = PBXBuildFile; fileRef = D1405BAE1DBDA96500E19C5F /* NSString+Util.m */; };
 		D1405BB11DBDA99700E19C5F /* WaitController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1405BB01DBDA99700E19C5F /* WaitController.m */; };
 		D1405BB51DBDAA0000E19C5F /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D1405BB41DBDAA0000E19C5F /* Info.plist */; };
+		D14344771E14B11B0063FAA2 /* SceneAddController.m in Sources */ = {isa = PBXBuildFile; fileRef = D14344761E14B11B0063FAA2 /* SceneAddController.m */; };
 		D14CF4E01E00E8970005596F /* HomeControllController.m in Sources */ = {isa = PBXBuildFile; fileRef = D14CF4DE1E00E8970005596F /* HomeControllController.m */; };
 		D14CF4E11E00E8970005596F /* HomeControllController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D14CF4DF1E00E8970005596F /* HomeControllController.xib */; };
 		D14CF4ED1E011B770005596F /* InfraredDeviceCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D14CF4EB1E011B770005596F /* InfraredDeviceCell.m */; };
@@ -115,9 +122,13 @@
 		D14D38EC1DEE683D00551FD3 /* EnterPSWController.m in Sources */ = {isa = PBXBuildFile; fileRef = D14D38EB1DEE683D00551FD3 /* EnterPSWController.m */; };
 		D158E5AF1DAB36EA000DB8C9 /* UMMobClick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D158E5AE1DAB36EA000DB8C9 /* UMMobClick.framework */; };
 		D158E5B11DAB37FA000DB8C9 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D158E5B01DAB37FA000DB8C9 /* CoreTelephony.framework */; };
+		D15F2B0D1E0A887F00050A7F /* CurrencyController.m in Sources */ = {isa = PBXBuildFile; fileRef = D15F2B0C1E0A887F00050A7F /* CurrencyController.m */; };
+		D15F2B101E0A8AE600050A7F /* CurrencyNewView.m in Sources */ = {isa = PBXBuildFile; fileRef = D15F2B0F1E0A8AE600050A7F /* CurrencyNewView.m */; };
 		D15F3BEE1DB4BC6F00EC2390 /* APPPSWController.m in Sources */ = {isa = PBXBuildFile; fileRef = D15F3BED1DB4BC6F00EC2390 /* APPPSWController.m */; };
 		D15F3BF41DB4F5FE00EC2390 /* AppUntils.m in Sources */ = {isa = PBXBuildFile; fileRef = D15F3BF11DB4F5FE00EC2390 /* AppUntils.m */; };
 		D15F3BF51DB4F5FE00EC2390 /* KeychainItemWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = D15F3BF31DB4F5FE00EC2390 /* KeychainItemWrapper.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		D166DC161E1CF97700FBF3B4 /* PopEditDoView.m in Sources */ = {isa = PBXBuildFile; fileRef = D166DC141E1CF97700FBF3B4 /* PopEditDoView.m */; };
+		D166DC171E1CF97700FBF3B4 /* PopEditDoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D166DC151E1CF97700FBF3B4 /* PopEditDoView.xib */; };
 		D17076761D94D6BB0027C46B /* LoginController.m in Sources */ = {isa = PBXBuildFile; fileRef = D17076751D94D6BB0027C46B /* LoginController.m */; };
 		D17CF0F11D6567E7007C95DD /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D17CF0F01D6567E7007C95DD /* main.m */; };
 		D17CF0FA1D6567E7007C95DD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D17CF0F81D6567E7007C95DD /* Main.storyboard */; };
@@ -132,6 +143,7 @@
 		D1940DD71D6AF76400A262EC /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D1940DD61D6AF76400A262EC /* libsqlite3.tbd */; };
 		D194FE681DF1709300FE146E /* ManualCreateController.m in Sources */ = {isa = PBXBuildFile; fileRef = D194FE661DF1709300FE146E /* ManualCreateController.m */; };
 		D194FE691DF1709300FE146E /* ManualCreateController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D194FE671DF1709300FE146E /* ManualCreateController.xib */; };
+		D196C45F1E1354DB00989D29 /* HRCommonButton.m in Sources */ = {isa = PBXBuildFile; fileRef = D196C45E1E1354DB00989D29 /* HRCommonButton.m */; };
 		D19CE3131DD40B5F008E7F3A /* DoorRecordCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D19CE3121DD40B5F008E7F3A /* DoorRecordCell.m */; };
 		D1A7DD211D8117DD00D051B0 /* ForgetController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1A7DBF21D8117DD00D051B0 /* ForgetController.m */; };
 		D1A7DD221D8117DD00D051B0 /* InputText.m in Sources */ = {isa = PBXBuildFile; fileRef = D1A7DBF51D8117DD00D051B0 /* InputText.m */; };
@@ -248,6 +260,28 @@
 		D1B50E351DFE3DC000CC83EF /* UUChartLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = D1B50E2D1DFE3DC000CC83EF /* UUChartLabel.m */; };
 		D1B50E361DFE3DC000CC83EF /* UUColor.m in Sources */ = {isa = PBXBuildFile; fileRef = D1B50E2F1DFE3DC000CC83EF /* UUColor.m */; };
 		D1B50E371DFE3DC000CC83EF /* UULineChart.m in Sources */ = {isa = PBXBuildFile; fileRef = D1B50E311DFE3DC000CC83EF /* UULineChart.m */; };
+		D1B73A351E08C74E00596E0A /* SwitchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1B73A341E08C74E00596E0A /* SwitchViewController.m */; };
+		D1B73A391E08C77D00596E0A /* DoTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D1B73A371E08C77D00596E0A /* DoTableViewCell.m */; };
+		D1B73A3A1E08C77D00596E0A /* DoTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D1B73A381E08C77D00596E0A /* DoTableViewCell.xib */; };
+		D1B73A431E08C7D400596E0A /* DofooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = D1B73A411E08C7D400596E0A /* DofooterView.m */; };
+		D1B73A441E08C7D400596E0A /* DofooterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D1B73A421E08C7D400596E0A /* DofooterView.xib */; };
+		D1B73A4B1E08DD6E00596E0A /* SceneController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1B73A4A1E08DD6E00596E0A /* SceneController.m */; };
+		D1B73A4F1E08DD9900596E0A /* SceneHeadCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D1B73A4D1E08DD9900596E0A /* SceneHeadCell.m */; };
+		D1B73A501E08DD9900596E0A /* SceneHeadCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D1B73A4E1E08DD9900596E0A /* SceneHeadCell.xib */; };
+		D1B73A571E08E00500596E0A /* SceneCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D1B73A521E08E00500596E0A /* SceneCell.m */; };
+		D1B73A581E08E00500596E0A /* SceneCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D1B73A531E08E00500596E0A /* SceneCell.xib */; };
+		D1B73A591E08E00500596E0A /* SceneCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D1B73A551E08E00500596E0A /* SceneCollectionCell.m */; };
+		D1B73A5A1E08E00500596E0A /* SceneCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D1B73A561E08E00500596E0A /* SceneCollectionCell.xib */; };
+		D1B73A5E1E08E01300596E0A /* SceneModellView.m in Sources */ = {isa = PBXBuildFile; fileRef = D1B73A5C1E08E01300596E0A /* SceneModellView.m */; };
+		D1B73A5F1E08E01300596E0A /* SceneModellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D1B73A5D1E08E01300596E0A /* SceneModellView.xib */; };
+		D1B73A661E08E06800596E0A /* ScenePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = D1B73A611E08E06800596E0A /* ScenePickerView.m */; };
+		D1B73A671E08E06800596E0A /* ScenePickerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D1B73A621E08E06800596E0A /* ScenePickerView.xib */; };
+		D1B73A681E08E06800596E0A /* SceneSwitchPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = D1B73A641E08E06800596E0A /* SceneSwitchPicker.m */; };
+		D1B73A691E08E06800596E0A /* SceneSwitchPicker.xib in Resources */ = {isa = PBXBuildFile; fileRef = D1B73A651E08E06800596E0A /* SceneSwitchPicker.xib */; };
+		D1B73A6C1E08E08C00596E0A /* SceneAirController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1B73A6B1E08E08C00596E0A /* SceneAirController.m */; };
+		D1B73A701E08E0B900596E0A /* DVSwitch.m in Sources */ = {isa = PBXBuildFile; fileRef = D1B73A6F1E08E0B900596E0A /* DVSwitch.m */; };
+		D1B73A731E08E0FD00596E0A /* SceneAirView.m in Sources */ = {isa = PBXBuildFile; fileRef = D1B73A721E08E0FD00596E0A /* SceneAirView.m */; };
+		D1B73A761E08E4A300596E0A /* AddCurrencyView.m in Sources */ = {isa = PBXBuildFile; fileRef = D1B73A751E08E4A300596E0A /* AddCurrencyView.m */; };
 		D1B792471D8BF78C00DDA4DD /* EBBannerView.m in Sources */ = {isa = PBXBuildFile; fileRef = D1B7923C1D8BF78C00DDA4DD /* EBBannerView.m */; };
 		D1B792481D8BF78C00DDA4DD /* EBBannerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D1B7923D1D8BF78C00DDA4DD /* EBBannerView.xib */; };
 		D1B792491D8BF78C00DDA4DD /* EBForeNotification.m in Sources */ = {isa = PBXBuildFile; fileRef = D1B7923E1D8BF78C00DDA4DD /* EBForeNotification.m */; };
@@ -259,13 +293,40 @@
 		D1C144241D8E2FD800FDDFA0 /* ShouAddFamilyModel.m in Sources */ = {isa = PBXBuildFile; fileRef = D1C144231D8E2FD800FDDFA0 /* ShouAddFamilyModel.m */; };
 		D1C3AFDE1DACF50C008E3426 /* NSString+DoorLock.m in Sources */ = {isa = PBXBuildFile; fileRef = D1C3AFDD1DACF50C008E3426 /* NSString+DoorLock.m */; };
 		D1C3AFE21DACF547008E3426 /* ShouQuanManagerController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1C3AFE11DACF547008E3426 /* ShouQuanManagerController.m */; };
+		D1C8D2401E1760E000F2D829 /* SceneModelSelectController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1C8D23F1E1760E000F2D829 /* SceneModelSelectController.m */; };
+		D1C8D2441E17669800F2D829 /* SceneModelSelectCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D1C8D2421E17669800F2D829 /* SceneModelSelectCell.m */; };
+		D1C8D2451E17669800F2D829 /* SceneModelSelectCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D1C8D2431E17669800F2D829 /* SceneModelSelectCell.xib */; };
+		D1C8D24B1E17A69D00F2D829 /* modelSelectPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = D1C8D24A1E17A69D00F2D829 /* modelSelectPickerView.m */; };
+		D1C8D24D1E17A6BA00F2D829 /* modelSelectPickerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D1C8D24C1E17A6BA00F2D829 /* modelSelectPickerView.xib */; };
+		D1D2272C1E0382120045A0A3 /* AddIraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1D2272A1E0382120045A0A3 /* AddIraViewController.m */; };
+		D1D2272D1E0382120045A0A3 /* AddIraViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D1D2272B1E0382120045A0A3 /* AddIraViewController.xib */; };
+		D1D227301E0382630045A0A3 /* CityField.m in Sources */ = {isa = PBXBuildFile; fileRef = D1D2272F1E0382630045A0A3 /* CityField.m */; };
+		D1D227331E0383F60045A0A3 /* Province.m in Sources */ = {isa = PBXBuildFile; fileRef = D1D227321E0383F60045A0A3 /* Province.m */; };
+		D1D227351E0384C10045A0A3 /* air_infrared_library.plist in Resources */ = {isa = PBXBuildFile; fileRef = D1D227341E0384C10045A0A3 /* air_infrared_library.plist */; };
+		D1D2273B1E03C6DD0045A0A3 /* EditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1D227391E03C6DD0045A0A3 /* EditViewController.m */; };
+		D1D2273C1E03C6DD0045A0A3 /* EditViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D1D2273A1E03C6DD0045A0A3 /* EditViewController.xib */; };
+		D1D2273F1E03C8750045A0A3 /* testBut.m in Sources */ = {isa = PBXBuildFile; fileRef = D1D2273E1E03C8750045A0A3 /* testBut.m */; };
 		D1D23DEF1D7570A100FCB5C9 /* AddDeivcecell.m in Sources */ = {isa = PBXBuildFile; fileRef = D1D23DEC1D7570A100FCB5C9 /* AddDeivcecell.m */; };
+		D1D77D2F1E10FC39008CE54F /* SceneNameIconCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D1D77D2E1E10FC39008CE54F /* SceneNameIconCell.m */; };
 		D1DD1D941DF655150028764F /* CreateXiaoRuiController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1DD1D921DF655150028764F /* CreateXiaoRuiController.m */; };
 		D1DD1D9D1DF663B50028764F /* CreatXiaoRuiView.m in Sources */ = {isa = PBXBuildFile; fileRef = D1DD1D9C1DF663B50028764F /* CreatXiaoRuiView.m */; };
 		D1DD1D9F1DF663F90028764F /* CreatXiaoRuiView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D1DD1D9E1DF663F90028764F /* CreatXiaoRuiView.xib */; };
 		D1DF6A5A1DF9076D00CA8F8B /* EnvironmentController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1DF6A581DF9076D00CA8F8B /* EnvironmentController.m */; };
 		D1DF6A5B1DF9076D00CA8F8B /* EnvironmentController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D1DF6A591DF9076D00CA8F8B /* EnvironmentController.xib */; };
 		D1DF6A5E1DF94D0D00CA8F8B /* HRNoHighLightedButton.m in Sources */ = {isa = PBXBuildFile; fileRef = D1DF6A5D1DF94D0D00CA8F8B /* HRNoHighLightedButton.m */; };
+		D1DFB5661E1B91E800BF0D7E /* SceneIcomSelectController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1DFB5651E1B91E800BF0D7E /* SceneIcomSelectController.m */; };
+		D1DFB56A1E1B984600BF0D7E /* SceneIcomSelectCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D1DFB5681E1B984600BF0D7E /* SceneIcomSelectCell.m */; };
+		D1DFB56B1E1B984600BF0D7E /* SceneIcomSelectCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D1DFB5691E1B984600BF0D7E /* SceneIcomSelectCell.xib */; };
+		D1E2F93E1E052FC3005030FD /* ControllAirController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1E2F93C1E052FC3005030FD /* ControllAirController.m */; };
+		D1E2F93F1E052FC3005030FD /* ControllAirController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D1E2F93D1E052FC3005030FD /* ControllAirController.xib */; };
+		D1E2F9421E053843005030FD /* AirCtrlViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1E2F9411E053843005030FD /* AirCtrlViewController.m */; };
+		D1E2F9451E05388F005030FD /* AirCtrlView.m in Sources */ = {isa = PBXBuildFile; fileRef = D1E2F9441E05388F005030FD /* AirCtrlView.m */; };
+		D1E2F94F1E053BA6005030FD /* CurrencyCtrlController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1E2F94E1E053BA6005030FD /* CurrencyCtrlController.m */; };
+		D1E2F9521E053D81005030FD /* CurrencyCtrlView.m in Sources */ = {isa = PBXBuildFile; fileRef = D1E2F9511E053D81005030FD /* CurrencyCtrlView.m */; };
+		D1E2F9571E053E55005030FD /* WindowCurtainsController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1E2F9551E053E55005030FD /* WindowCurtainsController.m */; };
+		D1E2F95C1E053EB5005030FD /* PopEditMenuIrgmView.m in Sources */ = {isa = PBXBuildFile; fileRef = D1E2F95A1E053EB5005030FD /* PopEditMenuIrgmView.m */; };
+		D1E2F95D1E053EB5005030FD /* PopEditMenuIrgmView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D1E2F95B1E053EB5005030FD /* PopEditMenuIrgmView.xib */; };
+		D1E2F9601E053F09005030FD /* IrgmStudyBtn.m in Sources */ = {isa = PBXBuildFile; fileRef = D1E2F95F1E053F09005030FD /* IrgmStudyBtn.m */; };
 		D1E35D871D90DE89002A766C /* AutherTimePickView.m in Sources */ = {isa = PBXBuildFile; fileRef = D1E35D861D90DE89002A766C /* AutherTimePickView.m */; };
 		D1EFCAC31D88EDD20045A0C0 /* DoorLockModel.m in Sources */ = {isa = PBXBuildFile; fileRef = D1EFCAC21D88EDD20045A0C0 /* DoorLockModel.m */; };
 		DAE2A790C81C0FDB9C617E84 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DC40F28764523F49428DB0CE /* libPods.a */; };
@@ -387,6 +448,14 @@
 		D11913CA1E0296E400ED1B9A /* XMGHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMGHeader.h; sourceTree = "<group>"; };
 		D11913CB1E0296E400ED1B9A /* XMGHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XMGHeader.m; sourceTree = "<group>"; };
 		D12BC7811DB1DA9E00D84B12 /* AccountManagementController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccountManagementController.m; sourceTree = "<group>"; };
+		D132CB1D1E208A8F0014B1E3 /* GeneralInfraredCtrl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GeneralInfraredCtrl.h; sourceTree = "<group>"; };
+		D132CB1E1E208A8F0014B1E3 /* GeneralInfraredCtrl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeneralInfraredCtrl.m; sourceTree = "<group>"; };
+		D132CB1F1E208A8F0014B1E3 /* GeneralInfraredCtrlViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GeneralInfraredCtrlViewController.h; sourceTree = "<group>"; };
+		D132CB201E208A8F0014B1E3 /* GeneralInfraredCtrlViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeneralInfraredCtrlViewController.m; sourceTree = "<group>"; };
+		D132CB231E208AA60014B1E3 /* IrgmStudyController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IrgmStudyController.h; sourceTree = "<group>"; };
+		D132CB241E208AA60014B1E3 /* IrgmStudyController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IrgmStudyController.m; sourceTree = "<group>"; };
+		D132CB251E208AA60014B1E3 /* IrgmStudyView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IrgmStudyView.h; sourceTree = "<group>"; };
+		D132CB261E208AA60014B1E3 /* IrgmStudyView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IrgmStudyView.m; sourceTree = "<group>"; };
 		D1352D491D9E0ECB003A83AB /* AddNewDeviceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddNewDeviceViewController.h; sourceTree = "<group>"; };
 		D1352D4A1D9E0ECB003A83AB /* AddNewDeviceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddNewDeviceViewController.m; sourceTree = "<group>"; };
 		D1352D4B1D9E0ECB003A83AB /* backWhite@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "backWhite@2x.png"; sourceTree = "<group>"; };
@@ -415,12 +484,17 @@
 		D1352D791D9E0F5A003A83AB /* QRTools.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QRTools.m; sourceTree = "<group>"; };
 		D1352D7D1D9E1065003A83AB /* NextController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NextController.m; sourceTree = "<group>"; };
 		D1352D811D9E194C003A83AB /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		D13F2B561E15EEA300173AA4 /* SceneAddCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SceneAddCell.h; sourceTree = "<group>"; };
+		D13F2B571E15EEA300173AA4 /* SceneAddCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SceneAddCell.m; sourceTree = "<group>"; };
+		D13F2B581E15EEA300173AA4 /* SceneAddCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SceneAddCell.xib; sourceTree = "<group>"; };
 		D1405BAB1DBDA93900E19C5F /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		D1405BAD1DBDA96500E19C5F /* NSString+Util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Util.h"; sourceTree = "<group>"; };
 		D1405BAE1DBDA96500E19C5F /* NSString+Util.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Util.m"; sourceTree = "<group>"; };
 		D1405BB01DBDA99700E19C5F /* WaitController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WaitController.m; sourceTree = "<group>"; };
 		D1405BB41DBDAA0000E19C5F /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D1405BB61DBDAA0B00E19C5F /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
+		D14344751E14B11B0063FAA2 /* SceneAddController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SceneAddController.h; sourceTree = "<group>"; };
+		D14344761E14B11B0063FAA2 /* SceneAddController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SceneAddController.m; sourceTree = "<group>"; };
 		D14CF4DD1E00E8970005596F /* HomeControllController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeControllController.h; sourceTree = "<group>"; };
 		D14CF4DE1E00E8970005596F /* HomeControllController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeControllController.m; sourceTree = "<group>"; };
 		D14CF4DF1E00E8970005596F /* HomeControllController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HomeControllController.xib; sourceTree = "<group>"; };
@@ -465,11 +539,18 @@
 		D14D38EB1DEE683D00551FD3 /* EnterPSWController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EnterPSWController.m; sourceTree = "<group>"; };
 		D158E5AE1DAB36EA000DB8C9 /* UMMobClick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = UMMobClick.framework; sourceTree = "<group>"; };
 		D158E5B01DAB37FA000DB8C9 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
+		D15F2B0B1E0A887F00050A7F /* CurrencyController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CurrencyController.h; sourceTree = "<group>"; };
+		D15F2B0C1E0A887F00050A7F /* CurrencyController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CurrencyController.m; sourceTree = "<group>"; };
+		D15F2B0E1E0A8AE600050A7F /* CurrencyNewView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CurrencyNewView.h; sourceTree = "<group>"; };
+		D15F2B0F1E0A8AE600050A7F /* CurrencyNewView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CurrencyNewView.m; sourceTree = "<group>"; };
 		D15F3BED1DB4BC6F00EC2390 /* APPPSWController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APPPSWController.m; sourceTree = "<group>"; };
 		D15F3BF01DB4F5FE00EC2390 /* AppUntils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppUntils.h; sourceTree = "<group>"; };
 		D15F3BF11DB4F5FE00EC2390 /* AppUntils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppUntils.m; sourceTree = "<group>"; };
 		D15F3BF21DB4F5FE00EC2390 /* KeychainItemWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeychainItemWrapper.h; sourceTree = "<group>"; };
 		D15F3BF31DB4F5FE00EC2390 /* KeychainItemWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeychainItemWrapper.m; sourceTree = "<group>"; };
+		D166DC131E1CF97700FBF3B4 /* PopEditDoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PopEditDoView.h; sourceTree = "<group>"; };
+		D166DC141E1CF97700FBF3B4 /* PopEditDoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PopEditDoView.m; sourceTree = "<group>"; };
+		D166DC151E1CF97700FBF3B4 /* PopEditDoView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PopEditDoView.xib; sourceTree = "<group>"; };
 		D17076751D94D6BB0027C46B /* LoginController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginController.m; sourceTree = "<group>"; };
 		D17CF0EC1D6567E7007C95DD /* HEROLIFE.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HEROLIFE.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D17CF0F01D6567E7007C95DD /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -490,6 +571,8 @@
 		D194FE651DF1709300FE146E /* ManualCreateController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ManualCreateController.h; sourceTree = "<group>"; };
 		D194FE661DF1709300FE146E /* ManualCreateController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ManualCreateController.m; sourceTree = "<group>"; };
 		D194FE671DF1709300FE146E /* ManualCreateController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ManualCreateController.xib; sourceTree = "<group>"; };
+		D196C45D1E1354DB00989D29 /* HRCommonButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HRCommonButton.h; sourceTree = "<group>"; };
+		D196C45E1E1354DB00989D29 /* HRCommonButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HRCommonButton.m; sourceTree = "<group>"; };
 		D19CE3121DD40B5F008E7F3A /* DoorRecordCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DoorRecordCell.m; sourceTree = "<group>"; };
 		D1A7DBF11D8117DD00D051B0 /* ForgetController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ForgetController.h; sourceTree = "<group>"; };
 		D1A7DBF21D8117DD00D051B0 /* ForgetController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ForgetController.m; sourceTree = "<group>"; };
@@ -727,6 +810,42 @@
 		D1B50E2F1DFE3DC000CC83EF /* UUColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UUColor.m; sourceTree = "<group>"; };
 		D1B50E301DFE3DC000CC83EF /* UULineChart.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UULineChart.h; sourceTree = "<group>"; };
 		D1B50E311DFE3DC000CC83EF /* UULineChart.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UULineChart.m; sourceTree = "<group>"; };
+		D1B73A331E08C74E00596E0A /* SwitchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SwitchViewController.h; sourceTree = "<group>"; };
+		D1B73A341E08C74E00596E0A /* SwitchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SwitchViewController.m; sourceTree = "<group>"; };
+		D1B73A361E08C77D00596E0A /* DoTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DoTableViewCell.h; sourceTree = "<group>"; };
+		D1B73A371E08C77D00596E0A /* DoTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DoTableViewCell.m; sourceTree = "<group>"; };
+		D1B73A381E08C77D00596E0A /* DoTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DoTableViewCell.xib; sourceTree = "<group>"; };
+		D1B73A401E08C7D400596E0A /* DofooterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DofooterView.h; sourceTree = "<group>"; };
+		D1B73A411E08C7D400596E0A /* DofooterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DofooterView.m; sourceTree = "<group>"; };
+		D1B73A421E08C7D400596E0A /* DofooterView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DofooterView.xib; sourceTree = "<group>"; };
+		D1B73A491E08DD6E00596E0A /* SceneController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SceneController.h; sourceTree = "<group>"; };
+		D1B73A4A1E08DD6E00596E0A /* SceneController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SceneController.m; sourceTree = "<group>"; };
+		D1B73A4C1E08DD9900596E0A /* SceneHeadCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SceneHeadCell.h; sourceTree = "<group>"; };
+		D1B73A4D1E08DD9900596E0A /* SceneHeadCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SceneHeadCell.m; sourceTree = "<group>"; };
+		D1B73A4E1E08DD9900596E0A /* SceneHeadCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SceneHeadCell.xib; sourceTree = "<group>"; };
+		D1B73A511E08E00500596E0A /* SceneCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SceneCell.h; sourceTree = "<group>"; };
+		D1B73A521E08E00500596E0A /* SceneCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SceneCell.m; sourceTree = "<group>"; };
+		D1B73A531E08E00500596E0A /* SceneCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SceneCell.xib; sourceTree = "<group>"; };
+		D1B73A541E08E00500596E0A /* SceneCollectionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SceneCollectionCell.h; sourceTree = "<group>"; };
+		D1B73A551E08E00500596E0A /* SceneCollectionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SceneCollectionCell.m; sourceTree = "<group>"; };
+		D1B73A561E08E00500596E0A /* SceneCollectionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SceneCollectionCell.xib; sourceTree = "<group>"; };
+		D1B73A5B1E08E01300596E0A /* SceneModellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SceneModellView.h; sourceTree = "<group>"; };
+		D1B73A5C1E08E01300596E0A /* SceneModellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SceneModellView.m; sourceTree = "<group>"; };
+		D1B73A5D1E08E01300596E0A /* SceneModellView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SceneModellView.xib; sourceTree = "<group>"; };
+		D1B73A601E08E06800596E0A /* ScenePickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScenePickerView.h; sourceTree = "<group>"; };
+		D1B73A611E08E06800596E0A /* ScenePickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScenePickerView.m; sourceTree = "<group>"; };
+		D1B73A621E08E06800596E0A /* ScenePickerView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ScenePickerView.xib; sourceTree = "<group>"; };
+		D1B73A631E08E06800596E0A /* SceneSwitchPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SceneSwitchPicker.h; sourceTree = "<group>"; };
+		D1B73A641E08E06800596E0A /* SceneSwitchPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SceneSwitchPicker.m; sourceTree = "<group>"; };
+		D1B73A651E08E06800596E0A /* SceneSwitchPicker.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SceneSwitchPicker.xib; sourceTree = "<group>"; };
+		D1B73A6A1E08E08C00596E0A /* SceneAirController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SceneAirController.h; sourceTree = "<group>"; };
+		D1B73A6B1E08E08C00596E0A /* SceneAirController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SceneAirController.m; sourceTree = "<group>"; };
+		D1B73A6E1E08E0B900596E0A /* DVSwitch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DVSwitch.h; sourceTree = "<group>"; };
+		D1B73A6F1E08E0B900596E0A /* DVSwitch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DVSwitch.m; sourceTree = "<group>"; };
+		D1B73A711E08E0FD00596E0A /* SceneAirView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SceneAirView.h; sourceTree = "<group>"; };
+		D1B73A721E08E0FD00596E0A /* SceneAirView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SceneAirView.m; sourceTree = "<group>"; };
+		D1B73A741E08E4A300596E0A /* AddCurrencyView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddCurrencyView.h; sourceTree = "<group>"; };
+		D1B73A751E08E4A300596E0A /* AddCurrencyView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddCurrencyView.m; sourceTree = "<group>"; };
 		D1B7923B1D8BF78C00DDA4DD /* EBBannerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EBBannerView.h; sourceTree = "<group>"; };
 		D1B7923C1D8BF78C00DDA4DD /* EBBannerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EBBannerView.m; sourceTree = "<group>"; };
 		D1B7923D1D8BF78C00DDA4DD /* EBBannerView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EBBannerView.xib; sourceTree = "<group>"; };
@@ -746,8 +865,31 @@
 		D1C3AFDC1DACF505008E3426 /* NSString+DoorLock.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSString+DoorLock.h"; sourceTree = "<group>"; };
 		D1C3AFDD1DACF50C008E3426 /* NSString+DoorLock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+DoorLock.m"; sourceTree = "<group>"; };
 		D1C3AFE11DACF547008E3426 /* ShouQuanManagerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShouQuanManagerController.m; sourceTree = "<group>"; };
+		D1C8D23E1E1760E000F2D829 /* SceneModelSelectController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SceneModelSelectController.h; sourceTree = "<group>"; };
+		D1C8D23F1E1760E000F2D829 /* SceneModelSelectController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SceneModelSelectController.m; sourceTree = "<group>"; };
+		D1C8D2411E17669800F2D829 /* SceneModelSelectCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SceneModelSelectCell.h; sourceTree = "<group>"; };
+		D1C8D2421E17669800F2D829 /* SceneModelSelectCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SceneModelSelectCell.m; sourceTree = "<group>"; };
+		D1C8D2431E17669800F2D829 /* SceneModelSelectCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SceneModelSelectCell.xib; sourceTree = "<group>"; };
+		D1C8D2491E17A69D00F2D829 /* modelSelectPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = modelSelectPickerView.h; sourceTree = "<group>"; };
+		D1C8D24A1E17A69D00F2D829 /* modelSelectPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = modelSelectPickerView.m; sourceTree = "<group>"; };
+		D1C8D24C1E17A6BA00F2D829 /* modelSelectPickerView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = modelSelectPickerView.xib; sourceTree = "<group>"; };
+		D1D227291E0382120045A0A3 /* AddIraViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AddIraViewController.h; path = ../AddIraViewController.h; sourceTree = "<group>"; };
+		D1D2272A1E0382120045A0A3 /* AddIraViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AddIraViewController.m; path = ../AddIraViewController.m; sourceTree = "<group>"; };
+		D1D2272B1E0382120045A0A3 /* AddIraViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = AddIraViewController.xib; path = ../AddIraViewController.xib; sourceTree = "<group>"; };
+		D1D2272E1E0382630045A0A3 /* CityField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CityField.h; sourceTree = "<group>"; };
+		D1D2272F1E0382630045A0A3 /* CityField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CityField.m; sourceTree = "<group>"; };
+		D1D227311E0383F60045A0A3 /* Province.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Province.h; sourceTree = "<group>"; };
+		D1D227321E0383F60045A0A3 /* Province.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Province.m; sourceTree = "<group>"; };
+		D1D227341E0384C10045A0A3 /* air_infrared_library.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = air_infrared_library.plist; sourceTree = "<group>"; };
+		D1D227381E03C6DD0045A0A3 /* EditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditViewController.h; sourceTree = "<group>"; };
+		D1D227391E03C6DD0045A0A3 /* EditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditViewController.m; sourceTree = "<group>"; };
+		D1D2273A1E03C6DD0045A0A3 /* EditViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EditViewController.xib; sourceTree = "<group>"; };
+		D1D2273D1E03C8750045A0A3 /* testBut.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = testBut.h; sourceTree = "<group>"; };
+		D1D2273E1E03C8750045A0A3 /* testBut.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = testBut.m; sourceTree = "<group>"; };
 		D1D23DEB1D7570A100FCB5C9 /* AddDeivcecell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AddDeivcecell.h; path = ../AddDeivcecell.h; sourceTree = "<group>"; };
 		D1D23DEC1D7570A100FCB5C9 /* AddDeivcecell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AddDeivcecell.m; path = ../AddDeivcecell.m; sourceTree = "<group>"; };
+		D1D77D2D1E10FC39008CE54F /* SceneNameIconCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SceneNameIconCell.h; sourceTree = "<group>"; };
+		D1D77D2E1E10FC39008CE54F /* SceneNameIconCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SceneNameIconCell.m; sourceTree = "<group>"; };
 		D1DD1D911DF655150028764F /* CreateXiaoRuiController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateXiaoRuiController.h; sourceTree = "<group>"; };
 		D1DD1D921DF655150028764F /* CreateXiaoRuiController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateXiaoRuiController.m; sourceTree = "<group>"; };
 		D1DD1D9B1DF663B50028764F /* CreatXiaoRuiView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreatXiaoRuiView.h; sourceTree = "<group>"; };
@@ -758,6 +900,29 @@
 		D1DF6A591DF9076D00CA8F8B /* EnvironmentController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EnvironmentController.xib; sourceTree = "<group>"; };
 		D1DF6A5C1DF94D0D00CA8F8B /* HRNoHighLightedButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HRNoHighLightedButton.h; sourceTree = "<group>"; };
 		D1DF6A5D1DF94D0D00CA8F8B /* HRNoHighLightedButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HRNoHighLightedButton.m; sourceTree = "<group>"; };
+		D1DFB5641E1B91E800BF0D7E /* SceneIcomSelectController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SceneIcomSelectController.h; sourceTree = "<group>"; };
+		D1DFB5651E1B91E800BF0D7E /* SceneIcomSelectController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SceneIcomSelectController.m; sourceTree = "<group>"; };
+		D1DFB5671E1B984600BF0D7E /* SceneIcomSelectCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SceneIcomSelectCell.h; sourceTree = "<group>"; };
+		D1DFB5681E1B984600BF0D7E /* SceneIcomSelectCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SceneIcomSelectCell.m; sourceTree = "<group>"; };
+		D1DFB5691E1B984600BF0D7E /* SceneIcomSelectCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SceneIcomSelectCell.xib; sourceTree = "<group>"; };
+		D1E2F93B1E052FC3005030FD /* ControllAirController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ControllAirController.h; sourceTree = "<group>"; };
+		D1E2F93C1E052FC3005030FD /* ControllAirController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ControllAirController.m; sourceTree = "<group>"; };
+		D1E2F93D1E052FC3005030FD /* ControllAirController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ControllAirController.xib; sourceTree = "<group>"; };
+		D1E2F9401E053843005030FD /* AirCtrlViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AirCtrlViewController.h; sourceTree = "<group>"; };
+		D1E2F9411E053843005030FD /* AirCtrlViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AirCtrlViewController.m; sourceTree = "<group>"; };
+		D1E2F9431E05388F005030FD /* AirCtrlView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AirCtrlView.h; sourceTree = "<group>"; };
+		D1E2F9441E05388F005030FD /* AirCtrlView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AirCtrlView.m; sourceTree = "<group>"; };
+		D1E2F94D1E053BA6005030FD /* CurrencyCtrlController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CurrencyCtrlController.h; path = ../Air/CurrencyCtrlController.h; sourceTree = "<group>"; };
+		D1E2F94E1E053BA6005030FD /* CurrencyCtrlController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CurrencyCtrlController.m; path = ../Air/CurrencyCtrlController.m; sourceTree = "<group>"; };
+		D1E2F9501E053D81005030FD /* CurrencyCtrlView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CurrencyCtrlView.h; sourceTree = "<group>"; };
+		D1E2F9511E053D81005030FD /* CurrencyCtrlView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CurrencyCtrlView.m; sourceTree = "<group>"; };
+		D1E2F9541E053E55005030FD /* WindowCurtainsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WindowCurtainsController.h; sourceTree = "<group>"; };
+		D1E2F9551E053E55005030FD /* WindowCurtainsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WindowCurtainsController.m; sourceTree = "<group>"; };
+		D1E2F9591E053EB5005030FD /* PopEditMenuIrgmView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PopEditMenuIrgmView.h; sourceTree = "<group>"; };
+		D1E2F95A1E053EB5005030FD /* PopEditMenuIrgmView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PopEditMenuIrgmView.m; sourceTree = "<group>"; };
+		D1E2F95B1E053EB5005030FD /* PopEditMenuIrgmView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PopEditMenuIrgmView.xib; sourceTree = "<group>"; };
+		D1E2F95E1E053F09005030FD /* IrgmStudyBtn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IrgmStudyBtn.h; path = ../Air/IrgmStudyBtn.h; sourceTree = "<group>"; };
+		D1E2F95F1E053F09005030FD /* IrgmStudyBtn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IrgmStudyBtn.m; path = ../Air/IrgmStudyBtn.m; sourceTree = "<group>"; };
 		D1E35D851D90DE89002A766C /* AutherTimePickView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AutherTimePickView.h; path = ../AutherTimePickView.h; sourceTree = "<group>"; };
 		D1E35D861D90DE89002A766C /* AutherTimePickView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AutherTimePickView.m; path = ../AutherTimePickView.m; sourceTree = "<group>"; };
 		D1E35D881D916BCB002A766C /* ShouQuanManagerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShouQuanManagerController.h; sourceTree = "<group>"; };
@@ -1130,6 +1295,14 @@
 				D14CF4EA1E011B770005596F /* InfraredDeviceCell.h */,
 				D14CF4EB1E011B770005596F /* InfraredDeviceCell.m */,
 				D14CF4EC1E011B770005596F /* InfraredDeviceCell.xib */,
+				D166DC131E1CF97700FBF3B4 /* PopEditDoView.h */,
+				D166DC141E1CF97700FBF3B4 /* PopEditDoView.m */,
+				D166DC151E1CF97700FBF3B4 /* PopEditDoView.xib */,
+				D1B73A481E08DAC300596E0A /* HRScene */,
+				D1B73A321E08C74300596E0A /* HRDO */,
+				D1E2F9531E053E15005030FD /* Window */,
+				D1E2F9461E053990005030FD /* Currency */,
+				D1D227371E03C41F0045A0A3 /* Air */,
 			);
 			path = HomeControll;
 			sourceTree = "<group>";
@@ -1232,6 +1405,7 @@
 				D1BDCAA71D926F530022BDE2 /* LaunchScreen.storyboard */,
 				D17CF0F81D6567E7007C95DD /* Main.storyboard */,
 				D17CF0FB1D6567E7007C95DD /* Assets.xcassets */,
+				D1D227341E0384C10045A0A3 /* air_infrared_library.plist */,
 				D1405BB41DBDAA0000E19C5F /* Info.plist */,
 				D17CF0F01D6567E7007C95DD /* main.m */,
 				D1405BB61DBDAA0B00E19C5F /* PrefixHeader.pch */,
@@ -1366,6 +1540,7 @@
 		D1A7DC001D8117DD00D051B0 /* Library */ = {
 			isa = PBXGroup;
 			children = (
+				D1B73A6D1E08E0B900596E0A /* DVSwitch */,
 				D1B50E251DFE3DC000CC83EF /* UUChart */,
 				D1147BD51DB0B80200ADEECC /* base64 */,
 				D158E5AE1DAB36EA000DB8C9 /* UMMobClick.framework */,
@@ -1688,6 +1863,12 @@
 		D1A7DCFD1D8117DD00D051B0 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				D1D2273D1E03C8750045A0A3 /* testBut.h */,
+				D1D2273E1E03C8750045A0A3 /* testBut.m */,
+				D1D227311E0383F60045A0A3 /* Province.h */,
+				D1D227321E0383F60045A0A3 /* Province.m */,
+				D1D2272E1E0382630045A0A3 /* CityField.h */,
+				D1D2272F1E0382630045A0A3 /* CityField.m */,
 				D1A7DCFE1D8117DD00D051B0 /* HRButton.h */,
 				D1A7DCFF1D8117DD00D051B0 /* HRButton.m */,
 				D1A7DD001D8117DD00D051B0 /* HRLabel.h */,
@@ -1696,6 +1877,8 @@
 				D1A7DD031D8117DD00D051B0 /* TipsLabel.m */,
 				D1DF6A5C1DF94D0D00CA8F8B /* HRNoHighLightedButton.h */,
 				D1DF6A5D1DF94D0D00CA8F8B /* HRNoHighLightedButton.m */,
+				D196C45D1E1354DB00989D29 /* HRCommonButton.h */,
+				D196C45E1E1354DB00989D29 /* HRCommonButton.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1798,6 +1981,81 @@
 			path = UUChart;
 			sourceTree = "<group>";
 		};
+		D1B73A321E08C74300596E0A /* HRDO */ = {
+			isa = PBXGroup;
+			children = (
+				D1B73A331E08C74E00596E0A /* SwitchViewController.h */,
+				D1B73A341E08C74E00596E0A /* SwitchViewController.m */,
+				D1B73A361E08C77D00596E0A /* DoTableViewCell.h */,
+				D1B73A371E08C77D00596E0A /* DoTableViewCell.m */,
+				D1B73A381E08C77D00596E0A /* DoTableViewCell.xib */,
+				D1B73A401E08C7D400596E0A /* DofooterView.h */,
+				D1B73A411E08C7D400596E0A /* DofooterView.m */,
+				D1B73A421E08C7D400596E0A /* DofooterView.xib */,
+			);
+			path = HRDO;
+			sourceTree = "<group>";
+		};
+		D1B73A481E08DAC300596E0A /* HRScene */ = {
+			isa = PBXGroup;
+			children = (
+				D1DFB5641E1B91E800BF0D7E /* SceneIcomSelectController.h */,
+				D1DFB5651E1B91E800BF0D7E /* SceneIcomSelectController.m */,
+				D1DFB5671E1B984600BF0D7E /* SceneIcomSelectCell.h */,
+				D1DFB5681E1B984600BF0D7E /* SceneIcomSelectCell.m */,
+				D1DFB5691E1B984600BF0D7E /* SceneIcomSelectCell.xib */,
+				D1C8D23E1E1760E000F2D829 /* SceneModelSelectController.h */,
+				D1C8D23F1E1760E000F2D829 /* SceneModelSelectController.m */,
+				D1C8D2411E17669800F2D829 /* SceneModelSelectCell.h */,
+				D1C8D2421E17669800F2D829 /* SceneModelSelectCell.m */,
+				D1C8D2431E17669800F2D829 /* SceneModelSelectCell.xib */,
+				D1C8D2491E17A69D00F2D829 /* modelSelectPickerView.h */,
+				D1C8D24A1E17A69D00F2D829 /* modelSelectPickerView.m */,
+				D1C8D24C1E17A6BA00F2D829 /* modelSelectPickerView.xib */,
+				D1B73A6A1E08E08C00596E0A /* SceneAirController.h */,
+				D1B73A6B1E08E08C00596E0A /* SceneAirController.m */,
+				D1B73A491E08DD6E00596E0A /* SceneController.h */,
+				D1B73A4A1E08DD6E00596E0A /* SceneController.m */,
+				D14344751E14B11B0063FAA2 /* SceneAddController.h */,
+				D14344761E14B11B0063FAA2 /* SceneAddController.m */,
+				D13F2B561E15EEA300173AA4 /* SceneAddCell.h */,
+				D13F2B571E15EEA300173AA4 /* SceneAddCell.m */,
+				D13F2B581E15EEA300173AA4 /* SceneAddCell.xib */,
+				D1B73A5B1E08E01300596E0A /* SceneModellView.h */,
+				D1B73A5C1E08E01300596E0A /* SceneModellView.m */,
+				D1B73A5D1E08E01300596E0A /* SceneModellView.xib */,
+				D1D77D2D1E10FC39008CE54F /* SceneNameIconCell.h */,
+				D1D77D2E1E10FC39008CE54F /* SceneNameIconCell.m */,
+				D1B73A4C1E08DD9900596E0A /* SceneHeadCell.h */,
+				D1B73A4D1E08DD9900596E0A /* SceneHeadCell.m */,
+				D1B73A4E1E08DD9900596E0A /* SceneHeadCell.xib */,
+				D1B73A511E08E00500596E0A /* SceneCell.h */,
+				D1B73A521E08E00500596E0A /* SceneCell.m */,
+				D1B73A531E08E00500596E0A /* SceneCell.xib */,
+				D1B73A541E08E00500596E0A /* SceneCollectionCell.h */,
+				D1B73A551E08E00500596E0A /* SceneCollectionCell.m */,
+				D1B73A561E08E00500596E0A /* SceneCollectionCell.xib */,
+				D1B73A601E08E06800596E0A /* ScenePickerView.h */,
+				D1B73A611E08E06800596E0A /* ScenePickerView.m */,
+				D1B73A621E08E06800596E0A /* ScenePickerView.xib */,
+				D1B73A631E08E06800596E0A /* SceneSwitchPicker.h */,
+				D1B73A641E08E06800596E0A /* SceneSwitchPicker.m */,
+				D1B73A651E08E06800596E0A /* SceneSwitchPicker.xib */,
+				D1B73A711E08E0FD00596E0A /* SceneAirView.h */,
+				D1B73A721E08E0FD00596E0A /* SceneAirView.m */,
+			);
+			path = HRScene;
+			sourceTree = "<group>";
+		};
+		D1B73A6D1E08E0B900596E0A /* DVSwitch */ = {
+			isa = PBXGroup;
+			children = (
+				D1B73A6E1E08E0B900596E0A /* DVSwitch.h */,
+				D1B73A6F1E08E0B900596E0A /* DVSwitch.m */,
+			);
+			path = DVSwitch;
+			sourceTree = "<group>";
+		};
 		D1B792391D8BF78C00DDA4DD /* EBForeNotification */ = {
 			isa = PBXGroup;
 			children = (
@@ -1856,6 +2114,26 @@
 			path = QRcode;
 			sourceTree = "<group>";
 		};
+		D1D227371E03C41F0045A0A3 /* Air */ = {
+			isa = PBXGroup;
+			children = (
+				D1D227381E03C6DD0045A0A3 /* EditViewController.h */,
+				D1D227391E03C6DD0045A0A3 /* EditViewController.m */,
+				D1D2273A1E03C6DD0045A0A3 /* EditViewController.xib */,
+				D1D227291E0382120045A0A3 /* AddIraViewController.h */,
+				D1D2272A1E0382120045A0A3 /* AddIraViewController.m */,
+				D1D2272B1E0382120045A0A3 /* AddIraViewController.xib */,
+				D1E2F93B1E052FC3005030FD /* ControllAirController.h */,
+				D1E2F93C1E052FC3005030FD /* ControllAirController.m */,
+				D1E2F93D1E052FC3005030FD /* ControllAirController.xib */,
+				D1E2F9401E053843005030FD /* AirCtrlViewController.h */,
+				D1E2F9411E053843005030FD /* AirCtrlViewController.m */,
+				D1E2F9431E05388F005030FD /* AirCtrlView.h */,
+				D1E2F9441E05388F005030FD /* AirCtrlView.m */,
+			);
+			path = Air;
+			sourceTree = "<group>";
+		};
 		D1DF6A551DF905DA00CA8F8B /* XiaoRui */ = {
 			isa = PBXGroup;
 			children = (
@@ -1877,6 +2155,45 @@
 			);
 			name = Environment;
 			path = ../CreateXiaoRui/Environment;
+			sourceTree = "<group>";
+		};
+		D1E2F9461E053990005030FD /* Currency */ = {
+			isa = PBXGroup;
+			children = (
+				D132CB1D1E208A8F0014B1E3 /* GeneralInfraredCtrl.h */,
+				D132CB1E1E208A8F0014B1E3 /* GeneralInfraredCtrl.m */,
+				D132CB1F1E208A8F0014B1E3 /* GeneralInfraredCtrlViewController.h */,
+				D132CB201E208A8F0014B1E3 /* GeneralInfraredCtrlViewController.m */,
+				D132CB231E208AA60014B1E3 /* IrgmStudyController.h */,
+				D132CB241E208AA60014B1E3 /* IrgmStudyController.m */,
+				D132CB251E208AA60014B1E3 /* IrgmStudyView.h */,
+				D132CB261E208AA60014B1E3 /* IrgmStudyView.m */,
+				D1E2F94D1E053BA6005030FD /* CurrencyCtrlController.h */,
+				D1E2F94E1E053BA6005030FD /* CurrencyCtrlController.m */,
+				D1E2F9501E053D81005030FD /* CurrencyCtrlView.h */,
+				D1E2F9511E053D81005030FD /* CurrencyCtrlView.m */,
+				D1E2F9591E053EB5005030FD /* PopEditMenuIrgmView.h */,
+				D1E2F95A1E053EB5005030FD /* PopEditMenuIrgmView.m */,
+				D1E2F95B1E053EB5005030FD /* PopEditMenuIrgmView.xib */,
+				D1E2F95E1E053F09005030FD /* IrgmStudyBtn.h */,
+				D1E2F95F1E053F09005030FD /* IrgmStudyBtn.m */,
+				D1B73A741E08E4A300596E0A /* AddCurrencyView.h */,
+				D1B73A751E08E4A300596E0A /* AddCurrencyView.m */,
+				D15F2B0B1E0A887F00050A7F /* CurrencyController.h */,
+				D15F2B0C1E0A887F00050A7F /* CurrencyController.m */,
+				D15F2B0E1E0A8AE600050A7F /* CurrencyNewView.h */,
+				D15F2B0F1E0A8AE600050A7F /* CurrencyNewView.m */,
+			);
+			path = Currency;
+			sourceTree = "<group>";
+		};
+		D1E2F9531E053E15005030FD /* Window */ = {
+			isa = PBXGroup;
+			children = (
+				D1E2F9541E053E55005030FD /* WindowCurtainsController.h */,
+				D1E2F9551E053E55005030FD /* WindowCurtainsController.m */,
+			);
+			path = Window;
 			sourceTree = "<group>";
 		};
 		EFE49747F7B44972AEF6CB46 /* Frameworks */ = {
@@ -2018,7 +2335,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D1E2F95D1E053EB5005030FD /* PopEditMenuIrgmView.xib in Resources */,
 				AAA8A9DA1D8CEB4100ABA020 /* 授权选择@3x.png in Resources */,
+				D1B73A5A1E08E00500596E0A /* SceneCollectionCell.xib in Resources */,
+				D1B73A5F1E08E01300596E0A /* SceneModellView.xib in Resources */,
 				1868B91C1D79289500D19386 /* 4.jpg in Resources */,
 				1868B91A1D79289500D19386 /* 2.jpg in Resources */,
 				AAA8A9DB1D8CEB4100ABA020 /* 未选择@2x.png in Resources */,
@@ -2027,33 +2347,43 @@
 				D1352D701D9E0ECB003A83AB /* Scanning frame@2x.png in Resources */,
 				D1B3CB361D966D6D009F96D2 /* HerolifeViewController.xib in Resources */,
 				18C6979A1D7462B9004DA2B1 /* 键盘@3x.png in Resources */,
+				D13F2B5A1E15EEA300173AA4 /* SceneAddCell.xib in Resources */,
+				D1D227351E0384C10045A0A3 /* air_infrared_library.plist in Resources */,
 				AAA49AEF1D9D0C0700D4D248 /* MissWebViewController.xib in Resources */,
 				D1352D6A1D9E0ECB003A83AB /* icon_qr.png in Resources */,
 				D1352D741D9E0ECB003A83AB /* whiteBack@2x.png in Resources */,
 				D11913D41E0296E400ED1B9A /* UserCell.xib in Resources */,
 				D11913D01E0296E400ED1B9A /* ico_login_user.png in Resources */,
 				AAA8A9D71D8CEB4100ABA020 /* 未选择.png in Resources */,
+				D1B73A501E08DD9900596E0A /* SceneHeadCell.xib in Resources */,
 				AAA8A9D91D8CEB4100ABA020 /* 授权选择@2x.png in Resources */,
 				D1BDCAA81D926F530022BDE2 /* LaunchScreen.storyboard in Resources */,
 				1868B8EB1D76C4A200D19386 /* 后退@2x.png in Resources */,
 				1868B9191D79289500D19386 /* 1.jpg in Resources */,
+				D1D2273C1E03C6DD0045A0A3 /* EditViewController.xib in Resources */,
 				D1352D6B1D9E0ECB003A83AB /* instructions.rtf in Resources */,
 				D11913D21E0296E400ED1B9A /* TextInteractionController.xib in Resources */,
+				D1C8D2451E17669800F2D829 /* SceneModelSelectCell.xib in Resources */,
 				AAA8A9D81D8CEB4100ABA020 /* 未选择@2x.png in Resources */,
 				D1352D711D9E0ECB003A83AB /* Scanning line@2x.png in Resources */,
 				D1405BB51DBDAA0000E19C5F /* Info.plist in Resources */,
 				D17CF0FC1D6567E7007C95DD /* Assets.xcassets in Resources */,
 				D11913CF1E0296E400ED1B9A /* ic_action_add.png in Resources */,
 				D1B7924A1D8BF78C00DDA4DD /* EBMute.mp3 in Resources */,
+				D1C8D24D1E17A6BA00F2D829 /* modelSelectPickerView.xib in Resources */,
+				D1B73A581E08E00500596E0A /* SceneCell.xib in Resources */,
 				D17CF0FA1D6567E7007C95DD /* Main.storyboard in Resources */,
+				D1DFB56B1E1B984600BF0D7E /* SceneIcomSelectCell.xib in Resources */,
 				D14CF4EE1E011B770005596F /* InfraredDeviceCell.xib in Resources */,
 				D11913D61E0296E400ED1B9A /* XiaoRuiCell.xib in Resources */,
 				D14CF4E11E00E8970005596F /* HomeControllController.xib in Resources */,
 				D1B3CB3B1D966DB5009F96D2 /* HerolifeImageCell.xib in Resources */,
 				D1352D681D9E0ECB003A83AB /* Default-568h@3x-1.png in Resources */,
+				D1B73A671E08E06800596E0A /* ScenePickerView.xib in Resources */,
 				18C697A71D7462B9004DA2B1 /* JCAlertView.bundle in Resources */,
 				AAA8A9DC1D8CEB4100ABA020 /* 未选择@3x.png in Resources */,
 				D1DD1D9F1DF663F90028764F /* CreatXiaoRuiView.xib in Resources */,
+				D166DC171E1CF97700FBF3B4 /* PopEditDoView.xib in Resources */,
 				1868B8ED1D76C4B300D19386 /* 后退@3x.png in Resources */,
 				1868B8F11D76CD4A00D19386 /* 智能开锁@3x.png in Resources */,
 				D194FE691DF1709300FE146E /* ManualCreateController.xib in Resources */,
@@ -2061,13 +2391,18 @@
 				AAA8A9D61D8CEB4100ABA020 /* 授权选择@2x.png in Resources */,
 				18C697991D7462B9004DA2B1 /* 键盘@2x.png in Resources */,
 				D1352D6D1D9E0ECB003A83AB /* ManualCreateXiaoRui.xib in Resources */,
+				D1D2272D1E0382120045A0A3 /* AddIraViewController.xib in Resources */,
 				AAA8A9B71D8CE9D900ABA020 /* arrow_down@2x.png in Resources */,
 				D1B792481D8BF78C00DDA4DD /* EBBannerView.xib in Resources */,
 				1868B8EF1D76CD3C00D19386 /* 智能开锁@2x.png in Resources */,
+				D1E2F93F1E052FC3005030FD /* ControllAirController.xib in Resources */,
 				D11913CE1E0296E400ED1B9A /* emotion.png in Resources */,
 				D1352D761D9E0ECB003A83AB /* XiaoRuiNewQRcode.xib in Resources */,
+				D1B73A3A1E08C77D00596E0A /* DoTableViewCell.xib in Resources */,
 				D11913CD1E0296E400ED1B9A /* AddTextView.xib in Resources */,
+				D1B73A691E08E06800596E0A /* SceneSwitchPicker.xib in Resources */,
 				AAA8A9D51D8CEB4100ABA020 /* 授权选择.png in Resources */,
+				D1B73A441E08C7D400596E0A /* DofooterView.xib in Resources */,
 				D1A7DD361D8117DD00D051B0 /* MJRefresh.bundle in Resources */,
 				D1352D651D9E0ECB003A83AB /* backWhite@2x.png in Resources */,
 				D1DF6A5B1DF9076D00CA8F8B /* EnvironmentController.xib in Resources */,
@@ -2152,6 +2487,7 @@
 				D1A7DD3C1D8117DD00D051B0 /* PhotoModel.m in Sources */,
 				D1B792471D8BF78C00DDA4DD /* EBBannerView.m in Sources */,
 				D1EFCAC31D88EDD20045A0C0 /* DoorLockModel.m in Sources */,
+				D1E2F94F1E053BA6005030FD /* CurrencyCtrlController.m in Sources */,
 				D1A7DD701D8117DD00D051B0 /* AsyncUdpSocket.m in Sources */,
 				D1C144241D8E2FD800FDDFA0 /* ShouAddFamilyModel.m in Sources */,
 				D1A7DDA51D8117DD00D051B0 /* Login.m in Sources */,
@@ -2160,15 +2496,20 @@
 				D1A7DD401D8117DD00D051B0 /* FMDatabasePool.m in Sources */,
 				D14D38E21DED5BA500551FD3 /* ESPTouchResult.m in Sources */,
 				D1A7DD8F1D8117DD00D051B0 /* UIBarButtonItem+XMGExtension.m in Sources */,
+				D1B73A4B1E08DD6E00596E0A /* SceneController.m in Sources */,
 				D1A7DDAB1D8117DD00D051B0 /* HRServicesManager.m in Sources */,
 				D1147BCC1DB0B6C500ADEECC /* DeviceListController.m in Sources */,
 				D1C3AFDE1DACF50C008E3426 /* NSString+DoorLock.m in Sources */,
 				D1352D641D9E0ECB003A83AB /* AddNewDeviceViewController.m in Sources */,
+				D1B73A5E1E08E01300596E0A /* SceneModellView.m in Sources */,
+				D15F2B0D1E0A887F00050A7F /* CurrencyController.m in Sources */,
 				AAA49AEA1D9D0BBD00D4D248 /* SettingController.m in Sources */,
 				AAA8A9B81D8CE9D900ABA020 /* CustomerInfoSectionView.m in Sources */,
 				D1A7DD3F1D8117DD00D051B0 /* FMDatabaseAdditions.m in Sources */,
 				D1A7DD271D8117DD00D051B0 /* CustomCollectionViewCollectionViewCell.m in Sources */,
+				D1D227301E0382630045A0A3 /* CityField.m in Sources */,
 				D1A7DD901D8117DD00D051B0 /* UIColor+Util.m in Sources */,
+				D1D77D2F1E10FC39008CE54F /* SceneNameIconCell.m in Sources */,
 				D1A7DD801D8117DD00D051B0 /* UIView+WebCacheOperation.m in Sources */,
 				D1A7DDB41D8117DD00D051B0 /* RegisterViewController.m in Sources */,
 				D1AA2E651D83F48600D1AEC9 /* DeviceListModel.m in Sources */,
@@ -2181,8 +2522,11 @@
 				D14D38E31DED5BA500551FD3 /* ESPTouchTask.m in Sources */,
 				D1A7DD311D8117DD00D051B0 /* MJRefreshBackNormalFooter.m in Sources */,
 				D1A7DD771D8117DD00D051B0 /* SDWebImageDownloaderOperation.m in Sources */,
+				D14344771E14B11B0063FAA2 /* SceneAddController.m in Sources */,
 				D11913D71E0296E400ED1B9A /* XMGHeader.m in Sources */,
 				D1A7DDAF1D8117DD00D051B0 /* SVProgressTool.m in Sources */,
+				D1B73A4F1E08DD9900596E0A /* SceneHeadCell.m in Sources */,
+				D1C8D24B1E17A69D00F2D829 /* modelSelectPickerView.m in Sources */,
 				D1A7DD9C1D8117DD00D051B0 /* HRMessageData.m in Sources */,
 				D14D38B01DED378800551FD3 /* HRRefreshFooter.m in Sources */,
 				D1A7DDCA1D811BB900D051B0 /* HRConst.m in Sources */,
@@ -2191,7 +2535,9 @@
 				D1A7DDA01D8117DD00D051B0 /* HRTotalData.m in Sources */,
 				D1A7DDBD1D8117DD00D051B0 /* WIFIListModel.m in Sources */,
 				D1147BDB1DB0B80200ADEECC /* README.md in Sources */,
+				D15F2B101E0A8AE600050A7F /* CurrencyNewView.m in Sources */,
 				D1A7DD711D8117DD00D051B0 /* MKAnnotationView+WebCache.m in Sources */,
+				D1B73A351E08C74E00596E0A /* SwitchViewController.m in Sources */,
 				D1A7DDA81D8117DD00D051B0 /* ErrorCodeManager.m in Sources */,
 				1868B8F71D76DDD400D19386 /* BackPicSetController.m in Sources */,
 				D15F3BF41DB4F5FE00EC2390 /* AppUntils.m in Sources */,
@@ -2216,6 +2562,8 @@
 				D1352D6C1D9E0ECB003A83AB /* ManualCreateXiaoRui.m in Sources */,
 				D1A7DDA31D8117DD00D051B0 /* IracData.m in Sources */,
 				D14D38B61DED384D00551FD3 /* DoorLockRecordConroller.m in Sources */,
+				D1B73A701E08E0B900596E0A /* DVSwitch.m in Sources */,
+				D1E2F9521E053D81005030FD /* CurrencyCtrlView.m in Sources */,
 				AAA49AED1D9D0BFE00D4D248 /* MissWebViewController.m in Sources */,
 				D1A7DD7B1D8117DD00D051B0 /* UIImage+GIF.m in Sources */,
 				18C697AD1D7462B9004DA2B1 /* PCLockLabel.m in Sources */,
@@ -2224,6 +2572,7 @@
 				D1A7DDBB1D8117DD00D051B0 /* WiFiListCell.m in Sources */,
 				D1B50E371DFE3DC000CC83EF /* UULineChart.m in Sources */,
 				D12BC7821DB1DA9E00D84B12 /* AccountManagementController.m in Sources */,
+				D13F2B591E15EEA300173AA4 /* SceneAddCell.m in Sources */,
 				D1DD1D941DF655150028764F /* CreateXiaoRuiController.m in Sources */,
 				D1405BAF1DBDA96500E19C5F /* NSString+Util.m in Sources */,
 				D1A7DD3E1D8117DD00D051B0 /* FMDatabase.m in Sources */,
@@ -2238,10 +2587,16 @@
 				D1352D721D9E0ECB003A83AB /* SearchDeviceView.m in Sources */,
 				D17076761D94D6BB0027C46B /* LoginController.m in Sources */,
 				D1A7DD761D8117DD00D051B0 /* SDWebImageDownloader.m in Sources */,
+				D1E2F9421E053843005030FD /* AirCtrlViewController.m in Sources */,
 				D1A7DD781D8117DD00D051B0 /* SDWebImageManager.m in Sources */,
 				D14D38DB1DED5BA500551FD3 /* ESP_WifiUtil.m in Sources */,
 				D1352D781D9E0F35003A83AB /* HRTabBarViewController.m in Sources */,
+				D1B73A681E08E06800596E0A /* SceneSwitchPicker.m in Sources */,
+				D1D227331E0383F60045A0A3 /* Province.m in Sources */,
+				D1B73A391E08C77D00596E0A /* DoTableViewCell.m in Sources */,
+				D196C45F1E1354DB00989D29 /* HRCommonButton.m in Sources */,
 				D1B50E331DFE3DC000CC83EF /* UUBarChart.m in Sources */,
+				D1E2F95C1E053EB5005030FD /* PopEditMenuIrgmView.m in Sources */,
 				18C697A81D7462B9004DA2B1 /* JCAlertView.m in Sources */,
 				1868B9131D79200200D19386 /* ChooseBackPicCtl.m in Sources */,
 				D1A7DD211D8117DD00D051B0 /* ForgetController.m in Sources */,
@@ -2252,18 +2607,27 @@
 				D14D38D91DED5BA500551FD3 /* ESP_CRC8.m in Sources */,
 				D1A7DD9F1D8117DD00D051B0 /* HRTempHumid.m in Sources */,
 				D1A7DDA61D8117DD00D051B0 /* Push.m in Sources */,
+				D132CB271E208AA60014B1E3 /* IrgmStudyController.m in Sources */,
 				D1A7DD7D1D8117DD00D051B0 /* UIImage+WebP.m in Sources */,
 				D15F3BF51DB4F5FE00EC2390 /* KeychainItemWrapper.m in Sources */,
+				D132CB221E208A8F0014B1E3 /* GeneralInfraredCtrlViewController.m in Sources */,
 				D1A7DD7E1D8117DD00D051B0 /* UIImageView+HighlightedWebCache.m in Sources */,
+				D1B73A571E08E00500596E0A /* SceneCell.m in Sources */,
+				D1B73A591E08E00500596E0A /* SceneCollectionCell.m in Sources */,
 				D1A7DD3A1D8117DD00D051B0 /* UIScrollView+MJRefresh.m in Sources */,
+				D1DFB56A1E1B984600BF0D7E /* SceneIcomSelectCell.m in Sources */,
 				D17CF0F11D6567E7007C95DD /* main.m in Sources */,
 				D1A7DD3D1D8117DD00D051B0 /* YRCoverFlowLayout.m in Sources */,
+				D1DFB5661E1B91E800BF0D7E /* SceneIcomSelectController.m in Sources */,
 				D1B3CB3F1D966DCA009F96D2 /* HerolifeLabelCell.m in Sources */,
 				D1A7DD9B1D8117DD00D051B0 /* HRInfraredDevice.m in Sources */,
 				D1352D7A1D9E0F5A003A83AB /* QRTools.m in Sources */,
 				D15F3BEE1DB4BC6F00EC2390 /* APPPSWController.m in Sources */,
+				D1E2F9571E053E55005030FD /* WindowCurtainsController.m in Sources */,
+				D1B73A661E08E06800596E0A /* ScenePickerView.m in Sources */,
 				D1405BAC1DBDA93900E19C5F /* AppDelegate.m in Sources */,
 				D1A7DD371D8117DD00D051B0 /* MJRefreshConst.m in Sources */,
+				D1C8D2401E1760E000F2D829 /* SceneModelSelectController.m in Sources */,
 				D1A7DD951D8117DD00D051B0 /* HRNavigationViewController.m in Sources */,
 				D1A7DD921D8117DD00D051B0 /* UIImageView+Util.m in Sources */,
 				D14D38E41DED5BA500551FD3 /* ESPTouchTaskParameter.m in Sources */,
@@ -2274,11 +2638,13 @@
 				18C697A51D7462B9004DA2B1 /* PCCircleViewConst.m in Sources */,
 				D1A7DD2A1D8117DD00D051B0 /* MJRefreshComponent.m in Sources */,
 				D1A7DD8D1D8117DD00D051B0 /* NSObject+Util.m in Sources */,
+				D1B73A731E08E0FD00596E0A /* SceneAirView.m in Sources */,
 				D1A7DD321D8117DD00D051B0 /* MJRefreshBackStateFooter.m in Sources */,
 				D1A7DDAD1D8117DD00D051B0 /* HRUDPSocketTool.m in Sources */,
 				D1A7DD2B1D8117DD00D051B0 /* MJRefreshFooter.m in Sources */,
 				AAFFDDF31D800EFC005669BA /* SRActionSheet.m in Sources */,
 				D1A7DD751D8117DD00D051B0 /* SDWebImageDecoder.m in Sources */,
+				D1E2F9601E053F09005030FD /* IrgmStudyBtn.m in Sources */,
 				D1A7DD6F1D8117DD00D051B0 /* AsyncSocket.m in Sources */,
 				D1B7924D1D8BF78C00DDA4DD /* UILabel+ContentSize.m in Sources */,
 				D1B50E351DFE3DC000CC83EF /* UUChartLabel.m in Sources */,
@@ -2289,6 +2655,7 @@
 				D1147BDA1DB0B80200ADEECC /* GTMBase64.m in Sources */,
 				D1A7DD8A1D8117DD00D051B0 /* AFHTTPSessionManager+Util.m in Sources */,
 				D14CF4E01E00E8970005596F /* HomeControllController.m in Sources */,
+				D1B73A761E08E4A300596E0A /* AddCurrencyView.m in Sources */,
 				D14D38DE1DED5BA500551FD3 /* ESPDatumCode.m in Sources */,
 				D1007CE01D8694280079D3DD /* DeviceAutherModel.m in Sources */,
 				D1352D6F1D9E0ECB003A83AB /* QRViewController.m in Sources */,
@@ -2308,8 +2675,11 @@
 				D1405BB11DBDA99700E19C5F /* WaitController.m in Sources */,
 				D194FE681DF1709300FE146E /* ManualCreateController.m in Sources */,
 				D1A9C8CE1DCB25EE00518886 /* OpenLockController.m in Sources */,
+				D1B73A431E08C7D400596E0A /* DofooterView.m in Sources */,
+				D1D2273F1E03C8750045A0A3 /* testBut.m in Sources */,
 				18C697AA1D7462B9004DA2B1 /* UITableView+SDAutoTableViewCellHeight.m in Sources */,
 				D1A7DDAA1D8117DD00D051B0 /* HRRefreshHeader.m in Sources */,
+				D132CB211E208A8F0014B1E3 /* GeneralInfraredCtrl.m in Sources */,
 				D1A7DDB11D8117DD00D051B0 /* HRLabel.m in Sources */,
 				AA029EA01D7D75B500EFF91C /* HWPopTool.m in Sources */,
 				AAA8A9C61D8CEA5E00ABA020 /* DoorPswModel.m in Sources */,
@@ -2319,10 +2689,14 @@
 				D1DF6A5A1DF9076D00CA8F8B /* EnvironmentController.m in Sources */,
 				D1B088E81DAA484200072214 /* NewFeatureCell.m in Sources */,
 				D1AA2E631D83F48600D1AEC9 /* DeviceListCell.m in Sources */,
+				D1D2273B1E03C6DD0045A0A3 /* EditViewController.m in Sources */,
+				D1B73A6C1E08E08C00596E0A /* SceneAirController.m in Sources */,
 				D1A7DDBA1D8117DD00D051B0 /* UDPModel.m in Sources */,
 				D1A7DD351D8117DD00D051B0 /* MJRefreshStateHeader.m in Sources */,
 				D1D23DEF1D7570A100FCB5C9 /* AddDeivcecell.m in Sources */,
 				D1A7DD7A1D8117DD00D051B0 /* UIButton+WebCache.m in Sources */,
+				D1C8D2441E17669800F2D829 /* SceneModelSelectCell.m in Sources */,
+				D1E2F93E1E052FC3005030FD /* ControllAirController.m in Sources */,
 				D1A7DDA21D8117DD00D051B0 /* HRXiaorui.m in Sources */,
 				D1A7DDB91D8117DD00D051B0 /* HRPushMode.m in Sources */,
 				D1B50E341DFE3DC000CC83EF /* UUChart.m in Sources */,
@@ -2332,15 +2706,19 @@
 				D1A7DDA91D8117DD00D051B0 /* HRHTTPTool.m in Sources */,
 				AA2C52781D91578D00D0BD3D /* PushSettingController.m in Sources */,
 				D11913CC1E0296E400ED1B9A /* AddTextView.m in Sources */,
+				D1D2272C1E0382120045A0A3 /* AddIraViewController.m in Sources */,
 				D1A7DD911D8117DD00D051B0 /* UIImage+Util.m in Sources */,
 				D14D38EC1DEE683D00551FD3 /* EnterPSWController.m in Sources */,
 				D19CE3131DD40B5F008E7F3A /* DoorRecordCell.m in Sources */,
 				D1A7DDBC1D8117DD00D051B0 /* WiFiListController.m in Sources */,
 				D1AA2E661D83F48600D1AEC9 /* DeviceListTcpModel.m in Sources */,
 				D1A7DD961D8117DD00D051B0 /* HRTabBar.m in Sources */,
+				D132CB281E208AA60014B1E3 /* IrgmStudyView.m in Sources */,
 				AAA8A9BE1D8CEA0E00ABA020 /* YXCustomAlertView.m in Sources */,
 				AA929A4F1DB47B5D009D64E6 /* GoToSetUpController.m in Sources */,
+				D1E2F9451E05388F005030FD /* AirCtrlView.m in Sources */,
 				D1AE5E4D1DAF24410051D7D9 /* GestureViewController.m in Sources */,
+				D166DC161E1CF97700FBF3B4 /* PopEditDoView.m in Sources */,
 				D1DD1D9D1DF663B50028764F /* CreatXiaoRuiView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

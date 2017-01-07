@@ -320,10 +320,10 @@
 	NSString *uuid = [[NSUserDefaults standardUserDefaults] objectForKey:kdefaultsIracUuid];
 	NSString *mid = [[NSUserDefaults standardUserDefaults] objectForKey:kdefaultsIracMid];
 	NSArray *regional = [NSArray array];
-	NSString *brand = [kUserDefault objectForKey:kdefaultsIracBrand];
+	NSString *brand = @"xiaorui brand";
 		
 		
-	/// 获取用户UUID
+	/// 获取用户设备令牌
 	NSString *ramStr = [kUserDefault objectForKey:kUserDefaultUUID];
 	
 	NSMutableDictionary *msgFromDict = [NSMutableDictionary dictionary];
