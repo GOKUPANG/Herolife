@@ -961,6 +961,7 @@ static NSUInteger lengthInteger = 0;
 		
 		[[NSNotificationCenter defaultCenter] postNotificationName:kNotificationLogin object:nil userInfo:jsonDict];
 		DDLogInfo(@"接收到登陆认证 数据%@", jsonDict);
+        return;
 	}
 	
 #pragma mark -  斌添加的代码
@@ -972,7 +973,8 @@ static NSUInteger lengthInteger = 0;
 		DDLogWarn(@"接收到服务器的返回push ok- 要过滤掉");
         //首页状态 通知
         [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationHomeStatus object:nil userInfo:jsonDict];
-		
+        
+        return;
 	}
 	/****************************开锁接收数据的判断*****************************/
 	
@@ -985,7 +987,8 @@ static NSUInteger lengthInteger = 0;
 		
 		[[NSNotificationCenter defaultCenter] postNotificationName:@"kDoorOnlineOrNot" object:nil userInfo:jsonDict];
 		
-		
+        
+        return;
 		
 	}
 	
@@ -998,7 +1001,8 @@ static NSUInteger lengthInteger = 0;
 		NSLog(@"接收到门锁开锁是否成功的数据");
 		
 		[[NSNotificationCenter defaultCenter] postNotificationName:@"kDoorOpenOrNot" object:nil userInfo:jsonDict];
-		
+        
+        return;
 		
 	}
 	
@@ -1012,7 +1016,8 @@ static NSUInteger lengthInteger = 0;
 		[self addCreateIracDict:jsonDict];
 		DDLogInfo(@"接收到创建红外空调 数据%@", jsonDict);
 		[[NSNotificationCenter defaultCenter] postNotificationName:kNotificationCreateIrac object:nil userInfo:jsonDict];
-		
+        
+        return;
 	}
 	
 	//删除红外空调
@@ -1021,7 +1026,8 @@ static NSUInteger lengthInteger = 0;
 		[self addDeleteIracDict:jsonDict];
 		DDLogInfo(@"接收到删除空调 数据%@", jsonDict);
 		[[NSNotificationCenter defaultCenter] postNotificationName:kNotificationDeleteIrac object:nil userInfo:jsonDict];
-		
+        
+        return;
 	}
 	//更新红外空调
 	if ([jsonDict[@"hrpush"][@"type"] isEqualToString:@"update"] && [jsonDict[@"msg"][@"types"] isEqualToString:@"irac"]) {
@@ -1029,7 +1035,8 @@ static NSUInteger lengthInteger = 0;
 		[self addUpdateIracDict:jsonDict];
 		DDLogInfo(@"接收到更新空调 数据%@", jsonDict);
 		[[NSNotificationCenter defaultCenter] postNotificationName:kNotificationUpdateIrac object:nil userInfo:jsonDict];
-		
+        
+        return;
 	}
 	//调试红外空调
 	if ([jsonDict[@"hrpush"][@"type"] isEqualToString:@"testing"] && [jsonDict[@"msg"][@"types"] isEqualToString:@"irac"]) {
@@ -1037,7 +1044,8 @@ static NSUInteger lengthInteger = 0;
 		[self addTestingIracDict:jsonDict];
 		DDLogInfo(@"接收到调试空调 数据%@", jsonDict);
 		[[NSNotificationCenter defaultCenter] postNotificationName:kNotificationTestingIrac object:nil userInfo:jsonDict];
-		
+        
+        return;
 	}
 	//控制红外空调
 	if ([jsonDict[@"hrpush"][@"type"] isEqualToString:@"control"] && [jsonDict[@"msg"][@"types"] isEqualToString:@"irac"]) {
@@ -1045,33 +1053,37 @@ static NSUInteger lengthInteger = 0;
 		[self addControlIracDict:jsonDict];
 		DDLogInfo(@"接收到控制空调 数据%@", jsonDict);
 		[[NSNotificationCenter defaultCenter] postNotificationName:kNotificationControlIrac object:nil userInfo:jsonDict];
-		
+        
+        return;
 	}
 	
 	//创建红外通用
 	if ([jsonDict[@"hrpush"][@"type"] isEqualToString:@"create"] && [jsonDict[@"msg"][@"types"] isEqualToString:@"irgm"]) {
 		
 		[self addCreateIrgmDict:jsonDict];
-		DDLogInfo(@"接收到创建红外空调 数据%@", jsonDict);
+		DDLogInfo(@"接收到创建红外通用 数据%@", jsonDict);
 		[[NSNotificationCenter defaultCenter] postNotificationName:kNotificationCreateIrgm object:nil userInfo:jsonDict];
-		
+        
+        return;
 	}
 	
 	//删除红外通用
 	if ([jsonDict[@"hrpush"][@"type"] isEqualToString:@"delete"] && [jsonDict[@"msg"][@"types"] isEqualToString:@"irgm"]) {
 		
 		[self addDeleteIrgmDict:jsonDict];
-		DDLogInfo(@"接收到删除空调 数据%@", jsonDict);
+		DDLogInfo(@"接收到删除通用 数据%@", jsonDict);
 		[[NSNotificationCenter defaultCenter] postNotificationName:kNotificationDeleteIrgm object:nil userInfo:jsonDict];
-		
+        
+        return;
 	}
 	//更新红外通用
 	if ([jsonDict[@"hrpush"][@"type"] isEqualToString:@"update"] && [jsonDict[@"msg"][@"types"] isEqualToString:@"irgm"]) {
 		
 		[self addUpdateIrgmDict:jsonDict];
-		DDLogInfo(@"接收到更新空调 数据%@", jsonDict);
+		DDLogInfo(@"接收到更新通用 数据%@", jsonDict);
 		[[NSNotificationCenter defaultCenter] postNotificationName:kNotificationUpdateIrgm object:nil userInfo:jsonDict];
-		
+        
+        return;
 	}
 	//调试红外通用
 	if ([jsonDict[@"hrpush"][@"type"] isEqualToString:@"testing"] && [jsonDict[@"msg"][@"types"] isEqualToString:@"irgm"]) {
@@ -1079,15 +1091,17 @@ static NSUInteger lengthInteger = 0;
 		[self addTestingIrgmDict:jsonDict];
 		DDLogInfo(@"接收到通用 数据%@", jsonDict);
 		[[NSNotificationCenter defaultCenter] postNotificationName:kNotificationTestingIrgm object:nil userInfo:jsonDict];
-		
+        
+        return;
 	}
 	//控制红外通用
 	if ([jsonDict[@"hrpush"][@"type"] isEqualToString:@"control"] && [jsonDict[@"msg"][@"types"] isEqualToString:@"irgm"]) {
 		
 		[self addControlIrgmDict:jsonDict];
-		DDLogInfo(@"接收到控制空调 数据%@", jsonDict);
+		DDLogInfo(@"接收到控制通用 数据%@", jsonDict);
 		[[NSNotificationCenter defaultCenter] postNotificationName:kNotificationControlIrgm object:nil userInfo:jsonDict];
-		
+        
+        return;
 	}
 	
 	//创建开关
@@ -1096,7 +1110,8 @@ static NSUInteger lengthInteger = 0;
 		[self addCreateDoDict:jsonDict];
 		DDLogInfo(@"接收到创建开关 数据%@", jsonDict);
 		[[NSNotificationCenter defaultCenter] postNotificationName:kNotificationCreateDo object:nil userInfo:jsonDict];
-		
+        
+        return;
 	}
 	
 	//删除开关
@@ -1105,7 +1120,8 @@ static NSUInteger lengthInteger = 0;
 		[self addDeleteDoDict:jsonDict];
 		DDLogInfo(@"接收到删除开关 数据%@", jsonDict);
 		[[NSNotificationCenter defaultCenter] postNotificationName:kNotificationDeleteDo object:nil userInfo:jsonDict];
-		
+        
+        return;
 	}
 	//更新开关
 	if ([jsonDict[@"hrpush"][@"type"] isEqualToString:@"update"] && [jsonDict[@"msg"][@"types"] isEqualToString:@"hrdo"]) {
@@ -1113,7 +1129,8 @@ static NSUInteger lengthInteger = 0;
 		[self addUpdateDoDict:jsonDict];
 		DDLogInfo(@"接收到更新开关 数据%@", jsonDict);
 		[[NSNotificationCenter defaultCenter] postNotificationName:kNotificationUpdateDo object:nil userInfo:jsonDict];
-		
+        
+        return;
 	}
 	//调试开关
 	if ([jsonDict[@"hrpush"][@"type"] isEqualToString:@"testing"] && [jsonDict[@"msg"][@"types"] isEqualToString:@"hrdo"]) {
@@ -1121,7 +1138,8 @@ static NSUInteger lengthInteger = 0;
 		[self addTestingDoDict:jsonDict];
 		DDLogInfo(@"接收到调试开关 数据%@", jsonDict);
 		[[NSNotificationCenter defaultCenter] postNotificationName:kNotificationTestingDo object:nil userInfo:jsonDict];
-		
+        
+        return;
 	}
 	//控制开关
 	if ([jsonDict[@"hrpush"][@"type"] isEqualToString:@"control"] && [jsonDict[@"msg"][@"types"] isEqualToString:@"hrdo"]) {
@@ -1129,6 +1147,8 @@ static NSUInteger lengthInteger = 0;
 		[self addControlDoDict:jsonDict];
 		DDLogInfo(@"接收到控制开关 数据%@", jsonDict);
 		[[NSNotificationCenter defaultCenter] postNotificationName:kNotificationControlDo object:nil userInfo:jsonDict];
+        
+        return;
 	}
 	
 	//文本交互
@@ -1136,6 +1156,8 @@ static NSUInteger lengthInteger = 0;
 		
 		//		DDLogInfo(@"接收到文本交互 数据%@", jsonDict);
 		[[NSNotificationCenter defaultCenter] postNotificationName:kNotificationMessage object:nil userInfo:jsonDict];
+        
+        return;
 	}
 	
 	//创建情景
@@ -1143,14 +1165,16 @@ static NSUInteger lengthInteger = 0;
 		[self addCreateSceneDict:jsonDict];
 		DDLogInfo(@"接收到创建情景 数据%@", jsonDict);
 		[[NSNotificationCenter defaultCenter] postNotificationName:kNotificationCreateScene object:nil userInfo:jsonDict];
-		
+        
+        return;
 	}
 	//更新情景
 	if ([jsonDict[@"hrpush"][@"type"] isEqualToString:@"update"] && [jsonDict[@"msg"][@"types"] isEqualToString:@"scene"]) {
 		[self addUpdataSceneDict:jsonDict];
 		DDLogInfo(@"接收到更新情景 数据%@", jsonDict);
 		[[NSNotificationCenter defaultCenter] postNotificationName:kNotificationUpDataScene object:nil userInfo:jsonDict];
-		
+        
+        return;
 	}
 	
 	//删除情景
@@ -1159,13 +1183,15 @@ static NSUInteger lengthInteger = 0;
 		DDLogInfo(@"接收到删除情景 数据%@", jsonDict);
 		[[NSNotificationCenter defaultCenter] postNotificationName:kNotificationDeleteScene object:nil userInfo:jsonDict];
         
+        return;
 	}
 	//控制情景
 	if ([jsonDict[@"hrpush"][@"type"] isEqualToString:@"control"] && [jsonDict[@"msg"][@"types"] isEqualToString:@"scene"]) {
 		[self addControlSceneDict:jsonDict];
 		DDLogInfo(@"接收到控制情景 数据%@", jsonDict);
 		[[NSNotificationCenter defaultCenter] postNotificationName:kNotificationControlScene object:nil userInfo:jsonDict];
-		
+        
+        return;
 	}
 #pragma mark - herolife 收到的相关数据
 	//设备硬件状态
@@ -1179,7 +1205,8 @@ static NSUInteger lengthInteger = 0;
 		self.stateDictionary = jsonDict;
 		
 		[[NSNotificationCenter defaultCenter] postNotificationName:kNotificationDeviceState object:nil userInfo:jsonDict];
-		
+        
+        return;
 	}
 	
 	//家人授权成功数据

@@ -253,6 +253,7 @@ static BOOL isOvertime = NO;
     
     //OK键文字
     [self.okButton setTitle:@"OK" forState:UIControlStateNormal];
+    self.okButton.titleLabel.font = [UIFont systemFontOfSize:30];
     [self.okButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     
     
@@ -406,6 +407,16 @@ static CGFloat gapVert;
     
     //第一排
     
+    CGFloat buttonH ;
+    
+    if (UIScreenW >= 375) {
+        buttonH = (UIScreenH - 138 /2 - 35 - 25 *2 - 20 -10 - 40) / 8;
+    }else
+    {
+        buttonH = (UIScreenH - 138 /2 /2 -10 - 35 - 25 *2 - 20 -10 -40) / 8;
+    }
+    
+    
     //login
     [self.loginLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(self.mas_centerX);
@@ -435,7 +446,7 @@ static CGFloat gapVert;
     }];
     
     //静音
-    CGFloat sizeWH = 78 *0.5 + 10;
+    CGFloat sizeWH = buttonH;
     [self.greenButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.size.mas_equalTo(CGSizeMake(sizeWH, sizeWH));
         make.right.equalTo(self.loginLabel.mas_left).offset(-67*0.5);
@@ -518,28 +529,23 @@ static CGFloat gapVert;
     }];
     
     
-    CGFloat magin;
+    CGFloat magin = 20;
     if (UIScreenW >= 375) {
-        magin = 25;
+        magin = 20;
     }else
     {
         
-        magin = 20;
+        magin = 18;
     }
     
     //第六排
     //tag 13
     [self.okButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(self.loginLabel);
-        if (UIScreenW >= 375) {
-            make.top.equalTo(self.num8Button).offset((174 + 157 - 20) *0.5);
-            make.size.mas_equalTo(CGSizeMake(174 *0.5 , 174*0.5));
-        }else
-        {
-            
-            make.top.equalTo(self.num8Button).offset((174 + 157 - 75) *0.5);
-            make.size.mas_equalTo(CGSizeMake(174 *0.5 -25 , 174*0.5 -25));
-        }
+        
+        
+        make.top.equalTo(self.num8Button).offset(2.0 * buttonH + magin *1.5);
+        make.size.mas_equalTo(CGSizeMake(1.5 * buttonH , 1.5 * buttonH));
     }];
     
     //12
@@ -578,6 +584,7 @@ static CGFloat gapVert;
         make.bottom.equalTo(self.downtButton).offset(qrMagin);
         make.right.equalTo(self.rightButton).offset(qrMagin);
     }];
+    
 }
 
 

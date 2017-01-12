@@ -189,7 +189,7 @@
         [self addChart];
     }else if (sender.tag == 3)//湿度
     {
-        self.companyLabel.text = @"%";
+        self.companyLabel.text = @"%RH";
         self.levelLabel.text = @"";
         [self.currentChartView removeFromSuperview];
         [self addChart];

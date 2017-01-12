@@ -3,7 +3,7 @@
 #ifndef Constant_h
 #define Constant_h
 
-
+UIKIT_EXTERN NSString *const EocstringConstant;
 
 /** 导航栏高度 */
 UIKIT_EXTERN CGFloat const HRNavH;

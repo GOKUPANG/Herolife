@@ -55,8 +55,6 @@
 		D1147BCC1DB0B6C500ADEECC /* DeviceListController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1147BCB1DB0B6C500ADEECC /* DeviceListController.m */; };
 		D1147BDA1DB0B80200ADEECC /* GTMBase64.m in Sources */ = {isa = PBXBuildFile; fileRef = D1147BD71DB0B80200ADEECC /* GTMBase64.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		D1147BDB1DB0B80200ADEECC /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = D1147BD91DB0B80200ADEECC /* README.md */; };
-		D11913CC1E0296E400ED1B9A /* AddTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = D11913BC1E0296E400ED1B9A /* AddTextView.m */; };
-		D11913CD1E0296E400ED1B9A /* AddTextView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D11913BD1E0296E400ED1B9A /* AddTextView.xib */; };
 		D11913CE1E0296E400ED1B9A /* emotion.png in Resources */ = {isa = PBXBuildFile; fileRef = D11913BE1E0296E400ED1B9A /* emotion.png */; };
 		D11913CF1E0296E400ED1B9A /* ic_action_add.png in Resources */ = {isa = PBXBuildFile; fileRef = D11913BF1E0296E400ED1B9A /* ic_action_add.png */; };
 		D11913D01E0296E400ED1B9A /* ico_login_user.png in Resources */ = {isa = PBXBuildFile; fileRef = D11913C01E0296E400ED1B9A /* ico_login_user.png */; };
@@ -430,9 +428,6 @@
 		D1147BD71DB0B80200ADEECC /* GTMBase64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTMBase64.m; sourceTree = "<group>"; };
 		D1147BD81DB0B80200ADEECC /* GTMDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMDefines.h; sourceTree = "<group>"; };
 		D1147BD91DB0B80200ADEECC /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
-		D11913BB1E0296E400ED1B9A /* AddTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddTextView.h; sourceTree = "<group>"; };
-		D11913BC1E0296E400ED1B9A /* AddTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddTextView.m; sourceTree = "<group>"; };
-		D11913BD1E0296E400ED1B9A /* AddTextView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddTextView.xib; sourceTree = "<group>"; };
 		D11913BE1E0296E400ED1B9A /* emotion.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = emotion.png; sourceTree = "<group>"; };
 		D11913BF1E0296E400ED1B9A /* ic_action_add.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_action_add.png; sourceTree = "<group>"; };
 		D11913C01E0296E400ED1B9A /* ico_login_user.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ico_login_user.png; sourceTree = "<group>"; };
@@ -1265,9 +1260,6 @@
 		D11913BA1E0296E400ED1B9A /* TextInteraction */ = {
 			isa = PBXGroup;
 			children = (
-				D11913BB1E0296E400ED1B9A /* AddTextView.h */,
-				D11913BC1E0296E400ED1B9A /* AddTextView.m */,
-				D11913BD1E0296E400ED1B9A /* AddTextView.xib */,
 				D11913BE1E0296E400ED1B9A /* emotion.png */,
 				D11913BF1E0296E400ED1B9A /* ic_action_add.png */,
 				D11913C01E0296E400ED1B9A /* ico_login_user.png */,
@@ -2399,7 +2391,6 @@
 				D11913CE1E0296E400ED1B9A /* emotion.png in Resources */,
 				D1352D761D9E0ECB003A83AB /* XiaoRuiNewQRcode.xib in Resources */,
 				D1B73A3A1E08C77D00596E0A /* DoTableViewCell.xib in Resources */,
-				D11913CD1E0296E400ED1B9A /* AddTextView.xib in Resources */,
 				D1B73A691E08E06800596E0A /* SceneSwitchPicker.xib in Resources */,
 				AAA8A9D51D8CEB4100ABA020 /* 授权选择.png in Resources */,
 				D1B73A441E08C7D400596E0A /* DofooterView.xib in Resources */,
@@ -2705,7 +2696,6 @@
 				D1B50E321DFE3DC000CC83EF /* UUBar.m in Sources */,
 				D1A7DDA91D8117DD00D051B0 /* HRHTTPTool.m in Sources */,
 				AA2C52781D91578D00D0BD3D /* PushSettingController.m in Sources */,
-				D11913CC1E0296E400ED1B9A /* AddTextView.m in Sources */,
 				D1D2272C1E0382120045A0A3 /* AddIraViewController.m in Sources */,
 				D1A7DD911D8117DD00D051B0 /* UIImage+Util.m in Sources */,
 				D14D38EC1DEE683D00551FD3 /* EnterPSWController.m in Sources */,

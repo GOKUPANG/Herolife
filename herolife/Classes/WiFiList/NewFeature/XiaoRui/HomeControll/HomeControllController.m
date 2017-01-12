@@ -29,7 +29,7 @@
 #import "PopEditDoView.h"
 #import "IrgmStudyController.h"
 
-@interface HomeControllController ()<UICollectionViewDelegate, UICollectionViewDataSource,UIActionSheetDelegate,UIAlertViewDelegate>
+@interface HomeControllController ()<UICollectionViewDelegate, UICollectionViewDataSource,UIActionSheetDelegate,UIAlertViewDelegate, YXCustomAlertViewDelegate>
 ///背景图片
 @property (weak, nonatomic) IBOutlet UIImageView *backImageView;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
@@ -74,6 +74,10 @@
 @property(nonatomic, strong) AddCurrencyView *currencyView;
 /** PopEditDoView */
 @property(nonatomic, strong) PopEditDoView *doView;
+/** 弹框中的输入框 */
+@property(nonatomic, weak) UITextField *nameField;
+/** <#name#> */
+@property(nonatomic, weak) YXCustomAlertView *deviceAlertView;
 @end
 
 @implementation HomeControllController
@@ -227,22 +231,34 @@ static BOOL isShowOverMenu = NO;
 //监听空调的创建帧
 - (void)receviedWithCreateIrac:(NSNotification *)notification
 {
+    [SVProgressTool hr_dismiss];
+    isOvertime = YES;
+    [self dismissDeviceAlertView];
+    
     [self getHomeHTTPRequest];
+   
 }
-
 //监听空调的删除帧
 static BOOL isOvertimeDelete = NO;
 - (void)receviedWithDeleteIrac:(NSNotification *)notification
 {
     isOvertimeDelete = YES;
     [SVProgressTool hr_showSuccessWithStatus:@"删除成功!"];
+    [self dismissDeviceAlertView];
     
-    [self getHomeHTTPRequest];}
+    [self getHomeHTTPRequest];
+
+    
+}
 //监听空调的更新帧
 - (void)receviedWithUpdateIrac:(NSNotification *)notification
 {
     [self getHomeHTTPRequest];
+    [SVProgressTool hr_dismiss];
+    isOvertime = YES;
     
+    [self dismissDeviceAlertView];
+
 }
 
 //监听空调的测试帧
@@ -258,7 +274,7 @@ static BOOL isOvertimeDelete = NO;
 
 - (void)receviedWithControlIrac:(NSNotification *)notification
 {
-    [SVProgressHUD dismiss];
+    [SVProgressTool hr_dismiss];
     isOvertime = YES;
     [self getHomeHTTPRequest];
 }
@@ -277,6 +293,29 @@ static BOOL isOvertime = NO;
     isOvertime = YES;
     [SVProgressTool hr_showSuccessWithStatus:@"执行情景模式成功!"];
     [self getHomeHTTPRequest];
+}
+
+- (void)dismissDeviceAlertView
+{
+    [UIView animateWithDuration:0.8 animations:^{
+        
+        
+        CGRect AlertViewFrame = self.deviceAlertView.frame;
+        
+        AlertViewFrame.origin.y = HRUIScreenH ;
+        
+        
+        _deviceAlertView.frame = AlertViewFrame;
+        
+        _deviceAlertView.alpha = 0;
+        
+        
+    } completion:^(BOOL finished) {
+        
+        
+        [_deviceAlertView dissMiss];
+        
+    }];
 }
 
 #pragma mark - 内部方法
@@ -356,15 +395,12 @@ static BOOL isOvertime = NO;
                            }else if (selectedIndex == 1)//添加电视类型
 
                            {
+                               [self addDeviceAlertViewWithTag:1 title:@"添加电视设备"];
                                
                            }else if (selectedIndex == 2)//添加红外通用
                            {
                                //添加弹框
-                               
-                               [self addCurrencyView];
-                               self.currencyView.textLabel = @"添加遥控器";
-                               self.currencyView.titleButton = @"添加";
-                               self.currencyView.deviceType = HRCurrencyDeviceTypeCurrency;
+                               [self addDeviceAlertViewWithTag:2 title:@"添加通用设备"];
                                
                            }else if (selectedIndex == 3)//添加智能设备
                                
@@ -1120,139 +1156,6 @@ static NSInteger gesturerRow = -1;
 }
 
 
-#pragma mark - UIAlertViewDelegate 代理方法
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    
-    if (alertView.tag == 100) {//空调
-        if (buttonIndex == 1) {
-            DDLogInfo(@"空调");
-            
-            IracData *rowDict = [IracData mj_objectWithKeyValues:self.iracArray[gesturerRow]];
-            
-            
-            NSString *token = [[NSUserDefaults standardUserDefaults] objectForKey:PushToken];
-            NSString *user = [[NSUserDefaults standardUserDefaults] objectForKey:kDefaultsUserName];
-            
-            /// 发送创建空调 请求帧
-            NSString *uid = rowDict.uid;
-            NSString *uuid = rowDict.uuid;
-            NSString *mid = rowDict.mid;
-            //根据该ID删除设备
-            NSString *did = rowDict.did;
-            
-            NSArray *picture = [NSArray array];
-            NSArray *regional = [NSArray array];
-            
-            
-            NSString *str = [NSString stringWithIRACVersion:@"0.0.1" status:@"200" token:token type:@"delete" desc:@"delete desc message" srcUserName:user dstUserName:user dstDevName:uuid uid:uid mid:mid did:did uuid:uuid types:@"irac" newVersion:@"0.0.1" title:rowDict.title brand:rowDict.brand created:rowDict.created update:rowDict.update state:@"1" picture:picture regional:regional model:rowDict.model onSwitch:rowDict.switchOff mode:rowDict.mode temperature:rowDict.temperature windspeed:rowDict.windspeed winddirection:rowDict.winddirection];
-            
-            [self.appDelegate sendMessageWithString:str];
-            [SVProgressTool hr_showWithStatus:@"正在删除设备..."];
-            // 设置超时
-            isOvertimeDelete = NO;
-            isShowOverMenu = NO;
-            // 启动定时器
-            [_timer invalidate];
-            _timer = [NSTimer scheduledTimerWithTimeInterval:HRTimeInterval target:self selector:@selector(startTimerDelete) userInfo:nil repeats:NO];
-        }
-        
-    }else if (alertView.tag == 101)//通用
-    {
-        if (buttonIndex == 1) {
-            
-            DDLogInfo(@"通用");
-            IrgmData *rowDict = [IrgmData mj_objectWithKeyValues:self.iracArray[gesturerRow]];
-            
-            
-            NSString *token = [[NSUserDefaults standardUserDefaults] objectForKey:PushToken];
-            NSString *user = [[NSUserDefaults standardUserDefaults] objectForKey:kDefaultsUserName];
-            
-            /// 发送创建空调 请求帧
-            NSString *str = [NSString stringWithIRGMVersion:@"0.0.1"
-                                                     status:@"200"
-                                                      token:token
-                                                       type:@"delete"
-                                                       desc:@"delete desc message"
-                                                srcUserName:user
-                                                dstUserName:user
-                                                 dstDevName:rowDict.uuid
-                                                        uid:rowDict.uid
-                                                        mid:rowDict.mid
-                                                        did:rowDict.did
-                                                       uuid:rowDict.uuid
-                                                      types:rowDict.types
-                                                 newVersion:rowDict.version
-                                                      title:rowDict.title
-                                                      brand:rowDict.brand
-                                                    created:rowDict.created
-                                                     update:rowDict.update
-                                                      state:rowDict.state
-                                                    picture:rowDict.picture
-                                                   regional:rowDict.regional
-                                                         op:rowDict.op
-                                                     name01:rowDict.name01
-                                                     name02:rowDict.name02
-                                                     name03:rowDict.name03
-                                                    param01:rowDict.param01
-                                                    param02:rowDict.param02
-                                                    param03:rowDict.param03];
-            
-            [self.appDelegate sendMessageWithString:str];
-            // 设置超时
-            [SVProgressTool hr_showWithStatus:@"正在删除设备..."];
-            // 设置超时
-            isOvertimeDelete = NO;
-            isShowOverMenu = NO;
-            // 启动定时器
-            [_timer invalidate];
-            _timer = [NSTimer scheduledTimerWithTimeInterval:HRTimeInterval target:self selector:@selector(startTimerDelete) userInfo:nil repeats:NO];
-        }
-    }else if (alertView.tag == 102)//开关删除
-    {
-        if (buttonIndex == 1) {
-            
-            DDLogInfo(@"开关");
-            HRDOData *rowDict = [HRDOData mj_objectWithKeyValues:self.iracArray[gesturerRow]];
-            
-            /// 发送删除开关 请求帧
-            NSString *token = [[NSUserDefaults standardUserDefaults] objectForKey:PushToken];
-            NSString *user = [[NSUserDefaults standardUserDefaults] objectForKey:kDefaultsUserName];
-            NSString *uuid = [[NSUserDefaults standardUserDefaults] objectForKey:kdefaultsIracUuid];
-            NSArray *regional = [NSArray array];
-            NSArray *parameter;
-            NSString *str = [NSString stringWithHRDOVersion:@"0.0.1" status:@"200" token:token type:@"delete" desc:@"delete desc message" srcUserName:user dstUserName:user dstDevName:uuid uid:rowDict.uid mid:rowDict.mid did:rowDict.did uuid:rowDict.uuid types:@"hrdo" newVersion:@"0.0.1" title:rowDict.title brand:rowDict.brand created:[NSString loadCurrentDate] update:[NSString loadCurrentDate] state:@"1" picture:rowDict.picture.firstObject regional:regional parameter:parameter];
-            
-            [self.appDelegate sendMessageWithString:str];
-            [SVProgressTool hr_showWithStatus:@"正在删除设备..."];
-            // 设置超时
-            isOvertimeDelete = NO;
-            isShowOverMenu = NO;
-            // 启动定时器
-            [_timer invalidate];
-            _timer = [NSTimer scheduledTimerWithTimeInterval:HRTimeInterval target:self selector:@selector(startTimerDelete) userInfo:nil repeats:NO];
-        }
-    }else if (alertView.tag == 103)//情景删除
-    {
-        if (buttonIndex == 1) {
-            HRSceneData *rowDict = [HRSceneData mj_objectWithKeyValues:self.iracArray[gesturerRow]];
-            NSArray *data = [NSArray array];
-            /// 发送删除开关 请求帧
-            NSString *str = [NSString stringWithSceneType:@"delete" did:rowDict.did title:rowDict.title picture:rowDict.picture data:data];
-            
-            [self.appDelegate sendMessageWithString:str];
-            [SVProgressTool hr_showWithStatus:@"正在删除设备..."];
-            // 设置超时
-            isOvertimeDelete = NO;
-            isShowOverMenu = NO;
-            // 启动定时器
-            [_timer invalidate];
-            _timer = [NSTimer scheduledTimerWithTimeInterval:HRTimeInterval target:self selector:@selector(startTimerDelete) userInfo:nil repeats:NO];
-        }
-    }
-    
-}
-
 #pragma mark - sheet 代理方法
 -(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
@@ -1266,7 +1169,9 @@ static NSInteger gesturerRow = -1;
             [self.navigationController pushViewController:editVC animated:YES];
             
         }else if (buttonIndex == 1) {
-            [self showAlertWithDelete:@"删除设备" tag:100];
+            
+            
+            [self deleteDeviceAlertViewWithTag:4 title:@"删除设备"];
             
         }else if(buttonIndex == 2) {
             
@@ -1291,27 +1196,20 @@ static NSInteger gesturerRow = -1;
             }
         }else if (buttonIndex == 1) {
             
-            [self showAlertWithDelete:@"删除设备" tag:101];
+            [self deleteDeviceAlertViewWithTag:5 title:@"删除设备"];
             
         }else if(buttonIndex == 2) {
             
         }
     }else if (actionSheet.tag == 1002)//开关
     {
-        HRDOData *rowDict = [HRDOData mj_objectWithKeyValues:self.iracArray[gesturerRow]];
         if (buttonIndex == 0) {
-            //编辑 view
-            //添加弹框
-            [self addCurrencyView];
-            self.currencyView.textLabel = @"修改设备信息";
-            self.currencyView.titleButton = @"确定";
-            self.currencyView.doData = rowDict;
-            self.currencyView.deviceType = HRCurrencyDeviceTypeDo;
             
-            self.doView.doData = rowDict;
+            [self addDeviceAlertViewWithTag:3 title:@"修改设备信息"];
             
         }else if (buttonIndex == 1) {
-            [self showAlertWithDelete:@"删除设备" tag:102];
+            
+            [self deleteDeviceAlertViewWithTag:6 title:@"删除设备"];
             
         }else if(buttonIndex == 2) {
             
@@ -1328,7 +1226,7 @@ static NSInteger gesturerRow = -1;
             [self.navigationController pushViewController:sceneVC animated:YES];
             
         }else if (buttonIndex == 1) {
-            [self showAlertWithDelete:@"删除设备" tag:103];
+            [self deleteDeviceAlertViewWithTag:7 title:@"删除设备"];
             
         }else if(buttonIndex == 2) {
             
@@ -1336,61 +1234,7 @@ static NSInteger gesturerRow = -1;
     }
     
 }
-#pragma mark - 点击sheet中的删除按钮
--(void)showAlertWithDelete:(NSString *)delete tag:(NSInteger)tag
-{
-    if (tag == 100) {
-        UIAlertView *alert = [[UIAlertView alloc]
-                              initWithTitle:nil
-                              message:delete
-                              delegate:self
-                              cancelButtonTitle:@"取消"
-                              otherButtonTitles:@"确定", nil];
-        alert.tag = 100;
-        [alert show];
-    }else if (tag == 101)
-    {
-        UIAlertView *alert = [[UIAlertView alloc]
-                              initWithTitle:nil
-                              message:delete
-                              delegate:self
-                              cancelButtonTitle:@"取消"
-                              otherButtonTitles:@"确定", nil];
-        alert.tag = 101;
-        [alert show];
-    }else if (tag == 102)
-    {
-        UIAlertView *alert = [[UIAlertView alloc]
-                              initWithTitle:nil
-                              message:delete
-                              delegate:self
-                              cancelButtonTitle:@"取消"
-                              otherButtonTitles:@"确定", nil];
-        alert.tag = 102;
-        [alert show];
-    }else if (tag == 103)
-    {
-        UIAlertView *alert = [[UIAlertView alloc]
-                              initWithTitle:nil
-                              message:delete
-                              delegate:self
-                              cancelButtonTitle:@"取消"
-                              otherButtonTitles:@"确定", nil];
-        alert.tag = 103;
-        [alert show];
-    }
-}
 
--(void)showAlert:(NSString *)msg {
-    
-    UIAlertView *alert = [[UIAlertView alloc]
-                          initWithTitle:nil
-                          message:msg
-                          delegate:self
-                          cancelButtonTitle:@"取消"
-                          otherButtonTitles:@"添加空调类型", @"添加通用类型", @"添加开关类型", nil];
-    [alert show];
-}
 - (void)startTimerDelete
 {
     if (!isOvertimeDelete && !
@@ -1398,6 +1242,382 @@ static NSInteger gesturerRow = -1;
         [SVProgressTool hr_showErrorWithStatus:@"请求超时!"];
     }
 }
+
+
+
+#pragma mark -添加 YXCustomAlertView 弹窗 相关  第三方demo方法
+
+-(void)deleteDeviceAlertViewWithTag:(NSInteger)tag title:(NSString *)title
+{
+    
+    CGFloat dilX = 25;
+    CGFloat dilH = 150;
+    YXCustomAlertView *alertV = [[YXCustomAlertView alloc] initAlertViewWithFrame:CGRectMake(dilX, 0, HRUIScreenW - 40, dilH) andSuperView:self.view];
+    
+    
+    alertV.delegate = self;
+    alertV.titleStr = title;
+    alertV.tag = tag;
+    
+    
+    self.deviceAlertView = alertV;
+    
+    
+    [UIView animateWithDuration:0.5 animations:^{
+        
+        self.deviceAlertView.center = CGPointMake(HRUIScreenW/2, HRUIScreenH/2-100);
+        
+        self.deviceAlertView.alpha=1;
+        
+    } completion:^(BOOL finished) {
+        
+        
+        
+        
+    }];
+    
+}
+
+-(void)addDeviceAlertViewWithTag:(NSInteger)tag title:(NSString *)title
+{
+    
+    CGFloat dilX = 25;
+    CGFloat dilH = 150;
+    YXCustomAlertView *alertV = [[YXCustomAlertView alloc] initAlertViewWithFrame:CGRectMake(dilX, 0, HRUIScreenW - 40, dilH) andSuperView:self.view];
+    
+    
+    alertV.delegate = self;
+    alertV.titleStr = title;
+    alertV.tag = tag;
+    
+    
+    CGFloat loginX = 200 *HRCommonScreenH;
+    
+    
+    UILabel * nameLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 55, loginX, 32)];
+    
+    [alertV addSubview:nameLabel];
+    nameLabel.text = @"设备名";
+    nameLabel.textColor = [UIColor blackColor];
+    
+    nameLabel.textAlignment = NSTextAlignmentCenter;
+    
+    UITextField *nameField = [[UITextField alloc] initWithFrame:CGRectMake(loginX, 55, alertV.frame.size.width -  loginX*1.2, 32)];
+    nameField.layer.borderColor = [[UIColor blackColor] CGColor];
+    nameField.secureTextEntry = NO;
+    UIView *leftpPwdView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 8, 32)];
+    
+    
+    nameField.leftViewMode = UITextFieldViewModeAlways;
+    nameField.leftView = leftpPwdView;
+    
+    
+    nameField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
+    nameField.layer.borderWidth = 1;
+    nameField.layer.cornerRadius = 4;
+    
+    nameField.placeholder = @"请输入您的设备名";
+    
+    
+    
+    nameField.clearButtonMode = UITextFieldViewModeWhileEditing;
+    
+    
+    nameField.textColor = [UIColor blackColor];
+    
+    
+    
+    
+    self.nameField = nameField;
+    
+    
+    [alertV addSubview:self.nameField];
+    
+    
+    
+    self.deviceAlertView = alertV;
+    
+    
+    [UIView animateWithDuration:0.5 animations:^{
+        
+        self.deviceAlertView.center = CGPointMake(HRUIScreenW/2, HRUIScreenH/2-100);
+        
+        self.deviceAlertView.alpha=1;
+        
+    } completion:^(BOOL finished) {
+        
+        
+        
+        
+    }];
+    
+}
+
+- (void) customAlertView:(YXCustomAlertView *) customAlertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    
+    if (buttonIndex==0) {
+        
+        [UIView animateWithDuration:0.5 animations:^{
+            
+            
+            CGRect AlertViewFrame = customAlertView.frame;
+            
+            AlertViewFrame.origin.y = 0;
+            
+            customAlertView.alpha = 0;
+            
+            
+            
+            customAlertView.frame = AlertViewFrame;
+            
+        } completion:^(BOOL finished) {
+            
+            
+            [customAlertView dissMiss];
+            
+            
+        }];
+    }else{
+        
+        
+        
+        
+        if (customAlertView.tag == 1) {//TV
+            
+            if (self.nameField.text.length == 0 ) {
+                [customAlertView.layer shake];
+                
+                [SVProgressTool hr_showErrorWithStatus:@"设备名为空,请输入设备名!"];
+                return;
+                
+            }
+            [self sendDataToSocketWithPicture:@"1"];
+        }else if (customAlertView.tag == 2)//通用
+        {
+            
+            if (self.nameField.text.length == 0 ) {
+                [customAlertView.layer shake];
+                
+                [SVProgressTool hr_showErrorWithStatus:@"设备名为空,请输入设备名!"];
+                return;
+                
+            }
+            [self sendDataToSocketWithPicture:@"2"];
+            
+        }else if (customAlertView.tag == 3)//通用
+        {
+            
+            if (self.nameField.text.length == 0 ) {
+                [customAlertView.layer shake];
+                
+                [SVProgressTool hr_showErrorWithStatus:@"设备名为空,请输入设备名!"];
+                return;
+                
+            }
+            HRDOData *rowDict = [HRDOData mj_objectWithKeyValues:self.iracArray[gesturerRow]];
+            [self sendSocketWithData:rowDict];
+            
+        }else if (customAlertView.tag == 4)//删除  空调
+        {
+            [self sendSocketWithDeleteIrac];
+            
+        }else if (customAlertView.tag == 5)//删除  通用和TV
+        {
+            [self sendSocketWithDeleteCurrentyAndTV];
+            
+        }else if (customAlertView.tag == 6)//删除  开关
+        {
+            [self sendSocketWithDeleteDo];
+            
+        }else if (customAlertView.tag == 7)//删除  情景
+        {
+            [self sendSocketWithDeleteScene];
+            
+        }
+    }
+}
+#pragma mark - 删除 设备 socket帧
+//情景
+- (void)sendSocketWithDeleteScene
+{
+    
+    HRSceneData *rowDict = [HRSceneData mj_objectWithKeyValues:self.iracArray[gesturerRow]];
+    NSArray *data = [NSArray array];
+    /// 发送删除开关 请求帧
+    NSString *str = [NSString stringWithSceneType:@"delete" did:rowDict.did title:rowDict.title picture:rowDict.picture data:data];
+    
+    [self.appDelegate sendMessageWithString:str];
+    [SVProgressTool hr_showWithStatus:@"正在删除设备..."];
+    // 设置超时
+    isOvertimeDelete = NO;
+    isShowOverMenu = NO;
+    // 启动定时器
+    [_timer invalidate];
+    _timer = [NSTimer scheduledTimerWithTimeInterval:HRTimeInterval target:self selector:@selector(startTimerDelete) userInfo:nil repeats:NO];
+}
+//开关
+- (void)sendSocketWithDeleteDo
+{
+    
+    HRDOData *rowDict = [HRDOData mj_objectWithKeyValues:self.iracArray[gesturerRow]];
+    
+    /// 发送删除开关 请求帧
+    NSString *token = [[NSUserDefaults standardUserDefaults] objectForKey:PushToken];
+    NSString *user = [[NSUserDefaults standardUserDefaults] objectForKey:kDefaultsUserName];
+    NSString *uuid = [[NSUserDefaults standardUserDefaults] objectForKey:kdefaultsIracUuid];
+    NSArray *regional = [NSArray array];
+    NSArray *parameter;
+    NSString *str = [NSString stringWithHRDOVersion:@"0.0.1" status:@"200" token:token type:@"delete" desc:@"delete desc message" srcUserName:user dstUserName:user dstDevName:uuid uid:rowDict.uid mid:rowDict.mid did:rowDict.did uuid:rowDict.uuid types:@"hrdo" newVersion:@"0.0.1" title:rowDict.title brand:rowDict.brand created:[NSString loadCurrentDate] update:[NSString loadCurrentDate] state:@"1" picture:rowDict.picture.firstObject regional:regional parameter:parameter];
+    
+    [self.appDelegate sendMessageWithString:str];
+    [SVProgressTool hr_showWithStatus:@"正在删除设备..."];
+    // 设置超时
+    isOvertimeDelete = NO;
+    isShowOverMenu = NO;
+    // 启动定时器
+    [_timer invalidate];
+    _timer = [NSTimer scheduledTimerWithTimeInterval:HRTimeInterval target:self selector:@selector(startTimerDelete) userInfo:nil repeats:NO];
+}
+//通用 TV
+- (void)sendSocketWithDeleteCurrentyAndTV
+{
+    
+    IrgmData *rowDict = [IrgmData mj_objectWithKeyValues:self.iracArray[gesturerRow]];
+    
+    
+    NSString *token = [[NSUserDefaults standardUserDefaults] objectForKey:PushToken];
+    NSString *user = [[NSUserDefaults standardUserDefaults] objectForKey:kDefaultsUserName];
+    
+    /// 发送创建空调 请求帧
+    NSString *str = [NSString stringWithIRGMVersion:@"0.0.1"
+                                             status:@"200"
+                                              token:token
+                                               type:@"delete"
+                                               desc:@"delete desc message"
+                                        srcUserName:user
+                                        dstUserName:user
+                                         dstDevName:rowDict.uuid
+                                                uid:rowDict.uid
+                                                mid:rowDict.mid
+                                                did:rowDict.did
+                                               uuid:rowDict.uuid
+                                              types:rowDict.types
+                                         newVersion:rowDict.version
+                                              title:rowDict.title
+                                              brand:rowDict.brand
+                                            created:rowDict.created
+                                             update:rowDict.update
+                                              state:rowDict.state
+                                            picture:rowDict.picture
+                                           regional:rowDict.regional
+                                                 op:rowDict.op
+                                             name01:rowDict.name01
+                                             name02:rowDict.name02
+                                             name03:rowDict.name03
+                                            param01:rowDict.param01
+                                            param02:rowDict.param02
+                                            param03:rowDict.param03];
+    
+    [self.appDelegate sendMessageWithString:str];
+    // 设置超时
+    [SVProgressTool hr_showWithStatus:@"正在删除设备..."];
+    // 设置超时
+    isOvertimeDelete = NO;
+    isShowOverMenu = NO;
+    // 启动定时器
+    [_timer invalidate];
+    _timer = [NSTimer scheduledTimerWithTimeInterval:HRTimeInterval target:self selector:@selector(startTimerDelete) userInfo:nil repeats:NO];
+    
+}
+//空调
+- (void)sendSocketWithDeleteIrac
+{
+    
+    IracData *rowDict = [IracData mj_objectWithKeyValues:self.iracArray[gesturerRow]];
+    
+    
+    NSString *token = [[NSUserDefaults standardUserDefaults] objectForKey:PushToken];
+    NSString *user = [[NSUserDefaults standardUserDefaults] objectForKey:kDefaultsUserName];
+    
+    /// 发送创建空调 请求帧
+    NSString *uid = rowDict.uid;
+    NSString *uuid = rowDict.uuid;
+    NSString *mid = rowDict.mid;
+    //根据该ID删除设备
+    NSString *did = rowDict.did;
+    
+    NSArray *picture = [NSArray array];
+    NSArray *regional = [NSArray array];
+    
+    
+    NSString *str = [NSString stringWithIRACVersion:@"0.0.1" status:@"200" token:token type:@"delete" desc:@"delete desc message" srcUserName:user dstUserName:user dstDevName:uuid uid:uid mid:mid did:did uuid:uuid types:@"irac" newVersion:@"0.0.1" title:rowDict.title brand:rowDict.brand created:rowDict.created update:rowDict.update state:@"1" picture:picture regional:regional model:rowDict.model onSwitch:rowDict.switchOff mode:rowDict.mode temperature:rowDict.temperature windspeed:rowDict.windspeed winddirection:rowDict.winddirection];
+    
+    [self.appDelegate sendMessageWithString:str];
+    [SVProgressTool hr_showWithStatus:@"正在删除设备..."];
+    // 设置超时
+    isOvertimeDelete = NO;
+    isShowOverMenu = NO;
+    // 启动定时器
+    [_timer invalidate];
+    _timer = [NSTimer scheduledTimerWithTimeInterval:HRTimeInterval target:self selector:@selector(startTimerDelete) userInfo:nil repeats:NO];
+}
+#pragma mark - 创建 TV 通用设备 和修改开关设备名称 socket 帧
+- (void)sendSocketWithData:(HRDOData *)doData
+{
+    NSString *token = [[NSUserDefaults standardUserDefaults] objectForKey:PushToken];
+    NSString *user = [[NSUserDefaults standardUserDefaults] objectForKey:kDefaultsUserName];
+    NSString *xiaoRuiUUID = [[NSUserDefaults standardUserDefaults] objectForKey:kdefaultsIracUuid];
+    NSArray *parameter = @[doData.parameter.firstObject, @"None", self.nameField.text, doData.parameter[2]];
+    NSString *str = [NSString stringWithHRDOVersion:@"0.0.1" status:@"200" token:token type:@"update" desc:@"update desc message" srcUserName:user dstUserName:user dstDevName:xiaoRuiUUID uid:doData.uid mid:doData.mid did:doData.did uuid:doData.uuid types:@"hrdo" newVersion:@"0.0.1" title:self.nameField.text brand:doData.brand created:[NSString loadCurrentDate] update:[NSString loadCurrentDate] state:@"1" picture:doData.picture regional:doData.regional parameter:parameter];
+    
+    [self.appDelegate sendMessageWithString:str];
+    DDLogInfo(@"发送 更新开关  数据%@", str);
+    [SVProgressTool hr_showWithStatus:@"正在更新设备名..."];
+    // 启动定时器
+    [_timer invalidate];
+    isOvertime = NO;
+    isShowOverMenu = NO;
+    _timer = [NSTimer scheduledTimerWithTimeInterval:15.0 target:self selector:@selector(startTimer) userInfo:nil repeats:NO];
+}
+
+- (void)sendDataToSocketWithPicture:(NSString *)pic
+{
+    [SVProgressTool hr_showWithStatus:@"正在添加设备..."];
+    
+    NSString *token = [[NSUserDefaults standardUserDefaults] objectForKey:PushToken];
+    NSString *user = [[NSUserDefaults standardUserDefaults] objectForKey:kDefaultsUserName];
+    
+    /// 发送创建TV 请求帧
+    NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:kdefaultsIracUid];
+    NSString *uuid = [[NSUserDefaults standardUserDefaults] objectForKey:kdefaultsIracUuid];
+    NSString *mid = [[NSUserDefaults standardUserDefaults] objectForKey:kdefaultsIracMid];
+    
+    NSMutableArray *picture = [NSMutableArray array];
+    [picture addObject:pic];
+    NSArray *regional = [NSArray array];
+    NSArray *op = [NSArray array];
+    NSArray *name01 = @[@"None",@"None",@"None",@"None",@"None",@"None",@"None",@"None",@"None",@"None"];
+    NSArray *name02 = @[@"None",@"None",@"None",@"None",@"None",@"None",@"None",@"None",@"None",@"None"];
+    NSArray *name03 = @[@"None",@"None",@"None",@"None",@"None",@"None",@"None",@"None",@"None",@"None"];
+    NSArray *param01 = @[@"None",@"None",@"None",@"None",@"None",@"None",@"None",@"None",@"None",@"None"];
+    NSArray *param02 = @[@"None",@"None",@"None",@"None",@"None",@"None",@"None",@"None",@"None",@"None"];
+    NSArray *param03 = @[@"None",@"None",@"None",@"None",@"None",@"None",@"None",@"None",@"None",@"None"];
+    
+    NSString *str = [NSString stringWithIRGMVersion:@"0.0.1" status:@"200" token:token type:@"create" desc:@"create desc message" srcUserName:user dstUserName:user dstDevName:uuid uid:uid mid:mid did:@"None" uuid:uuid types:@"irgm" newVersion:@"0.0.1" title:self.nameField.text brand:@"brand" created:@"None" update:@"None" state:@"1" picture:picture regional:regional op:op name01:name01 name02:name02 name03:name03 param01:param01 param02:param02 param03:param03];
+    DDLogWarn(@"-------发送添加通用 请求帧-------iracstr%@", str);
+    
+    [self.appDelegate sendMessageWithString:str];
+    // 启动定时器
+    [_timer invalidate];
+    isOvertime = NO;
+    isShowOverMenu = NO;
+    _timer = [NSTimer scheduledTimerWithTimeInterval:HRTimeInterval target:self selector:@selector(startTimer) userInfo:nil repeats:NO];
+   
+    
+}
+
+
 #pragma mark - 隐藏底部条
 - (void)IsTabBarHidden:(BOOL)hidden
 {

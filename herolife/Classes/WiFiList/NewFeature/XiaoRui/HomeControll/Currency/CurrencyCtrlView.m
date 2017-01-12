@@ -289,13 +289,21 @@ static BOOL isOvertime = NO;
 
 - (void)setUpFrame{
 	
+    
 	//提示框
 	self.tipsLabel = [[TipsLabel alloc] initWithFrame:CGRectMake(0, 0, UIScreenW, 30)];
 	[self addSubview:self.tipsLabel];
     
+    CGFloat buttonH ;
+    
+    if (UIScreenW >= 375) {
+        buttonH = (UIScreenH - 138 /2 - 35 - 25 *2 - 20 -10 - 40) / 8;
+    }else
+    {
+        buttonH = (UIScreenH - 138 /2 /2 -10 - 35 - 25 *2 - 20 -10 -40) / 8;
+    }
     //第一排
     
-	//login
 	[self.loginLabel mas_makeConstraints:^(MASConstraintMaker *make) {
 		make.centerX.equalTo(self.mas_centerX);
         if (UIScreenW >= 375) {
@@ -308,7 +316,7 @@ static BOOL isOvertime = NO;
 	}];
 	
 	//静音
-    CGFloat sizeWH = 78 *0.5 + 10;
+    CGFloat sizeWH = buttonH;
 	[self.greenButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.size.mas_equalTo(CGSizeMake(sizeWH, sizeWH));
 		make.right.equalTo(self.loginLabel.mas_left).offset(-67*0.5);
@@ -339,6 +347,7 @@ static BOOL isOvertime = NO;
         make.centerX.equalTo(self.loginLabel);
         make.centerY.equalTo(self.num1Button);
 	}];
+    
 	//3
     [self.num3Button mas_makeConstraints:^(MASConstraintMaker *make) {
         make.size.mas_equalTo(self.greenButton);
@@ -389,27 +398,15 @@ static BOOL isOvertime = NO;
         make.centerX.equalTo(self.redButton);
         make.centerY.equalTo(self.num7Button);
     }];
-    CGFloat magin;
-    if (UIScreenW >= 375) {
-        magin = 25;
-    }else
-    {
-        
-        magin = 20;
-    }
+    CGFloat magin = 20;
     //第六排
     //tag 13
     [self.okButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(self.loginLabel);
-        if (UIScreenW >= 375) {
-            make.top.equalTo(self.num8Button).offset((174 + 157 - 20) *0.5);
-            make.size.mas_equalTo(CGSizeMake(174 *0.5 , 174*0.5));
-        }else
-        {
-            
-            make.top.equalTo(self.num8Button).offset((174 + 157 - 75) *0.5);
-            make.size.mas_equalTo(CGSizeMake(174 *0.5 -25 , 174*0.5 -25));
-        }
+        
+        
+        make.top.equalTo(self.num8Button).offset(2.0 * buttonH + magin *1.5);
+        make.size.mas_equalTo(CGSizeMake(1.5 * buttonH , 1.5 * buttonH));
     }];
     
     //12

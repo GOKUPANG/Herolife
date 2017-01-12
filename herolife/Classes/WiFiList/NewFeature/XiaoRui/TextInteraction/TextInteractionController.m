@@ -11,13 +11,12 @@
 #import "UserCell.h"
 #import <MJExtension.h>
 #import "HRMessageData.h"
-#import "AddTextView.h"
 #import "AppDelegate.h"
 #import <SVProgressHUD.h>
 #import "XMGHeader.h"
 #import "DeviceListModel.h"
 
-@interface TextInteractionController ()< UITableViewDelegate,UITableViewDataSource,UITextViewDelegate>
+@interface TextInteractionController ()< UITableViewDelegate,UITableViewDataSource,UITextViewDelegate, YXCustomAlertViewDelegate>
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *bottomView;
 @property (weak, nonatomic) IBOutlet UIButton *addBtn;
 
@@ -25,12 +24,9 @@
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 //chartText的父控件
 @property (weak, nonatomic) IBOutlet UIView *chartView;
-/** PopEditDoView */
-@property(nonatomic, strong) AddTextView *textView;
 /** AppDelegate */
 @property(nonatomic, weak) AppDelegate *appDelegate;
-/** ept */
-@property(nonatomic, strong) UIView *eptView;
+
 /** 存放从数据库加载的所有数据 */
 @property(nonatomic, strong) NSMutableArray *sqlArray;
 
@@ -42,6 +38,9 @@
 @property(nonatomic, weak) HRNavigationBar *navView;
 
 @property (weak, nonatomic) IBOutlet UIImageView *backImgView;
+@property(nonatomic,strong) YXCustomAlertView *  modifyNameAlertView;
+/** <#name#> */
+@property(nonatomic, weak) UITextField *nameField;
 
 @end
 
@@ -237,7 +236,8 @@ static int refreshCount = 1;
     self.tableView.contentInset = UIEdgeInsetsMake(64, 0, 0, 0);
     NSString *userName = [kUserDefault objectForKey:kUserDefaultTextVCUserName];
     if (!userName) {
-        [self addPopView];
+        
+        [self addModifyUserNameAlertView];
     }
     //从数据库加载保存的文本数据
     
@@ -342,31 +342,6 @@ static int refreshCount = 1;
     NSLog(@"view.frame%@tableView%@", NSStringFromCGRect(self.view.frame), NSStringFromCGRect(self.tableView.frame));
 }
 
-- (void)addPopView
-{	//添加弹框
-	UIView *eptView = [[UIView alloc] initWithFrame:CGRectMake(0, 64, UIScreenW, UIScreenH)];
-//	eptView.backgroundColor = [UIColor colorWithR:127 G:127 B:127 alpha:1.0];
-    
-    eptView.backgroundColor = [UIColor clearColor];
-	
-	self.eptView = eptView;
-	self.textView = [[NSBundle mainBundle] loadNibNamed:@"AddTextView" owner:self options:nil].firstObject;
-	self.textView.frame = CGRectMake(30, UIScreenH *0.15, UIScreenW - 60, 150);
-	self.textView.backgroundColor = [UIColor whiteColor];
-    self.textView.layer.cornerRadius = 10;
-    self.textView.layer.masksToBounds = YES;
-    
-	[self.eptView addSubview:self.textView];
-	[self.view addSubview:self.eptView];
-	self.eptView.hidden = NO;
-	UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapEptViewClick)];
-	[self.eptView addGestureRecognizer:tap];
-}
-
-- (void)tapEptViewClick
-{
-	[self.eptView endEditing:YES];
-}
 
 - (void)viewWillLayoutSubviews
 {
@@ -377,7 +352,6 @@ static int refreshCount = 1;
 - (void)viewWillDisappear:(BOOL)animated
 {
 	[super viewWillDisappear:animated];
-	[self.textView resignFirstResponder];
 	refreshCount = 1;
     
     
@@ -558,20 +532,8 @@ static int refreshCount = 1;
 		{
 			[SVProgressTool hr_showErrorWithStatus:@"发送的信息不能为空!"];
 		}
-	}
-    
-//    else if ([self.addBtn.currentImage isEqual:[UIImage imageNamed:@"ic_action_add.png"]])
-//	{
-//		//添加
-//		[self addPopView];
-    
-    
-    
-//	}
-    
-    
-    else{
-        [self addPopView];
+	}else{
+        [self addModifyUserNameAlertView];
 
     }
 }
@@ -712,6 +674,150 @@ static int refreshCount = 1;
 	self.bottomView.constant = 0;
 }
 
+
+
+#pragma mark -添加 YXCustomAlertView 弹窗 相关  第三方demo方法
+-(void)addModifyUserNameAlertView
+{
+    
+    CGFloat dilX = 25;
+    CGFloat dilH = 150;
+    YXCustomAlertView *alertV = [[YXCustomAlertView alloc] initAlertViewWithFrame:CGRectMake(dilX, 0, HRUIScreenW - 40, dilH) andSuperView:self.navigationController.view];
+    
+    
+    // alertV.tag = tag;
+    alertV.delegate = self;
+    alertV.titleStr = @"设置您的昵称";
+    
+    
+    CGFloat loginX = 200 *HRCommonScreenH;
+    
+    
+    UILabel * nameLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 55, loginX, 32)];
+    
+    [alertV addSubview:nameLabel];
+    nameLabel.text = @"昵称";
+    nameLabel.textColor = [UIColor blackColor];
+    
+    nameLabel.textAlignment = NSTextAlignmentCenter;
+    
+    UITextField *nameField = [[UITextField alloc] initWithFrame:CGRectMake(loginX, 55, alertV.frame.size.width -  loginX*1.2, 32)];
+    nameField.layer.borderColor = [[UIColor blackColor] CGColor];
+    nameField.secureTextEntry = NO;
+    UIView *leftpPwdView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 8, 32)];
+    
+    
+    nameField.leftViewMode = UITextFieldViewModeAlways;
+    nameField.leftView = leftpPwdView;
+    
+    
+    nameField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
+    nameField.layer.borderWidth = 1;
+    nameField.layer.cornerRadius = 4;
+    
+    nameField.placeholder = @"请输入您的昵称";
+    
+    
+    
+    nameField.clearButtonMode = UITextFieldViewModeWhileEditing;
+    
+    
+    nameField.textColor = [UIColor blackColor];
+    
+    
+    
+    
+    self.nameField = nameField;
+    
+    
+    [alertV addSubview:self.nameField];
+    
+    
+    
+    self.modifyNameAlertView = alertV;
+    
+    
+    [UIView animateWithDuration:0.5 animations:^{
+        
+        self.modifyNameAlertView.center = CGPointMake(HRUIScreenW/2, HRUIScreenH/2-100);
+        
+        self.modifyNameAlertView.alpha=1;
+        
+    } completion:^(BOOL finished) {
+        
+        
+        
+        
+    }];
+    
+}
+
+- (void) customAlertView:(YXCustomAlertView *) customAlertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    
+    if (buttonIndex==0) {
+        
+        [SVProgressTool hr_showErrorWithStatus:@"用户昵称必须设置!"];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [self.navigationController popViewControllerAnimated: YES];
+        });
+        
+        [UIView animateWithDuration:0.5 animations:^{
+            
+            
+            CGRect AlertViewFrame = customAlertView.frame;
+            
+            AlertViewFrame.origin.y = 0;
+            
+            customAlertView.alpha = 0;
+            
+            
+            
+            customAlertView.frame = AlertViewFrame;
+            
+        } completion:^(BOOL finished) {
+            
+            
+            [customAlertView dissMiss];
+            
+            
+        }];
+    }else{
+        
+        
+        
+        if (self.nameField.text.length == 0 ) {
+            [customAlertView.layer shake];
+            [SVProgressTool hr_showErrorWithStatus:@"用户昵称不能为空!"];
+            return;
+            
+        }
+        
+        [kUserDefault setObject:self.nameField.text forKey:kUserDefaultTextVCUserName];
+        
+        [UIView animateWithDuration:0.8 animations:^{
+            
+            
+            CGRect AlertViewFrame = customAlertView.frame;
+            
+            AlertViewFrame.origin.y = HRUIScreenH ;
+            
+            
+            customAlertView.frame = AlertViewFrame;
+            
+            customAlertView.alpha = 0;
+            
+            
+        } completion:^(BOOL finished) {
+            
+            
+            [customAlertView dissMiss];
+            
+        }];
+        
+        
+    }
+}
 
 - (void)dealloc
 {
